@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<ROOT xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<TEST>
+		<NAME>M_CR_923</NAME>
+		<DEAD_ROCS>
+			<ROC>2</ROC>
+			<ROC>15</ROC>
+		</DEAD_ROCS>
+		<LIVE_ROCS>
+			<ROC>3</ROC>
+			<ROC>4</ROC>
+		</LIVE_ROCS>
+		<DEAD_PIX>332</DEAD_PIX>
+		<DEAD_BUMPS_ELEC>20</DEAD_BUMPS_ELEC>
+		<DEAD_BUMPS_REVBIAS>20</DEAD_BUMPS_REVBIAS>
+		<DEAD_BUMPS_XRAY>20</DEAD_BUMPS_XRAY>
+		<GRADE>C</GRADE>
+		<CAN_TIME>1</CAN_TIME>
+	</TEST>
+	<PIC>
+		<NAME>M_CR_923</NAME>
+		<FILE>testpic.jpg</FILE>
+		<TXT>testcomment.txt</TXT>
+		<PART>module_p</PART>
+	</PIC>
+	<SCAN>
+		<NAME>WL_CR_923</NAME>
+		<LEVEL>wafer</LEVEL>
+		<TYPE>IV</TYPE>
+		<FILE>WL_LL_919_IV.xml</FILE>
+		<TXT>testcomment.txt</TXT>
+	</SCAN>
+	<CONFIG>
+		<NAME>M_CR_923</NAME>
+		<FILE>testconfig.txt</FILE>
+	</CONFIG>
+</ROOT>

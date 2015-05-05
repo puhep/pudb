@@ -1,0 +1,10 @@
+h{ font-weight: bold;
+   font-size: 150%;
+   text-align: middle;}
+#module{
+   width: 960px;
+   height: auto;
+   overflow: hidden;}
+#module a{
+   display: inline;
+   margin: 0 10px;}
