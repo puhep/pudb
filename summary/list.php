@@ -19,7 +19,7 @@ Search: <input type="text" name="search">
 <form name="filter" action="../summary/list.php" method="post">
 List Filter:
 <br>
-Location:
+Assembly Location:
 <select name="loc">
 <?php
 

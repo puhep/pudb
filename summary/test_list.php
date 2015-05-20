@@ -15,6 +15,7 @@ Search: <input type="text" name="search">
 <?php 
 include('../functions/popfunctions.php');
 include('../functions/curfunctions.php');
+include('../graphing/xmlgrapher_crit.php');
 echo "<input type=\"hidden\" value=".$_POST['loc']." name=\"loc\">"; 
 ?>
 <input type="submit" value="Search">
@@ -122,6 +123,7 @@ X-Ray Offset:
 <textarea name="param13" cols="10" rows="1"></textarea>
 <br>
 
+<?php /* ?>
 IV Breakdown 
 <select name="comp14">
 <?php comparepop(); ?>
@@ -135,6 +137,7 @@ IV Compliance
 </select>
 <textarea name="param15" cols="10" rows="1"></textarea>
 <br>
+<?php */ ?>
 
 <br>
 Timeable:
@@ -146,10 +149,26 @@ Timeable:
 <br>
 <br>
 
+I(V=150)<2uA: 
+<select name="param16">
+<option value=""></option>
+<option value="1">Pass</option>
+<option value="0">Fail</option>
+</select>
+<br>
+<br>
+
+I(V=150)/I(V=100)<2: 
+<select name="param17">
+<option value=""></option>
+<option value="1">Pass</option>
+<option value="0">Fail</option>
+</select>
+<br>
+<br>
+
 <?php
 
-$breakdownlimit = 0;
-$compliancelimit = 0;
 
 $pursel = "";
 $nebsel = "";
@@ -190,7 +209,7 @@ if($_POST['param7'] != ""){
 	$sortmod7 = "AND badbumps_xray".$_POST['comp7']."\"".$_POST['param7']."\" ";
 }
 if($_POST['param8'] != ""){
-	$sortmod8 = "AND destination=\"".$_POST['param8']."\" ";
+	$sortmod8 = "AND destination LIKE \"%".$_POST['param8']."%\" ";
 }
 if($_POST['param9'] != ""){
 	$sortmod9 = "AND can_time=\"".$_POST['param9']."\" ";
@@ -226,14 +245,16 @@ $sorter = $sortmod1.$sortmod2.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.
 include('../../../Submission_p_secure_pages/connect.php');
 include('../functions/curfunctions.php');
 
-$func1 = "SELECT name, id from module_p WHERE name LIKE 'M_BB%' ".$sorter." ORDER BY name";
-$func2 = "SELECT name, id from module_p WHERE name LIKE 'M_CL%' ".$sorter." ORDER BY name";
-$func3 = "SELECT name, id from module_p WHERE name LIKE 'M_CR%' ".$sorter." ORDER BY name";
-$func4 = "SELECT name, id from module_p WHERE name LIKE 'M_FL%' ".$sorter." ORDER BY name";
-$func5 = "SELECT name, id from module_p WHERE name LIKE 'M_FR%' ".$sorter." ORDER BY name";
-$func6 = "SELECT name, id from module_p WHERE name LIKE 'M_LL%' ".$sorter." ORDER BY name";
-$func7 = "SELECT name, id from module_p WHERE name LIKE 'M_RR%' ".$sorter." ORDER BY name";
-$func8 = "SELECT name, id from module_p WHERE name LIKE 'M_TT%' ".$sorter." ORDER BY name";
+#Using joins to sort by parameters in the times_* tables. Probably helpful in the future.#
+$func1 = "SELECT a.name, a.id from module_p a, times_module_p b WHERE a.name LIKE 'M_BB%' AND a.id=b.assoc_module ".$sorter." ORDER BY b.HDI_attached DESC";
+$func2 = "SELECT a.name, a.id from module_p a, times_module_p b WHERE a.name LIKE 'M_CL%' AND a.id=b.assoc_module ".$sorter." ORDER BY b.HDI_attached DESC";
+$func3 = "SELECT a.name, a.id from module_p a, times_module_p b WHERE a.name LIKE 'M_CR%' AND a.id=b.assoc_module ".$sorter." ORDER BY b.HDI_attached DESC";
+$func4 = "SELECT a.name, a.id from module_p a, times_module_p b WHERE a.name LIKE 'M_FL%' AND a.id=b.assoc_module ".$sorter." ORDER BY b.HDI_attached DESC";
+$func5 = "SELECT a.name, a.id from module_p a, times_module_p b WHERE a.name LIKE 'M_FR%' AND a.id=b.assoc_module ".$sorter." ORDER BY b.HDI_attached DESC";
+$func6 = "SELECT a.name, a.id from module_p a, times_module_p b WHERE a.name LIKE 'M_LL%' AND a.id=b.assoc_module ".$sorter." ORDER BY b.HDI_attached DESC";
+$func7 = "SELECT a.name, a.id from module_p a, times_module_p b WHERE a.name LIKE 'M_RR%' AND a.id=b.assoc_module ".$sorter." ORDER BY b.HDI_attached DESC";
+$func8 = "SELECT a.name, a.id from module_p a, times_module_p b WHERE a.name LIKE 'M_TT%' AND a.id=b.assoc_module ".$sorter." ORDER BY b.HDI_attached DESC";
+
 $i=0;
 $j=0;
 $dataarray;
@@ -244,40 +265,34 @@ mysql_query('USE cmsfpix_u', $connection);
 
 $output1 = mysql_query($func1, $connection);
 while($row1 = mysql_fetch_assoc($output1)){
-	$failBreak=0;
-	$failComp=0;
-	$params = moduleMeasParams($row1['id']);
-	if(isset($breakdownlimit)){
-		$failBreak = compareParams($_POST['comp14'], $breakdownlimit, $params[0]);
-	}
-	if(isset($compliancelimit)){
-		$failComp = compareParams($_POST['comp15'], $compliancelimit, $params[1]);
-	}
-	if(!$failBreak && !$failComp){
-		$dataarray[0][$i] = $row1['name'];
-		$dataarray[1][$i] = $row1['id'];
-		$i++;
-	}
+	#Testing Pass/Fail of IV test
+	$dumped = dump("module_p", $row1['id']);
+	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
+	if($_POST['param16'] === "1" && $crit%5 == 0){ continue;}
+	if($_POST['param16'] === "0" && $crit%5 > 0){ continue;}
+	if($_POST['param17'] === "1" && $crit%7 == 0){ continue;}
+	if($_POST['param17'] === "0" && $crit%7 > 0){ continue;}
+
+	$dataarray[0][$i] = $row1['name'];
+	$dataarray[1][$i] = $row1['id'];
+	$i++;
 }
 $fpartarray[0] = $fpartarray[0]." (".$i.")";
 
 
 $output2 = mysql_query($func2, $connection);
 while($row2 = mysql_fetch_assoc($output2)){
-	$failBreak=0;
-	$failComp=0;
-	$params = moduleMeasParams($row2['id']);
-	if(isset($breakdownlimit)){
-		$failBreak = compareParams($_POST['comp14'], $breakdownlimit, $params[0]);
-	}
-	if(isset($compliancelimit)){
-		$failComp = compareParams($_POST['comp15'], $compliancelimit, $params[1]);
-	}
-	if(!$failBreak && !$failComp){
-		$dataarray[2][$j] = $row2['name'];
-		$dataarray[3][$j] = $row2['id'];
-		$j++;
-	}
+	#Testing Pass/Fail of IV test
+	$dumped = dump("module_p", $row2['id']);
+	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
+	if($_POST['param16'] === "1" && $crit%5 == 0){ continue;}
+	if($_POST['param16'] === "0" && $crit%5 > 0){ continue;}
+	if($_POST['param17'] === "1" && $crit%7 == 0){ continue;}
+	if($_POST['param17'] === "0" && $crit%7 > 0){ continue;}
+
+	$dataarray[2][$j] = $row2['name'];
+	$dataarray[3][$j] = $row2['id'];
+	$j++;
 }
 $fpartarray[1] = $fpartarray[1]." (".$j.")";
 
@@ -286,22 +301,17 @@ $j=0;
 
 $output3 = mysql_query($func3, $connection);
 while($row3 = mysql_fetch_assoc($output3)){
-	$failBreak=0;
-	$failComp=0;
-	$params = moduleMeasParams($row3['id']);
-	if(isset($breakdownlimit)){
-		$failBreak = compareParams($_POST['comp14'], $breakdownlimit, $params[0]);
-		echo $failBreak;
-	}
-	if(isset($compliancelimit)){
-		$failComp = compareParams($_POST['comp15'], $compliancelimit, $params[1]);
-		echo $failComp;
-	}
-	if(!$failBreak && !$failComp){
-		$dataarray[4][$j] = $row3['name'];
-		$dataarray[5][$j] = $row3['id'];
-		$j++;
-	}
+	#Testing Pass/Fail of IV test
+	$dumped = dump("module_p", $row3['id']);
+	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
+	if($_POST['param16'] === "1" && $crit%5 == 0){ continue;}
+	if($_POST['param16'] === "0" && $crit%5 > 0){ continue;}
+	if($_POST['param17'] === "1" && $crit%7 == 0){ continue;}
+	if($_POST['param17'] === "0" && $crit%7 > 0){ continue;}
+
+	$dataarray[4][$j] = $row3['name'];
+	$dataarray[5][$j] = $row3['id'];
+	$j++;
 }
 $fpartarray[2] = $fpartarray[2]." (".$j.")";
 
@@ -310,20 +320,17 @@ $j=0;
 
 $output4 = mysql_query($func4, $connection);
 while($row4 = mysql_fetch_assoc($output4)){
-	$failBreak=0;
-	$failComp=0;
-	$params = moduleMeasParams($row4['id']);
-	if(isset($breakdownlimit)){
-		$failBreak = compareParams($_POST['comp14'], $breakdownlimit, $params[0]);
-	}
-	if(isset($compliancelimit)){
-		$failComp = compareParams($_POST['comp15'], $compliancelimit, $params[1]);
-	}
-	if(!$failBreak && !$failComp){
-		$dataarray[6][$j] = $row4['name'];
-		$dataarray[7][$j] = $row4['id'];
-		$j++;
-	}
+	#Testing Pass/Fail of IV test
+	$dumped = dump("module_p", $row4['id']);
+	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
+	if($_POST['param16'] === "1" && $crit%5 == 0){ continue;}
+	if($_POST['param16'] === "0" && $crit%5 > 0){ continue;}
+	if($_POST['param17'] === "1" && $crit%7 == 0){ continue;}
+	if($_POST['param17'] === "0" && $crit%7 > 0){ continue;}
+
+	$dataarray[6][$j] = $row4['name'];
+	$dataarray[7][$j] = $row4['id'];
+	$j++;
 }
 $fpartarray[3] = $fpartarray[3]." (".$j.")";
 
@@ -332,20 +339,17 @@ $j=0;
 
 $output5 = mysql_query($func5, $connection);
 while($row5 = mysql_fetch_assoc($output5)){
-	$failBreak=0;
-	$failComp=0;
-	$params = moduleMeasParams($row5['id']);
-	if(isset($breakdownlimit)){
-		$failBreak = compareParams($_POST['comp14'], $breakdownlimit, $params[0]);
-	}
-	if(isset($compliancelimit)){
-		$failComp = compareParams($_POST['comp15'], $compliancelimit, $params[1]);
-	}
-	if(!$failBreak && !$failComp){
-		$dataarray[8][$j] = $row5['name'];
-		$dataarray[9][$j] = $row5['id'];
-		$j++;
-	}
+	#Testing Pass/Fail of IV test
+	$dumped = dump("module_p", $row5['id']);
+	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
+	if($_POST['param16'] === "1" && $crit%5 == 0){ continue;}
+	if($_POST['param16'] === "0" && $crit%5 > 0){ continue;}
+	if($_POST['param17'] === "1" && $crit%7 == 0){ continue;}
+	if($_POST['param17'] === "0" && $crit%7 > 0){ continue;}
+
+	$dataarray[8][$j] = $row5['name'];
+	$dataarray[9][$j] = $row5['id'];
+	$j++;
 }
 $fpartarray[4] = $fpartarray[4]." (".$j.")";
 
@@ -354,20 +358,17 @@ $j=0;
 
 $output6 = mysql_query($func6, $connection);
 while($row6 = mysql_fetch_assoc($output6)){
-	$failBreak=0;
-	$failComp=0;
-	$params = moduleMeasParams($row6['id']);
-	if(isset($breakdownlimit)){
-		$failBreak = compareParams($_POST['comp14'], $breakdownlimit, $params[0]);
-	}
-	if(isset($compliancelimit)){
-		$failComp = compareParams($_POST['comp15'], $compliancelimit, $params[1]);
-	}
-	if(!$failBreak && !$failComp){
-		$dataarray[10][$j] = $row6['name'];
-		$dataarray[11][$j] = $row6['id'];
-		$j++;
-	}
+	#Testing Pass/Fail of IV test
+	$dumped = dump("module_p", $row6['id']);
+	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
+	if($_POST['param16'] === "1" && $crit%5 == 0){ continue;}
+	if($_POST['param16'] === "0" && $crit%5 > 0){ continue;}
+	if($_POST['param17'] === "1" && $crit%7 == 0){ continue;}
+	if($_POST['param17'] === "0" && $crit%7 > 0){ continue;}
+
+	$dataarray[10][$j] = $row6['name'];
+	$dataarray[11][$j] = $row6['id'];
+	$j++;
 }
 $fpartarray[5] = $fpartarray[5]." (".$j.")";
 
@@ -376,20 +377,17 @@ $j=0;
 
 $output7 = mysql_query($func7, $connection);
 while($row7 = mysql_fetch_assoc($output7)){
-	$failBreak=0;
-	$failComp=0;
-	$params = moduleMeasParams($row7['id']);
-	if(isset($breakdownlimit)){
-		$failBreak = compareParams($_POST['comp14'], $breakdownlimit, $params[0]);
-	}
-	if(isset($compliancelimit)){
-		$failComp = compareParams($_POST['comp15'], $compliancelimit, $params[1]);
-	}
-	if(!$failBreak && !$failComp){
-		$dataarray[12][$j] = $row7['name'];
-		$dataarray[13][$j] = $row7['id'];
-		$j++;
-	}
+	#Testing Pass/Fail of IV test
+	$dumped = dump("module_p", $row7['id']);
+	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
+	if($_POST['param16'] === "1" && $crit%5 == 0){ continue;}
+	if($_POST['param16'] === "0" && $crit%5 > 0){ continue;}
+	if($_POST['param17'] === "1" && $crit%7 == 0){ continue;}
+	if($_POST['param17'] === "0" && $crit%7 > 0){ continue;}
+
+	$dataarray[12][$j] = $row7['name'];
+	$dataarray[13][$j] = $row7['id'];
+	$j++;
 }
 $fpartarray[6] = $fpartarray[6]." (".$j.")";
 
@@ -398,20 +396,17 @@ $j=0;
 
 $output8 = mysql_query($func8, $connection);
 while($row8 = mysql_fetch_assoc($output8)){
-	$failBreak=0;
-	$failComp=0;
-	$params = moduleMeasParams($row8['id']);
-	if(isset($breakdownlimit)){
-		$failBreak = compareParams($_POST['comp14'], $breakdownlimit, $params[0]);
-	}
-	if(isset($compliancelimit)){
-		$failComp = compareParams($_POST['comp15'], $compliancelimit, $params[1]);
-	}
-	if(!$failBreak && !$failComp){
-		$dataarray[14][$j] = $row8['name'];
-		$dataarray[15][$j] = $row8['id'];
-		$j++;
-	}
+	#Testing Pass/Fail of IV test
+	$dumped = dump("module_p", $row8['id']);
+	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
+	if($_POST['param16'] === "1" && $crit%5 == 0){ continue;}
+	if($_POST['param16'] === "0" && $crit%5 > 0){ continue;}
+	if($_POST['param17'] === "1" && $crit%7 == 0){ continue;}
+	if($_POST['param17'] === "0" && $crit%7 > 0){ continue;}
+
+	$dataarray[14][$j] = $row8['name'];
+	$dataarray[15][$j] = $row8['id'];
+	$j++;
 }
 $fpartarray[7] = $fpartarray[7]." (".$j.")";
 

@@ -77,6 +77,8 @@ $doc1=simplexml_load_string($xml);
 
 		settype($arr1[$k][0][$loop],"float");
 
+		$arr1[$k][0][$loop] = abs($arr1[$k][0][$loop]);
+
 		$arr1[$k][1][$loop]=$doc1->DATA_SET->DATA[$loop]->$y;
 		if($arr1[$k][1][$loop] == "NaN"){
 			$arr1[$k][1][$loop] = 1E-10;

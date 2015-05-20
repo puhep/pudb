@@ -6,10 +6,10 @@
   <link rel="stylesheet" type="text/css" href="../css/purduenebraska.css" />
 </head>
 <body>
+<form method="get" enctype="mulitpart/form-data">
 <?php
 ini_set('display_errors', 'On');
 error_reporting(E_ALL | E_STRICT);
-include('../functions/popfunctions.php');
 include('../functions/curfunctions.php');
 include('../../../Submission_p_secure_pages/connect.php');
 
@@ -217,6 +217,7 @@ echo "</td>";
 	echo "</table>";
 
 ?>
+</form>
 <br>
 <form method="link" action="../index.php">
 <input type="submit" value="MAIN MENU">

@@ -5,10 +5,9 @@ error_reporting(E_ALL | E_STRICT);
 
 #phpinfo();
 
-include("functions/editfunctions.php");
-
-
-#generateHDImodulename(167);
-
+$im = new imagick('/project/cmsfpix/.www/Submission_p/pics/module_p/module_p154pic2.jpg[0]');
+$im->setImageFormat('jpg');
+header('Content-Type: image/jpeg');
+echo $im;
 
 ?>

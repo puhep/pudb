@@ -13,6 +13,7 @@
  #error_reporting(E_ALL | E_STRICT);
 include('../functions/curfunctions.php');
 include('../functions/submitfunctions.php');
+include('../functions/popfunctions.php');
 
 $name = $_GET['name'];
 $id = findid("module_p", $name);
@@ -23,6 +24,7 @@ echo "<input type='hidden' name='name' value='".$_GET['name']."'>";
 curname("module_p", $id);
 echo "<br>";
 curtestgrade($id);
+morewebLinkList($id);
 curpics("sidet_p", $id);
 
 ?>

@@ -68,28 +68,36 @@ function curpics($type, $id){
 function curgraphs($sensorid, $scan, $level){
 	include('../../../Submission_p_secure_pages/connect.php');
 
-	$func = "SELECT filesize,notes  FROM measurement_p WHERE part_ID =$sensorid AND scan_type=\"$scan\"";
-	mysql_query('USE cmsfpix_u', $connection);
+	$imagefile = "../pics/graphs/".$level."_".$sensorid."_".$scan.".png";
 
-	$output = mysql_query($func, $connection);
-	
-	$name = findname("sensor_p", $sensorid);
-	if(substr($name, 0, 2) == "WS"){
-		$level = "";
-	}
-
-	$any = 0;
-	while($row = mysql_fetch_assoc($output)){
-		$exists = $row['filesize'];
-		if($exists){
-			break;}
-	}
-	if($exists){
-		echo "<a href=\"../graphing/xmlgrapher.php?id=$sensorid&scan=$scan&level=$level\" target =\"_blank\"><img src=\"../graphing/xmlgrapher.php?id=$sensorid&scan=$scan&level=$level\" width=\"335\" height=\"200\" /></a>";
-		
+	if(file_exists($imagefile)){
+		echo "<a href=\"$imagefile\" target=\"_blank\"><img src=\"$imagefile\" width=\"335\" height=\"200\" /></a>";
 	}
 	else{
-		echo "No ".$scan." scan data for this part";
+
+		$func = "SELECT filesize,notes  FROM measurement_p WHERE part_ID =$sensorid AND scan_type=\"$scan\"";
+		mysql_query('USE cmsfpix_u', $connection);
+
+		$output = mysql_query($func, $connection);
+	
+		$name = findname("sensor_p", $sensorid);
+		if(substr($name, 0, 2) == "WS"){
+			$level = "";
+		}
+
+		$any = 0;
+		while($row = mysql_fetch_assoc($output)){
+			$exists = $row['filesize'];
+			if($exists){
+				break;}
+		}
+		if($exists){
+			echo "<a href=\"../graphing/xmlgrapher.php?id=$sensorid&scan=$scan&level=$level\" target =\"_blank\"><img src=\"../graphing/xmlgrapher.php?id=$sensorid&scan=$scan&level=$level\" width=\"335\" height=\"200\" /></a>";
+		
+		}
+		else{
+			echo "No ".$scan." scan data for this part";
+		}
 	}
 }
 

@@ -41,7 +41,6 @@ if(mysql_num_rows($output)){
 
 }
 
-
 if($scan == "IV"){
 $y = "ACTV_CURRENT_AMP";
 $y2 = "ACTV_CURRENT_AMP";}
@@ -121,7 +120,7 @@ for($l=0;$l<$k;$l++){
 
 echo "<tr>";
 echo "<td>";
-echo $sensorsout[$l][0];
+echo $sensors[$l][0];
 echo "</td>";
 echo "<td>";
 if(!($markedarr[$l]%2)){echo "<p style=\"background-color:red;\">FAIL</p>";}

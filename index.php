@@ -24,57 +24,57 @@ Purdue University CMS FPix Upgrade Production Database
 <br>
 
 Assembly Flow Handler
-<form action="assembly/status.php" method="post">
-  <input name="assembly" value="Assembly Status" type="submit">
+<form action="assembly/status.php" method="get">
+  <input value="Assembly Status" type="submit">
   </form>
 <br>
 
 Data Viewing
-<form action="summary/list.php" method="post">
-  <input name="summary" value="Part List"
+<form action="summary/list.php" method="get">
+  <input value="Part List"
  type="submit"></form>
 
-<form action="summary/attached.php?sort=mod" method="post">
-  <input name="exploded" value="Assembled Modules"
+<form action="summary/attached.php?sort=mod" method="get">
+  <input value="Assembled Modules"
  type="submit"></form>
 
-<form action="summary/test_list.php" method="post">
-  <input name="tested" value="Tested Modules List"
+<form action="summary/test_list.php" method="get">
+  <input value="Tested Modules List"
  type="submit"></form>
 
-<form action="summary/time.php" method="post">
-  <input name="time" value="Assembly Over Time"
+<form action="summary/time.php" method="get">
+  <input value="Assembly Over Time"
  type="submit"></form>
 
-<form action="summary/pilotsummary.php" method="post">
-  <input name="time" value="Pilot Module IV Graphs"
+<form action="summary/pilotsummary.php" method="get">
+  <input value="Pilot Module IV Graphs"
  type="submit"></form>
 
-<form action="../MoReWeb/Results/Overview.html" method="post">
-  <input name="moreweb" value="MoReWeb Results"
+<form action="../MoReWeb/Results/Overview.html" method="get">
+  <input value="MoReWeb Results"
  type="submit"></form>
 
 <br>
 
 New Parts Information
-<form action="submit/wafersubmit.php" method="post">
-  <input name="wafer" value="Wafer Submit" type="submit">
+<form action="submit/wafersubmit.php" method="get">
+  <input value="Wafer Submit" type="submit">
   </form>
 
-<form action="submit/HDIsubmit.php" method="post">
-  <input name="hdi" value="HDI Submit" type="submit">
+<form action="submit/HDIsubmit.php" method="get">
+  <input value="HDI Submit" type="submit">
   </form>
 
-<form action="submit/modulesubmit.php" method="post">
-  <input name="module" value="Module Submit" type="submit">
+<form action="submit/modulesubmit.php" method="get">
+  <input value="Module Submit" type="submit">
   </form>
 
-<form action="submit/ROCsubmit.php" method="post">
-  <input name="ROC" value="ROC Submit" type="submit">
+<form action="submit/ROCsubmit.php" method="get">
+  <input value="ROC Submit" type="submit">
   </form>
 
-<form action="submit/batchrocsubmit.php" method="post">
-  <input name="batchROC" value="Batch Module Submit" type="submit">
+<form action="submit/batchrocsubmit.php" method="get">
+  <input value="Batch Module Submit" type="submit">
   </form>
 
 <form action="submit/flexsubmit.php" method="post">
@@ -87,49 +87,49 @@ New Parts Information
   <input name="id" value="2" type="hidden">
   </form>
 
-<form action="submit/morewebsubmit.php" method="post">
-  <input name="mwsub" value="MoReWeb Data Submit" type="submit">
+<form action="submit/morewebsubmit.php" method="get">
+  <input value="MoReWeb Data Submit" type="submit">
   </form>
 
 <br>
 
 Testing Data
-<form action="submit/meassubmit.php" method="post">
-  <input name="meas" value="Measurement Submit" type="submit">
+<form action="submit/meassubmit.php" method="get">
+  <input  value="Measurement Submit" type="submit">
   </form>
-<form action="submit/batchmeassubmit.php" method="post">
-  <input name="batch" value="Batch Measurement Submit" type="submit">
+<form action="submit/batchmeassubmit.php" method="get">
+  <input  value="Batch Measurement Submit" type="submit">
   </form>
-<form action="submit/batchfulltestsubmit.php" method="post">
-  <input name="fullbatch" value="Batch Full Test Submit" type="submit">
+<form action="submit/batchfulltestsubmit.php" method="get">
+  <input value="Batch Full Test Submit" type="submit">
   </form>
-<form action="submit/batchallsubmit.php" method="post">
-  <input name="allbatch" value="Consolidated Batch Submit" type="submit">
+<form action="submit/batchallsubmit.php" method="get">
+  <input value="Consolidated Batch Submit" type="submit">
   </form>
-<form action="submit/morewebsubmit.php" method="post">
-  <input name="morewebdata" value="MoReWeb Data Submit" type="submit">
+<form action="submit/morewebsubmit.php" method="get">
+  <input value="MoReWeb Data Submit" type="submit">
   </form>
 
 <br>
 
 Change/Edit
-<form action="submit/newcomment.php" method="post">
-  <input name="comment" value="Add Comments to Existing Part" type="submit">
+<form action="submit/newcomment.php" method="get">
+  <input value="Add Comments to Existing Part" type="submit">
   </form>
-<form action="submit/newpic.php" method="post">
-  <input name="pic" value="Add Pictures to Existing Part" type="submit">
+<form action="submit/newpic.php" method="get">
+  <input value="Add Pictures to Existing Part" type="submit">
   </form>
-<form action="submit/ROCedit.php" method="post">
-  <input name="ROCe" value="Edit ROCs" type="submit">
+<form action="submit/ROCedit.php" method="get">
+  <input value="Edit ROCs" type="submit">
   </form>
 <br>
 
 Information
-<form action="namingconvention.php" method="post">
-  <input name="con" value="Naming Convention" type="submit">
+<form action="namingconvention.php" method="get">
+  <input value="Naming Convention" type="submit">
   </form>
-<form action="wafermap.php" method="post">
-  <input name="map" value="Wafer Maps" type="submit">
+<form action="wafermap.php" method="get">
+  <input value="Wafer Maps" type="submit">
   </form>
 <br>
 

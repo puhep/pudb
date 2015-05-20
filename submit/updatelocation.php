@@ -10,6 +10,7 @@
 <?php
 include('../functions/curfunctions.php');
 include('../functions/editfunctions.php');
+include('../functions/popfunctions.php');
 
 echo "<input type='hidden' name='name' value='".$_GET['name']."'>";
 
@@ -19,7 +20,11 @@ curname("module_p", $id);
 ?>
 
 <br>
-New Location <textarea cols="10" rows="1" name="newloc"></textarea>
+New Location 
+	<select name="newloc">
+	<?php locpop(); ?>
+	</select>
+<br>
 <br>
 Additional Notes <textarea cols="40" rows="5" name="notes"></textarea>
 <br>
@@ -41,6 +46,7 @@ if(isset($_POST['submit']) && $_POST['newloc']!=""){
 	if($_POST['notes'] !=""){
 		addcomment("module_p", $id, $_POST['notes']);
 	}
+	echo $newlocnote;
 
 }
 elseif(isset($_POST['submit'])){

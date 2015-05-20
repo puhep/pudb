@@ -68,22 +68,25 @@ if($sortby == "mod"){
 	#SORTING ALREADY DONE
 }
 if($sortby == "hdi"){
-	array_multisort($bbmarray[6], SORT_ASC, SORT_STRING,$bbmarray[0],$bbmarray[1],$bbmarray[2],$bbmarray[3],$bbmarray[4],$bbmarray[5],$bbmarray[7],$bbmarray[8],$bbmarray[9]);
+	array_multisort($bbmarray[6], SORT_ASC, SORT_STRING,$bbmarray[0],$bbmarray[1],$bbmarray[2],$bbmarray[3],$bbmarray[4],$bbmarray[5],$bbmarray[7],$bbmarray[8],$bbmarray[9],$bbmarray[10]);
 }
 if($sortby == "sen"){
-	array_multisort($bbmarray[5], SORT_ASC, SORT_STRING,$bbmarray[0],$bbmarray[1],$bbmarray[2],$bbmarray[3],$bbmarray[4],$bbmarray[6],$bbmarray[7],$bbmarray[8],$bbmarray[9]);
+	array_multisort($bbmarray[5], SORT_ASC, SORT_STRING,$bbmarray[0],$bbmarray[1],$bbmarray[2],$bbmarray[3],$bbmarray[4],$bbmarray[6],$bbmarray[7],$bbmarray[8],$bbmarray[9],$bbmarray[10]);
 }
 if($sortby == "dat"){
-	array_multisort($bbmarray[4], SORT_ASC, SORT_STRING,$bbmarray[0],$bbmarray[1],$bbmarray[2],$bbmarray[3],$bbmarray[5],$bbmarray[6],$bbmarray[7],$bbmarray[8],$bbmarray[9]);
+	array_multisort($bbmarray[4], SORT_ASC, SORT_STRING,$bbmarray[0],$bbmarray[1],$bbmarray[2],$bbmarray[3],$bbmarray[5],$bbmarray[6],$bbmarray[7],$bbmarray[8],$bbmarray[9],$bbmarray[10]);
 }
 if($sortby == "fcb"){
-	array_multisort($bbmarray[7], SORT_ASC, SORT_STRING,$bbmarray[4], SORT_ASC, SORT_STRING, $bbmarray[0],$bbmarray[1],$bbmarray[2],$bbmarray[3],$bbmarray[5],$bbmarray[6],$bbmarray[8],$bbmarray[9]);
+	array_multisort($bbmarray[7], SORT_ASC, SORT_STRING,$bbmarray[4], SORT_ASC, SORT_STRING, $bbmarray[0],$bbmarray[1],$bbmarray[2],$bbmarray[3],$bbmarray[5],$bbmarray[6],$bbmarray[8],$bbmarray[9],$bbmarray[10]);
 }
 if($sortby == "loc"){
-	array_multisort($bbmarray[8], SORT_ASC, SORT_STRING,$bbmarray[4], SORT_ASC, SORT_STRING, $bbmarray[0],$bbmarray[1],$bbmarray[2],$bbmarray[3],$bbmarray[5],$bbmarray[6],$bbmarray[7],$bbmarray[9]);
+	array_multisort($bbmarray[8], SORT_ASC, SORT_STRING,$bbmarray[4], SORT_ASC, SORT_STRING, $bbmarray[0],$bbmarray[1],$bbmarray[2],$bbmarray[3],$bbmarray[5],$bbmarray[6],$bbmarray[7],$bbmarray[9],$bbmarray[10]);
 }
 if($sortby == "lm"){
-	array_multisort($bbmarray[9], SORT_ASC, SORT_STRING,$bbmarray[4], SORT_ASC, SORT_STRING, $bbmarray[0],$bbmarray[1],$bbmarray[2],$bbmarray[3],$bbmarray[5],$bbmarray[6],$bbmarray[7],$bbmarray[8]);
+	array_multisort($bbmarray[9], SORT_ASC, SORT_STRING,$bbmarray[4], SORT_ASC, SORT_STRING, $bbmarray[0],$bbmarray[1],$bbmarray[2],$bbmarray[3],$bbmarray[5],$bbmarray[6],$bbmarray[7],$bbmarray[8],$bbmarray[10]);
+}
+else{
+	#no sorting
 }
 
 

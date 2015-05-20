@@ -115,9 +115,9 @@ if(isset($_POST['submit']) && isset($_POST['modules']) && isset($_POST['QC']) &&
 
 		$id = $_POST['modules'];
 
-		$func = "INSERT INTO times_module_p(assoc_module, received) VALUES($id, \"$date\")";
-
-		mysql_query($func, $connection);
+		$timefunc = "INSERT INTO times_module_p(assoc_module, received) VALUES($id, \"$date\")";
+		echo $timefunc;
+		mysql_query($timefunc, $connection);
 
 		echo "<br>";
 		echo "The module was successfully added to the database";

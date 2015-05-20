@@ -1,13 +1,14 @@
 <?php
+function xmlgrapher_writer($id, $scan, $level){
 require_once('../jpgraph/src/jpgraph.php');
 require_once('../jpgraph/src/jpgraph_scatter.php');
 require_once('../jpgraph/src/jpgraph_log.php');
 
 include('../../../Submission_p_secure_pages/connect.php');
 
-$id = $_GET['id'];
-$scan = $_GET['scan'];
-$level = $_GET['level'];
+#$id = $_GET['id'];
+#$scan = $_GET['scan'];
+#$level = $_GET['level'];
 
 $func = "SELECT file, filesize, part_type FROM measurement_p WHERE part_ID=\"$id\" AND scan_type=\"$scan\"";
 $namefunc = "SELECT name, module FROM sensor_p WHERE id=\"$id\"";
@@ -337,6 +338,7 @@ $sp4->SetLegend("Module at FNAL\n".$timestamp4);
 #$splim->SetLegend("Limit");
 #}
 
-$graph->StrokeStore($imagefile);
+$graph->Stroke($imagefile);
 
+}
 ?>

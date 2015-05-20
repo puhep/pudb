@@ -10,6 +10,16 @@ function comparepop(){
 	echo "<option value=\"!=\">!=</option>\n";
 }
 
+function locpop(){
+	
+	echo "<option value=\"CERN\">CERN</option>\n";
+	echo "<option value=\"Fermilab\">Fermilab</option>\n";
+	echo "<option value=\"Kansas\">Kansas</option>\n";
+	echo "<option value=\"Nebraska\">Nebraska</option>\n";
+	echo "<option value=\"Purdue\">Purdue</option>\n";
+	echo "<option value=\"UIC\">UIC</option>\n";
+}
+
 function waferpop(){
 
 include('../../../Submission_p_secure_pages/connect.php');
@@ -317,4 +327,36 @@ function HDIbatchpop(){
 	echo "<option value=\"YHC69-1015\">YHC69-1015</option>\n";
 
 }
+
+function morewebLinkList($modid){
+include('../functions/curfunctions.php');
+
+	$doc = new DOMDocument();
+	$doc->loadHTMLFile("/project/cmsfpix/.www/MoReWeb/Results/Overview.html");
+
+	$tags = $doc->getElementsByTagName('a');
+
+	$found = 0;
+
+	echo "<br>";
+	echo "MoReWeb Results:<br>";
+
+	foreach($tags as $tag){
+		$curname = $tag->nodeValue;
+		$curid = findid("module_p",$curname);
+		$curlink = $tag->getAttribute('href');
+		$exploded = explode('_',$curlink);
+		
+		if($curid == $modid){
+			echo "<a href=\"../../MoReWeb/Results/$curlink\" target=\"blank_\">".$exploded[2]."</a>";
+			echo "<br>";
+			$found=1;
+		}
+	}
+	if(!$found){
+		echo "No MoReWeb results for this module";
+	}
+	echo "<br>";
+}
+
 ?>

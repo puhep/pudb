@@ -75,6 +75,7 @@ include('../../../Submission_p_secure_pages/connect.php');
 function measurement($id, $parttype, $scan, $notes, $file, $size, $name, $breakdown, $compliance){
 include('../../../Submission_p_secure_pages/connect.php');
 include('../functions/curfunctions.php');
+include('../graphing/xmlgrapher_writer.php');
 
 	$sqlnotes = mysql_real_escape_string($notes);
 
@@ -88,10 +89,12 @@ include('../functions/curfunctions.php');
 	}
 	$func = "INSERT INTO measurement_p(part_ID, part_type, scan_type, notes, file, filesize, filename, breakdown, compliance) VALUES (\"$id\", \"$parttype\", \"$scan\", \"$sqlnotes\", \"$file\",\"$size\",\"$name\", $breakdown, $compliance)";
 	
+
 	mysql_query('USE cmsfpix_u', $connection);
 
 	if(mysql_query($func,$connection)){
 		echo "The $scan measurement on sensor $sensorname has been added to the database.<br>";
+		xmlgrapher_writer($id, $scan, $parttype);	
 	}
 	else{
 		echo("An error has occurred and the data has not been added.<br>");
@@ -210,19 +213,48 @@ include("../functions/curfunctions.php");
 
 				$doc = simplexml_load_file($dir.$entry);
 				
-				#while($doc->ROCS[$i]->MODNAME != ""){
+				########ALL ROCS##########
+				$i = 0;
+				while($doc->ROCS[$i]->NAME !=""){
+
+					$name = $doc->ROCS[$i]->NAME;
+					$id = findid("module_p", $name);
 					
+					$k = 0;
+					while($doc->ROCS[$i]->ROC[$k]->POSITION !=""){
 
+						mysql_query('USE cmsfpix_u', $connection);
+					
+						$pos = $doc->ROCS[$i]->ROC[$k]->POSITION;
+						if(($status=$doc->ROCS[$i]->ROC[$k]->IS_DEAD)!=""){
+							$func = "UPDATE ROC_p SET is_dead=\"".$status."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
+							mysql_query($func, $connection);
+							echo "ROC ".$pos." on ".$name." status updated<br>";
+						}
+						if(($offset=$doc->ROCS[$i]->ROC[$k]->XRAY_OFFSET)!=""){
+							$func = "UPDATE ROC_p SET xray_offset=\"".$offset."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
+							mysql_query($func, $connection);
+							echo "ROC ".$pos." on ".$name." X-ray offset: ".$offset."<br>";
+						}
+						if(($slope=$doc->ROCS[$i]->ROC[$k]->XRAY_SLOPE)!=""){
+							$func = "UPDATE ROC_p SET xray_slope=\"".$slope."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
+							mysql_query($func, $connection);
+							echo "ROC ".$pos." on ".$name." X-ray slope: ".$slope."<br>";
+						}
+				
+					$k++;
+					}
+				$i++;
+				}
 
-
-				#}
 
 				$i=0;
 				while($doc->TEST[$i]->NAME != ""){
 
 					$name = $doc->TEST[$i]->NAME;
 					$id = findid("module_p", $name);
-
+					
+							
 					########DEAD ROCS##########
 					$j = 0;
 					while($doc->TEST[$i]->DEAD_ROCS->ROC[$j] != ""){
@@ -461,6 +493,39 @@ include("../functions/curfunctions.php");
 
 				$doc = simplexml_load_file($dir.$entry);
 
+				########ALL ROCS##########
+				$i = 0;
+				while($doc->ROCS[$i]->NAME !=""){
+
+					$name = $doc->ROCS[$i]->NAME;
+					$id = findid("module_p", $name);
+					
+					$k = 0;
+					while($doc->ROCS[$i]->ROC[$k]->POSITION !=""){
+
+						mysql_query('USE cmsfpix_u', $connection);
+					
+						$pos = $doc->ROCS[$i]->ROC[$k]->POSITION;
+
+						if(($status=$doc->ROCS[$i]->ROC[$k]->IS_DEAD)!=""){
+							$func = "UPDATE ROC_p SET is_dead=\"".$status."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
+							mysql_query($func, $connection);
+						}
+						if(($offset=$doc->ROCS[$i]->ROC[$k]->XRAY_OFFSET)!=""){
+							$func = "UPDATE ROC_p SET xray_offset=\"".$offset."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
+							mysql_query($func, $connection);
+						}
+						if(($slope=$doc->ROCS[$i]->ROC[$k]->XRAY_SLOPE)!=""){
+							$func = "UPDATE ROC_p SET xray_slope=\"".$slope."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
+							mysql_query($func, $connection);
+						}
+						echo "ROC ".$pos." on ".$name." has been updated";
+					$k++;
+					}
+				$i++;
+				}
+
+				$i=0;
 				while($doc->TEST[$i]->NAME != ""){
 
 					$name = $doc->TEST[$i]->NAME;
@@ -1139,7 +1204,7 @@ include("../functions/editfunctions.php");
 						continue;
 					}
 
-					$date = date('Y/m/d');
+					$date = date('Y-m-d H:i:s');
 
 					$notes = $date." Received\n";
 
@@ -1149,9 +1214,9 @@ include("../functions/editfunctions.php");
 					if(mysql_query($func, $connection)){
 						
 						$timefunc = "INSERT INTO times_module_p(assoc_module, received) VALUES($id, \"$date\")";
+						echo $timefunc;
 						mysql_query($timefunc, $connection);
 					}
-					
 					ROCinfo($id);
 
 					for($j=1;$j<=16;$j++){

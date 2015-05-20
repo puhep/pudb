@@ -48,10 +48,10 @@ Scan Level: &nbsp;<input name="level" value="wafer" type="radio"> On Wafer
  <input name="level" value="fnal" type="radio"> Testing at FermiLab
 <br>
 <br>
-Breakdown Voltage: &nbsp;<textarea cols="10" rows="1" name="breakdown"></textarea>
+Breakdown Voltage: &nbsp;<textarea cols="10" rows="1" name="breakdown">0</textarea>
 <br>
 <br>
-Compliance Voltage: &nbsp;<textarea cols="10" rows="1" name="compliance"></textarea>
+Compliance Voltage: &nbsp;<textarea cols="10" rows="1" name="compliance">0</textarea>
 <br>
 <br>
 XML file:
@@ -73,7 +73,7 @@ Additional Notes <textarea cols="40" rows="5" name="notes"></textarea>
 
 conditionalSubmit(1);
 
-if(isset($_POST['submit']) &&  $_FILES['xml']['size'] > 0 && isset($_POST['level']) && isset($_POST['scan']) && isset($_POST['breakdown']) && isset($_POST['compliance'])){
+if(isset($_POST['submit']) &&  $_FILES['xml']['size'] > 0 && isset($_POST['level']) && isset($_POST['scan'])){
 	
 	$fp = fopen($_FILES['xml']['tmp_name'],'r');
 	$content = fread($fp,filesize($_FILES['xml']['tmp_name']));
