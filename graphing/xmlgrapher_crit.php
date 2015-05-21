@@ -460,17 +460,17 @@ if(!is_null($file3)){
 	}
 }
 
-if(!is_null($file1)){
+if(!is_null($file1) && $level=="wafer"){
 
 	$totmarked*=$markedA;
 }
 
-if(!is_null($file2)){
+if(!is_null($file2) && $level=="bare"){
 
 	$totmarked*=$markedB;
 }
 
-if(!is_null($file3)){
+if(!is_null($file3) && $level=="module"){
 
 	$totmarked*=$markedC;
 }

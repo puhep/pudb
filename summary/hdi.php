@@ -86,7 +86,7 @@
 
 ?>
 
-<form method="post" action="summarycomment.php">
+<form method="get" action="summarycomment.php">
 <?php
    echo "<input type='hidden' name='part' value='".$part."'>";
    echo "<input type='hidden' name='id' value='".$id."'>";
@@ -94,7 +94,7 @@
 <input type="submit" value="Add Comment to This Part">
 </form>
 
-<form method="post" action="summarypic.php">
+<form method="get" action="summarypic.php">
 <?php
    echo "<input type='hidden' name='part' value='".$part."'>";
    echo "<input type='hidden' name='id' value='".$id."'>";

@@ -6,7 +6,7 @@
   <title>New Picture Submission</title>
 </head>
 <body>
-<form action="summarypic.php" method="post" enctype="multipart/form-data">
+<form action="summarypic_proc.php" method="post" enctype="multipart/form-data">
 
 <?php
  #ini_set('display_errors', 'On');
@@ -14,17 +14,14 @@
 include('../functions/curfunctions.php');
 include('../functions/submitfunctions.php');
 
-if (isset($_POST['submit']) && $_FILES['pic']['size'] > 0){
+$part = $_GET['part'];
+$id = $_GET['id'];
 
-	addpic($_FILES['pic']['name'], $_FILES['pic']['tmp_name'], $_POST['part'], $_POST['id'], $_POST['notes']);
+echo "<input type='hidden' name='part' value='".$part."'>";
+echo "<input type='hidden' name='id' value='".$id."'>";
 
-}
-
-echo "<input type='hidden' name='part' value='".$_POST['part']."'>";
-
-echo "<input type='hidden' name='id' value='".$_POST['id']."'>";
-curname($_POST['part'], $_POST['id']);
-curpics($_POST['part'], $_POST['id']);
+curname($part, $id);
+curpics($part, $id);
 
 ?>
 
@@ -46,22 +43,22 @@ Additional Notes <textarea cols="40" rows="5" name="notes"></textarea><br>
 
 <form method="GET" action="
 <?php
-  if($_POST['part'] == "module_p"){
+  if($part == "module_p"){
   echo "bbm";}
-  if($_POST['part'] == "wafer_p"){
+  if($part == "wafer_p"){
   echo "wafer";}
-  if($_POST['part'] == "sensor_p"){
+  if($part == "sensor_p"){
   echo "sensor";}
-  if($_POST['part'] == "ROC_p"){
+  if($part == "ROC_p"){
   echo "roc";}
-  if($_POST['part'] == "HDI_p"){
+  if($part == "HDI_p"){
   echo "hdi";}
 
   echo ".php";
 ?>
 ">
 <?php
-  $dumped = dump($_POST['part'], $_POST['id']);
+  $dumped = dump($part, $id);
   echo "<input type='hidden' name='name' value='".$dumped['name']."'>";
 ?>
 <input type="submit" value="Back to Summary">

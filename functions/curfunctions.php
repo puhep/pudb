@@ -115,7 +115,10 @@ function curname($db, $id){
 	$output = mysql_query($func, $connection);
 	$array = mysql_fetch_assoc($output);
 	$name = $array['name'];
-	$name_hdi = $array['name_hdi'];
+	$name_hdi = NULL;
+	if($db == "module_p"){
+		$name_hdi = $array['name_hdi'];
+	}
 
 	if($name_hdi == NULL){
 		echo "<b>$name</b><br>";

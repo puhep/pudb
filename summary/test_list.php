@@ -1,3 +1,53 @@
+<?php
+include('../functions/popfunctions.php');
+include('../functions/curfunctions.php');
+include('../graphing/xmlgrapher_crit.php');
+
+	$param1 = "";
+	$param2 = "";
+	$param3 = "";
+	$param4 = "";
+	$param5 = "";
+	$param6 = "";
+	$param7 = "";
+	$param8 = "";
+	$param9 = "";
+	$param10 = "";
+	$param11 = "";
+	$param12 = "";
+	$param13 = "";
+	$param14 = "";
+	$param15 = "";
+	$param16 = "";
+	$param17 = "";
+	$param18 = "";
+
+#if($_POST){
+
+	$param1 = $_POST['param1'];
+	$param2 = $_POST['param2'];
+	$param3 = $_POST['param3'];
+	$param4 = $_POST['param4'];
+	$param5 = $_POST['param5'];
+	$param6 = $_POST['param6'];
+	$param7 = $_POST['param7'];
+	$param8 = $_POST['param8'];
+	$param9 = $_POST['param9'];
+	$param10 = $_POST['param10'];
+	$param11 = $_POST['param11'];
+	$param12 = $_POST['param12'];
+	$param13 = $_POST['param13'];
+	$param14 = $_POST['param14'];
+	$param15 = $_POST['param15'];
+	$param16 = $_POST['param16'];
+	$param17 = $_POST['param17'];
+	$param18 = $_POST['param18'];
+
+	#header("Location: ".$_SERVER['REQUEST_URI']);
+	#exit();
+#}
+
+?>
 <html>
 <head>
   <meta content="text/html; charset=ISO-8859-1"
@@ -10,16 +60,6 @@
 <input type="submit" value="MAIN MENU">
 </form>
 <br>
-<form name="searcher" action="../summary/searchredirect.php" method="post">
-Search: <input type="text" name="search">
-<?php 
-include('../functions/popfunctions.php');
-include('../functions/curfunctions.php');
-include('../graphing/xmlgrapher_crit.php');
-echo "<input type=\"hidden\" value=".$_POST['loc']." name=\"loc\">"; 
-?>
-<input type="submit" value="Search">
-</form>
 <br>
 <form name="filter" action="../summary/test_list.php" method="post">
 List Filters:
@@ -27,115 +67,109 @@ List Filters:
 Assembly Location:
 <select name="param1">
 <option value=""></option>
-<option value="Nebraska">Nebraska</option>
-<option value="Purdue">Purdue</option>
+<option value="Nebraska"<?php echo $param1 == 'Nebraska' ? 'selected="selected"' : ''; ?>>Nebraska</option>
+<option value="Purdue"<?php echo $param1 == 'Purdue' ? 'selected="selected"' : ''; ?>>Purdue</option>
 </select>
 <br>
 <br>
 
 Current Location:
 <select name="param8">
-<option value=""></option>
-<option value="CERN">CERN</option>
-<option value="Fermilab">Fermilab</option>
-<option value="Kansas">Kansas</option>
-<option value="Nebraska">Nebraska</option>
-<option value="Purdue">Purdue</option>
-<option value="UIC">UIC</option>
+<?php locpop("param8"); ?>
 </select>
 <br>
 <br>
 
 Grade:
 <select name="comp2">
-<?php comparepop(); ?>
+<?php comparepop("comp2"); ?>
 </select>
 <select name="param2">
 <option value=""></option>
-<option value="A">A</option>
-<option value="B">B</option>
-<option value="C">C</option>
-<option value="F">F</option>
+<option value="A"<?php echo $_POST['param2'] == 'A' ? 'selected="selected"' : ''; ?>>A</option>
+<option value="B"<?php echo $_POST['param2'] == 'B' ? 'selected="selected"' : ''; ?>>B</option>
+<option value="C"<?php echo $_POST['param2'] == 'C' ? 'selected="selected"' : ''; ?>>C</option>
+<option value="F"<?php echo $_POST['param2'] == 'F' ? 'selected="selected"' : ''; ?>>F</option>
 </select>
 <br>
 <br>
 
 # Bad ROCs:
 <select name="comp3">
-<?php comparepop(); ?>
+<?php comparepop("comp3"); ?>
 </select>
-<textarea name="param3" cols="10" rows="1"></textarea>
+<textarea name="param3" cols="10" rows="1"><?php echo $_POST['param3']; ?></textarea>
 <br>
 
 # Dead Pixels: 
 <select name="comp4">
-<?php comparepop(); ?>
+<?php comparepop("comp4"); ?>
 </select>
-<textarea name="param4" cols="10" rows="1"></textarea>
+<textarea name="param4" cols="10" rows="1"><?php echo $_POST['param4']; ?></textarea>
 <br>
 
 # Un-Maskable Pixels: 
 <select name="comp10">
-<?php comparepop(); ?>
+<?php comparepop("comp10"); ?>
 </select>
-<textarea name="param10" cols="10" rows="1"></textarea>
+<textarea name="param10" cols="10" rows="1"><?php echo $_POST['param10']; ?></textarea>
 <br>
 
 # Un-Addressable Pixels: 
 <select name="comp11">
-<?php comparepop(); ?>
+<?php comparepop("comp11"); ?>
 </select>
-<textarea name="param11" cols="10" rows="1"></textarea>
+<textarea name="param11" cols="10" rows="1"><?php echo $_POST['param11']; ?></textarea>
 <br>
 
 # Bad Bumps (Electrical): 
 <select name="comp5">
-<?php comparepop(); ?>
+<?php comparepop("comp5"); ?>
 </select>
-<textarea name="param5" cols="10" rows="1"></textarea>
+<textarea name="param5" cols="10" rows="1"><?php echo $_POST['param5']; ?></textarea>
 <br>
 
 # Bad Bumps (Reverse Bias): 
 <select name="comp6">
-<?php comparepop(); ?>
+<?php comparepop("comp6"); ?>
 </select>
-<textarea name="param6" cols="10" rows="1"></textarea>
+<textarea name="param6" cols="10" rows="1"><?php echo $_POST['param6']; ?></textarea>
 <br>
 
 # Bad Bumps (X-Ray): 
 <select name="comp7">
-<?php comparepop(); ?>
+<?php comparepop("comp7"); ?>
 </select>
-<textarea name="param7" cols="10" rows="1"></textarea>
+<textarea name="param7" cols="10" rows="1"><?php echo $_POST['param7']; ?></textarea>
 <br>
 
 X-Ray Slope: 
 <select name="comp12">
-<?php comparepop(); ?>
+<?php comparepop("comp12"); ?>
 </select>
-<textarea name="param12" cols="10" rows="1"></textarea>
+<textarea name="param12" cols="10" rows="1"><?php echo $_POST['param12']; ?></textarea>
 <br>
 
 X-Ray Offset: 
 <select name="comp13">
-<?php comparepop(); ?>
+<?php comparepop("comp13"); ?>
 </select>
-<textarea name="param13" cols="10" rows="1"></textarea>
+<textarea name="param13" cols="10" rows="1"><?php echo $_POST['param13']; ?></textarea>
 <br>
 
 <?php /* ?>
 IV Breakdown 
 <select name="comp14">
-<?php comparepop(); ?>
+<?php comparepop("comp14"); ?>
 </select>
-<textarea name="param14" cols="10" rows="1"></textarea>
+<textarea name="param14" cols="10" rows="1"><?php echo $_POST['param14']; ?></textarea>
 <br>
 
 IV Compliance
 <select name="comp15">
-<?php comparepop(); ?>
+<?php comparepop("comp15"); ?>
 </select>
-<textarea name="param15" cols="10" rows="1"></textarea>
+<textarea name="param15" cols="10" rows="1"><?php echo $_POST['param15']; ?></textarea>
 <br>
 <?php */ ?>
 
@@ -143,32 +177,29 @@ IV Compliance
 Timeable:
 <select name="param9">
 <option value=""></option>
-<option value="1">Yes</option>
-<option value="0">No</option>
+<option value="1"<?php echo $_POST['param9'] == '1' ? 'selected="selected"' : ''; ?>>Yes</option>
+<option value="0"<?php echo $_POST['param9'] == '0' ? 'selected="selected"' : ''; ?>>No</option>
 </select>
 <br>
 <br>
 
-I(V=150)<2uA: 
-<select name="param16">
+IV Scan Thresholds:
+<select name="comp18">
 <option value=""></option>
-<option value="1">Pass</option>
-<option value="0">Fail</option>
+<option value="1"<?php echo $_POST['comp18'] == '1' ? 'selected="selected"' : ''; ?>>Pass</option>
+<option value="0"<?php echo $_POST['comp18'] == '0' ? 'selected="selected"' : ''; ?>>Fail</option>
 </select>
-<br>
-<br>
-
-I(V=150)/I(V=100)<2: 
-<select name="param17">
+<select name="param18">
 <option value=""></option>
-<option value="1">Pass</option>
-<option value="0">Fail</option>
+<option value="0"<?php echo $_POST['param18'] == '0' ? 'selected="selected"' : ''; ?>>I(V=150)<2uA</option>
+<option value="1"<?php echo $_POST['param18'] == '1' ? 'selected="selected"' : ''; ?>>I(V=150)/I(V=100)<2</option>
+<option value="2"<?php echo $_POST['param18'] == '2' ? 'selected="selected"' : ''; ?>>Both</option>
+<option value="3"<?php echo $_POST['param18'] == '3' ? 'selected="selected"' : ''; ?>>Either</option>
 </select>
 <br>
 <br>
 
 <?php
-
 
 $pursel = "";
 $nebsel = "";
@@ -268,10 +299,14 @@ while($row1 = mysql_fetch_assoc($output1)){
 	#Testing Pass/Fail of IV test
 	$dumped = dump("module_p", $row1['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
-	if($_POST['param16'] === "1" && $crit%5 == 0){ continue;}
-	if($_POST['param16'] === "0" && $crit%5 > 0){ continue;}
-	if($_POST['param17'] === "1" && $crit%7 == 0){ continue;}
-	if($_POST['param17'] === "0" && $crit%7 > 0){ continue;}
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "0" && $crit%5 > 0){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "0" && $crit%5 == 0){ continue;}
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "1" && $crit%7 > 0){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "1" && $crit%7 == 0){ continue;}
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "2" && $crit%35 > 0){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "2" && $crit != 1){ continue;}
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "3" && $crit == 1){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "3" && $crit == 35){ continue;}
 
 	$dataarray[0][$i] = $row1['name'];
 	$dataarray[1][$i] = $row1['id'];
@@ -285,10 +320,15 @@ while($row2 = mysql_fetch_assoc($output2)){
 	#Testing Pass/Fail of IV test
 	$dumped = dump("module_p", $row2['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
-	if($_POST['param16'] === "1" && $crit%5 == 0){ continue;}
-	if($_POST['param16'] === "0" && $crit%5 > 0){ continue;}
-	if($_POST['param17'] === "1" && $crit%7 == 0){ continue;}
-	if($_POST['param17'] === "0" && $crit%7 > 0){ continue;}
+	
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "0" && $crit%5 > 0){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "0" && $crit%5 == 0){ continue;}
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "1" && $crit%7 > 0){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "1" && $crit%7 == 0){ continue;}
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "2" && $crit%35 > 0){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "2" && $crit != 1){ continue;}
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "3" && $crit == 1){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "3" && $crit == 35){ continue;}
 
 	$dataarray[2][$j] = $row2['name'];
 	$dataarray[3][$j] = $row2['id'];
@@ -304,10 +344,15 @@ while($row3 = mysql_fetch_assoc($output3)){
 	#Testing Pass/Fail of IV test
 	$dumped = dump("module_p", $row3['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
-	if($_POST['param16'] === "1" && $crit%5 == 0){ continue;}
-	if($_POST['param16'] === "0" && $crit%5 > 0){ continue;}
-	if($_POST['param17'] === "1" && $crit%7 == 0){ continue;}
-	if($_POST['param17'] === "0" && $crit%7 > 0){ continue;}
+	
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "0" && $crit%5 > 0){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "0" && $crit%5 == 0){ continue;}
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "1" && $crit%7 > 0){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "1" && $crit%7 == 0){ continue;}
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "2" && $crit%35 > 0){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "2" && $crit != 1){ continue;}
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "3" && $crit == 1){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "3" && $crit == 35){ continue;}
 
 	$dataarray[4][$j] = $row3['name'];
 	$dataarray[5][$j] = $row3['id'];
@@ -323,10 +368,15 @@ while($row4 = mysql_fetch_assoc($output4)){
 	#Testing Pass/Fail of IV test
 	$dumped = dump("module_p", $row4['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
-	if($_POST['param16'] === "1" && $crit%5 == 0){ continue;}
-	if($_POST['param16'] === "0" && $crit%5 > 0){ continue;}
-	if($_POST['param17'] === "1" && $crit%7 == 0){ continue;}
-	if($_POST['param17'] === "0" && $crit%7 > 0){ continue;}
+	
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "0" && $crit%5 > 0){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "0" && $crit%5 == 0){ continue;}
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "1" && $crit%7 > 0){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "1" && $crit%7 == 0){ continue;}
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "2" && $crit%35 > 0){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "2" && $crit != 1){ continue;}
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "3" && $crit == 1){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "3" && $crit == 35){ continue;}
 
 	$dataarray[6][$j] = $row4['name'];
 	$dataarray[7][$j] = $row4['id'];
@@ -342,10 +392,15 @@ while($row5 = mysql_fetch_assoc($output5)){
 	#Testing Pass/Fail of IV test
 	$dumped = dump("module_p", $row5['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
-	if($_POST['param16'] === "1" && $crit%5 == 0){ continue;}
-	if($_POST['param16'] === "0" && $crit%5 > 0){ continue;}
-	if($_POST['param17'] === "1" && $crit%7 == 0){ continue;}
-	if($_POST['param17'] === "0" && $crit%7 > 0){ continue;}
+	
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "0" && $crit%5 > 0){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "0" && $crit%5 == 0){ continue;}
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "1" && $crit%7 > 0){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "1" && $crit%7 == 0){ continue;}
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "2" && $crit%35 > 0){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "2" && $crit != 1){ continue;}
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "3" && $crit == 1){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "3" && $crit == 35){ continue;}
 
 	$dataarray[8][$j] = $row5['name'];
 	$dataarray[9][$j] = $row5['id'];
@@ -361,10 +416,15 @@ while($row6 = mysql_fetch_assoc($output6)){
 	#Testing Pass/Fail of IV test
 	$dumped = dump("module_p", $row6['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
-	if($_POST['param16'] === "1" && $crit%5 == 0){ continue;}
-	if($_POST['param16'] === "0" && $crit%5 > 0){ continue;}
-	if($_POST['param17'] === "1" && $crit%7 == 0){ continue;}
-	if($_POST['param17'] === "0" && $crit%7 > 0){ continue;}
+	
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "0" && $crit%5 > 0){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "0" && $crit%5 == 0){ continue;}
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "1" && $crit%7 > 0){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "1" && $crit%7 == 0){ continue;}
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "2" && $crit%35 > 0){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "2" && $crit != 1){ continue;}
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "3" && $crit == 1){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "3" && $crit == 35){ continue;}
 
 	$dataarray[10][$j] = $row6['name'];
 	$dataarray[11][$j] = $row6['id'];
@@ -380,10 +440,15 @@ while($row7 = mysql_fetch_assoc($output7)){
 	#Testing Pass/Fail of IV test
 	$dumped = dump("module_p", $row7['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
-	if($_POST['param16'] === "1" && $crit%5 == 0){ continue;}
-	if($_POST['param16'] === "0" && $crit%5 > 0){ continue;}
-	if($_POST['param17'] === "1" && $crit%7 == 0){ continue;}
-	if($_POST['param17'] === "0" && $crit%7 > 0){ continue;}
+	
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "0" && $crit%5 > 0){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "0" && $crit%5 == 0){ continue;}
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "1" && $crit%7 > 0){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "1" && $crit%7 == 0){ continue;}
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "2" && $crit%35 > 0){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "2" && $crit != 1){ continue;}
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "3" && $crit == 1){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "3" && $crit == 35){ continue;}
 
 	$dataarray[12][$j] = $row7['name'];
 	$dataarray[13][$j] = $row7['id'];
@@ -399,10 +464,15 @@ while($row8 = mysql_fetch_assoc($output8)){
 	#Testing Pass/Fail of IV test
 	$dumped = dump("module_p", $row8['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
-	if($_POST['param16'] === "1" && $crit%5 == 0){ continue;}
-	if($_POST['param16'] === "0" && $crit%5 > 0){ continue;}
-	if($_POST['param17'] === "1" && $crit%7 == 0){ continue;}
-	if($_POST['param17'] === "0" && $crit%7 > 0){ continue;}
+	
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "0" && $crit%5 > 0){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "0" && $crit%5 == 0){ continue;}
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "1" && $crit%7 > 0){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "1" && $crit%7 == 0){ continue;}
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "2" && $crit%35 > 0){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "2" && $crit != 1){ continue;}
+	if($_POST['comp18'] === "0" && $_POST['param18'] === "3" && $crit == 1){ continue;}
+	if($_POST['comp18'] === "1" && $_POST['param18'] === "3" && $crit == 35){ continue;}
 
 	$dataarray[14][$j] = $row8['name'];
 	$dataarray[15][$j] = $row8['id'];

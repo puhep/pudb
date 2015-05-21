@@ -1,3 +1,0 @@
-test of rsync
-this file made 7/18/2013
-should be synced 7/20/2013

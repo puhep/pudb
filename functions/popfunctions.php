@@ -1,23 +1,60 @@
 <?php
 
-function comparepop(){
+function comparepop($formname){
 	
-	echo "<option value=\"=\">=</option>\n";
-	echo "<option value=\">\">></option>\n";
-	echo "<option value=\"<\"><</option>\n";
-	echo "<option value=\">=\">>=</option>\n";
-	echo "<option value=\"<=\"><=</option>\n";
-	echo "<option value=\"!=\">!=</option>\n";
+	echo "<option value=\"=\"";
+	if($_POST[$formname] == "="){ echo 'selected="selected"';}
+	echo ">=</option>\n";
+	
+	echo "<option value=\">\"";
+	if($_POST[$formname] == ">"){ echo 'selected="selected"';}
+	echo ">></option>\n";
+	
+	echo "<option value=\"<\"";
+	if($_POST[$formname] == "<"){ echo 'selected="selected"';}
+	echo "><</option>\n";
+	
+	echo "<option value=\">=\"";
+	if($_POST[$formname] == ">="){ echo 'selected="selected"';}
+	echo ">>=</option>\n";
+	
+	echo "<option value=\"<=\"";
+	if($_POST[$formname] == "<="){ echo 'selected="selected"';}
+	echo "><=</option>\n";
+	
+	echo "<option value=\"!=\"";
+	if($_POST[$formname] == "!="){ echo 'selected="selected"';}
+	echo ">!=</option>\n";
 }
 
-function locpop(){
+function locpop($formname){
 	
-	echo "<option value=\"CERN\">CERN</option>\n";
-	echo "<option value=\"Fermilab\">Fermilab</option>\n";
-	echo "<option value=\"Kansas\">Kansas</option>\n";
-	echo "<option value=\"Nebraska\">Nebraska</option>\n";
-	echo "<option value=\"Purdue\">Purdue</option>\n";
-	echo "<option value=\"UIC\">UIC</option>\n";
+	echo "<option value=\"\"";
+	echo "></option>\n";
+	
+	echo "<option value=\"Fermilab\"";
+	echo "<option value=\"CERN\"";
+	if($_POST[$formname] == "CERN"){ echo 'selected="selected"';}
+	echo ">CERN</option>\n";
+	
+	if($_POST[$formname] == "Fermilab"){ echo 'selected="selected"';}
+	echo ">Fermilab</option>\n";
+	
+	echo "<option value=\"Kansas\"";
+	if($_POST[$formname] == "Kansas"){ echo 'selected="selected"';}
+	echo ">Kansas</option>\n";
+	
+	echo "<option value=\"Nebraska\"";
+	if($_POST[$formname] == "Nebraska"){ echo 'selected="selected"';}
+	echo ">Nebraska</option>\n";
+	
+	echo "<option value=\"Purdue\"";
+	if($_POST[$formname] == "Purdue"){ echo 'selected="selected"';}
+	echo ">Purdue</option>\n";
+	
+	echo "<option value=\"UIC\"";
+	if($_POST[$formname] == "UIC"){ echo 'selected="selected"';}
+	echo ">UIC</option>\n";
 }
 
 function waferpop(){
