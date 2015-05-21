@@ -45,7 +45,7 @@ function curpics($type, $id){
 		
 		echo "<td>";
 		
-		echo "<form method=\"post\" action=\"../summary/piccomedit.php\">";
+		echo "<form method=\"get\" action=\"../summary/piccomedit.php\">";
 		echo "<input type='hidden' name='file' value='".$txt."'>";
 		echo "<input type='hidden' name='id' value='".$id."'>";
 		echo "<input type='hidden' name='part' value='".$type."'>";
