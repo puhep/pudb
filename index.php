@@ -9,6 +9,10 @@
 <h>
 Purdue University CMS FPix Upgrade Production Database
 </h>
+<br>
+<h>
+<font color="red"> This database will be unavailable from 6PM EST Friday June 5 to 10AM EST Monday June 8 due to building maintenance.</font>
+</h>
 <div style="position:fixed;left:420px;top:2px;">
 <form method="link" action="login.php?prev=index.php">
 <input type="submit" value="LOG IN">

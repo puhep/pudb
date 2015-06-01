@@ -58,7 +58,10 @@ if(isset($_POST['submit']) && ((isset($_POST['box']) && $_POST['who'] != "") || 
 	$funcassembly = "UPDATE module_p SET assembly=$assembly WHERE id=$id";
 	$funcship = "UPDATE module_p SET shipped=\"".$_POST['date']."\", destination=\"".$_POST['dest']."\" WHERE id=$id";
 	mysql_query($funcassembly, $connection);
-	mysql_query($funcship, $connection);
+	
+	if(isset($_POST['shipbox'])){
+		mysql_query($funcship, $connection);
+	}
 	
 	if($assembly==5){
 		$hdi = $_POST['hdi'];
