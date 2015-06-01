@@ -42,6 +42,10 @@ Data Viewing
   <input value="Tested Modules List"
  type="submit"></form>
 
+<form action="summary/recently_updated.php" method="get">
+  <input value="Recently Updated Modules"
+ type="submit"></form>
+
 <form action="summary/time.php" method="get">
   <input value="Assembly Over Time"
  type="submit"></form>

@@ -1,3 +1,24 @@
+<?php
+include('../functions/submitfunctions.php');
+
+if(isset($_POST['submit']) && isset($_POST['panel']) && isset($_POST['pos']) && isset($_POST['arrival'])){
+ 
+
+ $HDI_id = $_POST['batchdate']."-".$_POST['panel']."-".$_POST['pos'];
+ 
+ $gets = "?submitted=".$HDI_id;
+
+ hdiinfo($HDI_id,$_POST['notes'],$_POST['arrival'],$_POST['loc']);
+header("Location: HDIsubmit.php".$gets);
+exit();
+}
+elseif(isset($_POST['submit'])){
+ $gets = "?submitted=x";
+ echo "Not all forms were filled, please retry.";
+header("Location: HDIsubmit.php".$gets);
+exit();
+}
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
@@ -43,19 +64,18 @@ Additional Notes <textarea cols="40" rows="5" name="notes"></textarea><br>
 <br>
 
 <?php
-include('../functions/submitfunctions.php');
+
+if(isset($_GET['submitted'])){
+	if($_GET['submitted'] == "x"){
+		echo "Not all forms were filled, please retry";
+	}
+	else{
+		echo "HDI ".$_GET['submitted']." has been added to the database.<br>";
+	}
+}
 
 conditionalSubmit(1);
 
-if(isset($_POST['submit']) && isset($_POST['panel']) && isset($_POST['pos']) && isset($_POST['arrival'])){
- 
- $HDI_id = $_POST['batchdate']."-".$_POST['panel']."-".$_POST['pos'];
-
- hdiinfo($HDI_id,$_POST['notes'],$_POST['arrival'],$_POST['loc']);
-}
-elseif(isset($_POST['submit'])){
- echo "Not all forms were filled, please retry.";
-}
 ?>
 </form>
 

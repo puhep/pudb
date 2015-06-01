@@ -32,11 +32,11 @@ function locpop($formname){
 	echo "<option value=\"\"";
 	echo "></option>\n";
 	
-	echo "<option value=\"Fermilab\"";
 	echo "<option value=\"CERN\"";
 	if($_POST[$formname] == "CERN"){ echo 'selected="selected"';}
 	echo ">CERN</option>\n";
 	
+	echo "<option value=\"Fermilab\"";
 	if($_POST[$formname] == "Fermilab"){ echo 'selected="selected"';}
 	echo ">Fermilab</option>\n";
 	
