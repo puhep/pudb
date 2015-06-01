@@ -157,4 +157,16 @@ function flipROCs($id){
 	}
 }
 
+function lastUpdate($db, $id, $who, $what, $comments){
+	include('../../../Submission_p_secure_pages/connect.php');
+
+	$update = $what." by ".$who;
+
+	mysql_query('USE cmsfpix_u', $connection);
+
+	$func = "UPDATE ".$db." SET last_update=\"".$what."\", last_user=\"".$who."\", last_comment=\"".$comments."\" WHERE id=".$id;
+	
+	mysql_query($func, $connection);
+}
+
 ?>

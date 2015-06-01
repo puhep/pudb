@@ -5,7 +5,7 @@
   <title>Module Assembly Flow</title>
 </head>
 <body>
-<form method="post" enctype="multipart/form-data">
+<form action="bbm_proc.php" method="post" enctype="multipart/form-data">
 <?php
 
 ini_set('display_error', 'On');
@@ -22,7 +22,7 @@ mysql_query('USE cmsfpix_u', $connection);
 
 $name = $_GET['name'];
 $id = findid("module_p", $name);
-echo "<input type='hidden' name='id' value='".$_GET['id']."'>";
+echo "<input type='hidden' name='name' value='".$name."'>";
 
 $search = "SELECT name, assembly, destination FROM module_p WHERE id=$id";
 $table = mysql_query($search, $connection);
@@ -32,58 +32,6 @@ curname("module_p", $id);
 
 
 $steparray = array("Received", "Inspected", "IV Tested", "Ready for HDI Assembly", "HDI Attached", "Wirebonded", "Encapsulated", "Tested", "Thermally Cycled", "Tested", "Ready for Shipping", "Shipped");
-
-if(isset($_POST['submit']) && ((isset($_POST['box']) && $_POST['who'] != "") || (isset($_POST['shipbox']) && $_POST['who_ship'] != "")) && (!is_null($_POST['hdi']) || $assembly!=4)){
-	
-	if(isset($_POST['shipbox'])){
-		$assembly = 11;
-	}
-	
-	if(isset($_POST['shipbox'])){
-	$submittedstep = $steparray[$assembly]." by ".$_POST['who_ship']." to ".$_POST['dest'];
-	}
-	else{
-	$submittedstep = $steparray[$assembly]." by ".$_POST['who'];
-	}
-	$assembly++;
-	
-	milestone("module_p", $id, $assembly);
-
-
-	if(isset($_POST['shipbox'])){
-		if($_POST['notes_ship']!=""){
-			$submittednotes = $_POST['notes_ship'];
-		}
-	}
-	else{
-		if($_POST['notes']!=""){
-			$submittednotes = $_POST['notes'];
-		}
-	}
-	addcomment("module_p", $id, $submittedstep);
-	addcomment("module_p", $id, $submittednotes);
-	$funcassembly = "UPDATE module_p SET assembly=$assembly WHERE id=$id";
-	$funcship = "UPDATE module_p SET shipped=\"".$_POST['date']."\", destination=\"".$_POST['dest']."\" WHERE id=$id";
-	mysql_query($funcassembly, $connection);
-	mysql_query($funcship, $connection);
-	
-	if($assembly==5){
-		$hdi = $_POST['hdi'];
-		$newname = "M".substr($row['name'], 2);
-		$funchdi = "UPDATE HDI_p SET module=$id WHERE id=$hdi";
-		$funchdi2 = "UPDATE HDI_p SET assembly=3 WHERE id=$hdi";
-		$funcmod = "UPDATE module_p SET assoc_HDI=$hdi WHERE id=$id";
-		$funcmod2 = "UPDATE module_p SET name=\"$newname\" WHERE id=$id";
-		mysql_query($funchdi, $connection);
-		mysql_query($funchdi2, $connection);
-		mysql_query($funcmod, $connection);
-		mysql_query($funcmod2, $connection);
-
-		generateHDImodulename($id);
-
-		milestone("HDI_p", $hdi, 3);
-	}
-}
 
 $checker = " CHECKED ";
 

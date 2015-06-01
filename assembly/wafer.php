@@ -5,7 +5,7 @@
   <title>Wafer Assembly Flow</title>
 </head>
 <body>
-<form method="post" enctype="multipart/form-data">
+<form action="wafer_proc.php" method="post" enctype="multipart/form-data">
 <?php
 
 ini_set('display_error', 'On');
@@ -21,7 +21,7 @@ mysql_query('USE cmsfpix_u', $connection);
 
 $name = $_GET['name'];
 $id = findid("wafer_p", $name);
-echo "<input type='hidden' name='id' value='".$_GET['id']."'>";
+echo "<input type='hidden' name='name' value='".$name."'>";
 
 $search = "SELECT assembly,name FROM wafer_p WHERE id=$id";
 $table = mysql_query($search, $connection);
@@ -31,36 +31,6 @@ $assembly = $row['assembly'];
 curname("wafer_p", $id);
 
 $steparray = array("Inspected", "Tested", "Promoted", "Ready for Shipping", "Shipped");
-
-
-if(isset($_POST['submit']) && isset($_POST['box']) && $_POST['who'] != ""){
-	$submittedstep = $steparray[$assembly]." by ".$_POST['who'];
-	if($_POST['notes']!=""){
-		$submittednotes =$_POST['notes'];
-	}
-
-	addcomment("wafer_p", $id, $submittedstep);
-	addcomment("wafer_p", $id, $submittednotes);
-
-
-	$assembly++;
-	$funcassembly = "UPDATE wafer_p SET assembly=$assembly WHERE id=$id";
-	mysql_query($funcassembly, $connection);
-
-	milestone("wafer_p", $id, $assembly); 
-	
-	if($assembly == 3){
-		if(!empty($_POST[sens])){
-			foreach($_POST[sens] as $promotedid){
-				sensorSetPromote($promotedid);
-			}
-		}
-
-	}
-	if($assembly == 5){
-		promoteSensors($id);
-	}
-}
 
 $checker = " CHECKED ";
 $rework = "";

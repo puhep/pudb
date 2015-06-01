@@ -5,7 +5,7 @@
   <title>HDI Assembly Flow</title>
 </head>
 <body>
-<form method="post" enctype="multipart/form-data">
+<form action="hdi_proc.php" method="post" enctype="multipart/form-data">
 <?php
 
 ini_set('display_error', 'On');
@@ -20,7 +20,7 @@ mysql_query('USE cmsfpix_u', $connection);
 
 $name = $_GET['name'];
 $id = findid("HDI_p", $name);
-echo "<input type='hidden' name='id' value='".$_GET['id']."'>";
+echo "<input type='hidden' name='name' value='".$name."'>";
 
 $search = "SELECT assembly FROM HDI_p WHERE id=$id";
 $table = mysql_query($search, $connection);
@@ -29,27 +29,7 @@ $assembly = $row['assembly'];
 
 curname("HDI_p", $id);
 
-
 $steparray = array("Inspected", "Ready for Assembly", "On Module");
-
-
-if(isset($_POST['submit']) && isset($_POST['box']) && $_POST['who'] != ""){
-	$submittedstep = $steparray[$assembly]." by ".$_POST['who'];
-	if($_POST['notes']!=""){
-		$submittednotes = $_POST['notes'];
-	}
-	addcomment("HDI_p", $id, $submittedstep);
-	addcomment("HDI_p", $id, $submittednotes);
-	$assembly++;
-
-	milestone("HDI_p",$id,$assembly);
-
-	if($_POST['box'] == "reject"){
-		$assembly = 4;
-	}
-	$funcassembly = "UPDATE HDI_p SET assembly=$assembly WHERE id=$id";
-	mysql_query($funcassembly, $connection);
-}
 
 $checker = " CHECKED ";
 $rework = "";

@@ -15,7 +15,7 @@ include('../../../Submission_p_secure_pages/connect.php');
 include('../functions/curfunctions.php');
 
 
-$func = "SELECT name, id, time_created from module_p ORDER BY time_created DESC";
+$func = "SELECT name, id, time_created, last_user, last_update, last_comment from module_p ORDER BY time_created DESC";
 $i=0;
 $j=0;
 $dataarray;
@@ -27,6 +27,9 @@ while($row = mysql_fetch_assoc($output)){
 	$dataarray[0][$i] = $row['name'];
 	$dataarray[1][$i] = $row['id'];
 	$dataarray[2][$i] = $row['time_created'];
+	$dataarray[3][$i] = $row['last_user'];
+	$dataarray[4][$i] = $row['last_update'];
+	$dataarray[5][$i] = $row['last_comment'];
 	$i++;
 }
 
@@ -34,7 +37,6 @@ echo "<br>";
 
 echo "Recently Updated Modules:";
 
-#echo "<table cellspacing=60 border=0>";
 echo "<table cellspacing=20 border=0>";
 	echo "<tr>";
 
@@ -44,6 +46,18 @@ echo "<table cellspacing=20 border=0>";
 
 	echo "<td>";
 	echo "Last Updated";
+	echo "</td>";
+
+	echo "<td>";
+	echo "User";
+	echo "</td>";
+
+	echo "<td>";
+	echo "Update";
+	echo "</td>";
+
+	echo "<td>";
+	echo "Comments";
 	echo "</td>";
 
 	echo "</tr>";
@@ -59,6 +73,18 @@ echo "<table cellspacing=20 border=0>";
 
 			echo "<td>";
 			echo $dataarray[2][$k];
+			echo "</td>";
+
+			echo "<td>";
+			echo $dataarray[3][$k];
+			echo "</td>";
+
+			echo "<td>";
+			echo $dataarray[4][$k];
+			echo "</td>";
+
+			echo "<td>";
+			echo $dataarray[5][$k];
 			echo "</td>";
 
 			echo "</tr>";
