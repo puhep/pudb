@@ -21,8 +21,8 @@ include('../graphing/xmlgrapher_crit.php');
 	$param16 = "";
 	$param17 = "";
 	$param18 = "";
+	$param19 = "";
 
-#if($_POST){
 
 	$param1 = $_POST['param1'];
 	$param2 = $_POST['param2'];
@@ -42,10 +42,8 @@ include('../graphing/xmlgrapher_crit.php');
 	$param16 = $_POST['param16'];
 	$param17 = $_POST['param17'];
 	$param18 = $_POST['param18'];
+	$param18 = $_POST['param19'];
 
-	#header("Location: ".$_SERVER['REQUEST_URI']);
-	#exit();
-#}
 
 ?>
 <html>
@@ -62,8 +60,14 @@ include('../graphing/xmlgrapher_crit.php');
 <br>
 <br>
 <form name="filter" action="../summary/test_list.php" method="post">
-List Filters:
+Filters:
 <br>
+
+Name Includes:
+<textarea name="param19" cols="10" rows="1"><?php echo $_POST['param19']; ?></textarea>
+<br>
+<br>
+
 Assembly Location:
 <select name="param1">
 <option value=""></option>
@@ -263,8 +267,11 @@ if($_POST['param14'] != ""){
 if($_POST['param15'] != ""){
 	$compliancelimit = $_POST['param15'];
 }
+if($_POST['param19'] != ""){
+	$sortmod19 = "AND (name LIKE \"%".$_POST['param19']."%\" OR name_hdi LIKE \"%".$_POST['param19']."%\")";
+}
 
-$sorter = $sortmod1.$sortmod2.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13;
+$sorter = $sortmod1.$sortmod2.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19;
 
 ?>
 <input type="submit" value="Apply">

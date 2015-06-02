@@ -41,11 +41,6 @@ if(isset($_POST['submit']) && $_POST['newloc']!=""){
 	changeloc($id, $_POST['newloc']);
 
 	$newlocnote = "Module moved to ".$_POST['newloc'];
-	addcomment("module_p", $id, $newlocnote);
-
-	if($_POST['notes'] !=""){
-		addcomment("module_p", $id, $_POST['notes']);
-	}
 	echo $newlocnote;
 
 }

@@ -83,9 +83,11 @@ conditionalSubmit(1);
 if(isset($_POST['submit']) && isset($_POST['modules']) && isset($_POST['QC']) && isset($_POST['arrival'])){
 
 	include('../../../Submission_p_secure_pages/connect.php');
+	include('../functions/editfunctions.php');
 
 	$sqlarrival = mysql_real_escape_string($_POST['arrival']);
 	$sqlnotes = mysql_real_escape_string($_POST['notes']);
+	$notes = mysql_real_escape_string($_POST['notes']);
 
 
 	mysql_query('USE cmsfpix_u', $connection);
@@ -98,8 +100,6 @@ if(isset($_POST['submit']) && isset($_POST['modules']) && isset($_POST['QC']) &&
 	}
 
 	$date = date('Y-m-d H:i:s');
-
-	$notes="";
 
 	if($sqlnotes != ""){
 		$sqlnotes = $date."  ".$sqlnotes."\n";
@@ -117,6 +117,8 @@ if(isset($_POST['submit']) && isset($_POST['modules']) && isset($_POST['QC']) &&
 
 		$timefunc = "INSERT INTO times_module_p(assoc_module, received) VALUES($id, \"$date\")";
 		mysql_query($timefunc, $connection);
+
+		lastUpdate("module_p", $id, "User", "Received", $notes);
 
 		echo "<br>";
 		echo "The module was successfully added to the database";

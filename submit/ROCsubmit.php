@@ -11,6 +11,7 @@ include('../../../Submission_p_secure_pages/connect.php');
 include('../functions/submitfunctions.php');
 include('../functions/popfunctions.php');
 include('../functions/curfunctions.php');
+include('../functions/editfunctions.php');
 if(!isset($_POST['modules'])){
 ?>
 Available Modules
@@ -159,6 +160,8 @@ if(isset($_POST['submit']) && isset($_POST['ROC0'])){
 
 	$func3 = "UPDATE module_p SET has_ROC=\"1\" WHERE id=".$_POST['modules'];
 	mysql_query($func3, $connection);
+
+	lastUpdate("module_p", $_POST['modules'], "User", "Added ROCs", "");
 }
 
 ?>

@@ -28,6 +28,10 @@ function addcomment($db, $id, $new){
 	if(!mysql_query($func2, $connection)){
 		echo "An error has occurred and the comment has not been added";
 	}
+
+	if($db == "module_p"){
+		lastUpdate($db, $id, "User", "Comment", $new);
+	}
 }
 
 function connecttbm($hdi, $tbm){
@@ -43,7 +47,7 @@ function connecttbm($hdi, $tbm){
 	mysql_query($hdifunc, $connection);
 }
 
-function changeloc($id, $newloc){
+function changeloc($id, $newloc, $notes){
 	include('../../../Submission_p_secure_pages/connect.php');
 	
 	mysql_query('USE cmsfpix_u', $connection);
@@ -51,6 +55,15 @@ function changeloc($id, $newloc){
 	$func = "UPDATE module_p SET destination=\"$newloc\" WHERE id=$id";
 	
 	mysql_query($func, $connection);
+
+	$newlocnote = "Module moved to ".$newloc;
+	addcomment("module_p", $id, $newlocnote);
+
+	if($notes != ""){
+		addcomment("module_p", $id, $notes);
+	}
+
+	lastUpdate("module_p", $id, "User", "Location Changed to ".$newloc, $notes);
 
 }
 
@@ -127,6 +140,9 @@ function spinROCs($id){
 			break;
 		}
 	}
+
+	lastUpdate("module_p", $id, "User", "ROCs spun", "");
+
 }
 
 ####Transpose 0 and 15; 8 and 7 ####
@@ -155,6 +171,9 @@ function flipROCs($id){
 			break;
 		}
 	}
+
+	lastUpdate("module_p", $id, "User", "ROCs flipped", "");
+
 }
 
 function lastUpdate($db, $id, $who, $what, $comments){

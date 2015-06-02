@@ -75,6 +75,7 @@ include('../../../Submission_p_secure_pages/connect.php');
 function measurement($id, $parttype, $scan, $notes, $file, $size, $name, $breakdown, $compliance){
 include('../../../Submission_p_secure_pages/connect.php');
 include('../functions/curfunctions.php');
+include('../functions/editfunctions.php');
 include('../graphing/xmlgrapher_writer.php');
 
 	$sqlnotes = mysql_real_escape_string($notes);
@@ -244,6 +245,7 @@ include("../functions/curfunctions.php");
 				
 					$k++;
 					}
+					lastUpdate("module_p", $id, "User", "Updated Fulltest Values", "");
 				$i++;
 				}
 
@@ -451,6 +453,7 @@ include("../functions/curfunctions.php");
 
 					echo "Changes Submitted for ".$name."<br>";
 					
+					lastUpdate("module_p", $id, "User", "Updated Fulltest Values", "");
 					$i++;
 				}
 			}
@@ -463,6 +466,7 @@ include("../functions/curfunctions.php");
 function bigbatch($zip, $name, $size, $notes){
 include("../../../Submission_p_secure_pages/connect.php");
 include("../functions/curfunctions.php");
+include("../functions/editfunctions.php");
 
 	ini_set('display_error', 'On');
 	error_reporting(E_ALL | E_STRICT);
@@ -522,6 +526,7 @@ include("../functions/curfunctions.php");
 						echo "ROC ".$pos." on ".$name." has been updated";
 					$k++;
 					}
+					lastUpdate("module_p", $id, "User", "Updated Fulltest Values", "");
 				$i++;
 				}
 
@@ -529,7 +534,6 @@ include("../functions/curfunctions.php");
 				while($doc->TEST[$i]->NAME != ""){
 
 					$name = $doc->TEST[$i]->NAME;
-					echo $name;
 					$id = findid("module_p", $name);
 
 					########DEAD ROCS##########
@@ -726,6 +730,7 @@ include("../functions/curfunctions.php");
 
 					#####################
 
+					lastUpdate("module_p", $id, "User", "Updated Fulltest Values", "");
 					
 					$i++;
 				}
@@ -780,6 +785,7 @@ include("../functions/curfunctions.php");
 	
 					measurement($id, $level, $type, $notes, $content, filesize($dir.$file), $file, $breakdown, $compliance);
 
+					lastUpdate("module_p", $modid, "User", "Fulltest IV/CV scan", $notes);
 					$i++;
 				}
 				##########################
@@ -890,6 +896,7 @@ include('../../../Submission_p_secure_pages/connect.php');
 }
 
 ### Submits a new module to the database
+### Depreciated
 function moduleinfo($sensor){
 include('../../../Submission_p_secure_pages/connect.php');
 include('../functions/curfunctions.php');
@@ -1067,6 +1074,7 @@ function milestone($db, $id, $assembly){
 }
 
 function addpic($filename, $tmploc, $part, $id, $notes){
+	include('../functions/editfunctions.php');
 
 	$cwd = getcwd();
 	$dir = "/project/cmsfpix/.www/Submission_p";
@@ -1089,6 +1097,10 @@ function addpic($filename, $tmploc, $part, $id, $notes){
 
 	fwrite($fp, $date.$notes."\n");
 	fclose($fp);
+
+	if($part == "module_p"){
+		lastUpdate($part, $id, "User", "New Picture", $notes);
+	}
 }
 
 function batchpic($zipfile, $name, $part, $id){
@@ -1126,6 +1138,7 @@ function batchpic($zipfile, $name, $part, $id){
 }
 
 function addconfig($filename, $tmploc, $part, $id){
+include("../functions/editfunctions.php");
 
 	$dir = "/project/cmsfpix/.www/Submission_p/module_config_files/";
 	
@@ -1140,6 +1153,9 @@ function addconfig($filename, $tmploc, $part, $id){
 	chmod($dir.$id."/".$filename, 0777);
 	
 	echo "Config file for ".$part." added to the database.<br>";
+
+	lastUpdate("module_p", $id, "User", "Config File Added", "");
+
 }
 
 function batchroc($xml, $name, $size, $location){
@@ -1235,6 +1251,9 @@ include("../functions/editfunctions.php");
 					echo "Module ".$name." added to the database";		
 					echo "<br>";
 					$i++;
+					
+					lastUpdate("module_p", $id, "User", "Batch Module Submit", "");
+
 				}
 
 			}	
