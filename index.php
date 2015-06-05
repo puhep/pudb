@@ -95,10 +95,6 @@ New Parts Information
   <input name="id" value="2" type="hidden">
   </form>
 
-<form action="submit/morewebsubmit.php" method="get">
-  <input value="MoReWeb Data Submit" type="submit">
-  </form>
-
 <br>
 
 Testing Data

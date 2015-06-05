@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<form action='batchallsubmit.php' method='post' enctype='multipart/form-data'>
+<form action='batchallsubmit_proc.php' method='post' enctype='multipart/form-data'>
 <?php
 include('../functions/submitfunctions.php');
 include('../functions/popfunctions.php');
@@ -27,11 +27,6 @@ include('../functions/curfunctions.php');
 conditionalSubmit(0);
 echo "<br>";
 
-if(isset($_POST['submit']) &&  $_FILES['zip']['size'] > 0){
-
-	bigbatch($_FILES['zip']['tmp_name'],$_FILES['zip']['name'],$_FILES['zip']['size']);
-
-}
 ?>
 </form>
 

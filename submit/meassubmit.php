@@ -6,13 +6,13 @@
   <title>Measurement Submission</title>
 </head>
 <body>
-<form action='meassubmit.php' method='post' enctype='multipart/form-data'>
 <?php
 include('../functions/submitfunctions.php');
 include('../functions/popfunctions.php');
 include('../functions/curfunctions.php');
-if(!isset($_POST['wafers'])){
+if(!isset($_GET['wafers'])){
 ?>
+<form action='meassubmit.php' method='get' enctype='multipart/form-data'>
 Available Wafers
 <select name="wafers">
 <?php
@@ -24,11 +24,12 @@ waferpop();
 }
 else{
 ?>
+<form action='meassubmit_proc.php' method='post' enctype='multipart/form-data'>
 
 Available Sensors
 <select name="sensors">
 <?php
-sensorpop($_POST['wafers']);
+sensorpop($_GET['wafers']);
 ?>
 </select>
 
@@ -57,7 +58,7 @@ Compliance Voltage: &nbsp;<textarea cols="10" rows="1" name="compliance">0</text
 XML file:
 <input name="xml" type="file">
 <?php
-echo "<input type='hidden' name='wafers' value='".$_POST['wafers']."'>";
+echo "<input type='hidden' name='wafers' value='".$_GET['wafers']."'>";
 ?>
 <br>
 <br>
@@ -70,21 +71,7 @@ Additional Notes <textarea cols="40" rows="5" name="notes"></textarea>
 <br>
 
 <?php
-
 conditionalSubmit(1);
-
-if(isset($_POST['submit']) &&  $_FILES['xml']['size'] > 0 && isset($_POST['level']) && isset($_POST['scan'])){
-	
-	$fp = fopen($_FILES['xml']['tmp_name'],'r');
-	$content = fread($fp,filesize($_FILES['xml']['tmp_name']));
-	$content = addslashes($content);
-	fclose($fp);
- 
-	measurement($_POST['sensors'],$_POST['level'],$_POST['scan'],$_POST['notes'],$content,$_FILES['xml']['size'], $_FILES['xml']['name'], $_POST['breakdown'], $_POST['compliance']);
-}
-	if($_POST['level'] == "wafer"){
-		isTestedWaferUpdate($_POST['wafers']);
-	}
 ?>
 </form>
 

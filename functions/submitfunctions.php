@@ -71,6 +71,40 @@ include('../../../Submission_p_secure_pages/connect.php');
 
 }
 
+function wafersensorinfo($wafname, $rec, $notes){
+	include('../functions/curfunctions.php');
+
+	waferinfo($wafname, $rec, $notes);
+
+	$wafid = findid("wafer_p", $wafname);
+
+	sensorinfo("WL_TT_".$wafname, "2x8 automatically added to the database",$wafid);
+	sensorinfo("WL_FL_".$wafname, "2x8 automatically added to the database",$wafid);
+	sensorinfo("WL_LL_".$wafname, "2x8 automatically added to the database",$wafid);
+	sensorinfo("WL_CL_".$wafname, "2x8 automatically added to the database",$wafid);
+	sensorinfo("WL_CR_".$wafname, "2x8 automatically added to the database",$wafid);
+	sensorinfo("WL_RR_".$wafname, "2x8 automatically added to the database",$wafid);
+	sensorinfo("WL_FR_".$wafname, "2x8 automatically added to the database",$wafid);
+	sensorinfo("WL_BB_".$wafname, "2x8 automatically added to the database",$wafid);
+	sensorinfo("WS_TR_".$wafname, "1x1 automatically added to the database",$wafid);
+	sensorinfo("WS_CR_".$wafname, "1x1 automatically added to the database",$wafid);
+	sensorinfo("WS_BR_".$wafname, "1x1 automatically added to the database",$wafid);
+	sensorinfo("WS_TL_".$wafname, "1x1 automatically added to the database",$wafid);
+	sensorinfo("WS_CL_".$wafname, "1x1 automatically added to the database",$wafid);
+	sensorinfo("WS_BL_".$wafname, "1x1 automatically added to the database",$wafid);
+	sensorinfo("WA_TL_".$wafname, "Slim-edge 1x1 automatically added to the database",$wafid);
+	sensorinfo("WA_BL_".$wafname, "Slim-edge 1x1 automatically added to the database",$wafid);
+	sensorinfo("WA_TR_".$wafname, "Slim-edge 1x1 automatically added to the database",$wafid);
+	sensorinfo("WA_BR_".$wafname, "Slim-edge 1x1 automatically added to the database",$wafid);
+	
+	#sensorinfo("WD_TL_".$wafname, "Diode automatically added to the database",$wafid);
+	#sensorinfo("WD_BL_".$wafname, "Diode automatically added to the database",$wafid);
+	#sensorinfo("WD_TR_".$wafname, "Diode automatically added to the database",$wafid);
+	#sensorinfo("WD_BR_".$wafname, "Diode automatically added to the database",$wafid);
+
+
+}
+
 ### Submits a new IV or CV scan to the database
 function measurement($id, $parttype, $scan, $notes, $file, $size, $name, $breakdown, $compliance){
 include('../../../Submission_p_secure_pages/connect.php');
@@ -896,10 +930,10 @@ include('../../../Submission_p_secure_pages/connect.php');
 }
 
 ### Submits a new module to the database
-### Depreciated
 function moduleinfo($sensor){
 include('../../../Submission_p_secure_pages/connect.php');
 include('../functions/curfunctions.php');
+include('../functions/editfunctions.php');
 
 	mysql_query('USE cmsfpix_u' , $connection);
 	
@@ -919,6 +953,8 @@ include('../functions/curfunctions.php');
 		$func2 = "UPDATE sensor_p SET module=\"$modid\" WHERE id=\"$sensorid\"";
 		mysql_query($func2, $connection);
 		#echo("BBM ".$name." has been added to the database.<br>");
+
+		lastUpdate("module_p", $modid, "User", "New Module (Not yet received)");
 	}
 	else{
 		echo("An error has occurred and the data has not been added.<br>");
@@ -1254,6 +1290,109 @@ include("../functions/editfunctions.php");
 					
 					lastUpdate("module_p", $id, "User", "Batch Module Submit", "");
 
+				}
+
+			}	
+		}	
+	}	
+}
+
+function batchwafer($xml, $name, $size, $user, $loc){
+include("../../../Submission_p_secure_pages/connect.php");
+include("../functions/curfunctions.php");
+include("../functions/editfunctions.php");
+
+	ini_set('display_error', 'On');
+	error_reporting(E_ALL | E_STRICT);
+
+	$dir = "/project/cmsfpix/.www/Submission_p/tmp/tmpwafer/";
+	$date = date('Y-m-d H:i:s');
+	
+	#####Clear the tmp directory before putting in new files#####
+	exec("rm $dir*");
+
+	move_uploaded_file($xml, $dir.$name);
+
+	chmod($dir.$name, 0777);
+
+	$i = 0;
+	$RTI2PDB = array("","TT","FL","LL","CL","CR","RR","FR","BB");
+	
+	if($handle = opendir($dir)){
+		
+		while(false !== ($entry=readdir($handle))){
+		
+			if(substr($entry, -3) == "xml"){
+
+				$doc = simplexml_load_file($dir.$entry);
+	
+				$i=0;
+
+
+				while(strpos($doc->Worksheet[$i]->attributes('ss',TRUE)->Name,"") === false){
+					
+					
+					if(strpos($doc->Worksheet[$i]->attributes('ss',TRUE)->Name,"B") === false){
+						$i++;
+						continue;
+					}
+					
+					$wafnum = substr($doc->Worksheet[$i]->attributes('ss', TRUE)->Name, 1);
+					$wafnum = str_pad($wafnum, 3, "0", STR_PAD_LEFT);
+					echo $wafnum."<br>";
+
+					#wafersensorinfo($wafnum, $date, "Wafer submitted automatically through batch submission");
+
+
+					$k=0;
+					for($j=0; $j<8; $j++){
+
+						$sensnum = "WL_".$RTI2PDB[$j+1]."_".$wafnum;
+
+						$xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"true\"?>";
+						$xml .= "<ROOT xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">";
+						$xml .= "<HEADER>";
+						$xml .= "<TYPE><EXTENSION_TABLE_NAME>UPGRADE_FPIX_SNSRWAFR_IV</EXTENSION_TABLE_NAME><NAME/>";
+						$xml .= "<RUN><RUN_NAME/><RUN_BEGIN_TIMESTAMP>";
+						$xml .= $date;
+						$xml .= "</RUN_BEGIN_TIMESTAMP>";
+
+						$xml .= "<INITIATED_BY_USER>".$user."</INITIATED_BY_USER>";
+						$xml .= "<LOCATION>".$loc."</LOCATION>";
+						$xml .= "<COMMENT_DESCRIPTION/></RUN></HEADER>";
+
+						$xml .= "<DATA_SET><VERSION/><COMMENT_DESCRIPTION/>";
+						$xml .= "<PART><SERIAL_NUMBER>".$sensnum."</SERIAL_NUMBER><KIND_OF_PART/></PART>";
+						
+						$l=0;
+						while(!($doc->Worksheet[$i]->Table->Row[$k]->Cell[0]->Data->attributes('ss',TRUE)->Type == "Number")){
+						$k++;
+						}
+
+						while($doc->Worksheet[$i]->Table->Row[$k]->Cell[0]->Data->attributes('ss',TRUE)->Type == "Number"){
+							
+							$gr = $doc->Worksheet[$i]->Table->Row[$k]->Cell[0]->Data;
+							$actv = $doc->Worksheet[$i]->Table->Row[$k]->Cell[2]->Data;
+							$vol = $doc->Worksheet[$i]->Table->Row[$k]->Cell[4]->Data;
+
+							$xml .= "<DATA>";
+							$xml .= "<VOLTAGE_VOLT>".$vol."</VOLTAGE_VOLT>";
+							$xml .= "<ACTV_CURRENT_AMP>".$actv."</ACTV_CURRENT_AMP>";
+							$xml .= "<GRD_CURRENT_AMP>".$gr."</GRD_CURRENT_AMP>";
+							$xml .= "</DATA>";
+							
+						$k++;
+						}
+
+						$xml .= "</DATA_SET></ROOT>";
+
+						$sensid = findid("sensor_p", $sensnum);
+
+						#measurement($sensid, "wafer", "IV", "Automatically uploaded through batch submission", $xml, strlen($xml), $sensnum."_IV.xml", 0, 0){
+						
+					}
+
+				$i++;
 				}
 
 			}	

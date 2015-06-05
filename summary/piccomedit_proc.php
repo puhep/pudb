@@ -19,6 +19,10 @@ if (isset($_POST['submit']) && $_POST['notes'] != ""){
 	fwrite($fp, $date.$_POST['notes']."\n");
 	fclose($fp);
 
+	if($_POST['part'] == "module_p"){
+		lastUpdate("module_p", $_POST['id'], "User", "Picture Comment", $_POST['notes']);
+	}
+
 	exit();
 }
 

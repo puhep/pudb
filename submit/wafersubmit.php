@@ -16,32 +16,7 @@ if(isset($_POST['submit']) && $_POST['wafer_id']!="" && $_POST['receive']!=""){
 	else{ 
    		$name=str_pad($_POST['wafer_id'],3,"0", STR_PAD_LEFT);
 
- 		waferinfo($name,$_POST['receive'],$_POST['notes']);
-
-  		$wafid = findid("wafer_p",$name); 
-
-  		sensorinfo("WL_TT_".$name,"2x8 automatically added to the database",$wafid);
- 		sensorinfo("WL_FL_".$name,"2x8 automatically added to the database",$wafid);
-  		sensorinfo("WL_LL_".$name,"2x8 automatically added to the database",$wafid);
-  		sensorinfo("WL_CL_".$name,"2x8 automatically added to the database",$wafid);
-  		sensorinfo("WL_CR_".$name,"2x8 automatically added to the database",$wafid);
-  		sensorinfo("WL_RR_".$name,"2x8 automatically added to the database",$wafid);
-  		sensorinfo("WL_FR_".$name,"2x8 automatically added to the database",$wafid);
-  		sensorinfo("WL_BB_".$name,"2x8 automatically added to the database",$wafid);
-  		sensorinfo("WS_TR_".$name,"1x1 automatically added to the database",$wafid);
-  		sensorinfo("WS_CR_".$name,"1x1 automatically added to the database",$wafid);
-  		sensorinfo("WS_BR_".$name,"1x1 automatically added to the database",$wafid);
-  		sensorinfo("WS_TL_".$name,"1x1 automatically added to the database",$wafid);
-  		sensorinfo("WS_CL_".$name,"1x1 automatically added to the database",$wafid);
-  		sensorinfo("WS_BL_".$name,"1x1 automatically added to the database",$wafid);
-  		sensorinfo("WA_TL_".$name,"Slim-edge 1x1 automatically added to the database",$wafid);
-  		sensorinfo("WA_BL_".$name,"Slim-edge 1x1 automatically added to the database",$wafid);
-  		sensorinfo("WA_TR_".$name,"Slim-edge 1x1 automatically added to the database",$wafid);
-  		sensorinfo("WA_BR_".$name,"Slim-edge 1x1 automatically added to the database",$wafid);
-  		#sensorinfo("WD_TL_".$name,"Diode automatically added to the database",$wafid);
-  		#sensorinfo("WD_TR_".$name,"Diode automatically added to the database",$wafid);
-  		#sensorinfo("WD_BL_".$name,"Diode automatically added to the database",$wafid);
-  		#sensorinfo("WD_BR_".$name,"Diode automatically added to the database",$wafid);
+ 		wafersensorinfo($name,$_POST['receive'],$_POST['notes']);
 	}
 	exit();
 }

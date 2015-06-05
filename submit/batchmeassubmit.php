@@ -6,7 +6,7 @@
   <title>Batch Submission</title>
 </head>
 <body>
-<form action='batchmeassubmit.php' method='post' enctype='multipart/form-data'>
+<form action='batchmeassubmit_proc.php' method='post' enctype='multipart/form-data'>
 <?php
 include('../functions/submitfunctions.php');
 include('../functions/popfunctions.php');
@@ -22,9 +22,6 @@ Scan Level: &nbsp;<input name="level" value="wafer" type="radio"> On Wafer
 <br>
 .zip file:
 <input name="zipped" type="file">
-<?php
-echo "<input type='hidden' name='wafers' value='".$_POST['wafers']."'>";
-?>
 <br>
 <br>
 Additional Notes <textarea cols="40" rows="5" name="notes"></textarea>
@@ -36,13 +33,6 @@ Additional Notes <textarea cols="40" rows="5" name="notes"></textarea>
 conditionalSubmit(0);
 echo "<br>";
 
-
-if(isset($_POST['submit']) &&  $_FILES['zipped']['size'] > 0 && isset($_POST['level'])){
-	batchmeasurement($_FILES['zipped']['tmp_name'],$_FILES['zipped']['name'],$_FILES['zipped']['size'], $_POST['level'],$_POST['notes']);
-}
-	#if($_POST['level'] == "wafer"){
-		#isTestedWaferUpdate($_POST['wafers']);
-	#}
 ?>
 </form>
 
