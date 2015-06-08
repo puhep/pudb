@@ -9,10 +9,6 @@
 <h>
 Purdue University CMS FPix Upgrade Production Database
 </h>
-<br>
-<h>
-<font color="red"> This database will be unavailable from 6PM EST Friday June 5 to 10AM EST Monday June 8 due to building maintenance.</font>
-</h>
 <div style="position:fixed;left:420px;top:2px;">
 <form method="link" action="login.php?prev=index.php">
 <input type="submit" value="LOG IN">
@@ -24,6 +20,21 @@ Purdue University CMS FPix Upgrade Production Database
 <input type="submit" value="LOG OUT">
 </form>
 </div2>
+<br>
+
+<?php if($_SESSION['hidepre']){ ?>
+<div3 style="position:fixed;left:420px;top:58px;">
+<form method="link" action="hidepre.php">
+<input type="submit" value="SHOW PREPRODUCTION UNDER CONSTRUCTION">
+</form>
+</div3>
+<?php } else{ ?>
+<div3 style="position:fixed;left:420px;top:58px;">
+<form method="link" action="hidepre.php">
+<input type="submit" value="HIDE PREPRODUCTION UNDER CONSTRUCTION">
+</form>
+</div3>
+<?php } ?>
 <br>
 <br>
 
@@ -82,7 +93,7 @@ New Parts Information
   </form>
 
 <form action="submit/batchrocsubmit.php" method="get">
-  <input value="Batch Module Submit" type="submit">
+  <input value="Batch Received Module Submit" type="submit">
   </form>
 
 <form action="submit/flexsubmit.php" method="post">

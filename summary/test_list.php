@@ -207,6 +207,9 @@ IV Scan Thresholds:
 
 $pursel = "";
 $nebsel = "";
+
+$hide = hidepre("module",2);
+
 $sortmod1 = "";
 $sortmod2 = "";
 $sortmod3 = "";
@@ -271,7 +274,7 @@ if($_POST['param19'] != ""){
 	$sortmod19 = "AND (name LIKE \"%".$_POST['param19']."%\" OR name_hdi LIKE \"%".$_POST['param19']."%\")";
 }
 
-$sorter = $sortmod1.$sortmod2.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19;
+$sorter = $hide.$sortmod1.$sortmod2.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19;
 
 ?>
 <input type="submit" value="Apply">

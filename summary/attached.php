@@ -22,8 +22,10 @@ include('../../../Submission_p_secure_pages/connect.php');
 
 $sortby = $_GET['sort'];
 
+$hide = hidepre("module",2);
 
-$bbmfunc = "SELECT name, id, assembly, assoc_sens, bonder, location, time_created from module_p WHERE name LIKE 'M%' ORDER BY name";
+
+$bbmfunc = "SELECT name, id, assembly, assoc_sens, bonder, location, time_created from module_p WHERE name LIKE 'M%'".$hide." ORDER BY name";
 
 $partarray = array("Module","Location", "Bonder", "HDI", "Sensor", "ROCs", "IV Scans", "Criteria", "Date Assembled", "Last Modified");
 $sortarray = array("mod", "loc", "fcb", "hdi", "sen", "", "", "", "dat", "lm");

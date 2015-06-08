@@ -13,9 +13,13 @@ error_reporting(E_ALL | E_STRICT);
 include('../functions/curfunctions.php');
 include('../../../Submission_p_secure_pages/connect.php');
 
-$waferfunc = "SELECT name, id, assembly from wafer_p ORDER BY name";
-$bbmfunc = "SELECT name, id, assembly, location from module_p ORDER BY name";
-$hdifunc = "SELECT name, id, assembly, location from HDI_p ORDER BY name";
+$hidew = hidepre("wafer",1);
+$hideh = hidepre("HDI",1);
+$hidem = hidepre("module",1);
+
+$waferfunc = "SELECT name, id, assembly FROM wafer_p ".$hidew." ORDER BY name";
+$bbmfunc = "SELECT name, id, assembly, location FROM module_p ".$hidem." ORDER BY name";
+$hdifunc = "SELECT name, id, assembly, location FROM HDI_p ".$hideh." ORDER BY name";
 
 $wafersteparray = array("Received", "Inspected", "Tested", "Promoted", "Ready for Shipping", "Shipped");
 $bbmsteparray = array("Expected", "Received", "Inspected", "IV Tested", "Ready for HDI Assembly",  "HDI Attached", "Wirebonded", "Encapsulated", "Tested", "Thermally Cycled", "Tested", "Ready for Shipping", "Shipped"); 
@@ -33,14 +37,14 @@ $l=0;
 mysql_query('USE cmsfpix_u', $connection);
 
 $output = mysql_query($waferfunc, $connection);
-while($row = mysql_fetch_assoc($output)){
+while($output && $row = mysql_fetch_assoc($output)){
 	$waferarray[$i][0] = $row['name'];
 	$waferarray[$i][1] = $row['id'];
 	$waferarray[$i][2] = $row['assembly'];
 	$i++;
 }
 $output = mysql_query($bbmfunc, $connection);
-while($row = mysql_fetch_assoc($output)){
+while($output && $row = mysql_fetch_assoc($output)){
 	$bbmarray[$k][0] = $row['name'];
 	$bbmarray[$k][1] = $row['id'];
 	$bbmarray[$k][2] = $row['assembly'];
@@ -51,7 +55,7 @@ while($row = mysql_fetch_assoc($output)){
 	$k++;
 }
 $output = mysql_query($hdifunc, $connection);
-while($row = mysql_fetch_assoc($output)){
+while($output && $row = mysql_fetch_assoc($output)){
 	$hdiarray[$l][0] = $row['name'];
 	$hdiarray[$l][1] = $row['id'];
 	$hdiarray[$l][2] = $row['assembly'];

@@ -14,8 +14,9 @@
 include('../../../Submission_p_secure_pages/connect.php');
 include('../functions/curfunctions.php');
 
+$hide = hidepre("module",1);
 
-$func = "SELECT name, id, time_created, last_user, last_update, last_comment, destination from module_p ORDER BY time_created DESC";
+$func = "SELECT name, id, time_created, last_user, last_update, last_comment, destination from module_p".$hide." ORDER BY time_created DESC";
 $i=0;
 $j=0;
 $dataarray;
@@ -68,7 +69,7 @@ echo "<table cellspacing=20 border=0>";
 	echo "</tr>";
 
 
-	for($k=0; $k<10; $k++){
+	for($k=0; $k<40; $k++){
 
 			echo "<tr>";
 

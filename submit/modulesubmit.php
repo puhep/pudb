@@ -5,7 +5,6 @@
   <title>Recieved Module Submission</title>
 </head>
 <body>
-<form action='modulesubmit.php' method='post' enctype='multipart/form-data'>
 
 <img src="../pics/RTI_Numbering_Scheme.png" width="200" height="200">
 <img src="../pics/SINTEF_numbering_diagram_2x8s_Updated.jpg" width="270" height="250">
@@ -20,8 +19,9 @@ include('../functions/curfunctions.php');
 
 
 
-if(!isset($_POST['wafers'])){
+if(!isset($_GET['wafers'])){
 ?>
+<form action='modulesubmit.php' method='get' enctype='multipart/form-data'>
 Available Wafers
 <select name="wafers">
 <?php
@@ -32,13 +32,14 @@ shippedwaferpop();
 <?php
 }
 else{
-echo "<input type='hidden' name='wafers' value='".$_POST['wafers']."'>";
+echo "<form action='modulesubmit_proc.php' method='post' enctype='multipart/form-data'>";
+echo "<input type='hidden' name='wafers' value='".$_GET['wafers']."'>";
 ?>
 
 Available Modules
 <select name="modules">
 <?php
-availmodule($_POST['wafers']);
+availmodule($_GET['wafers']);
 ?>
 </select>
 
@@ -79,55 +80,6 @@ Additional Notes <textarea cols="40" rows="5" name="notes"></textarea>
 <?php
 
 conditionalSubmit(1);
-
-if(isset($_POST['submit']) && isset($_POST['modules']) && isset($_POST['QC']) && isset($_POST['arrival'])){
-
-	include('../../../Submission_p_secure_pages/connect.php');
-	include('../functions/editfunctions.php');
-
-	$sqlarrival = mysql_real_escape_string($_POST['arrival']);
-	$sqlnotes = mysql_real_escape_string($_POST['notes']);
-	$notes = mysql_real_escape_string($_POST['notes']);
-
-
-	mysql_query('USE cmsfpix_u', $connection);
-
-	if(!strcmp($_POST['QC'],"accept")){
-		$good = 1;
-	}
-	else{
-		$good = -1;
-	}
-
-	$date = date('Y-m-d H:i:s');
-
-	if($sqlnotes != ""){
-		$sqlnotes = $date."  ".$sqlnotes."\n";
-	}
-
-	$sqlnotes = $date."  Received\n".$sqlnotes;
-
-
-
-	$func = 'UPDATE module_p set assembly='.$good.', arrival="'.$sqlarrival.'", location="'.$_POST['loc'].'", destination="'.$_POST['loc'].'", bonder="'.$_POST['flip'].'", has_ROC="0", notes="'.$sqlnotes.'" WHERE id='.$_POST['modules'];
-
-	if(mysql_query($func, $connection)){
-
-		$id = $_POST['modules'];
-
-		$timefunc = "INSERT INTO times_module_p(assoc_module, received) VALUES($id, \"$date\")";
-		mysql_query($timefunc, $connection);
-
-		lastUpdate("module_p", $id, "User", "Received", $notes);
-
-		echo "<br>";
-		echo "The module was successfully added to the database";
-	}
-	else{
-		echo "<br>";
-		echo "An error occurred and the module was not added to the database";
-	}
-}
 
 ?>
 </form>

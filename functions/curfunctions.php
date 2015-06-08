@@ -887,4 +887,19 @@ switch($comper){
 
 	return $overwrite;
 }
+
+function hidepre($part, $opt){
+
+	$hider = "";
+
+	if($_SESSION['hidepre']){
+
+		if($opt == 1){ $hider .= " WHERE ";}
+		if($opt == 2){ $hider .= " AND ";}
+
+		$hider .= "id IN (SELECT assoc_".strtolower($part)." FROM times_".$part."_p WHERE received > \"2015-05-30\")";
+
+	}
+	return $hider;
+}
 ?>

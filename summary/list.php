@@ -54,11 +54,16 @@ if($_POST['loc'] == "nebraska"){
 include('../../../Submission_p_secure_pages/connect.php');
 include('../functions/curfunctions.php');
 
-$func1 = "SELECT name, id from wafer_p ".$locsort." ORDER BY name";
-$func2 = "SELECT name, id from sensor_p ".$locsort." ORDER BY name";
-$func3 = "SELECT name, id from HDI_p ".$locsort." ORDER BY name";
-$func4 = "SELECT name, id from module_p WHERE name LIKE 'B%' AND assembly!=0 ".$locsortmod." ORDER BY name";
-$func5 = "SELECT name, id from module_p WHERE name LIKE 'M%' ".$locsortmod." ORDER BY name";
+$hidew =  hidepre("wafer",1);
+$hides =  hidepre("sensor",1);
+$hideh =  hidepre("HDI",1);
+$hidem =  hidepre("module",2);
+
+$func1 = "SELECT name, id from wafer_p ".$locsort.$hidew." ORDER BY name";
+$func2 = "SELECT name, id from sensor_p ".$locsort.$hides." ORDER BY name";
+$func3 = "SELECT name, id from HDI_p ".$locsort.$hideh." ORDER BY name";
+$func4 = "SELECT name, id from module_p WHERE name LIKE 'B%' AND assembly!=0 ".$locsortmod.$hidem." ORDER BY name";
+$func5 = "SELECT name, id from module_p WHERE name LIKE 'M%' ".$locsortmod.$hidem." ORDER BY name";
 $i=0;
 $j=0;
 $dataarray;

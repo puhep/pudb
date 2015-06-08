@@ -26,13 +26,16 @@ include('../functions/curfunctions.php');
 
 include('../../../Submission_p_secure_pages/connect.php');
 
+$hide = hidepre($_GET['part'], 2);
+
 $prepart = $_GET['part'];
 $sl = $_GET['sl'];
 $part = $prepart."_p";
 
 $sortby = $_GET['sort'];
 
-$func = "SELECT name, id, arrival, shipped, time_created from ".$part." WHERE assembly=".$sl;
+$func = "SELECT name, id, arrival, shipped, time_created from ".$part." WHERE assembly=".$sl.$hide;
+
 
 if($part == "wafer_p"){
 	$steparray = array("Received", "Inspected", "Tested", "Promoted", "Ready for Shipping", "Shipped");
@@ -91,7 +94,7 @@ echo "</tr>";
 $results = array();
 $i=0;
 
-while($row = mysql_fetch_assoc($output)){
+while($output && $row = mysql_fetch_assoc($output)){
 
 	$results[0][$i] = $row['name'];
 	$results[6][$i] = $row['name'];
