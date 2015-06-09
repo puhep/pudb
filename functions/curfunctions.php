@@ -891,14 +891,20 @@ switch($comper){
 function hidepre($part, $opt){
 
 	$hider = "";
+	$cutoff = "\"2015-05-30\"";
+
 
 	if($_SESSION['hidepre']){
 
 		if($opt == 1){ $hider .= " WHERE ";}
 		if($opt == 2){ $hider .= " AND ";}
 
-		$hider .= "id IN (SELECT assoc_".strtolower($part)." FROM times_".$part."_p WHERE received > \"2015-05-30\")";
-
+		if($part == "sensor"){
+			$hider .="assoc_wafer IN (SELECT assoc_wafer FROM times_wafer_p WHERE received > ".$cutoff.")";
+		}
+		else{
+			$hider .= "id IN (SELECT assoc_".strtolower($part)." FROM times_".$part."_p WHERE received > ".$cutoff.")";
+		}
 	}
 	return $hider;
 }

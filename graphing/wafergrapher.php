@@ -10,9 +10,14 @@ $arr3;
 
 $date = time();
 
+$hide = "";
+if($_SESSION['hidepre']){
+	$hide = " WHERE received > \"2015-05-30\"";
+}
+
 mysql_query("USE cmsfpix_u", $connection);
 
-$func = "SELECT UNIX_TIMESTAMP(received) FROM times_wafer_p ORDER BY received";
+$func = "SELECT UNIX_TIMESTAMP(received) FROM times_wafer_p".$hide." ORDER BY received";
 
 $output = mysql_query($func, $connection);
 

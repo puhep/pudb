@@ -1,5 +1,8 @@
 <?php
 
+ini_set('display_errors', 'On');
+error_reporting(E_ALL | E_STRICT);
+
 function comparepop($formname){
 	
 	echo "<option value=\"=\"";
@@ -60,14 +63,19 @@ function locpop($formname){
 function waferpop(){
 
 include('../../../Submission_p_secure_pages/connect.php');
+include('../function/curfunctions.php');
+
+	$hide = hidepre("wafer",1);
 
 	mysql_query('USE cmsfpix_u', $connection);
 
-	$available = mysql_query('SELECT name,id FROM wafer_p ORDER BY name ASC',$connection);
+	$func = "SELECT name,id FROM wafer_p".$hide." ORDER BY name ASC";
+
+	$available = mysql_query($func,$connection);
 
 	echo "<option value=\"NULL\">Select a wafer</option>\n";
 
-	while($waferrow = mysql_fetch_assoc($available)){
+	while($available && $waferrow = mysql_fetch_assoc($available)){
 		$id = $waferrow['id'];
 		$waferid = $waferrow['name'];
 		echo "<option value=\"$id\">".$waferid."</option>\n";
@@ -77,10 +85,15 @@ include('../../../Submission_p_secure_pages/connect.php');
 function shippedwaferpop(){
 
 include('../../../Submission_p_secure_pages/connect.php');
+include('../function/curfunctions.php');
+
+	$hide = hidepre("wafer",2);
 
 	mysql_query('USE cmsfpix_u', $connection);
 
-	$available = mysql_query('SELECT name,id FROM wafer_p WHERE assembly=5 ORDER BY name ASC',$connection);
+	$func = "SELECT name,id FROM wafer_p WHERE assembly=5".$hide." ORDER BY name ASC";
+	
+	$available = mysql_query($func,$connection);
 
 	echo "<option value=\"NULL\">Select a wafer</option>\n";
 
@@ -94,9 +107,13 @@ include('../../../Submission_p_secure_pages/connect.php');
 function sensorpop($wafer){
 
 include('../../../Submission_p_secure_pages/connect.php');
+include('../function/curfunctions.php');
+
+	$hide = hidepre("sensor",2);
 
 	mysql_query('USE cmsfpix_u', $connection);
-	$func = 'SELECT name,id FROM sensor_p WHERE assoc_wafer='.$wafer.' ORDER BY name ASC';
+	
+	$func = 'SELECT name,id FROM sensor_p WHERE assoc_wafer='.$wafer.$hide.' ORDER BY name ASC';
 	
 	$available = mysql_query($func, $connection);
 
@@ -112,11 +129,14 @@ include('../../../Submission_p_secure_pages/connect.php');
 function sensorlist($wafer){
 
 include('../../../Submission_p_secure_pages/connect.php');
+include('../function/curfunctions.php');
+
+	$hide = hidepre("sensor",2);
 
 	mysql_query('USE cmsfpix_u', $connection);
-	$funcA = 'SELECT name,id FROM sensor_p WHERE assoc_wafer='.$wafer.' AND name LIKE \'WA_%\' ORDER BY name ASC';
-	$funcL = 'SELECT name,id FROM sensor_p WHERE assoc_wafer='.$wafer.' AND name LIKE \'WL_%\' ORDER BY name ASC';
-	$funcS = 'SELECT name,id FROM sensor_p WHERE assoc_wafer='.$wafer.' AND name LIKE \'WS_%\' ORDER BY name ASC';
+	$funcA = 'SELECT name,id FROM sensor_p WHERE assoc_wafer='.$wafer.$hide.' AND name LIKE \'WA_%\' ORDER BY name ASC';
+	$funcL = 'SELECT name,id FROM sensor_p WHERE assoc_wafer='.$wafer.$hide.' AND name LIKE \'WL_%\' ORDER BY name ASC';
+	$funcS = 'SELECT name,id FROM sensor_p WHERE assoc_wafer='.$wafer.$hide.' AND name LIKE \'WS_%\' ORDER BY name ASC';
 	
 	$availableA = mysql_query($funcA, $connection);
 	$availableL = mysql_query($funcL, $connection);
@@ -157,10 +177,13 @@ include('../../../Submission_p_secure_pages/connect.php');
 function availsensor(){
 
 include('../../../Submission_p_secure_pages/connect.php');
+include('../function/curfunctions.php');
+
+	$hide = hidepre("wafer",1);
 
 	mysql_query('USE cmsfpix_u', $connection);
 
-	$waffunc = 'SELECT id from wafer_p ORDER BY name';
+	$waffunc = 'SELECT id from wafer_p".$hide." ORDER BY name';
 	$output = mysql_query($waffunc, $connection);
 	
 	echo "<option value=\"NULL\">Select a sensor</option>\n";
@@ -185,9 +208,13 @@ function modulepop(){
 include('../../../Submission_p_secure_pages/connect.php');
 include('../functions/curfunctions.php');
 
+	$hide = hidepre("module",1);
+
 	mysql_query('USE cmsfpix_u', $connection);
 
-	$available = mysql_query('SELECT id FROM module_p',$connection);
+	$func = "SELECT id FROM module_p".$hide;
+
+	$available = mysql_query($func,$connection);
 
 	echo "<option value=\"NULL\">Select a module</option>\n";
 
@@ -203,9 +230,13 @@ function receivedmodulepop(){
 include('../../../Submission_p_secure_pages/connect.php');
 include('../functions/curfunctions.php');
 
+	$hide = hidepre("module",2);
+
 	mysql_query('USE cmsfpix_u', $connection);
 
-	$available = mysql_query('SELECT id FROM module_p WHERE assembly>0',$connection);
+	$func = "SELECT id FROM module_p WHERE assembly>0".$hide;
+	
+	$available = mysql_query($func,$connection);
 
 	echo "<option value=\"NULL\">Select a module</option>\n";
 
@@ -221,9 +252,11 @@ function modulepopnoroc(){
 include('../../../Submission_p_secure_pages/connect.php');
 include('../functions/curfunctions.php');
 
+	$hide = hidepre("module",2);
+
 	mysql_query('USE cmsfpix_u', $connection);
 
-	$func = "SELECT id FROM module_p WHERE has_ROC=\"0\"";
+	$func = "SELECT id FROM module_p WHERE has_ROC=\"0\"".$hide;
 
 	$available = mysql_query($func,$connection);
 
@@ -241,9 +274,11 @@ function modulepopwithroc(){
 include('../../../Submission_p_secure_pages/connect.php');
 include('../functions/curfunctions.php');
 
+	$hide = hidepre("module",2);
+
 	mysql_query('USE cmsfpix_u', $connection);
 
-	$func = "SELECT id FROM module_p WHERE has_ROC=\"1\"";
+	$func = "SELECT id FROM module_p WHERE has_ROC=\"1\"".$hide;
 
 	$available = mysql_query($func,$connection);
 
@@ -259,10 +294,13 @@ include('../functions/curfunctions.php');
 function availmodule($wafer){
 
 include('../../../Submission_p_secure_pages/connect.php');
+include('../functions/curfunctions.php');
+
+	$hide = hidepre("sensor",2);
 
 	mysql_query('USE cmsfpix_u', $connection);
 
-	$sensfunc = 'SELECT id from sensor_p WHERE assoc_wafer='.$wafer;
+	$sensfunc = 'SELECT id from sensor_p WHERE assoc_wafer='.$wafer.$hide;
 	$output = mysql_query($sensfunc, $connection);
 	
 	echo "<option value=\"NULL\">Select a module</option>\n";
@@ -285,10 +323,15 @@ include('../../../Submission_p_secure_pages/connect.php');
 function hdipop(){
 
 include('../../../Submission_p_secure_pages/connect.php');
+include('../functions/curfunctions.php');
+
+	$hide = hidepre("HDI",1);
 
 	mysql_query('USE cmsfpix_u', $connection);
 
-	$available = mysql_query('SELECT name,id FROM HDI_p',$connection);
+	$func = "SELECT name,id FROM HDI_p".$hide;
+
+	$available = mysql_query($func,$connection);
 
 	echo "<option value=\"NULL\">Select an HDI </option>\n";
 
@@ -302,10 +345,13 @@ include('../../../Submission_p_secure_pages/connect.php');
 function availhdi(){
 
 include('../../../Submission_p_secure_pages/connect.php');
+include('../functions/curfunctions.php');
+
+	$hide = hidepre("HDI",2);
 
 	mysql_query('USE cmsfpix_u', $connection);
 
-	$func = "SELECT name, id FROM HDI_p WHERE assembly=2";
+	$func = "SELECT name, id FROM HDI_p WHERE assembly=2".$hide;
 
 	$available = mysql_query($func, $connection);
 
@@ -322,10 +368,13 @@ include('../../../Submission_p_secure_pages/connect.php');
 function barehdi(){
 
 include('../../../Submission_p_secure_pages/connect.php');
+include('../functions/curfunctions.php');
+
+	$hide = hidepre("HDI",2);
 
 	mysql_query('USE cmsfpix_u', $connection);
 
-	$func = "SELECT name, id FROM HDI_p WHERE assoc_tbm IS NULL";
+	$func = "SELECT name, id FROM HDI_p WHERE assoc_tbm IS NULL".$hide;
 
 	$available = mysql_query($func, $connection);
 

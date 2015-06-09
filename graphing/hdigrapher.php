@@ -11,6 +11,11 @@ $arr3;
 
 $date = time();
 
+$hide = "";
+if($_SESSION['hidepre']){
+	$hide = " WHERE received > \"2015-05-30\"";
+}
+
 $loc = $_GET['loc'];
 $loc_condition=TRUE;
 if($loc == "purdue"){
@@ -19,13 +24,12 @@ if($loc == "purdue"){
 if($loc == "nebraska"){
 	$loc_condition = "Nebraska";
 }
-	
 
 
 mysql_query("USE cmsfpix_u", $connection);
 
-$func1 = "SELECT UNIX_TIMESTAMP(received), assoc_hdi FROM times_HDI_p ORDER BY received";
-$func2 = "SELECT UNIX_TIMESTAMP(on_module), assoc_hdi FROM times_HDI_p ORDER BY on_module";
+$func1 = "SELECT UNIX_TIMESTAMP(received), assoc_hdi FROM times_HDI_p".$hide." ORDER BY received";
+$func2 = "SELECT UNIX_TIMESTAMP(on_module), assoc_hdi FROM times_HDI_p".$hide." ORDER BY on_module";
 
 $output1 = mysql_query($func1, $connection);
 $output2 = mysql_query($func2, $connection);
