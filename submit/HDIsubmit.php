@@ -14,7 +14,11 @@
 include('../functions/popfunctions.php');
 ?>
 
-Batch And Date Code <select name="batchdate">
+<img src="../pics/HDI_labels.png" width="320" height="337">
+<br>
+<br>
+
+Work Order And Date Code <select name="batchdate">
 <?php
   HDIbatchpop();
 ?>

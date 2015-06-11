@@ -35,6 +35,11 @@ Purdue University CMS FPix Upgrade Production Database
 </form>
 </div3>
 <?php } ?>
+
+<div4 style="position:fixed;left:520px;top:200px">
+<a href="graphing/modulegrapher.php" target="blank"><img src="graphing/modulegrapher.php" width="910" height="600" /></a>
+</div4>
+
 <br>
 <br>
 
@@ -50,7 +55,7 @@ Data Viewing
  type="submit"></form>
 
 <form action="summary/attached.php?sort=mod" method="get">
-  <input value="Assembled Modules"
+  <input value="Detailed Module List"
  type="submit"></form>
 
 <form action="summary/test_list.php" method="get">
@@ -63,10 +68,6 @@ Data Viewing
 
 <form action="summary/time.php" method="get">
   <input value="Assembly Over Time"
- type="submit"></form>
-
-<form action="summary/pilotsummary.php" method="get">
-  <input value="Pilot Module IV Graphs"
  type="submit"></form>
 
 <form action="../MoReWeb/Results/Overview.html" method="get">
@@ -93,17 +94,17 @@ New Parts Information
   </form>
 
 <form action="submit/batchrocsubmit.php" method="get">
-  <input value="Batch Received Module Submit" type="submit">
+  <input value="Module Batch Submit" type="submit">
   </form>
 
-<form action="submit/flexsubmit.php" method="post">
+<form action="submit/flexsubmit.php" method="get">
   <input name="flex" value="Flex Cable Submit - Purdue" type="submit">
-  <input name="id" value="1" type="hidden">
+  <input name="name" value="Purdue" type="hidden">
   </form>
 
-<form action="submit/flexsubmit.php" method="post">
+<form action="submit/flexsubmit.php" method="get">
   <input name="flex" value="Flex Cable Submit - Nebraska" type="submit">
-  <input name="id" value="2" type="hidden">
+  <input name="name" value="Nebraska" type="hidden">
   </form>
 
 <br>

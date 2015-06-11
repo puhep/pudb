@@ -124,7 +124,7 @@ function curname($db, $id){
 		echo "<b>$name</b><br>";
 	}
 	else{
-		echo "<b>$name_hdi ($name)</b><br>";
+		echo "<b>$name_hdi</b><br>";
 	}
 }
 
@@ -384,7 +384,7 @@ function findname($db, $id){
 		return $name;
 	}
 	else{
-		return  $name_hdi." (".$name.")";
+		return  $name_hdi;
 	}
 }
 
@@ -775,7 +775,11 @@ function isLoggedIn(){
 		session_start();
 	}
 
-	if(isset($_SESSION['user']) || substr($_SERVER['REMOTE_ADDR'],0,11) == "128.210.67." || substr($_SERVER['REMOTE_ADDR'],0,10) == "192.168.1."){
+	if(substr($_SERVER['REMOTE_ADDR'],0,11) == "128.210.67." || substr($_SERVER['REMOTE_ADDR'],0,10) == "192.168.1."){
+		$_SESSION['user'] = "PurdueUser";
+	}
+
+	if(isset($_SESSION['user'])){
 		$temp = $_SESSION['user'];
 		$_SESSION['user'] = $temp;
 		return 1;
@@ -894,7 +898,7 @@ function hidepre($part, $opt){
 	$cutoff = "\"2015-05-30\"";
 
 
-	if($_SESSION['hidepre']){
+	if(isset($_SESSION['hidepre']) && $_SESSION['hidepre']){
 
 		if($opt == 1){ $hider .= " WHERE ";}
 		if($opt == 2){ $hider .= " AND ";}

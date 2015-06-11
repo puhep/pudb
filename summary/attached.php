@@ -19,8 +19,10 @@ include('../functions/curfunctions.php');
   include('../graphing/xmlgrapher_crit.php');
 include('../../../Submission_p_secure_pages/connect.php');
 
-
-$sortby = $_GET['sort'];
+$sortby = "";
+if(isset($_GET['sort'])){
+	$sortby = $_GET['sort'];
+}
 
 $hide = hidepre("module",2);
 

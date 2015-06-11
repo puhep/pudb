@@ -20,13 +20,16 @@ curname("module_p", $id);
 ?>
 
 <br>
-New Location 
+New Location: 
 	<select name="newloc">
-	<?php locpop(); ?>
+	<?php locpop(""); ?>
 	</select>
 <br>
 <br>
-Additional Notes <textarea cols="40" rows="5" name="notes"></textarea>
+User: <textarea cols="10" rows="1" name="user"></textarea>
+<br>
+<br>
+Additional Notes: <textarea cols="40" rows="5" name="notes"></textarea>
 <br>
 <br>
 
@@ -36,11 +39,11 @@ include('../functions/curfunctions.php');
 
 conditionalSubmit(1);
 
-if(isset($_POST['submit']) && $_POST['newloc']!=""){
+if(isset($_POST['submit']) && $_POST['newloc']!="" && isset($_POST['user'])){
 
-	changeloc($id, $_POST['newloc']);
+	changeloc($id, $_POST['newloc'], $_POST['notes'], $_POST['user']);
 
-	$newlocnote = "Module moved to ".$_POST['newloc'];
+	$newlocnote = "Module moved to ".$_POST['newloc']." by ".$_POST['user'];
 	echo $newlocnote;
 
 }

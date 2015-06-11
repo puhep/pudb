@@ -14,10 +14,11 @@ mysql_query('USE cmsfpix_u', $connection);
 $name = $_POST['name'];
 $id = findid("module_p", $name);
 
-$search = "SELECT name, assembly, destination FROM module_p WHERE id=$id";
+$search = "SELECT name, assembly, destination, location FROM module_p WHERE id=$id";
 $table = mysql_query($search, $connection);
 $row = mysql_fetch_assoc($table);
 $assembly = $row['assembly'];
+$location = $row['location'];
 
 $steparray = array("Received", "Inspected", "IV Tested", "Ready for HDI Assembly", "HDI Attached", "Wirebonded", "Encapsulated", "Tested", "Thermally Cycled", "Tested", "Ready for Shipping", "Shipped");
 
@@ -61,6 +62,16 @@ if(isset($_POST['submit']) && ((isset($_POST['box']) && $_POST['who'] != "") || 
 	
 	if(isset($_POST['shipbox'])){
 		mysql_query($funcship, $connection);
+		$flexfunc = "UPDATE flex_p set current=current-1 WHERE name=\"".$location."\"";
+		$carrierfunc = "UPDATE carrier_p set current=current-1 WHERE name=\"".$location."\"";
+		mysql_query($flexfunc, $connection);
+		mysql_query($carrierfunc, $connection);
+		$flexid = 0;
+		$carrierid = 0;
+		if($location == "Purdue"){ $flexid = 1; $carrierid = 1;}
+		if($location == "Nebraska"){ $flexid = 2; $carrierid = 2;}
+		addcomment("flex_p", $flexid, "Flex cable shipped out on module ".$name);
+		addcomment("carrier_p", $carrierid, "Module carrier shipped out on module ".$name);
 	}
 	
 	if($assembly==5){

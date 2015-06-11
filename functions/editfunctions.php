@@ -47,7 +47,7 @@ function connecttbm($hdi, $tbm){
 	mysql_query($hdifunc, $connection);
 }
 
-function changeloc($id, $newloc, $notes){
+function changeloc($id, $newloc, $notes, $user){
 	include('../../../Submission_p_secure_pages/connect.php');
 	
 	mysql_query('USE cmsfpix_u', $connection);
@@ -56,14 +56,14 @@ function changeloc($id, $newloc, $notes){
 	
 	mysql_query($func, $connection);
 
-	$newlocnote = "Module moved to ".$newloc;
+	$newlocnote = "Module moved to ".$newloc." by ".$user;
 	addcomment("module_p", $id, $newlocnote);
 
 	if($notes != ""){
 		addcomment("module_p", $id, $notes);
 	}
 
-	lastUpdate("module_p", $id, "User", "Location Changed to ".$newloc, $notes);
+	lastUpdate("module_p", $id, $user, "Location Changed to ".$newloc, $notes);
 
 }
 
@@ -99,6 +99,9 @@ function generateHDImodulename($modid){
 
 	if($batch === "YHC69" && $datecode === "1015"){
 		$newname = $newname."A-";
+	}
+	if($batch === "YHD19" && $datecode === "1815"){
+		$newname = $newname."B-";
 	}
 
 	$newname = $newname.$panel."-".$padpos;

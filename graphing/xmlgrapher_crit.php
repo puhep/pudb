@@ -53,7 +53,7 @@ $doc3=simplexml_load_string($file3);}
 
 if($scan == "IV"){
 $y = "ACTV_CURRENT_AMP";
-$y2 = "ACTV_CURRENT_AMP";}
+$y2 = "TOT_CURRENT_AMP";}
 if($scan == "CV"){
 $y = "ACTV_CAP_FRD";}
 
@@ -321,7 +321,7 @@ $doc3=simplexml_load_string($file3);}
 
 if($scan == "IV"){
 $y = "ACTV_CURRENT_AMP";
-$y2 = "ACTV_CURRENT_AMP";}
+$y2 = "TOT_CURRENT_AMP";}
 if($scan == "CV"){
 $y = "ACTV_CAP_FRD";}
 

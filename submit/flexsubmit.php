@@ -5,7 +5,7 @@
   <title>Flex Cable Submission</title>
 </head>
 <body>
-<form  method="post" enctype="multipart/form-data">
+<form action="flexsubmit_proc.php" method="post" enctype="multipart/form-data">
 
 <?php
 include('../functions/submitfunctions.php');
@@ -15,86 +15,59 @@ include('../../../Submission_p_secure_pages/connect.php');
 
 mysql_query('USE cmsfpix_u', $connection);
 
-$id = $_POST['id'];
-echo "<input type=\"hidden\" value=\"".$_POST['id']."\" name=\"id\">";
+$name = $_GET['name'];
+if($name == "Purdue"){$id = 1;}
+if($name == "Nebraska"){$id = 2;}
+echo "<input type=\"hidden\" value=\"".$_GET['name']."\" name=\"name\">";
 
 
+$ffunc = "SELECT current FROM flex_p WHERE id=".$id;
+$foutput = mysql_query($ffunc, $connection);
+$frow = mysql_fetch_assoc($foutput);
+$fcurcount = $frow['current'];
 
-if(isset($_POST['submit'])){
-
-	$add=0;
-	$ship=0;
-	$trash=0;
-
-	if($_POST['add'] != ""){
-		$add = $_POST['add'];}
-	if($_POST['ship'] != ""){
-		$ship = $_POST['ship'];}
-	if($_POST['trash'] != ""){
-		$trash = $_POST['trash'];}
-
-	$func1 = "UPDATE flex_p SET current=current+".$add.", tot_received=tot_received+".$add." WHERE id=".$id;
-	mysql_query($func1, $connection);
-	
-	$func2 = "UPDATE flex_p SET current=current-".$ship.", tot_shipped=tot_shipped+".$ship." WHERE id=".$id;
-	mysql_query($func2, $connection);
-	
-	$func3 = "UPDATE flex_p SET current=current-".$trash.", tot_trashed=tot_trashed+".$trash." WHERE id=".$id;
-	mysql_query($func3, $connection);
-	
-	$func4 = "SELECT current FROM flex_p WHERE id=".$id;
-	$output = mysql_query($func4, $connection);
-	$row = mysql_fetch_assoc($output);
-	$curcount = $row['current'];
-	echo $curcount;
-	
-	$tally = "Flex Cables Added: ".$add." Shipped: ".$ship." Trashed: ".$trash." Current Total: ".$curcount;
-	
-	addcomment("flex_p",$id,$tally);
-	addcomment("flex_p",$id,$_POST['notes']);
-
-}
-
-echo "Current Number of Flex Cables: ";
-
-$func = "SELECT current FROM flex_p WHERE id=".$id;
-$output = mysql_query($func, $connection);
-$row = mysql_fetch_assoc($output);
-$curcount = $row['current'];
-echo $curcount;
+$cfunc = "SELECT current FROM carrier_p WHERE id=".$id;
+$coutput = mysql_query($cfunc, $connection);
+$crow = mysql_fetch_assoc($coutput);
+$ccurcount = $crow['current'];
 ?>
 
-<br>
-<br>
+<table cellpadding="20">
+	<tr>
+		<td>
+		Current Number of Flex Cables: 
+		<?php echo $fcurcount; ?>
+		</td>
+		<td>
+		Current Number of Module Carriers: 
+		<?php echo $ccurcount; ?>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		New Total Number of Flex Cables: <textarea cols="2" rows="1" name="fcurr"></textarea>
+		</td>
+		<td>
+		New Total Number of Module Carriers: <textarea cols="2" rows="1" name="ccurr"></textarea>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<?php curnotes("flex_p",$id); ?>
+		</td>
+		<td>
+		<?php curnotes("carrier_p",$id); ?>
+		</td>
+	</tr>
 
-Flex Cables Recieved: <textarea cols="2" rows="1" name="add"></textarea>
 
-<br>
-<br>
+</table>
 
-Flex Cables Shipped Out: <textarea cols="2" rows="1" name="ship"></textarea>
-
-<br>
-<br>
-
-Flex Cables Discarded: <textarea cols="2" rows="1" name="trash"></textarea>
-
-<br>
-<br>
-
-Additional Notes <textarea cols="40" rows="5" name="notes"></textarea>
 <br>
 <br>
 
 <?php
-
-curnotes("flex_p",$id);
-
-echo"<br>";
-echo"<br>";
-
 conditionalSubmit(1);
-
 ?>
 
 </form>

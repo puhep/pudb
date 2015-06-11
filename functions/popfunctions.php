@@ -3,60 +3,60 @@
 ini_set('display_errors', 'On');
 error_reporting(E_ALL | E_STRICT);
 
-function comparepop($formname){
+function comparepop($comparator){
 	
 	echo "<option value=\"=\"";
-	if($_POST[$formname] == "="){ echo 'selected="selected"';}
+	if($comparator == "="){ echo 'selected="selected"';}
 	echo ">=</option>\n";
 	
 	echo "<option value=\">\"";
-	if($_POST[$formname] == ">"){ echo 'selected="selected"';}
+	if($comparator == ">"){ echo 'selected="selected"';}
 	echo ">></option>\n";
 	
 	echo "<option value=\"<\"";
-	if($_POST[$formname] == "<"){ echo 'selected="selected"';}
+	if($comparator == "<"){ echo 'selected="selected"';}
 	echo "><</option>\n";
 	
 	echo "<option value=\">=\"";
-	if($_POST[$formname] == ">="){ echo 'selected="selected"';}
+	if($comparator == ">="){ echo 'selected="selected"';}
 	echo ">>=</option>\n";
 	
 	echo "<option value=\"<=\"";
-	if($_POST[$formname] == "<="){ echo 'selected="selected"';}
+	if($comparator == "<="){ echo 'selected="selected"';}
 	echo "><=</option>\n";
 	
 	echo "<option value=\"!=\"";
-	if($_POST[$formname] == "!="){ echo 'selected="selected"';}
+	if($comparator == "!="){ echo 'selected="selected"';}
 	echo ">!=</option>\n";
 }
 
-function locpop($formname){
+function locpop($loc){
 	
 	echo "<option value=\"\"";
 	echo "></option>\n";
 	
 	echo "<option value=\"CERN\"";
-	if($_POST[$formname] == "CERN"){ echo 'selected="selected"';}
+	if($loc == "CERN"){ echo 'selected="selected"';}
 	echo ">CERN</option>\n";
 	
 	echo "<option value=\"Fermilab\"";
-	if($_POST[$formname] == "Fermilab"){ echo 'selected="selected"';}
+	if($loc == "Fermilab"){ echo 'selected="selected"';}
 	echo ">Fermilab</option>\n";
 	
 	echo "<option value=\"Kansas\"";
-	if($_POST[$formname] == "Kansas"){ echo 'selected="selected"';}
+	if($loc == "Kansas"){ echo 'selected="selected"';}
 	echo ">Kansas</option>\n";
 	
 	echo "<option value=\"Nebraska\"";
-	if($_POST[$formname] == "Nebraska"){ echo 'selected="selected"';}
+	if($loc == "Nebraska"){ echo 'selected="selected"';}
 	echo ">Nebraska</option>\n";
 	
 	echo "<option value=\"Purdue\"";
-	if($_POST[$formname] == "Purdue"){ echo 'selected="selected"';}
+	if($loc == "Purdue"){ echo 'selected="selected"';}
 	echo ">Purdue</option>\n";
 	
 	echo "<option value=\"UIC\"";
-	if($_POST[$formname] == "UIC"){ echo 'selected="selected"';}
+	if($loc == "UIC"){ echo 'selected="selected"';}
 	echo ">UIC</option>\n";
 }
 
@@ -411,6 +411,7 @@ include('../../../Submission_p_secure_pages/connect.php');
 function HDIbatchpop(){
 
 	echo "<option value=\"YHC69-1015\">YHC69-1015</option>\n";
+	echo "<option value=\"YHD19-1815\">YHD19-1815</option>\n";
 
 }
 
