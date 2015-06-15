@@ -1,8 +1,8 @@
 <?php
 include('../../../Submission_p_secure_pages/connect.php');
-require_once('../jpgraph/src/jpgraph.php');
-require_once('../jpgraph/src/jpgraph_date.php');
-require_once('../jpgraph/src/jpgraph_line.php');
+include('../jpgraph/src/jpgraph.php');
+include('../jpgraph/src/jpgraph_date.php');
+include('../jpgraph/src/jpgraph_line.php');
 
 $arr1;
 $arr2;

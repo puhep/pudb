@@ -70,6 +70,10 @@ Data Viewing
   <input value="Assembly Over Time"
  type="submit"></form>
 
+<form action="summary/pos.php" method="get">
+  <input value="IV by Position"
+ type="submit"></form>
+
 <form action="../MoReWeb/Results/Overview.html" method="get">
   <input value="MoReWeb Results"
  type="submit"></form>
@@ -98,12 +102,12 @@ New Parts Information
   </form>
 
 <form action="submit/flexsubmit.php" method="get">
-  <input name="flex" value="Flex Cable Submit - Purdue" type="submit">
+  <input name="flex" value="Flex and Carrier Submit - Purdue" type="submit">
   <input name="name" value="Purdue" type="hidden">
   </form>
 
 <form action="submit/flexsubmit.php" method="get">
-  <input name="flex" value="Flex Cable Submit - Nebraska" type="submit">
+  <input name="flex" value="Flex and Carrier Submit - Nebraska" type="submit">
   <input name="name" value="Nebraska" type="hidden">
   </form>
 

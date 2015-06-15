@@ -1,16 +1,16 @@
 <?php
 function xmldepvolt($file, $scan){
-#require_once('../jpgraph/src/jpgraph.php');
-#require_once('../jpgraph/src/jpgraph_scatter.php');
-#require_once('../jpgraph/src/jpgraph_log.php');
-#require_once('../jpgraph/src/jpgraph_line.php');
-#require_once('../jpgraph/src/jpgraph_utils.inc.php');
+#include('../jpgraph/src/jpgraph.php');
+#include('../jpgraph/src/jpgraph_scatter.php');
+#include('../jpgraph/src/jpgraph_log.php');
+#include('../jpgraph/src/jpgraph_line.php');
+#include('../jpgraph/src/jpgraph_utils.inc.php');
 
-require_once('jpgraph/src/jpgraph.php');
-require_once('jpgraph/src/jpgraph_scatter.php');
-require_once('jpgraph/src/jpgraph_log.php');
-require_once('jpgraph/src/jpgraph_line.php');
-require_once('jpgraph/src/jpgraph_utils.inc.php');
+include('jpgraph/src/jpgraph.php');
+include('jpgraph/src/jpgraph_scatter.php');
+include('jpgraph/src/jpgraph_log.php');
+include('jpgraph/src/jpgraph_line.php');
+include('jpgraph/src/jpgraph_utils.inc.php');
 
 if(!is_null($file)){
 $doc=simplexml_load_string($file);}

@@ -101,6 +101,20 @@ function curgraphs($sensorid, $scan, $level){
 	}
 }
 
+function curgraphs_pos_summary($level, $scan, $loc){
+
+	$imagefile = "../pics/graphs/".$level."_".$loc."_".$scan.".png";
+
+	if(file_exists($imagefile)){
+		echo "<a href=\"$imagefile\" target=\"_blank\"><img src=\"$imagefile\" width=\"710\" height=\"400\" /></a>";
+	}
+	else{
+
+		echo "<a href=\"../graphing/positiongrapher.php?level=$level&scan=$scan&loc=$loc\" target=\"_blank\"><img src=\"../graphing/positiongrapher.php?level=$level&scan=$scan&loc=$loc\" width=\"710\" height=\"400\" /></a>";
+	}
+
+}
+
 function curname($db, $id){
 	include('../../../Submission_p_secure_pages/connect.php');
 
@@ -512,7 +526,7 @@ function namedump($db, $id){
 		$wafer = mysql_query($waferfunc, $connection);
 		$row = mysql_fetch_assoc($wafer);
 		$namearr["wafer"] = $row['name'];
-		if($namearr['sensor'] == ""){
+		if(isset($namearr['sensor']) && $namearr['sensor'] == ""){
 			$sensorfunc = "SELECT name from sensor_p WHERE assoc_wafer=$id";
 			$sensor = mysql_query($sensorfunc, $connection);
 			$subrow = mysql_fetch_assoc($sensor);

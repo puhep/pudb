@@ -111,11 +111,13 @@ include('../../../Submission_p_secure_pages/connect.php');
 include('../functions/curfunctions.php');
 include('../functions/editfunctions.php');
 include('../graphing/xmlgrapher_writer.php');
+include('../graphing/positiongrapher_writer.php');
 
 	$sqlnotes = mysql_real_escape_string($notes);
 
 	$sensordata = dump("sensor_p", $id);
 	$sensorname = $sensordata['name'];
+		$loc = substr($sensorname,3,2);
 
 	$date = date('Y-m-d H:i:s');
 
@@ -130,6 +132,7 @@ include('../graphing/xmlgrapher_writer.php');
 	if(mysql_query($func,$connection)){
 		echo "The $scan measurement on sensor $sensorname has been added to the database.<br>";
 		xmlgrapher_writer($id, $scan, $parttype);	
+		positiongrapher_writer($parttype, $scan, $loc);	
 	}
 	else{
 		echo("An error has occurred and the data has not been added.<br>");

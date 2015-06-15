@@ -63,7 +63,7 @@ function locpop($loc){
 function waferpop(){
 
 include('../../../Submission_p_secure_pages/connect.php');
-include('../function/curfunctions.php');
+include('../functions/curfunctions.php');
 
 	$hide = hidepre("wafer",1);
 
@@ -85,7 +85,7 @@ include('../function/curfunctions.php');
 function shippedwaferpop(){
 
 include('../../../Submission_p_secure_pages/connect.php');
-include('../function/curfunctions.php');
+include('../functions/curfunctions.php');
 
 	$hide = hidepre("wafer",2);
 
@@ -107,7 +107,7 @@ include('../function/curfunctions.php');
 function sensorpop($wafer){
 
 include('../../../Submission_p_secure_pages/connect.php');
-include('../function/curfunctions.php');
+include('../functions/curfunctions.php');
 
 	$hide = hidepre("sensor",2);
 
@@ -129,7 +129,7 @@ include('../function/curfunctions.php');
 function sensorlist($wafer){
 
 include('../../../Submission_p_secure_pages/connect.php');
-include('../function/curfunctions.php');
+include('../functions/curfunctions.php');
 
 	$hide = hidepre("sensor",2);
 
@@ -177,7 +177,7 @@ include('../function/curfunctions.php');
 function availsensor(){
 
 include('../../../Submission_p_secure_pages/connect.php');
-include('../function/curfunctions.php');
+include('../functions/curfunctions.php');
 
 	$hide = hidepre("wafer",1);
 
@@ -419,7 +419,11 @@ function morewebLinkList($modid){
 include('../functions/curfunctions.php');
 
 	$doc = new DOMDocument();
+	
+	libxml_use_internal_errors(true);
 	$doc->loadHTMLFile("/project/cmsfpix/.www/MoReWeb/Results/Overview.html");
+	libxml_use_internal_errors(false);
+
 
 	$tags = $doc->getElementsByTagName('a');
 

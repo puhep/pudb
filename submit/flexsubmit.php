@@ -30,25 +30,31 @@ $cfunc = "SELECT current FROM carrier_p WHERE id=".$id;
 $coutput = mysql_query($cfunc, $connection);
 $crow = mysql_fetch_assoc($coutput);
 $ccurcount = $crow['current'];
+
+echo "<b>";
+echo $name;
+echo "</b>";
+
+
 ?>
 
 <table cellpadding="20">
 	<tr>
 		<td>
-		Current Number of Flex Cables: 
+		Current number of flex cables: 
 		<?php echo $fcurcount; ?>
 		</td>
 		<td>
-		Current Number of Module Carriers: 
+		Current number of module carriers: 
 		<?php echo $ccurcount; ?>
 		</td>
 	</tr>
 	<tr>
 		<td>
-		New Total Number of Flex Cables: <textarea cols="2" rows="1" name="fcurr"></textarea>
+		New total number of flex cables: <textarea cols="2" rows="1" name="fcurr"></textarea>
 		</td>
 		<td>
-		New Total Number of Module Carriers: <textarea cols="2" rows="1" name="ccurr"></textarea>
+		New total number of module carriers: <textarea cols="2" rows="1" name="ccurr"></textarea>
 		</td>
 	</tr>
 	<tr>

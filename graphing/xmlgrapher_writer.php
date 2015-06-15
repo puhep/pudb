@@ -1,8 +1,8 @@
 <?php
 function xmlgrapher_writer($id, $scan, $level){
-require_once('../jpgraph/src/jpgraph.php');
-require_once('../jpgraph/src/jpgraph_scatter.php');
-require_once('../jpgraph/src/jpgraph_log.php');
+include('../jpgraph/src/jpgraph.php');
+include('../jpgraph/src/jpgraph_scatter.php');
+include('../jpgraph/src/jpgraph_log.php');
 
 include('../../../Submission_p_secure_pages/connect.php');
 

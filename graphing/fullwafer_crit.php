@@ -47,7 +47,6 @@ $y2 = "ACTV_CURRENT_AMP";}
 if($scan == "CV"){
 $y = "ACTV_CAP_FRD";}
 
-$graphname = $partname." ".$scan." Scan";
 $datacountlim = 0;
 
 $k=0;
