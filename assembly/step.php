@@ -134,8 +134,7 @@ while($output && $row = mysql_fetch_assoc($output)){
 	$i++;
 }
 
-
-
+if(!empty($results)){
 if($part == "module_p" && $sl == 12){
 	if($sortby == "nm"){
 		array_multisort($results[6], SORT_ASC, SORT_STRING,$results[1],$results[2],$results[3],$results[4],$results[5],$results[0]);
@@ -175,7 +174,7 @@ else{
 		array_multisort($results[1], SORT_ASC, SORT_STRING, $results[0]);
 	}
 }
-
+}
 
 for($loop=0;$loop<$i;$loop++){
 

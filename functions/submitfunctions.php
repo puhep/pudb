@@ -1197,7 +1197,7 @@ include("../functions/editfunctions.php");
 
 }
 
-function batchroc($xml, $name, $size, $location){
+function batchroc($xml, $name, $size, $location, $user, $notes){
 include("../../../Submission_p_secure_pages/connect.php");
 include("../functions/curfunctions.php");
 include("../functions/editfunctions.php");
@@ -1261,9 +1261,12 @@ include("../functions/editfunctions.php");
 
 					$date = date('Y-m-d H:i:s');
 
-					$notes = $date." Received\n";
+					$newnotes = $date." Received by ".$user."\n";
+					if($notes != ""){
+						$newnotes .= $date." ".$notes."\n";
+					}
 
-					$func = "UPDATE module_p SET assembly=1, arrival=\"".$date."\", location=\"".$location."\", destination=\"".$location."\", has_ROC=\"1\", notes=\"".$notes."\" WHERE id=".$id;
+					$func = "UPDATE module_p SET assembly=1, arrival=\"".$date."\", location=\"".$location."\", destination=\"".$location."\", has_ROC=\"1\", notes=\"".$newnotes."\" WHERE id=".$id;
 
 					mysql_query("USE cmsfpix_u", $connection);
 					if(mysql_query($func, $connection)){
@@ -1291,7 +1294,7 @@ include("../functions/editfunctions.php");
 					echo "<br>";
 					$i++;
 					
-					lastUpdate("module_p", $id, "User", "Batch Module Submit", "");
+					lastUpdate("module_p", $id, $user, "Batch Module Submit", "");
 
 				}
 

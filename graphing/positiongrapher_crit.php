@@ -115,6 +115,7 @@ $k++;
 
 }
 
+echo "<div style='font-size:120%'>";
 echo "<table border=1>";
 
 echo "<tr>";
@@ -142,5 +143,6 @@ echo "</tr>";
 
 
 echo "</table>";
+echo "</div>";
 }
 ?>

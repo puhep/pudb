@@ -26,6 +26,14 @@ $limitarr;
 $markedarr = array();
 $empty=1;
 
+###Array for a limit line
+for($loop=0;$loop<=15;$loop++){
+	$limitarr[0][$loop]=$loop*10;
+	$limitarr[1][$loop]=2E-6;
+}
+	$limitarr[0][16]=150.1;
+	$limitarr[1][16]=1E-10;
+
 $sensorfunc = "SELECT name, id FROM sensor_p WHERE name LIKE \"%".$loc."%\"";
 $sensoroutput = mysql_query($sensorfunc, $connection);
 
@@ -135,6 +143,8 @@ $graph->SetScale("linlog",-10,-4,0,600);
 
 $graph->img->SetMargin(70,80,40,40);	
 
+$graph->img->SetAntiAliasing(false);
+
 $graph->title->Set($graphname);
 
 $graph->title->SetFont(FF_FONT1,FS_BOLD);
@@ -172,14 +182,13 @@ $graph->Add($sp1[$l]);
 $sp1[$l]->SetLegend($sensors[$l][0]);
 }
 
-#if($scan=="IV"){
-#$splim = new ScatterPlot($limitarr[1],$limitarr[0]);
-#$splim->mark->SetWidth(8);
-#$splim->mark->SetFillColor("red");
-#$splim->link->Show();
-#$graph->Add($splim);
-#$splim->SetLegend("Limit");
-#}
+if($scan=="IV"){
+$splim = new LinePlot($limitarr[1],$limitarr[0]);
+$graph->Add($splim);
+$splim->SetWeight(2);
+$splim->SetColor("black");
+$splim->SetLegend("2uA at 150V Limit");
+}
 
  $graph->Stroke($imagefile);
 }

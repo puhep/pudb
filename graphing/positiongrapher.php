@@ -2,8 +2,10 @@
 require_once('../jpgraph/src/jpgraph.php');
 require_once('../jpgraph/src/jpgraph_scatter.php');
 require_once('../jpgraph/src/jpgraph_log.php');
+require_once('../jpgraph/src/jpgraph_line.php');
 
 include('../../../Submission_p_secure_pages/connect.php');
+include('../functions/curfunctions.php');
 mysql_query('USE cmsfpix_u',$connection);
 
 $level = $_GET['level'];
@@ -20,15 +22,23 @@ $measurements = array();
 $colors = array("#000000","#ffff00","#a020f0","#ffa500","#add8e6","#ff0000","#bebebe","#00ff00","#ff1493","#0000ff","#ee82ee","#ffa07a","#98fb98","#8b4513","#9acd32","#6b8e23");
 
 
+$hide = hidepre("sensor", 2);
+
 $arr1 = array();
 $limitarr;
 $markedarr = array();
 $empty=1;
 
-$sensorfunc = "SELECT name, id FROM sensor_p WHERE name LIKE \"%".$loc."%\"";
-$sensoroutput = mysql_query($sensorfunc, $connection);
+###Array for a limit line
+for($loop=0;$loop<=15;$loop++){
+	$limitarr[0][$loop]=$loop*10;
+	$limitarr[1][$loop]=2E-6;
+}
+	$limitarr[0][16]=150.1;
+	$limitarr[1][16]=1E-10;
 
-#echo $sensorfunc;
+$sensorfunc = "SELECT name, id FROM sensor_p WHERE name LIKE \"%".$loc."%\"".$hide;
+$sensoroutput = mysql_query($sensorfunc, $connection);
 
 $i = 0;
 while($sensrow = mysql_fetch_assoc($sensoroutput)){
@@ -134,6 +144,8 @@ $graph->SetScale("linlog",-10,-4,0,600);
 
 $graph->img->SetMargin(70,80,40,40);	
 
+$graph->img->SetAntiAliasing(false);	
+
 $graph->title->Set($graphname);
 
 $graph->title->SetFont(FF_FONT1,FS_BOLD);
@@ -171,14 +183,14 @@ $graph->Add($sp1[$l]);
 $sp1[$l]->SetLegend($sensors[$l][0]);
 }
 
-#if($scan=="IV"){
-#$splim = new ScatterPlot($limitarr[1],$limitarr[0]);
-#$splim->mark->SetWidth(8);
-#$splim->mark->SetFillColor("red");
-#$splim->link->Show();
-#$graph->Add($splim);
-#$splim->SetLegend("Limit");
-#}
+if($scan=="IV"){
+$splim = new LinePlot($limitarr[1],$limitarr[0]);
+$graph->Add($splim);
+$splim->SetWeight(2);
+$splim->SetColor("black");
+$splim->SetLegend("2uA at 150V Limit");
+#$splim->SetStyle("dotted");
+}
 
  $graph->StrokeStore($imagefile);
 ?>

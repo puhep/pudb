@@ -60,6 +60,22 @@ function locpop($loc){
 	echo ">UIC</option>\n";
 }
 
+function bonderpop(){
+
+	echo "<option value=\"\"";
+	echo "></option>\n";
+	
+	echo "<option value=\"FC150\"";
+	#if($loc == "UIC"){ echo 'selected="selected"';}
+	echo ">FC150</option>\n";
+
+	echo "<option value=\"Datacon\"";
+	#if($loc == "UIC"){ echo 'selected="selected"';}
+	echo ">Datacon</option>\n";
+
+
+}
+
 function waferpop(){
 
 include('../../../Submission_p_secure_pages/connect.php');

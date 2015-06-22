@@ -9,6 +9,8 @@
 <h>
 Purdue University CMS FPix Upgrade Production Database
 </h>
+<br>
+<b><font color="red">Due to Purdue Physics IT maintenance work, this site will be down on Tuesday, June 23 from 10AM EST to 2PM EST</font></b>
 <div style="position:fixed;left:420px;top:2px;">
 <form method="link" action="login.php?prev=index.php">
 <input type="submit" value="LOG IN">

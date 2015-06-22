@@ -35,6 +35,14 @@ Location:
 </select>
 <br>
 <br>
+User:
+<textarea name="user" cols="10" rows="1"></textarea>
+<br>
+<br>
+Additional Notes:
+<textarea name="notes" cols="40" rows="5"></textarea>
+<br>
+<br>
 
 <?php
 conditionalSubmit(0);

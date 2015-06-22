@@ -2,10 +2,10 @@
 <head>
   <meta content="text/html; charset=ISO-8859-1"
  http-equiv="content-type">
-  <title>Update Module Location</title>
+  <title>Update Module Bonder</title>
 </head>
 <body>
-<form  action="updatelocation_proc.php" method="post" enctype="multipart/form-data">
+<form  action="updatebonder_proc.php" method="post" enctype="multipart/form-data">
 
 <?php
 include('../functions/curfunctions.php');
@@ -20,9 +20,9 @@ curname("module_p", $id);
 ?>
 
 <br>
-New Location: 
-	<select name="newloc">
-	<?php locpop(""); ?>
+New Bonder: 
+	<select name="newbonder">
+	<?php bonderpop(); ?>
 	</select>
 <br>
 <br>

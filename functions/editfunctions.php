@@ -67,6 +67,26 @@ function changeloc($id, $newloc, $notes, $user){
 
 }
 
+function changebonder($id, $newbonder, $notes, $user){
+	include('../../../Submission_p_secure_pages/connect.php');
+	
+	mysql_query('USE cmsfpix_u', $connection);
+
+	$func = "UPDATE module_p SET bonder=\"$newbonder\" WHERE id=$id";
+	
+	mysql_query($func, $connection);
+
+	$newbondernote = "Module bonder set to ".$newbonder." by ".$user;
+	addcomment("module_p", $id, $newbondernote);
+
+	if($notes != ""){
+		addcomment("module_p", $id, $notes);
+	}
+
+	lastUpdate("module_p", $id, $user, "Bonder Changed to ".$newbonder, $notes);
+
+}
+
 function generateHDImodulename($modid){
 	include('../../../Submission_p_secure_pages/connect.php');
 	

@@ -72,6 +72,8 @@
 		echo "</h>";
 		echo $dumped['bonder'];
 		echo "<br>";
+		echo "<a href=\"../submit/updatebonder.php?name=$name\">Update Bonder</a>";
+		echo "<br>";
 		echo "<br>";
 
 		echo "<h>";

@@ -18,8 +18,6 @@ include('../graphing/xmlgrapher_crit.php');
 	$param13 = "";
 	$param14 = "";
 	$param15 = "";
-	$param16 = "";
-	$param17 = "";
 	$param18 = "";
 	$param19 = "";
 
@@ -49,10 +47,8 @@ include('../graphing/xmlgrapher_crit.php');
 		$param11 = $_POST['param11'];
 		$param12 = $_POST['param12'];
 		$param13 = $_POST['param13'];
-		$param14 = $_POST['param14'];
-		$param15 = $_POST['param15'];
-		$param16 = $_POST['param16'];
-		$param17 = $_POST['param17'];
+		#$param14 = $_POST['param14'];
+		#$param15 = $_POST['param15'];
 		$param18 = $_POST['param18'];
 		$param19 = $_POST['param19'];
 

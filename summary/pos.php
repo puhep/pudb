@@ -7,6 +7,11 @@
   <link rel="stylesheet" type="text/css" href="../css/assemblyovertime.css" />
 </head>
 <body>
+
+<div style="position:fixed;left:1200px;top:58px;">
+<img src="../pics/SINTEF_numbering_diagram_2x8s_Updated.jpg">
+</div>
+
 <?php
 include("../graphing/positiongrapher_crit.php");
 include("../functions/curfunctions.php");

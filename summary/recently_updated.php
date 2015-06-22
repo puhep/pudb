@@ -16,7 +16,7 @@ include('../functions/curfunctions.php');
 
 $hide = hidepre("module",1);
 
-$func = "SELECT name, id, time_created, last_user, last_update, last_comment, destination from module_p".$hide." ORDER BY time_created DESC";
+$func = "SELECT name, id, time_created, last_user, last_update, last_comment, destination from module_p".$hide." WHERE assembly>0 ORDER BY time_created DESC";
 $i=0;
 $j=0;
 $dataarray;
@@ -37,7 +37,7 @@ while($row = mysql_fetch_assoc($output)){
 
 echo "<br>";
 
-echo "Recently Updated Modules:";
+echo "<b>Recently Updated Modules:</b>";
 
 echo "<table cellspacing=20 border=0>";
 	echo "<tr>";
