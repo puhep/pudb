@@ -33,6 +33,46 @@ curpics("sidet_p", $id);
 <br>
 </form>
 
+<div style="position:absolute;left:500px;top:10px;">
+<form method="POST" action="../submit/fullSubmit.php">
+<?php
+  echo "<input type='hidden' name='id' value='".$id."'>";
+?>
+<input type="submit" value="Update">
+</form>
+</div>
+
+<div2 style="position:absolute;left:500px;top:38px;">
+<form method="GET" action="../download/configfiles.php" target="_blank">
+<?php
+  echo "<input type='hidden' name='name' value='".$name."'>";
+?>
+<input type="submit" value="Config Files">
+</form>
+</div2>
+
+<div3 style="position:absolute;left:500px;top:66px;">
+<form method="GET" action="test_list.php" ">
+<input type="submit" value="Back to Tested Module List">
+</form>
+</div3>
+
+<div4 style="position:absolute;left:500px;top:94px;">
+<form method="GET" action="bbm.php">
+<?php
+  echo "<input type='hidden' name='name' value='".$name."'>";
+?>
+<input type="submit" value="Back to Part Summary">
+</form>
+</div4>
+
+<div5 style="position:absolute;left:500px;top:122px;">
+<form method="link" action="../index.php">
+<input type="submit" value="MAIN MENU">
+</form>
+</div5>
+
+
 <form method="POST" action="../submit/fullSubmit.php">
 <?php
   echo "<input type='hidden' name='id' value='".$id."'>";
@@ -61,6 +101,5 @@ curpics("sidet_p", $id);
 <form method="link" action="../index.php">
 <input type="submit" value="MAIN MENU">
 </form>
-
 </body>
 </html>

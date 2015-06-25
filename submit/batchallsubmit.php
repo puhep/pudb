@@ -18,6 +18,10 @@ include('../functions/curfunctions.php');
 
 <br>
 <br>
+User:
+<textarea name="user" rows="1" cols="10"></textarea>
+<br>
+<br>
 .zip file:
 <input name="zip" type="file">
 <br>

@@ -7,9 +7,9 @@ include('../functions/curfunctions.php');
 
 	header("Location: batchallsubmit.php".$gets);
 
-if(isset($_POST['submit']) &&  $_FILES['zip']['size'] > 0){
+if(isset($_POST['submit']) && $_POST['user'] != "" && $_FILES['zip']['size'] > 0){
 
-	bigbatch($_FILES['zip']['tmp_name'],$_FILES['zip']['name'],$_FILES['zip']['size']);
+	bigbatch($_FILES['zip']['tmp_name'],$_FILES['zip']['name'],$_FILES['zip']['size'], $_POST['user']);
 
 	exit();
 

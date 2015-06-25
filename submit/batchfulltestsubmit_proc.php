@@ -7,8 +7,9 @@ include('../functions/curfunctions.php');
 
 	header("Location: batchfulltestsubmit.php".$gets);
 
-if(isset($_POST['submit']) &&  $_FILES['txt']['size'] > 0){
-	batchfulltest($_FILES['txt']['tmp_name'],$_FILES['txt']['name'],$_FILES['txt']['size']);
+if(isset($_POST['submit']) && $_POST['user'] != "" &&  $_FILES['txt']['size'] > 0){
+
+	batchfulltest($_FILES['txt']['tmp_name'],$_FILES['txt']['name'],$_FILES['txt']['size'], $_POST['user']);
 
 	exit();
 }

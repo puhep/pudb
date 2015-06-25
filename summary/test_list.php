@@ -256,7 +256,7 @@ if($param3 != ""){
 	$sortmod3 = "AND badrocs".$_POST['comp3']."\"".$_POST['param3']."\" ";
 }
 if($param4 != ""){
-	$sortmod4 = "AND badpix".$_POST['comp4']."\"".$_POST['param4']."\" ";
+	$sortmod4 = "AND deadpix".$_POST['comp4']."\"".$_POST['param4']."\" ";
 }
 if($param5 != ""){
 	$sortmod5 = "AND badbumps_electrical".$_POST['comp5']."\"".$_POST['param5']."\" ";
@@ -280,10 +280,10 @@ if($param11 != ""){
 	$sortmod11 = "AND unaddressable_pix".$_POST['comp11']."\"".$_POST['param11']."\" ";
 }
 if($param12 != ""){
-	$sortmod12 = "AND xray_slope".$_POST['comp12']."\"".$_POST['param12']."\" ";
+	$sortmod12 = "AND c.xray_slope".$_POST['comp12']."\"".$_POST['param12']."\" ";
 }
 if($param13 != ""){
-	$sortmod13 = "AND xray_offset".$_POST['comp13']."\"".$_POST['param13']."\" ";
+	$sortmod13 = "AND c.xray_offset".$_POST['comp13']."\"".$_POST['param13']."\" ";
 }
 if($param14 != ""){
 	$breakdownlimit = $_POST['param14'];
@@ -292,7 +292,7 @@ if($param15 != ""){
 	$compliancelimit = $_POST['param15'];
 }
 if($param19 != ""){
-	$sortmod19 = "AND (name LIKE \"%".$param19."%\" OR name_hdi LIKE \"%".$param19."%\")";
+	$sortmod19 = "AND (a.name LIKE \"%".$param19."%\" OR a.name_hdi LIKE \"%".$param19."%\")";
 }
 
 $sorter = $hide.$sortmod1.$sortmod2.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19;
@@ -308,14 +308,14 @@ include('../../../Submission_p_secure_pages/connect.php');
 include('../functions/curfunctions.php');
 
 #Using joins to sort by parameters in the times_* tables. Probably helpful in the future.#
-$func1 = "SELECT a.name, a.id from module_p a, times_module_p b WHERE a.name LIKE 'M_BB%' AND a.id=b.assoc_module ".$sorter." ORDER BY b.HDI_attached DESC";
-$func2 = "SELECT a.name, a.id from module_p a, times_module_p b WHERE a.name LIKE 'M_CL%' AND a.id=b.assoc_module ".$sorter." ORDER BY b.HDI_attached DESC";
-$func3 = "SELECT a.name, a.id from module_p a, times_module_p b WHERE a.name LIKE 'M_CR%' AND a.id=b.assoc_module ".$sorter." ORDER BY b.HDI_attached DESC";
-$func4 = "SELECT a.name, a.id from module_p a, times_module_p b WHERE a.name LIKE 'M_FL%' AND a.id=b.assoc_module ".$sorter." ORDER BY b.HDI_attached DESC";
-$func5 = "SELECT a.name, a.id from module_p a, times_module_p b WHERE a.name LIKE 'M_FR%' AND a.id=b.assoc_module ".$sorter." ORDER BY b.HDI_attached DESC";
-$func6 = "SELECT a.name, a.id from module_p a, times_module_p b WHERE a.name LIKE 'M_LL%' AND a.id=b.assoc_module ".$sorter." ORDER BY b.HDI_attached DESC";
-$func7 = "SELECT a.name, a.id from module_p a, times_module_p b WHERE a.name LIKE 'M_RR%' AND a.id=b.assoc_module ".$sorter." ORDER BY b.HDI_attached DESC";
-$func8 = "SELECT a.name, a.id from module_p a, times_module_p b WHERE a.name LIKE 'M_TT%' AND a.id=b.assoc_module ".$sorter." ORDER BY b.HDI_attached DESC";
+$func1 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_BB%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
+$func2 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_CL%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
+$func3 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_CR%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
+$func4 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_FL%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
+$func5 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_FR%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
+$func6 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_LL%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
+$func7 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_RR%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
+$func8 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_TT%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
 
 $i=0;
 $j=0;
@@ -533,7 +533,7 @@ for($l=0;$l<8;$l++){
 			echo "<tr>";
 			echo "<td>";
 
-			echo "<a href=\"summaryFull.php?name=".$dataarray[2*$l][$k]."\">".findname("module_p", $dataarray[2*$l+1][$k])."</a>";
+			echo "<a href=\"summaryFull.php?name=".findname("module_p",$dataarray[2*$l+1][$k])."\">".findname("module_p", $dataarray[2*$l+1][$k])."</a>";
 			
 			echo "</td>";
 			echo "</tr>";

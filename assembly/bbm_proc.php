@@ -13,6 +13,7 @@ mysql_query('USE cmsfpix_u', $connection);
 
 $name = $_POST['name'];
 $id = findid("module_p", $name);
+$name = findname("module_p",$id);
 
 $search = "SELECT name, assembly, destination, location FROM module_p WHERE id=$id";
 $table = mysql_query($search, $connection);

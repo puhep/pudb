@@ -2,6 +2,7 @@
 <?php
 
 include('../../../Submission_p_secure_pages/connect.php');
+include('../functions/curfunctions.php');
 mysql_query('USE cmsfpix_u', $connection);
 
 
@@ -29,7 +30,7 @@ $results = array();
 
 $waffunc = "SELECT name, id FROM wafer_p WHERE name LIKE \"%$sqlname%\" ".$locsort;
 $sensorfunc = "SELECT name, id FROM sensor_p WHERE name LIKE \"%$sqlname%\" ".$locsort;
-$bbmfunc = "SELECT name, id FROM module_p WHERE name LIKE \"%$sqlname%\" ".$locsort;
+$bbmfunc = "SELECT name, id FROM module_p WHERE (name LIKE \"%$sqlname%\" OR name_hdi LIKE \"%$sqlname%\") ".$locsort;
 $hdifunc = "SELECT name, id FROM HDI_p WHERE name LIKE \"%$sqlname%\" ".$locsort;
 
 $wafout = mysql_query($waffunc,$connection);
@@ -51,7 +52,7 @@ if(mysql_num_rows($bbmout)){
 
 	$urn = "bbm.php?name=";
 	while($row=mysql_fetch_assoc($bbmout)){
-		$results[0][]=$row['name'];
+		$results[0][]=findname("module_p", $row['id']);
 		$results[1][]=$row['id'];
 		$results[2][]="Module";
 		$results[3][]=$urn;

@@ -15,7 +15,7 @@ if(isset($_POST['submit']) && $_FILES['tarball']['size'] > 0){
 
 	move_uploaded_file($tmptar, $dir.$tar);
 
-	exec("tar -xvf $dir.$tar");
+	exec("tar -zxvf ".$dir.$tar);
 
 	echo "File uploaded";
 

@@ -130,7 +130,7 @@ include('../graphing/positiongrapher_writer.php');
 	mysql_query('USE cmsfpix_u', $connection);
 
 	if(mysql_query($func,$connection)){
-		echo "The $scan measurement on sensor $sensorname has been added to the database.<br>";
+		#echo "The $scan measurement on sensor $sensorname has been added to the database.<br>";
 		xmlgrapher_writer($id, $scan, $parttype);	
 		positiongrapher_writer($parttype, $scan, $loc);	
 	}
@@ -225,9 +225,10 @@ include("../../../Submission_p_secure_pages/connect.php");
 	
 }
 
-function batchfulltest($txtfile, $name, $size, $notes){
+function batchfulltest($txtfile, $name, $size, $user){
 include("../../../Submission_p_secure_pages/connect.php");
 include("../functions/curfunctions.php");
+include("../functions/editfunctions.php");
 
 	ini_set('display_error', 'On');
 	error_reporting(E_ALL | E_STRICT);
@@ -282,7 +283,7 @@ include("../functions/curfunctions.php");
 				
 					$k++;
 					}
-					lastUpdate("module_p", $id, "User", "Updated Fulltest Values", "");
+					lastUpdate("module_p", $id, $user, "Updated Fulltest Values", "");
 				$i++;
 				}
 
@@ -490,7 +491,7 @@ include("../functions/curfunctions.php");
 
 					echo "Changes Submitted for ".$name."<br>";
 					
-					lastUpdate("module_p", $id, "User", "Updated Fulltest Values", "");
+					lastUpdate("module_p", $id, $user, "Updated Fulltest Values", "");
 					$i++;
 				}
 			}
@@ -500,7 +501,7 @@ include("../functions/curfunctions.php");
 
 }
 
-function bigbatch($zip, $name, $size, $notes){
+function bigbatch($zip, $name, $size, $user){
 include("../../../Submission_p_secure_pages/connect.php");
 include("../functions/curfunctions.php");
 include("../functions/editfunctions.php");
@@ -563,7 +564,7 @@ include("../functions/editfunctions.php");
 						echo "ROC ".$pos." on ".$name." has been updated";
 					$k++;
 					}
-					lastUpdate("module_p", $id, "User", "Updated Fulltest Values", "");
+					lastUpdate("module_p", $id, $user, "Updated Fulltest Values", "");
 				$i++;
 				}
 
@@ -767,7 +768,7 @@ include("../functions/editfunctions.php");
 
 					#####################
 
-					lastUpdate("module_p", $id, "User", "Updated Fulltest Values", "");
+					lastUpdate("module_p", $id, $user, "Updated Fulltest Values", "");
 					
 					$i++;
 				}
@@ -822,7 +823,7 @@ include("../functions/editfunctions.php");
 	
 					measurement($id, $level, $type, $notes, $content, filesize($dir.$file), $file, $breakdown, $compliance);
 
-					lastUpdate("module_p", $modid, "User", "Fulltest IV/CV scan", $notes);
+					lastUpdate("module_p", $modid, $user, "Fulltest IV/CV scan", $notes);
 					$i++;
 				}
 				##########################
@@ -1404,5 +1405,50 @@ include("../functions/editfunctions.php");
 			}	
 		}	
 	}	
+}
+
+function log2xml($log, $user, $loc, $partname){
+
+	$timestamp = date("Y-m-d H:i:s", filemtime($log));
+
+	$xmlstr = "";
+	$xmlstr .= "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?>";
+	$xmlstr .= "<ROOT xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">";
+	$xmlstr .= "<HEADER><TYPE>";
+	$xmlstr .= "<EXTENSION_TABLE_NAME>UPGRADE_FPIX_SNSRWAFR_IV</EXTENSION_TABLE_NAME>";
+	$xmlstr .= "<NAME></NAME></TYPE>";
+	$xmlstr .= "<RUN><RUN_NAME></RUN_NAME>";
+	$xmlstr .= "<RUN_BEGIN_TIMESTAMP>".$timestamp."</RUN_BEGIN_TIMESTAMP>";
+	$xmlstr .= "<INITIATED_BY_USER>".$user."</INITIATED_BY_USER>";
+	$xmlstr .= "<LOCATION>".$loc."</LOCATION>";
+	$xmlstr .= "<COMMENT_DESCRIPTION></COMMENT_DESCRIPTION></RUN></HEADER>";
+	
+	$xmlstr .= "<DATA_SET><VERSION></VERSION><COMMENT_DESCRIPTION></COMMENT_DESCRIPTION>";
+	$xmlstr .= "<PART><SERIAL_NUMBER>".$partname."</SERIAL_NUMBER>";
+	$xmlstr .= "<KIND_OF_PART></KIND_OF_PART></PART>";
+
+	$fp = fopen($log, 'r');
+	$content = "";
+	if($fp){
+		while(($line = fgets($fp)) !== false){
+			if($line{0} == "#"){
+				continue;
+			}
+			$linearr = explode("\t", $line);
+			$voltage = $linearr[0];
+			$current = $linearr[1];
+
+			$xmlstr .= "<DATA>";
+			$xmlstr .= "<VOLTAGE_VOLT>".$voltage."</VOLTAGE_VOLT>";
+			$xmlstr .= "<TOT_CURRENT_AMP>".$current."</TOT_CURRENT_AMP>";
+			$xmlstr .= "</DATA>";
+		}
+	}
+
+	$xmlstr .= "</DATA_SET></ROOT>";
+	fclose($fp);
+
+	return addslashes($xmlstr);
+
 }
 

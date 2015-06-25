@@ -13,6 +13,7 @@
 	$id = findid($part, $name);
 	$names = namedump($part, $id);
 	$dumped = dump($part, $id);
+	$foundname = findname("module_p",$id);
 ?>
 <head>
   <meta content="text/html; charset=ISO-8859-1"
@@ -20,7 +21,7 @@
   <link rel="stylesheet" type="text/css" href="../css/summary3.css" />
   <?php
 	echo "<title>";
-	echo findname("module_p",$id);
+	echo $foundname;
 	echo " Summary";
 	echo "</title>";
   ?>
@@ -29,7 +30,7 @@
 <?php
 
 		echo "<part>";
-		echo findname("module_p",$id);
+		echo $foundname;
 		echo "</part>";
 		echo "<br>";
 		echo "<br>";
@@ -62,7 +63,7 @@
 		echo "</h>";
 		echo $dumped['destination'];
 		echo "<br>";
-		echo "<a href=\"../submit/updatelocation.php?name=$name\">Update Location</a>";
+		echo "<a href=\"../submit/updatelocation.php?name=$foundname\">Update Location</a>";
 		echo "<br>";
 		echo "<br>";
 		}
@@ -72,7 +73,7 @@
 		echo "</h>";
 		echo $dumped['bonder'];
 		echo "<br>";
-		echo "<a href=\"../submit/updatebonder.php?name=$name\">Update Bonder</a>";
+		echo "<a href=\"../submit/updatebonder.php?name=$foundname\">Update Bonder</a>";
 		echo "<br>";
 		echo "<br>";
 
@@ -81,7 +82,7 @@
 		echo "</h>";
 		curstep("module", $dumped['assembly']);
 		echo "<br>";
-		echo "<a href=\"../assembly/bbm.php?name=$name\">Update Status</a>";
+		echo "<a href=\"../assembly/bbm.php?name=$foundname\">Update Status</a>";
 		echo "<br>";
 		echo "<br>";
 

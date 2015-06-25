@@ -100,6 +100,7 @@ while($output && $row = mysql_fetch_assoc($output)){
 	$results[6][$i] = $row['name'];
 	
 	if($part=="module_p"){
+		$results[0][$i] = findname("module_p",$row['id']);
 		$results[6][$i] = findname("module_p",$row['id']);
 	}
 

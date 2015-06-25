@@ -14,9 +14,9 @@
 include('../../../Submission_p_secure_pages/connect.php');
 include('../functions/curfunctions.php');
 
-$hide = hidepre("module",1);
+$hide = hidepre("module",2);
 
-$func = "SELECT name, id, time_created, last_user, last_update, last_comment, destination from module_p".$hide." WHERE assembly>0 ORDER BY time_created DESC";
+$func = "SELECT name, id, time_created, last_user, last_update, last_comment, destination from module_p WHERE assembly>0".$hide." ORDER BY time_created DESC";
 $i=0;
 $j=0;
 $dataarray;
@@ -25,7 +25,7 @@ mysql_query('USE cmsfpix_u', $connection);
 
 $output = mysql_query($func, $connection);
 while($row = mysql_fetch_assoc($output)){
-	$dataarray[0][$i] = $row['name'];
+	$dataarray[0][$i] = findname("module_p",$row['id']);
 	$dataarray[1][$i] = $row['id'];
 	$dataarray[2][$i] = $row['time_created'];
 	$dataarray[3][$i] = $row['last_user'];

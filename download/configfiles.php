@@ -46,7 +46,7 @@ error_reporting(E_ALL | E_STRICT);
 	echo "</tr>";
 
 
-	if($handle = opendir($dir)){
+	if(file_exists($dir) && ($handle = opendir($dir))){
 
 		while(false !== ($entry=readdir($handle))){
 

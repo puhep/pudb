@@ -47,7 +47,7 @@ while($row = mysql_fetch_assoc($output)){
 	$timeout = mysql_query($timefunc, $connection);
 	$timerow = mysql_fetch_assoc($timeout);
 
-	$bbmarray[0][$k] = $row['name'];
+	$bbmarray[0][$k] = findname("module_p",$row['id']);
 	$bbmarray[1][$k] = $row['id'];
 	$bbmarray[2][$k] = $row['assembly'];
 	$bbmarray[3][$k] = $row['assoc_sens'];

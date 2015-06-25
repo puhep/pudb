@@ -57,9 +57,16 @@ Compliance Voltage: &nbsp;<textarea cols="10" rows="1" name="compliance">0</text
 <br>
 XML file:
 <input name="xml" type="file">
+OR
+Log file:
+<input name="log" type="file">
 <?php
 echo "<input type='hidden' name='wafers' value='".$_GET['wafers']."'>";
 ?>
+<br>
+<br>
+User:
+<textarea cols="10" rows="1" name="user"></textarea>
 <br>
 <br>
 Additional Notes <textarea cols="40" rows="5" name="notes"></textarea>

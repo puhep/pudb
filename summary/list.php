@@ -118,7 +118,7 @@ $output5 = mysql_query($func5, $connection);
 while($row5 = mysql_fetch_assoc($output5)){
 	$dataarray[8][$j] = findname("module_p", $row5['id']);
 	$dataarray[9][$j] = $row5['id'];
-	$dataarray[10][$j] = $row5['name'];
+	$dataarray[10][$j] = findname("module_p", $row5['id']);
 	$j++;
 }
 $fpartarray[4] = $fpartarray[4]." (".$j.")";

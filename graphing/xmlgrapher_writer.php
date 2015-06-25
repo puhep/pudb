@@ -10,6 +10,10 @@ include('../../../Submission_p_secure_pages/connect.php');
 #$scan = $_GET['scan'];
 #$level = $_GET['level'];
 
+if($level == "assembled" || $level == "fnal"){
+	$level = "module";
+}
+
 $func = "SELECT file, filesize, part_type FROM measurement_p WHERE part_ID=\"$id\" AND scan_type=\"$scan\"";
 $namefunc = "SELECT name, module FROM sensor_p WHERE id=\"$id\"";
 $modfunc = "SELECT name FROM module_p WHERE assoc_sens=\"$id\"";
