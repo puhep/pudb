@@ -240,66 +240,137 @@ function currocs($module){
 	echo "</tr>";
 
 	echo "</table>";
+}
 
-	/*echo "<table border=0>";
+function curxparams($module){
+	include('../../../Submission_p_secure_pages/connect.php');
+
+	mysql_query('USE cmsfpix_u', $connection);
+
+	$func = "SELECT xray_offset, xray_slope from ROC_p WHERE assoc_module=\"$module\" AND position<=7 ORDER BY position ASC";
+	$revfunc = "SELECT xray_offset, xray_slope from ROC_p WHERE assoc_module=\"$module\" AND position>=8 ORDER BY position DESC";
+
+	$output = mysql_query($func, $connection);
+	$outputrev = mysql_query($revfunc, $connection);
+	$storedslope = array();
+	$storedsloperev = array();
+
+	echo "<table border=0>";
+
+	echo "<tr>";
+	echo "<td>X-Ray Offset:</td>";
+	echo "<td></td>";
+	echo "<td></td>";
+	echo "<td>X-Ray Slope</td>";
+	echo "</tr>";
 
 	echo "<tr>";
 	echo "<td>";
 
 	echo "<table border=1>";
-	echo "<tr>";
-	for($i=7;$i>=0;$i--){
+	for($i=0;$i<8;$i++){
 
-		echo "<td>";
-		echo "ROC".$i;
-		echo "</td>";
-		
-	}
-	echo "</tr>";
-	echo "<tr>";
-	for($i=7;$i>=0;$i--){
-		
-		echo "<td>";
-		$rocrowrev = mysql_fetch_assoc($outputrev);
-		echo $rocrowrev['name'];
-		echo "</td>";
-	}
-	echo "</tr>";
-	echo "</table>";
-
-	echo "</td>";
-	echo "</tr>";
-	echo "<tr>";
-
-	echo "<td>";
-
-	echo "<table border=1>";
-	echo "<tr>";
-	for($i=8;$i<=15;$i++){
-
-		echo "<td>";
-		echo "ROC".$i;
-		echo "</td>";
-
-	}
-	echo "</tr>";
-	echo "<tr>";
-	for($i=8;$i<=15;$i++){
-
-		echo "<td>";
 		$rocrow = mysql_fetch_assoc($output);
-		echo $rocrow['name'];
+		echo "<tr>";
+
+		echo "<td>";
+		echo "ROC".$i;
 		echo "</td>";
 
+		echo "<td style=\"height: 100%;\">";
+	
+		echo $rocrow['xray_offset'];
+		$storedslope[$i] = $rocrow['xray_slope'];
+
+		echo "</td>";
+
+		echo "</tr>";
 	}
-	echo "</tr>";
 	echo "</table>";
 
 	echo "</td>";
 
+	echo "<td>";
+
+	echo "<table border=1>";
+	for($i=15;$i>7;$i--){
+
+		$rocrowrev = mysql_fetch_assoc($outputrev);
+		echo "<tr>";
+
+		echo "<td>";
+		echo "ROC".$i;
+		echo "</td>";
+
+		echo "<td>";
+		echo $rocrowrev['xray_offset'];
+		$storedsloperev[$i] = $rocrowrev['xray_slope'];
+
+		echo "</td>";
+
+		echo "</tr>";
+	}
+	echo "</table>";
+
+	echo "</td>";
+
+	echo "<td>";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "</td>";
+
+	echo "<td>";
+
+	echo "<table border=1>";
+	for($i=0;$i<8;$i++){
+
+		$rocrow = mysql_fetch_assoc($output);
+		echo "<tr>";
+
+		echo "<td>";
+		echo "ROC".$i;
+		echo "</td>";
+
+		echo "<td style=\"height: 100%;\">";
+	
+		echo $storedslope[$i];
+
+		echo "</td>";
+
+		echo "</tr>";
+	}
+	echo "</table>";
+
+	echo "</td>";
+
+	echo "<td>";
+
+	echo "<table border=1>";
+	for($i=15;$i>7;$i--){
+
+		$rocrowrev = mysql_fetch_assoc($outputrev);
+		echo "<tr>";
+
+		echo "<td>";
+		echo "ROC".$i;
+		echo "</td>";
+
+		echo "<td>";
+		echo $storedsloperev[$i];
+
+		echo "</td>";
+
+		echo "</tr>";
+	}
+	echo "</table>";
+
+	echo "</td>";
 	echo "</tr>";
 
-	echo "</table>";*/
+	echo "</table>";
 }
 
 function badrocs($id){
@@ -343,8 +414,6 @@ function curtestgrade($id){
 	echo "Number of Bad Bump Bonds (Electrical): ".$dumped['badbumps_electrical']."<br>";
 	echo "Number of Bad Bump Bonds (Reverse Bias): ".$dumped['badbumps_reversebias']."<br>";
 	echo "Number of Bad Bump Bonds (X-Ray): ".$dumped['badbumps_xray']."<br>";
-	echo "X-Ray Slope: ".$dumped['xray_slope']."<br>";
-	echo "X-Ray Offset: ".$dumped['xray_offset']."<br>";
 	echo "Grade: ".$dumped['grade']."<br>";
 	if($dumped['can_time']==1){
 	echo "Timeable: Yes<br>";
@@ -355,6 +424,8 @@ function curtestgrade($id){
 	else{
 	echo "Timeable: No<br>";
 	}
+	echo "<br>";
+	curxparams($id);
 
 	return;
 }

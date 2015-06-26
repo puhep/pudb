@@ -229,6 +229,12 @@ $pursel = "";
 $nebsel = "";
 
 $hide = hidepre("module",2);
+###This is a quick way to fix the fact that hidepre doesn't account for the table references needed 
+###for the join statement
+if($hide != ""){
+	$hide = "AND a.id IN (SELECT assoc_module FROM times_module_p WHERE received > \"2015-05-30\")";
+}
+
 
 $sortmod1 = "";
 $sortmod2 = "";
@@ -317,6 +323,7 @@ $func6 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a
 $func7 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_RR%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
 $func8 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_TT%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
 
+
 $i=0;
 $j=0;
 $dataarray;
@@ -326,8 +333,7 @@ $fpartarray = array("M_BB", "M_CL", "M_CR", "M_FL", "M_FR", "M_LL", "M_RR", "M_T
 mysql_query('USE cmsfpix_u', $connection);
 
 $output1 = mysql_query($func1, $connection);
-if($output1){
-while($row1 = mysql_fetch_assoc($output1)){
+while($output1 && $row1 = mysql_fetch_assoc($output1)){
 	#Testing Pass/Fail of IV test
 	$dumped = dump("module_p", $row1['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
@@ -344,13 +350,11 @@ while($row1 = mysql_fetch_assoc($output1)){
 	$dataarray[1][$i] = $row1['id'];
 	$i++;
 }
-}
-else{ $dataarray[0] = 0;}
 $fpartarray[0] = $fpartarray[0]." (".$i.")";
 
 
 $output2 = mysql_query($func2, $connection);
-while($row2 = mysql_fetch_assoc($output2)){
+while($output2 && $row2 = mysql_fetch_assoc($output2)){
 	#Testing Pass/Fail of IV test
 	$dumped = dump("module_p", $row2['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
@@ -374,7 +378,7 @@ if($j > $i){$i = $j;}
 $j=0;
 
 $output3 = mysql_query($func3, $connection);
-while($row3 = mysql_fetch_assoc($output3)){
+while($output3 && $row3 = mysql_fetch_assoc($output3)){
 	#Testing Pass/Fail of IV test
 	$dumped = dump("module_p", $row3['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
@@ -398,7 +402,7 @@ if($j > $i){$i = $j;}
 $j=0;
 
 $output4 = mysql_query($func4, $connection);
-while($row4 = mysql_fetch_assoc($output4)){
+while($output4 && $row4 = mysql_fetch_assoc($output4)){
 	#Testing Pass/Fail of IV test
 	$dumped = dump("module_p", $row4['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
@@ -422,7 +426,7 @@ if($j > $i){$i = $j;}
 $j=0;
 
 $output5 = mysql_query($func5, $connection);
-while($row5 = mysql_fetch_assoc($output5)){
+while($output5 && $row5 = mysql_fetch_assoc($output5)){
 	#Testing Pass/Fail of IV test
 	$dumped = dump("module_p", $row5['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
@@ -446,7 +450,7 @@ if($j > $i){$i = $j;}
 $j=0;
 
 $output6 = mysql_query($func6, $connection);
-while($row6 = mysql_fetch_assoc($output6)){
+while($output6 && $row6 = mysql_fetch_assoc($output6)){
 	#Testing Pass/Fail of IV test
 	$dumped = dump("module_p", $row6['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
@@ -470,7 +474,7 @@ if($j > $i){$i = $j;}
 $j=0;
 
 $output7 = mysql_query($func7, $connection);
-while($row7 = mysql_fetch_assoc($output7)){
+while($output7 && $row7 = mysql_fetch_assoc($output7)){
 	#Testing Pass/Fail of IV test
 	$dumped = dump("module_p", $row7['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
@@ -494,7 +498,7 @@ if($j > $i){$i = $j;}
 $j=0;
 
 $output8 = mysql_query($func8, $connection);
-while($row8 = mysql_fetch_assoc($output8)){
+while($output8 && $row8 = mysql_fetch_assoc($output8)){
 	#Testing Pass/Fail of IV test
 	$dumped = dump("module_p", $row8['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");

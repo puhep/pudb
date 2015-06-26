@@ -5,7 +5,9 @@ include('../functions/popfunctions.php');
 include('../functions/curfunctions.php');
 include('../functions/editfunctions.php');
 
-echo "<input type='hidden' name='modules' value='".$_POST['modules']."'>";
+$gets = "?modules=".$_POST['modules'];
+
+header("Location: ROCedit.php".$gets);
 
 
 mysql_query('USE cmsfpix_u', $connection);

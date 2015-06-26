@@ -126,9 +126,11 @@ function generateHDImodulename($modid){
 
 	$newname = $newname.$panel."-".$padpos;
 
-	echo $newname;
+	#echo $newname;
 	$func = "UPDATE module_p SET name_hdi=\"".$newname."\" WHERE id=".$modid;
 	mysql_query($func, $connection);
+
+	return $newname;
 
 }
 

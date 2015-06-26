@@ -87,9 +87,13 @@ if(isset($_POST['submit']) && ((isset($_POST['box']) && $_POST['who'] != "") || 
 		mysql_query($funcmod, $connection);
 		mysql_query($funcmod2, $connection);
 
-		generateHDImodulename($id);
+		$hdiname = generateHDImodulename($id);
 
 		milestone("HDI_p", $hdi, 3);
+	
+		$newgets = "?name=".$hdiname;
+
+		header("Location: bbm.php".$newgets);
 	}
 	
 	lastUpdate("module_p", $id, $_POST['who'], $steparray[$assembly-1], $submittednotes);

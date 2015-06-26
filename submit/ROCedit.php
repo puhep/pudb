@@ -5,14 +5,16 @@
   <title>ROC Editing</title>
 </head>
 <body>
-<form action='ROCedit.php' method='post' enctype='multipart/form-data'>
+<form action='ROCedit_proc.php' method='post' enctype='multipart/form-data'>
 <?php
 include('../../../Submission_p_secure_pages/connect.php');
 include('../functions/submitfunctions.php');
 include('../functions/popfunctions.php');
 include('../functions/curfunctions.php');
 include('../functions/editfunctions.php');
-if(!isset($_POST['modules'])){
+if(!isset($_GET['modules'])){
+
+echo "<form action='ROCedit.php' method='get' enctype='multipart/form-data'>";
 ?>
 Available Modules
 <select name="modules">
@@ -25,9 +27,12 @@ modulepopwithroc();
 }
 else{
 
-echo "<input type='hidden' name='modules' value='".$_POST['modules']."'>";
+echo "<form action='ROCedit_proc.php' method='post' enctype='multipart/form-data'>";
 
-curname("module_p", $_POST['modules']);
+
+echo "<input type='hidden' name='modules' value='".$_GET['modules']."'>";
+
+curname("module_p", $_GET['modules']);
 
 $i = 0;
 
@@ -36,14 +41,14 @@ $rocs = array();
 mysql_query('USE cmsfpix_u', $connection);
 
 
-$func = 'SELECT name from ROC_p WHERE assoc_module='.$_POST['modules'].' ORDER BY position';
+$func = 'SELECT name from ROC_p WHERE assoc_module='.$_GET['modules'].' ORDER BY position';
 $output = mysql_query($func, $connection);
 while($rocrow = mysql_fetch_assoc($output)){
 	$rocs[$i] = $rocrow['name'];
 	$i++;
 }
 if($i == 0){
-	ROCinfo($_POST['modules']);
+	ROCinfo($_GET['modules']);
 }
 
 ?>
