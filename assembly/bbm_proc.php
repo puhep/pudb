@@ -27,7 +27,7 @@ $gets = "?name=".$name;
 
 header("Location: bbm.php".$gets);
 
-if(isset($_POST['submit']) && ((isset($_POST['box']) && $_POST['who'] != "") || (isset($_POST['shipbox']) && $_POST['who_ship'] != "")) && (!is_null($_POST['hdi']) || $assembly!=4)){
+if(isset($_POST['submit']) && ((isset($_POST['box']) && $_POST['who'] != "") || (isset($_POST['shipbox']) && $_POST['who_ship'] != "" && $_POST['track'])) && (!is_null($_POST['hdi']) || $assembly!=4)){
 	
 
 	if(isset($_POST['shipbox'])){
@@ -58,7 +58,7 @@ if(isset($_POST['submit']) && ((isset($_POST['box']) && $_POST['who'] != "") || 
 	addcomment("module_p", $id, $submittedstep);
 	addcomment("module_p", $id, $submittednotes);
 	$funcassembly = "UPDATE module_p SET assembly=$assembly WHERE id=$id";
-	$funcship = "UPDATE module_p SET shipped=\"".$_POST['date']."\", destination=\"".$_POST['dest']."\" WHERE id=$id";
+	$funcship = "UPDATE module_p SET shipped=\"".$_POST['date']."\", destination=\"".$_POST['dest']."\", tracking_number=\"".$_POST['track']."\" WHERE id=$id";
 	mysql_query($funcassembly, $connection);
 	
 	if(isset($_POST['shipbox'])){

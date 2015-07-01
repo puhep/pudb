@@ -152,8 +152,11 @@ include('../functions/curfunctions.php');
 	mysql_query('USE cmsfpix_u', $connection);
 	$funcA = 'SELECT name,id FROM sensor_p WHERE assoc_wafer='.$wafer.$hide.' AND name LIKE \'WA_%\' ORDER BY name ASC';
 	$funcL = 'SELECT name,id FROM sensor_p WHERE assoc_wafer='.$wafer.$hide.' AND name LIKE \'WL_%\' ORDER BY name ASC';
+	#$funcL = 'SELECT b.name as sensorname,b.id,c.name as modulename FROM wafer_p a, sensor_p b, module_p c WHERE b.assoc_wafer='.$wafer.$hide.' AND b.name LIKE \'WL_%\' AND a.id=b.assoc_wafer AND c.assembly>0 ORDER BY b.name ASC';
 	$funcS = 'SELECT name,id FROM sensor_p WHERE assoc_wafer='.$wafer.$hide.' AND name LIKE \'WS_%\' ORDER BY name ASC';
 	
+
+
 	$availableA = mysql_query($funcA, $connection);
 	$availableL = mysql_query($funcL, $connection);
 	$availableS = mysql_query($funcS, $connection);
@@ -173,7 +176,23 @@ include('../functions/curfunctions.php');
 	while($sensrow = mysql_fetch_assoc($availableL)){
 		$id = $sensrow['id'];
 		$sensid = $sensrow['name'];
-		echo "<a href=\"sensor.php?name=".$sensid."\">$sensid</a><br>";
+
+		$modname = "";
+
+		$modfunc = "SELECT id FROM module_p WHERE assembly>0 AND assoc_sens=".$id;
+		$modout = mysql_query($modfunc, $connection);
+		if($modrow = mysql_fetch_assoc($modout)){
+			$modname = findname("module_p",$modrow['id']);
+		}
+
+		echo "<a href=\"sensor.php?name=".$sensid."\">$sensid</a>";
+		if($modname != ""){
+			echo "&nbsp;";
+			echo "&nbsp;";
+			echo "<a href=\"bbm.php?name=".$modname."\">($modname)</a>";
+		}
+		echo "<br>";
+		
 	}
 	echo "</td>";
 

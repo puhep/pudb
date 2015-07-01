@@ -187,6 +187,7 @@ if($assembly >= 6 && $assembly <= 11){
 	echo"Comments: <textarea name=\"notes_ship\"></textarea>   ";
 	echo"Destination: <input name=\"dest\" type=\"text\">   ";
 	echo"Date (yyyy/mm/dd): <input name=\"date\" type=\"text\">   ";
+	echo"Tracking Number: <input name=\"track\" type=\"text\">   ";
 	$checker = "";
 }
 else{

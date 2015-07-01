@@ -34,9 +34,9 @@ curpics("sidet_p", $id);
 </form>
 
 <div style="position:absolute;left:500px;top:10px;">
-<form method="POST" action="../submit/fullSubmit.php">
+<form method="GET" action="../submit/fullSubmit.php">
 <?php
-  echo "<input type='hidden' name='id' value='".$id."'>";
+  echo "<input type='hidden' name='name' value='".$name."'>";
 ?>
 <input type="submit" value="Update">
 </form>
@@ -73,9 +73,9 @@ curpics("sidet_p", $id);
 </div5>
 
 
-<form method="POST" action="../submit/fullSubmit.php">
+<form method="GET" action="../submit/fullSubmit.php">
 <?php
-  echo "<input type='hidden' name='id' value='".$id."'>";
+  echo "<input type='hidden' name='name' value='".$name."'>";
 ?>
 <input type="submit" value="Update">
 </form>

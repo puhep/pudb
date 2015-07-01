@@ -242,28 +242,25 @@ function currocs($module){
 	echo "</table>";
 }
 
-function curxparams($module){
+function currocparams($module, $param){
 	include('../../../Submission_p_secure_pages/connect.php');
 
 	mysql_query('USE cmsfpix_u', $connection);
 
-	$func = "SELECT xray_offset, xray_slope from ROC_p WHERE assoc_module=\"$module\" AND position<=7 ORDER BY position ASC";
-	$revfunc = "SELECT xray_offset, xray_slope from ROC_p WHERE assoc_module=\"$module\" AND position>=8 ORDER BY position DESC";
+	$func = "SELECT $param from ROC_p WHERE assoc_module=\"$module\" AND position<=7 ORDER BY position ASC";
+	$revfunc = "SELECT $param from ROC_p WHERE assoc_module=\"$module\" AND position>=8 ORDER BY position DESC";
 
 	$output = mysql_query($func, $connection);
 	$outputrev = mysql_query($revfunc, $connection);
-	$storedslope = array();
-	$storedsloperev = array();
 
 	echo "<table border=0>";
-
+	
 	echo "<tr>";
-	echo "<td>X-Ray Offset:</td>";
-	echo "<td></td>";
-	echo "<td></td>";
-	echo "<td>X-Ray Slope</td>";
+	echo "<td>".$param."</td>";
+	echo "<td>";
+	echo "</td>";
 	echo "</tr>";
-
+	
 	echo "<tr>";
 	echo "<td>";
 
@@ -279,8 +276,7 @@ function curxparams($module){
 
 		echo "<td style=\"height: 100%;\">";
 	
-		echo $rocrow['xray_offset'];
-		$storedslope[$i] = $rocrow['xray_slope'];
+		echo $rocrow[$param];
 
 		echo "</td>";
 
@@ -303,63 +299,7 @@ function curxparams($module){
 		echo "</td>";
 
 		echo "<td>";
-		echo $rocrowrev['xray_offset'];
-		$storedsloperev[$i] = $rocrowrev['xray_slope'];
-
-		echo "</td>";
-
-		echo "</tr>";
-	}
-	echo "</table>";
-
-	echo "</td>";
-
-	echo "<td>";
-	echo "&nbsp;";
-	echo "&nbsp;";
-	echo "&nbsp;";
-	echo "&nbsp;";
-	echo "&nbsp;";
-	echo "</td>";
-
-	echo "<td>";
-
-	echo "<table border=1>";
-	for($i=0;$i<8;$i++){
-
-		$rocrow = mysql_fetch_assoc($output);
-		echo "<tr>";
-
-		echo "<td>";
-		echo "ROC".$i;
-		echo "</td>";
-
-		echo "<td style=\"height: 100%;\">";
-	
-		echo $storedslope[$i];
-
-		echo "</td>";
-
-		echo "</tr>";
-	}
-	echo "</table>";
-
-	echo "</td>";
-
-	echo "<td>";
-
-	echo "<table border=1>";
-	for($i=15;$i>7;$i--){
-
-		$rocrowrev = mysql_fetch_assoc($outputrev);
-		echo "<tr>";
-
-		echo "<td>";
-		echo "ROC".$i;
-		echo "</td>";
-
-		echo "<td>";
-		echo $storedsloperev[$i];
+		echo $rocrowrev[$param];
 
 		echo "</td>";
 
@@ -401,6 +341,30 @@ function curloc($db, $id){
 	return $loc;
 }
 
+function curtrack($id){
+	include('../../../Submission_p_secure_pages/connect.php');
+
+	mysql_query('USE cmsfpix_u', $connection);
+	
+	$func = "SELECT tracking_number from module_p WHERE tracking_number IS NOT NULL AND id=".$id;
+
+	$output = mysql_query($func, $connection);
+	if($row = mysql_fetch_assoc($output)){
+		$track = $row['tracking_number'];
+		if(strtolower($track) == "courier"){
+			echo "Module transported by hand";
+		}
+		else if(is_numeric($track)){
+			echo "<a href=\"https://www.fedex.com/apps/fedextrack/?trknbr=".$track."\">Track Package</a>";
+		}
+		else{
+			echo "Possible tracking number formatting error";
+		}
+	}
+
+	return;
+}
+
 function curtestgrade($id){
 
 	$dumped = dump("module_p", $id);
@@ -408,12 +372,12 @@ function curtestgrade($id){
 	$badrocs = badrocs($id);
 
 	echo "Number of Bad Rocs: ".$badrocs."<br>";
-	echo "Number of Dead Pixels: ".$dumped['deadpix']."<br>";
+	#echo "Number of Dead Pixels: ".$dumped['deadpix']."<br>";
 	echo "Number of Unmaskable Pixels: ".$dumped['unmaskable_pix']."<br>";
 	echo "Number of Unaddressable Pixels: ".$dumped['unaddressable_pix']."<br>";
-	echo "Number of Bad Bump Bonds (Electrical): ".$dumped['badbumps_electrical']."<br>";
-	echo "Number of Bad Bump Bonds (Reverse Bias): ".$dumped['badbumps_reversebias']."<br>";
-	echo "Number of Bad Bump Bonds (X-Ray): ".$dumped['badbumps_xray']."<br>";
+	#echo "Number of Bad Bump Bonds (Electrical): ".$dumped['badbumps_electrical']."<br>";
+	#echo "Number of Bad Bump Bonds (Reverse Bias): ".$dumped['badbumps_reversebias']."<br>";
+	#echo "Number of Bad Bump Bonds (X-Ray): ".$dumped['badbumps_xray']."<br>";
 	echo "Grade: ".$dumped['grade']."<br>";
 	if($dumped['can_time']==1){
 	echo "Timeable: Yes<br>";
@@ -425,7 +389,27 @@ function curtestgrade($id){
 	echo "Timeable: No<br>";
 	}
 	echo "<br>";
-	curxparams($id);
+
+	echo "<table border=0>";
+	echo "<tr>";
+	echo "<td>";
+	currocparams($id, "xray_slope");
+	echo "</td>";
+	echo "<td>";
+	currocparams($id, "xray_offset");
+	echo "</td>";
+	echo "<td>";
+	currocparams($id, "badbumps_elec");
+	echo "</td>";
+	echo "<td>";
+	currocparams($id, "badbumps_xray");
+	echo "</td>";
+	echo "<td>";
+	currocparams($id, "deadpix");
+	echo "</td>";
+	echo "</tr>";
+	echo "</table>";
+
 
 	return;
 }

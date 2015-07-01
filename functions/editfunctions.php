@@ -201,6 +201,37 @@ function flipROCs($id){
 
 }
 
+####Transpose 8 and 15####
+function RTIROCs($id){
+	include('../../../Submission_p_secure_pages/connect.php');
+	
+	mysql_query('USE cmsfpix_u', $connection);
+
+	$func = "SELECT name from ROC_p WHERE assoc_module=".$id." ORDER BY position";
+
+	$output = mysql_query($func, $connection);
+
+	$rocs;
+	$i=0;
+
+	while($rocrow = mysql_fetch_assoc($output)){
+		$rocs[$i] = $rocrow['name'];
+		$i++;
+	}
+
+	for($j=8;$j<16;$j++){
+			$flipfunc = "UPDATE ROC_p SET name=\"".$rocs[$j]."\" WHERE assoc_module=".$id." AND position=".(23-$j);
+
+		if(!mysql_query($flipfunc, $connection)){
+			echo "An error has occurred and the changes have not been added to the database.";
+			break;
+		}
+	}
+
+	lastUpdate("module_p", $id, "User", "ROCs adjusted for RTI scheme", "");
+
+}
+
 function lastUpdate($db, $id, $who, $what, $comments){
 	include('../../../Submission_p_secure_pages/connect.php');
 

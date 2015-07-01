@@ -6,7 +6,7 @@
   <title>Full Test Submission</title>
 </head>
 <body>
-<form action="fullSubmit.php" method="POST" enctype="multipart/form-data">
+<form action="fullSubmit_proc.php" method="POST" enctype="multipart/form-data">
 
 <?php
  #ini_set('display_errors', 'On');
@@ -14,72 +14,11 @@
 include('../functions/curfunctions.php');
 include('../functions/submitfunctions.php');
 
-$id = $_POST['id'];
-$name = findname("module_p", $id);
+$name = $_GET['name'];
+$id = findid("module_p", $name);
 
-if (isset($_POST['submit']) && $_FILES['pic']['size'] > 0){
+echo "<input type='hidden' name='name' value='".$_GET['name']."'>";
 
-	addpic($_FILES['pic']['name'], $_FILES['pic']['tmp_name'], "sidet_p", $id, $_POST['notes']);
-}
-else if(isset($_POST['submit']) && $_FILES['zip']['size'] > 0){
-
-	batchpic($_FILES['zip']['tmp_name'], $_FILES['zip']['name'], "sidet_p", $id);
-}
-else if(isset($_POST['submit']) && $_FILES['tests']['size'] > 0){
-
-	batchfulltest($_FILES['tests']['tmp_name'], $_FILES['tests']['name'], $_FILES['tests']['size']);
-}
-if(isset($_POST['submit']) && isset($_POST['newgrade'])){
-	include('../../../Submission_p_secure_pages/connect.php');
-
-	mysql_query('USE cmsfpix_u', $connection);
-
-	$func = "UPDATE module_p SET grade=\"".$_POST['newgrade']."\" WHERE id=".$id;
-	mysql_query($func, $connection);
-}
-
-if(isset($_POST['submit']) && ($_POST['newpix'] != "")){
-	include('../../../Submission_p_secure_pages/connect.php');
-
-	mysql_query('USE cmsfpix_u', $connection);
-
-	$func = "UPDATE module_p SET badpix=\"".$_POST['newpix']."\" WHERE id=".$id;
-	mysql_query($func, $connection);
-}
-if(isset($_POST['submit']) && ($_POST['bumps_elec'] != "")){
-	include('../../../Submission_p_secure_pages/connect.php');
-
-	mysql_query('USE cmsfpix_u', $connection);
-
-	$func = "UPDATE module_p SET badbumps_electrical=\"".$_POST['bumps_elec']."\" WHERE id=".$id;
-	mysql_query($func, $connection);
-}
-if(isset($_POST['submit']) && ($_POST['bumps_revbias'] != "")){
-	include('../../../Submission_p_secure_pages/connect.php');
-
-	mysql_query('USE cmsfpix_u', $connection);
-
-	$func = "UPDATE module_p SET badbumps_reversebias=\"".$_POST['bumps_revbias']."\" WHERE id=".$id;
-	mysql_query($func, $connection);
-}
-if(isset($_POST['submit']) && ($_POST['bumps_xray'] != "")){
-	include('../../../Submission_p_secure_pages/connect.php');
-
-	mysql_query('USE cmsfpix_u', $connection);
-
-	$func = "UPDATE module_p SET badbumps_xray=\"".$_POST['bumps_xray']."\" WHERE id=".$id;
-	mysql_query($func, $connection);
-}
-if(isset($_POST['submit']) && ($_POST['grade'] != "")){
-	include('../../../Submission_p_secure_pages/connect.php');
-
-	mysql_query('USE cmsfpix_u', $connection);
-
-	$func = "UPDATE module_p SET grade=\"".$_POST['grade']."\" WHERE id=".$id;
-	mysql_query($func, $connection);
-}
-
-echo "<input type='hidden' name='id' value='".$_POST['id']."'>";
 curname("module_p", $id);
 curtestgrade($id);
 curpics("sidet_p", $id);
@@ -97,18 +36,6 @@ Zip File of Pictures <input name="zip" type="file">
 OR
 <br>
 XML File of Test Results <input name="tests" type="file">
-<br>
-<br>
-Number of Bad Pixels: <textarea cols="10" rows="1" name="newpix"></textarea>
-<br>
-<br>
-Number of Bad Bump Bonds (Electrical): <textarea cols="10" rows="1" name="bumps_elec"></textarea>
-<br>
-<br>
-Number of Bad Bump Bonds (Reverse Bias): <textarea cols="10" rows="1" name="bumps_revbias"></textarea>
-<br>
-<br>
-Number of Bad Bump Bonds (X-Ray): <textarea cols="10" rows="1" name="bumps_xray"></textarea>
 <br>
 <br>
 Grade: <select name="grade">

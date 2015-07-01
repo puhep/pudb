@@ -46,14 +46,17 @@
 		echo "<h>";
 		echo "Processing at: ";
 		echo "</h>";
+		echo $dumped['location'];
 		}
 		else{
 		echo "<h>";
 		echo "Processed at: ";
 		echo "</h>";
+		echo $dumped['location'];
+		echo "<br>";
+		curtrack($id);
 		}
 
-		echo $dumped['location'];
 		echo "<br>";
 		echo "<br>";
 

@@ -33,36 +33,36 @@ include('../graphing/xmlgrapher_crit.php');
 	$comp13 = "";
 	$comp18 = "";
 
-	if(!empty($_POST)){
-		$param1 = $_POST['param1'];
-		$param2 = $_POST['param2'];
-		$param3 = $_POST['param3'];
-		$param4 = $_POST['param4'];
-		$param5 = $_POST['param5'];
-		$param6 = $_POST['param6'];
-		$param7 = $_POST['param7'];
-		$param8 = $_POST['param8'];
-		$param9 = $_POST['param9'];
-		$param10 = $_POST['param10'];
-		$param11 = $_POST['param11'];
-		$param12 = $_POST['param12'];
-		$param13 = $_POST['param13'];
-		#$param14 = $_POST['param14'];
-		#$param15 = $_POST['param15'];
-		$param18 = $_POST['param18'];
-		$param19 = $_POST['param19'];
+	if(!empty($_GET)){
+		$param1 = $_GET['param1'];
+		$param2 = $_GET['param2'];
+		$param3 = $_GET['param3'];
+		$param4 = $_GET['param4'];
+		$param5 = $_GET['param5'];
+		#$param6 = $_GET['param6'];
+		$param7 = $_GET['param7'];
+		$param8 = $_GET['param8'];
+		$param9 = $_GET['param9'];
+		$param10 = $_GET['param10'];
+		$param11 = $_GET['param11'];
+		$param12 = $_GET['param12'];
+		$param13 = $_GET['param13'];
+		#$param14 = $_GET['param14'];
+		#$param15 = $_GET['param15'];
+		$param18 = $_GET['param18'];
+		$param19 = $_GET['param19'];
 
-		$comp2 = $_POST['comp2'];
-		$comp3 = $_POST['comp3'];
-		$comp4 = $_POST['comp4'];
-		$comp5 = $_POST['comp5'];
-		$comp6 = $_POST['comp6'];
-		$comp7 = $_POST['comp7'];
-		$comp10 = $_POST['comp10'];
-		$comp11 = $_POST['comp11'];
-		$comp12 = $_POST['comp12'];
-		$comp13 = $_POST['comp13'];
-		$comp18 = $_POST['comp13'];
+		$comp2 = $_GET['comp2'];
+		$comp3 = $_GET['comp3'];
+		$comp4 = $_GET['comp4'];
+		$comp5 = $_GET['comp5'];
+		#$comp6 = $_GET['comp6'];
+		$comp7 = $_GET['comp7'];
+		$comp10 = $_GET['comp10'];
+		$comp11 = $_GET['comp11'];
+		$comp12 = $_GET['comp12'];
+		$comp13 = $_GET['comp13'];
+		$comp18 = $_GET['comp13'];
 	}
 
 ?>
@@ -79,7 +79,7 @@ include('../graphing/xmlgrapher_crit.php');
 </form>
 <br>
 <br>
-<form name="filter" action="../summary/test_list.php" method="post">
+<form name="filter" action="../summary/test_list.php" method="GET">
 Filters:
 <br>
 
@@ -125,7 +125,7 @@ Grade:
 <textarea name="param3" cols="10" rows="1"><?php echo $param3; ?></textarea>
 <br>
 
-# Dead Pixels: 
+# Dead Pixels per ROC: 
 <select name="comp4">
 <?php comparepop($comp4); ?>
 </select>
@@ -146,21 +146,23 @@ Grade:
 <textarea name="param11" cols="10" rows="1"><?php echo $param11; ?></textarea>
 <br>
 
-# Bad Bumps (Electrical): 
+# Bad Bumps per ROC (Electrical): 
 <select name="comp5">
 <?php comparepop($comp5); ?>
 </select>
 <textarea name="param5" cols="10" rows="1"><?php echo $param5; ?></textarea>
 <br>
 
+<?php /* ?>
 # Bad Bumps (Reverse Bias): 
 <select name="comp6">
 <?php comparepop($comp6); ?>
 </select>
 <textarea name="param6" cols="10" rows="1"><?php echo $param6; ?></textarea>
 <br>
+<?php */ ?>
 
-# Bad Bumps (X-Ray): 
+# Bad Bumps per ROC (X-Ray): 
 <select name="comp7">
 <?php comparepop($comp7); ?>
 </select>
@@ -253,49 +255,49 @@ $sortmod14 = "";
 $sortmod15 = "";
 $sortmod19 = "";
 if($param1 != ""){
-	$sortmod1 = "AND location=\"".$_POST['param1']."\" ";
+	$sortmod1 = "AND location=\"".$_GET['param1']."\" ";
 }
 if($param2 != ""){
-	$sortmod2 = "AND grade".$_POST['comp2']."\"".$_POST['param2']."\" ";
+	$sortmod2 = "AND grade".$_GET['comp2']."\"".$_GET['param2']."\" ";
 }
 if($param3 != ""){
-	$sortmod3 = "AND badrocs".$_POST['comp3']."\"".$_POST['param3']."\" ";
+	$sortmod3 = "AND badrocs".$_GET['comp3']."\"".$_GET['param3']."\" ";
 }
 if($param4 != ""){
-	$sortmod4 = "AND deadpix".$_POST['comp4']."\"".$_POST['param4']."\" ";
+	$sortmod4 = "AND c.deadpix".$_GET['comp4']."\"".$_GET['param4']."\" ";
 }
 if($param5 != ""){
-	$sortmod5 = "AND badbumps_electrical".$_POST['comp5']."\"".$_POST['param5']."\" ";
+	$sortmod5 = "AND c.badbumps_electrical".$_GET['comp5']."\"".$_GET['param5']."\" ";
 }
 if($param6 != ""){
-	$sortmod6 = "AND badbumps_reversebias".$_POST['comp6']."\"".$_POST['param6']."\" ";
+	$sortmod6 = "AND badbumps_reversebias".$_GET['comp6']."\"".$_GET['param6']."\" ";
 }
 if($param7 != ""){
-	$sortmod7 = "AND badbumps_xray".$_POST['comp7']."\"".$_POST['param7']."\" ";
+	$sortmod7 = "AND c.badbumps_xray".$_GET['comp7']."\"".$_GET['param7']."\" ";
 }
 if($param8 != ""){
-	$sortmod8 = "AND destination LIKE \"%".$_POST['param8']."%\" ";
+	$sortmod8 = "AND destination LIKE \"%".$_GET['param8']."%\" ";
 }
 if($param9 != ""){
-	$sortmod9 = "AND can_time=\"".$_POST['param9']."\" ";
+	$sortmod9 = "AND can_time=\"".$_GET['param9']."\" ";
 }
 if($param10 != ""){
-	$sortmod10 = "AND unmaskable_pix".$_POST['comp10']."\"".$_POST['param10']."\" ";
+	$sortmod10 = "AND unmaskable_pix".$_GET['comp10']."\"".$_GET['param10']."\" ";
 }
 if($param11 != ""){
-	$sortmod11 = "AND unaddressable_pix".$_POST['comp11']."\"".$_POST['param11']."\" ";
+	$sortmod11 = "AND unaddressable_pix".$_GET['comp11']."\"".$_GET['param11']."\" ";
 }
 if($param12 != ""){
-	$sortmod12 = "AND c.xray_slope".$_POST['comp12']."\"".$_POST['param12']."\" ";
+	$sortmod12 = "AND c.xray_slope".$_GET['comp12']."\"".$_GET['param12']."\" ";
 }
 if($param13 != ""){
-	$sortmod13 = "AND c.xray_offset".$_POST['comp13']."\"".$_POST['param13']."\" ";
+	$sortmod13 = "AND c.xray_offset".$_GET['comp13']."\"".$_GET['param13']."\" ";
 }
 if($param14 != ""){
-	$breakdownlimit = $_POST['param14'];
+	$breakdownlimit = $_GET['param14'];
 }
 if($param15 != ""){
-	$compliancelimit = $_POST['param15'];
+	$compliancelimit = $_GET['param15'];
 }
 if($param19 != ""){
 	$sortmod19 = "AND (a.name LIKE \"%".$param19."%\" OR a.name_hdi LIKE \"%".$param19."%\")";

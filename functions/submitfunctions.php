@@ -280,6 +280,21 @@ include("../functions/editfunctions.php");
 							mysql_query($func, $connection);
 							echo "ROC ".$pos." on ".$name." X-ray slope: ".$slope."<br>";
 						}
+						if(($slope=$doc->ROCS[$i]->ROC[$k]->BADBUMPS_ELEC)!=""){
+							$func = "UPDATE ROC_p SET badbumps_elec=\"".$slope."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
+							mysql_query($func, $connection);
+							echo "ROC ".$pos." on ".$name." Bad Bumps (Electrical): ".$slope."<br>";
+						}
+						if(($slope=$doc->ROCS[$i]->ROC[$k]->BADBUMPS_XRAY)!=""){
+							$func = "UPDATE ROC_p SET badbumps_xray=\"".$slope."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
+							mysql_query($func, $connection);
+							echo "ROC ".$pos." on ".$name." Bad Bumps (X-Ray): ".$slope."<br>";
+						}
+						if(($slope=$doc->ROCS[$i]->ROC[$k]->DEAD_PIX)!=""){
+							$func = "UPDATE ROC_p SET deadpix=\"".$slope."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
+							mysql_query($func, $connection);
+							echo "ROC ".$pos." on ".$name." Dead Pixels: ".$slope."<br>";
+						}
 				
 					$k++;
 					}
@@ -560,6 +575,21 @@ include("../functions/editfunctions.php");
 						if(($slope=$doc->ROCS[$i]->ROC[$k]->XRAY_SLOPE)!=""){
 							$func = "UPDATE ROC_p SET xray_slope=\"".$slope."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
 							mysql_query($func, $connection);
+						}
+						if(($slope=$doc->ROCS[$i]->ROC[$k]->BADBUMPS_ELEC)!=""){
+							$func = "UPDATE ROC_p SET badbumps_elec=\"".$slope."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
+							mysql_query($func, $connection);
+							echo "ROC ".$pos." on ".$name." Bad Bumps (Electrical): ".$slope."<br>";
+						}
+						if(($slope=$doc->ROCS[$i]->ROC[$k]->BADBUMPS_XRAY)!=""){
+							$func = "UPDATE ROC_p SET badbumps_xray=\"".$slope."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
+							mysql_query($func, $connection);
+							echo "ROC ".$pos." on ".$name." Bad Bumps (X-Ray): ".$slope."<br>";
+						}
+						if(($slope=$doc->ROCS[$i]->ROC[$k]->DEAD_PIX)!=""){
+							$func = "UPDATE ROC_p SET deadpix=\"".$slope."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
+							mysql_query($func, $connection);
+							echo "ROC ".$pos." on ".$name." Dead Pixels: ".$slope."<br>";
 						}
 						echo "ROC ".$pos." on ".$name." has been updated";
 					$k++;
@@ -1273,7 +1303,7 @@ include("../functions/editfunctions.php");
 					if(mysql_query($func, $connection)){
 						
 						$timefunc = "INSERT INTO times_module_p(assoc_module, received) VALUES($id, \"$date\")";
-						echo $timefunc;
+						#echo $timefunc;
 						mysql_query($timefunc, $connection);
 					}
 					ROCinfo($id);
@@ -1290,7 +1320,8 @@ include("../functions/editfunctions.php");
 						$rocfunc = "UPDATE ROC_p SET name=\"".$rocname."\" WHERE assoc_module=".$id." AND position=".($j-1);	
 						mysql_query($rocfunc, $connection);
 					}
-					flipROCs($id); ####RTI handles the ROCS upside down ####
+					RTIROCs($id); ####RTI's numbering scheme is different ####
+					flipROCs($id); ####RTI's numbering scheme is different ####
 					echo "Module ".$name." added to the database";		
 					echo "<br>";
 					$i++;
