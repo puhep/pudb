@@ -23,7 +23,7 @@ $id = findid("module_p", $name);
 echo "<input type='hidden' name='name' value='".$_GET['name']."'>";
 curname("module_p", $id);
 echo "<br>";
-curtestgrade($id);
+curtestparams($id);
 morewebLinkList($id);
 curpics("sidet_p", $id);
 

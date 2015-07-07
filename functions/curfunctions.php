@@ -313,6 +313,57 @@ function currocparams($module, $param){
 	echo "</table>";
 }
 
+function curgrade($id){
+	include('../graphing/xmlgrapher_crit.php');
+	include('../functions/curfunctions.php');
+
+	$dumped = dump("module_p", $id);
+
+	$crit = xmlgrapher_crit_num($dumped['assoc_sens'], "IV", "module", 0);
+
+	$bumpcrit = badbumps_crit($id);
+
+	if($bumpcrit == "" || $crit == 0){
+		return "I";
+	}
+
+	if($crit%25 == 0 || $crit%7 == 0 || $bumpcrit == "C"){
+		return "C";
+	}
+	if($crit%5 == 0 || $bumpcrit == "B"){
+		return "B";
+	}
+	
+	return "A";
+	
+}
+
+function badbumps_crit($id){
+	include('../../../Submission_p_secure_pages/connect.php');
+
+	mysql_query('USE cmsfpix_u', $connection);
+	
+	$func = "SELECT badbumps_elec, deadpix from ROC_p WHERE assoc_module=".$id;
+	$output = mysql_query($func, $connection);
+	$ret = "";
+	while($array = mysql_fetch_assoc($output)){
+		if(is_null($array['badbumps_elec']) || is_null($array['deadpix'])){
+			return "";
+		}
+		$totbad = $array['badbumps_elec'] + $array['deadpix'];
+		if($totbad > 166){
+			$ret = "C";
+		}
+		else if($totbad > 41 && $ret != "C"){
+			$ret = "B";
+		}
+		else if($ret != "B" && $ret != "B"){
+			$ret = "A";
+		}
+	}
+		return $ret;
+}
+
 function badrocs($id){
 	include('../../../Submission_p_secure_pages/connect.php');
 	
@@ -355,17 +406,17 @@ function curtrack($id){
 			echo "Module transported by hand";
 		}
 		else if(is_numeric($track)){
-			echo "<a href=\"https://www.fedex.com/apps/fedextrack/?trknbr=".$track."\">Track Package</a>";
+			echo "<a target=\"_blank\" href=\"https://www.fedex.com/apps/fedextrack/?trknbr=".$track."\">Track Package</a>";
 		}
 		else{
-			echo "Possible tracking number formatting error";
+			echo $track;
 		}
 	}
 
 	return;
 }
 
-function curtestgrade($id){
+function curtestparams($id){
 
 	$dumped = dump("module_p", $id);
 
@@ -378,7 +429,7 @@ function curtestgrade($id){
 	#echo "Number of Bad Bump Bonds (Electrical): ".$dumped['badbumps_electrical']."<br>";
 	#echo "Number of Bad Bump Bonds (Reverse Bias): ".$dumped['badbumps_reversebias']."<br>";
 	#echo "Number of Bad Bump Bonds (X-Ray): ".$dumped['badbumps_xray']."<br>";
-	echo "Grade: ".$dumped['grade']."<br>";
+	echo "Grade: ".curgrade($id)."<br>";
 	if($dumped['can_time']==1){
 	echo "Timeable: Yes<br>";
 	}

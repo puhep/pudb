@@ -20,7 +20,7 @@ $id = findid("module_p", $name);
 echo "<input type='hidden' name='name' value='".$_GET['name']."'>";
 
 curname("module_p", $id);
-curtestgrade($id);
+curtestparams($id);
 curpics("sidet_p", $id);
 
 ?>

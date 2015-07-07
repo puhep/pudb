@@ -252,64 +252,52 @@ include("../functions/editfunctions.php");
 
 				$doc = simplexml_load_file($dir.$entry);
 				
-				########ALL ROCS##########
-				$i = 0;
-				while($doc->ROCS[$i]->NAME !=""){
-
-					$name = $doc->ROCS[$i]->NAME;
-					$id = findid("module_p", $name);
-					
-					$k = 0;
-					while($doc->ROCS[$i]->ROC[$k]->POSITION !=""){
-
-						mysql_query('USE cmsfpix_u', $connection);
-					
-						$pos = $doc->ROCS[$i]->ROC[$k]->POSITION;
-						if(($status=$doc->ROCS[$i]->ROC[$k]->IS_DEAD)!=""){
-							$func = "UPDATE ROC_p SET is_dead=\"".$status."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
-							mysql_query($func, $connection);
-							echo "ROC ".$pos." on ".$name." status updated<br>";
-						}
-						if(($offset=$doc->ROCS[$i]->ROC[$k]->XRAY_OFFSET)!=""){
-							$func = "UPDATE ROC_p SET xray_offset=\"".$offset."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
-							mysql_query($func, $connection);
-							echo "ROC ".$pos." on ".$name." X-ray offset: ".$offset."<br>";
-						}
-						if(($slope=$doc->ROCS[$i]->ROC[$k]->XRAY_SLOPE)!=""){
-							$func = "UPDATE ROC_p SET xray_slope=\"".$slope."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
-							mysql_query($func, $connection);
-							echo "ROC ".$pos." on ".$name." X-ray slope: ".$slope."<br>";
-						}
-						if(($slope=$doc->ROCS[$i]->ROC[$k]->BADBUMPS_ELEC)!=""){
-							$func = "UPDATE ROC_p SET badbumps_elec=\"".$slope."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
-							mysql_query($func, $connection);
-							echo "ROC ".$pos." on ".$name." Bad Bumps (Electrical): ".$slope."<br>";
-						}
-						if(($slope=$doc->ROCS[$i]->ROC[$k]->BADBUMPS_XRAY)!=""){
-							$func = "UPDATE ROC_p SET badbumps_xray=\"".$slope."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
-							mysql_query($func, $connection);
-							echo "ROC ".$pos." on ".$name." Bad Bumps (X-Ray): ".$slope."<br>";
-						}
-						if(($slope=$doc->ROCS[$i]->ROC[$k]->DEAD_PIX)!=""){
-							$func = "UPDATE ROC_p SET deadpix=\"".$slope."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
-							mysql_query($func, $connection);
-							echo "ROC ".$pos." on ".$name." Dead Pixels: ".$slope."<br>";
-						}
-				
-					$k++;
-					}
-					lastUpdate("module_p", $id, $user, "Updated Fulltest Values", "");
-				$i++;
-				}
-
-
 				$i=0;
 				while($doc->TEST[$i]->NAME != ""){
 
 					$name = $doc->TEST[$i]->NAME;
 					$id = findid("module_p", $name);
 					
-							
+					########ALL ROCS##########
+				
+					for($k=0;$k<16;$k++){
+						
+						if(($pos = $doc->TEST[$i]->ROCS->ROC[$k]->POSITION) != ""){
+							mysql_query('USE cmsfpix_u', $connection);
+				
+							if(($status=$doc->TEST[$i]->ROCS->ROC[$k]->IS_DEAD)!=""){
+								$func = "UPDATE ROC_p SET is_dead=\"".$status."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
+								mysql_query($func, $connection);
+								echo "ROC ".$pos." on ".$name." status updated<br>";
+							}
+							if(($offset=$doc->TEST[$i]->ROCS->ROC[$k]->XRAY_OFFSET)!=""){
+								$func = "UPDATE ROC_p SET xray_offset=\"".$offset."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
+								mysql_query($func, $connection);
+								echo "ROC ".$pos." on ".$name." X-ray offset: ".$offset."<br>";
+							}
+							if(($slope=$doc->TEST[$i]->ROCS->ROC[$k]->XRAY_SLOPE)!=""){
+								$func = "UPDATE ROC_p SET xray_slope=\"".$slope."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
+								mysql_query($func, $connection);
+								echo "ROC ".$pos." on ".$name." X-ray slope: ".$slope."<br>";
+							}
+							if(($bb_elec=$doc->TEST[$i]->ROCS->ROC[$k]->BADBUMPS_ELEC)!=""){
+								$func = "UPDATE ROC_p SET badbumps_elec=\"".$bb_elec."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
+								mysql_query($func, $connection);
+								echo "ROC ".$pos." on ".$name." Bad Bumps (Electrical): ".$bb_elec."<br>";
+							}
+							if(($bb_xray=$doc->TEST[$i]->ROCS->ROC[$k]->BADBUMPS_XRAY)!=""){
+								$func = "UPDATE ROC_p SET badbumps_xray=\"".$bb_xray."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
+								mysql_query($func, $connection);
+								echo "ROC ".$pos." on ".$name." Bad Bumps (X-Ray): ".$bb_xray."<br>";
+							}
+							if(($deadpix=$doc->TEST[$i]->ROCS->ROC[$k]->DEAD_PIX)!=""){
+								$func = "UPDATE ROC_p SET deadpix=\"".$deadpix."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
+								mysql_query($func, $connection);
+								echo "ROC ".$pos." on ".$name." Dead Pixels: ".$deadpix."<br>";
+							}
+						}
+					}
+
 					########DEAD ROCS##########
 					$j = 0;
 					while($doc->TEST[$i]->DEAD_ROCS->ROC[$j] != ""){
@@ -550,59 +538,51 @@ include("../functions/editfunctions.php");
 
 				$doc = simplexml_load_file($dir.$entry);
 
-				########ALL ROCS##########
-				$i = 0;
-				while($doc->ROCS[$i]->NAME !=""){
-
-					$name = $doc->ROCS[$i]->NAME;
-					$id = findid("module_p", $name);
-					
-					$k = 0;
-					while($doc->ROCS[$i]->ROC[$k]->POSITION !=""){
-
-						mysql_query('USE cmsfpix_u', $connection);
-					
-						$pos = $doc->ROCS[$i]->ROC[$k]->POSITION;
-
-						if(($status=$doc->ROCS[$i]->ROC[$k]->IS_DEAD)!=""){
-							$func = "UPDATE ROC_p SET is_dead=\"".$status."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
-							mysql_query($func, $connection);
-						}
-						if(($offset=$doc->ROCS[$i]->ROC[$k]->XRAY_OFFSET)!=""){
-							$func = "UPDATE ROC_p SET xray_offset=\"".$offset."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
-							mysql_query($func, $connection);
-						}
-						if(($slope=$doc->ROCS[$i]->ROC[$k]->XRAY_SLOPE)!=""){
-							$func = "UPDATE ROC_p SET xray_slope=\"".$slope."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
-							mysql_query($func, $connection);
-						}
-						if(($slope=$doc->ROCS[$i]->ROC[$k]->BADBUMPS_ELEC)!=""){
-							$func = "UPDATE ROC_p SET badbumps_elec=\"".$slope."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
-							mysql_query($func, $connection);
-							echo "ROC ".$pos." on ".$name." Bad Bumps (Electrical): ".$slope."<br>";
-						}
-						if(($slope=$doc->ROCS[$i]->ROC[$k]->BADBUMPS_XRAY)!=""){
-							$func = "UPDATE ROC_p SET badbumps_xray=\"".$slope."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
-							mysql_query($func, $connection);
-							echo "ROC ".$pos." on ".$name." Bad Bumps (X-Ray): ".$slope."<br>";
-						}
-						if(($slope=$doc->ROCS[$i]->ROC[$k]->DEAD_PIX)!=""){
-							$func = "UPDATE ROC_p SET deadpix=\"".$slope."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
-							mysql_query($func, $connection);
-							echo "ROC ".$pos." on ".$name." Dead Pixels: ".$slope."<br>";
-						}
-						echo "ROC ".$pos." on ".$name." has been updated";
-					$k++;
-					}
-					lastUpdate("module_p", $id, $user, "Updated Fulltest Values", "");
-				$i++;
-				}
-
 				$i=0;
 				while($doc->TEST[$i]->NAME != ""){
 
 					$name = $doc->TEST[$i]->NAME;
 					$id = findid("module_p", $name);
+
+					########ALL ROCS##########
+				
+					for($k=0;$k<16;$k++){
+						
+						if(($pos = $doc->TEST[$i]->ROCS->ROC[$k]->POSITION) != ""){
+							mysql_query('USE cmsfpix_u', $connection);
+				
+							if(($status=$doc->TEST[$i]->ROCS->ROC[$k]->IS_DEAD)!=""){
+								$func = "UPDATE ROC_p SET is_dead=\"".$status."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
+								mysql_query($func, $connection);
+								echo "ROC ".$pos." on ".$name." status updated<br>";
+							}
+							if(($offset=$doc->TEST[$i]->ROCS->ROC[$k]->XRAY_OFFSET)!=""){
+								$func = "UPDATE ROC_p SET xray_offset=\"".$offset."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
+								mysql_query($func, $connection);
+								echo "ROC ".$pos." on ".$name." X-ray offset: ".$offset."<br>";
+							}
+							if(($slope=$doc->TEST[$i]->ROCS->ROC[$k]->XRAY_SLOPE)!=""){
+								$func = "UPDATE ROC_p SET xray_slope=\"".$slope."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
+								mysql_query($func, $connection);
+								echo "ROC ".$pos." on ".$name." X-ray slope: ".$slope."<br>";
+							}
+							if(($bb_elec=$doc->TEST[$i]->ROCS->ROC[$k]->BADBUMPS_ELEC)!=""){
+								$func = "UPDATE ROC_p SET badbumps_elec=\"".$bb_elec."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
+								mysql_query($func, $connection);
+								echo "ROC ".$pos." on ".$name." Bad Bumps (Electrical): ".$bb_elec."<br>";
+							}
+							if(($bb_xray=$doc->TEST[$i]->ROCS->ROC[$k]->BADBUMPS_XRAY)!=""){
+								$func = "UPDATE ROC_p SET badbumps_xray=\"".$bb_xray."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
+								mysql_query($func, $connection);
+								echo "ROC ".$pos." on ".$name." Bad Bumps (X-Ray): ".$bb_xray."<br>";
+							}
+							if(($deadpix=$doc->TEST[$i]->ROCS->ROC[$k]->DEAD_PIX)!=""){
+								$func = "UPDATE ROC_p SET deadpix=\"".$deadpix."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
+								mysql_query($func, $connection);
+								echo "ROC ".$pos." on ".$name." Dead Pixels: ".$deadpix."<br>";
+							}
+						}
+					}
 
 					########DEAD ROCS##########
 					$j = 0;
@@ -832,7 +812,7 @@ include("../functions/editfunctions.php");
 
 					$name = $doc->SCAN[$i]->NAME;
 					$modid = findid("module_p", $name);
-					$dumped = dump("module_p", $id);
+					$dumped = dump("module_p", $modid);
 					$id = $dumped['assoc_sens'];
 
 					$level = strtolower($doc->SCAN[$i]->LEVEL);
@@ -1462,10 +1442,14 @@ function log2xml($log, $user, $loc, $partname){
 	$content = "";
 	if($fp){
 		while(($line = fgets($fp)) !== false){
-			if($line{0} == "#"){
+
+			if($line{0} == "#" || $line == ""){
 				continue;
 			}
-			$linearr = explode("\t", $line);
+			$linearr = preg_split("/[ \t]+/", $line, -1, PREG_SPLIT_NO_EMPTY);
+			if(!is_numeric($linearr[0])){
+				continue;
+			}
 			$voltage = $linearr[0];
 			$current = $linearr[1];
 

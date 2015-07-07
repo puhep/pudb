@@ -15,6 +15,13 @@ $row = mysql_fetch_array($output, MYSQL_ASSOC);
 $type = $row['part_type'];
 $scan = $row['scan_type'];
 
+if($type != "wafer"){
+	$y = "TOT_CURRENT_AMP";
+}
+else{
+	$y = "ACTV_CURRENT_AMP";
+}
+
 $file = $row['file'];
 $doc = simplexml_load_string($file);
 $filename = $doc->DATA_SET->PART->SERIAL_NUMBER."_".$scan;
@@ -24,7 +31,7 @@ $tsvfile = "";
 for($loop=0;$loop<count($doc->DATA_SET->DATA); $loop++){
 	$tsvfile .= $doc->DATA_SET->DATA[$loop]->VOLTAGE_VOLT;
 	$tsvfile .= "\t";
-	$tsvfile .= $doc->DATA_SET->DATA[$loop]->ACTV_CURRENT_AMP;
+	$tsvfile .= $doc->DATA_SET->DATA[$loop]->$y;
 	$tsvfile .= "\n";
 }
 

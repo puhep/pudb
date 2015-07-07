@@ -62,7 +62,7 @@ include('../graphing/xmlgrapher_crit.php');
 		$comp11 = $_GET['comp11'];
 		$comp12 = $_GET['comp12'];
 		$comp13 = $_GET['comp13'];
-		$comp18 = $_GET['comp13'];
+		$comp18 = $_GET['comp18'];
 	}
 
 ?>
@@ -113,7 +113,7 @@ Grade:
 <option value="A"<?php echo $param2 == 'A' ? 'selected="selected"' : ''; ?>>A</option>
 <option value="B"<?php echo $param2 == 'B' ? 'selected="selected"' : ''; ?>>B</option>
 <option value="C"<?php echo $param2 == 'C' ? 'selected="selected"' : ''; ?>>C</option>
-<option value="F"<?php echo $param2 == 'F' ? 'selected="selected"' : ''; ?>>F</option>
+<option value="I"<?php echo $param2 == 'I' ? 'selected="selected"' : ''; ?>>I</option>
 </select>
 <br>
 <br>
@@ -303,7 +303,7 @@ if($param19 != ""){
 	$sortmod19 = "AND (a.name LIKE \"%".$param19."%\" OR a.name_hdi LIKE \"%".$param19."%\")";
 }
 
-$sorter = $hide.$sortmod1.$sortmod2.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19;
+$sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19;
 
 ?>
 <input type="submit" value="Apply">
@@ -338,7 +338,8 @@ $output1 = mysql_query($func1, $connection);
 while($output1 && $row1 = mysql_fetch_assoc($output1)){
 	#Testing Pass/Fail of IV test
 	$dumped = dump("module_p", $row1['id']);
-	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
+	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
+
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
 	if($comp18 === "0" && $param18 === "1" && $crit%7 > 0){ continue;}
@@ -359,7 +360,7 @@ $output2 = mysql_query($func2, $connection);
 while($output2 && $row2 = mysql_fetch_assoc($output2)){
 	#Testing Pass/Fail of IV test
 	$dumped = dump("module_p", $row2['id']);
-	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
+	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
 	
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
@@ -383,7 +384,7 @@ $output3 = mysql_query($func3, $connection);
 while($output3 && $row3 = mysql_fetch_assoc($output3)){
 	#Testing Pass/Fail of IV test
 	$dumped = dump("module_p", $row3['id']);
-	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
+	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
 	
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
@@ -407,7 +408,7 @@ $output4 = mysql_query($func4, $connection);
 while($output4 && $row4 = mysql_fetch_assoc($output4)){
 	#Testing Pass/Fail of IV test
 	$dumped = dump("module_p", $row4['id']);
-	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
+	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
 	
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
@@ -431,7 +432,7 @@ $output5 = mysql_query($func5, $connection);
 while($output5 && $row5 = mysql_fetch_assoc($output5)){
 	#Testing Pass/Fail of IV test
 	$dumped = dump("module_p", $row5['id']);
-	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
+	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
 	
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
@@ -455,7 +456,7 @@ $output6 = mysql_query($func6, $connection);
 while($output6 && $row6 = mysql_fetch_assoc($output6)){
 	#Testing Pass/Fail of IV test
 	$dumped = dump("module_p", $row6['id']);
-	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
+	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
 	
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
@@ -479,7 +480,7 @@ $output7 = mysql_query($func7, $connection);
 while($output7 && $row7 = mysql_fetch_assoc($output7)){
 	#Testing Pass/Fail of IV test
 	$dumped = dump("module_p", $row7['id']);
-	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
+	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
 	
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
@@ -503,7 +504,7 @@ $output8 = mysql_query($func8, $connection);
 while($output8 && $row8 = mysql_fetch_assoc($output8)){
 	#Testing Pass/Fail of IV test
 	$dumped = dump("module_p", $row8['id']);
-	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module");
+	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
 	
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}

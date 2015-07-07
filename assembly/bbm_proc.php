@@ -58,10 +58,12 @@ if(isset($_POST['submit']) && ((isset($_POST['box']) && $_POST['who'] != "") || 
 	addcomment("module_p", $id, $submittedstep);
 	addcomment("module_p", $id, $submittednotes);
 	$funcassembly = "UPDATE module_p SET assembly=$assembly WHERE id=$id";
-	$funcship = "UPDATE module_p SET shipped=\"".$_POST['date']."\", destination=\"".$_POST['dest']."\", tracking_number=\"".$_POST['track']."\" WHERE id=$id";
 	mysql_query($funcassembly, $connection);
 	
 	if(isset($_POST['shipbox'])){
+
+		$formattedtrack = preg_replace("/[ ]/","",$_POST['track']);
+		$funcship = "UPDATE module_p SET shipped=\"".$_POST['date']."\", destination=\"".$_POST['dest']."\", tracking_number=\"".$formattedtrack."\" WHERE id=$id";
 		mysql_query($funcship, $connection);
 		$flexfunc = "UPDATE flex_p set current=current-1 WHERE name=\"".$location."\"";
 		$carrierfunc = "UPDATE carrier_p set current=current-1 WHERE name=\"".$location."\"";

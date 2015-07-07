@@ -23,6 +23,7 @@ if($namerow['module']){
 $file1 = NULL;
 $file2 = NULL;
 $file3 = NULL;
+$file4 = NULL;
 
 while($row = mysql_fetch_assoc($file)){
 	
@@ -37,6 +38,9 @@ while($row = mysql_fetch_assoc($file)){
 			if($row['part_type'] == "assembled"){
 				$file3 = $row['file'];
 			}
+			if($row['part_type'] == "fnal"){
+				$file4 = $row['file'];
+			}
 		}
 	}
 }
@@ -50,6 +54,9 @@ $doc2=simplexml_load_string($file2);}
 
 if(!is_null($file3)){
 $doc3=simplexml_load_string($file3);}
+
+if(!is_null($file4)){
+$doc4=simplexml_load_string($file4);}
 
 if($scan == "IV"){
 $y = "ACTV_CURRENT_AMP";
@@ -89,13 +96,26 @@ if(!is_null($file3)){
 		$timestamp3 = "No Timestamp";
 	}
 }
+if(!is_null($file4)){
+	$datacount4 = count($doc4->DATA_SET->DATA);
+	if($datacount4 > $datacountlim){
+		$datacountlim = $datacount4;
+	}
+
+	$timestamp4 = $doc4->HEADER->RUN->RUN_BEGIN_TIMESTAMP;
+	if($timestamp4 == ""){
+		$timestamp4 = "No Timestamp";
+	}
+}
 $arr1;
 $arr2;
 $arr3;
+$arr4;
 $limitarr;
 $markedA=1;
 $markedB=1;
 $markedC=1;
+$markedD=1;
 
 if(!is_null($file1)){
 	for($loop=0;$loop<$datacount1;$loop++){
@@ -103,6 +123,7 @@ if(!is_null($file1)){
 		$arr1[0][$loop]=$doc1->DATA_SET->DATA[$loop]->VOLTAGE_VOLT;
 
 		settype($arr1[0][$loop],"float");
+			$arr1[0][$loop] = abs($arr1[0][$loop]);
 
 		$arr1[1][$loop]=$doc1->DATA_SET->DATA[$loop]->$y;
 		if($arr1[1][$loop] == "NaN"){
@@ -135,6 +156,7 @@ if(!is_null($file2)){
 		$arr2[0][$loop]=$doc2->DATA_SET->DATA[$loop]->VOLTAGE_VOLT;
 		
 		settype($arr2[0][$loop],"float");
+			$arr2[0][$loop] = abs($arr2[0][$loop]);
 
 		$arr2[1][$loop]=$doc2->DATA_SET->DATA[$loop]->$y2;
 		if($arr2[1][$loop] == "NaN"){
@@ -166,6 +188,7 @@ if(!is_null($file3)){
 		$arr3[0][$loop]=$doc3->DATA_SET->DATA[$loop]->VOLTAGE_VOLT;
 		
 		settype($arr3[0][$loop],"float");
+			$arr3[0][$loop] = abs($arr3[0][$loop]);
 
 		$arr3[1][$loop]=$doc3->DATA_SET->DATA[$loop]->$y2;
 		if($arr3[1][$loop] == "NaN"){
@@ -188,6 +211,38 @@ if(!is_null($file3)){
 	}
 	if($I150/$I100>2){
 		$markedC*=3;
+	}
+}
+
+if(!is_null($file4)){
+	for($loop=0;$loop<$datacount4;$loop++){
+
+		$arr4[0][$loop]=$doc4->DATA_SET->DATA[$loop]->VOLTAGE_VOLT;
+		
+		settype($arr4[0][$loop],"float");
+			$arr4[0][$loop] = abs($arr4[0][$loop]);
+
+		$arr4[1][$loop]=$doc4->DATA_SET->DATA[$loop]->$y2;
+		if($arr4[1][$loop] == "NaN"){
+			$arr4[1][$loop] = 1E-10;
+		}
+			settype($arr4[1][$loop],"float");
+			if($arr4[1][$loop] < 0){
+				#$arr4[1][$loop] = 1E-10;
+				$arr4[1][$loop] *= -1;
+			}
+	}
+	$index100 = array_search(100, $arr4[0]);
+		$I100=$arr4[1][$index100];
+
+	$index150 = array_search(150, $arr4[0]);
+		$I150=$arr4[1][$index150];
+
+	if($I150>2E-6){
+		$markedD*=2;
+	}
+	if($I150/$I100>2){
+		$markedD*=3;
 	}
 }
 
@@ -264,10 +319,30 @@ if(!is_null($file3)){
 	echo "</tr>";
 }
 
+if(!is_null($file4)){
+
+	echo "<tr>";
+	echo "<td>";
+	echo "Module at FNAL:";
+	echo "</td>";
+
+	echo "<td>";
+	if(!($markedD%2)){echo "<p style=\"background-color:red;\">FAIL</p>";}
+	else{echo "<p style=\"background-color:green;\">PASS</p>";}
+	echo "</td>";
+
+	echo "<td>";
+	if(!($markedD%3)){echo "<p style=\"background-color:red;\">FAIL</p>";}
+	else{echo "<p style=\"background-color:green;\">PASS</p>";}
+	echo "</td>";
+
+	echo "</tr>";
+}
+
 echo "</table>";
 }
 
-function xmlgrapher_crit_num($id, $scan, $level){
+function xmlgrapher_crit_num($id, $scan, $level, $exclusive){
 include('../../../Submission_p_secure_pages/connect.php');
 
 $func = "SELECT file, filesize, part_type FROM measurement_p WHERE part_ID=\"$id\" AND scan_type=\"$scan\"";
@@ -291,6 +366,7 @@ if($namerow['module']){
 $file1 = NULL;
 $file2 = NULL;
 $file3 = NULL;
+$file4 = NULL;
 
 while($row = mysql_fetch_assoc($file)){
 	
@@ -305,6 +381,9 @@ while($row = mysql_fetch_assoc($file)){
 			if($row['part_type'] == "assembled"){
 				$file3 = $row['file'];
 			}
+			if($row['part_type'] == "fnal"){
+				$file4 = $row['file'];
+			}
 		}
 	}
 }
@@ -318,6 +397,9 @@ $doc2=simplexml_load_string($file2);}
 
 if(!is_null($file3)){
 $doc3=simplexml_load_string($file3);}
+
+if(!is_null($file4)){
+$doc4=simplexml_load_string($file4);}
 
 if($scan == "IV"){
 $y = "ACTV_CURRENT_AMP";
@@ -357,21 +439,37 @@ if(!is_null($file3)){
 		$timestamp3 = "No Timestamp";
 	}
 }
+if(!is_null($file4)){
+	$datacount4 = count($doc4->DATA_SET->DATA);
+	if($datacount4 > $datacountlim){
+		$datacountlim = $datacount4;
+	}
+
+	$timestamp4 = $doc4->HEADER->RUN->RUN_BEGIN_TIMESTAMP;
+	if($timestamp4 == ""){
+		$timestamp4 = "No Timestamp";
+	}
+}
 $arr1;
 $arr2;
 $arr3;
+$arr4;
 $limitarr;
-$markedA=1;
-$markedB=1;
-$markedC=1;
-$totmarked=1;
+$markedA=0;
+$markedB=0;
+$markedC=0;
+$markedD=0;
+$totmarked=0;
 
 if(!is_null($file1)){
+	$markedA=1;
+	$totmarked=1;
 	for($loop=0;$loop<$datacount1;$loop++){
 
 		$arr1[0][$loop]=$doc1->DATA_SET->DATA[$loop]->VOLTAGE_VOLT;
 
 		settype($arr1[0][$loop],"float");
+			$arr1[0][$loop] = abs($arr1[0][$loop]);
 
 		$arr1[1][$loop]=$doc1->DATA_SET->DATA[$loop]->$y;
 		if($arr1[1][$loop] == "NaN"){
@@ -393,17 +491,23 @@ if(!is_null($file1)){
 	if($I150>2E-6){
 		$markedA*=5;
 	}
+	if($I150>10E-6){
+		$markedA*=5;
+	}
 	if($I150/$I100>2){
 		$markedA*=7;
 	}
 }
 
 if(!is_null($file2)){
+	$markedB=1;
+	$totmarked=1;
 	for($loop=0;$loop<$datacount2;$loop++){
 
 		$arr2[0][$loop]=$doc2->DATA_SET->DATA[$loop]->VOLTAGE_VOLT;
 		
 		settype($arr2[0][$loop],"float");
+			$arr2[0][$loop] = abs($arr2[0][$loop]);
 
 		$arr2[1][$loop]=$doc2->DATA_SET->DATA[$loop]->$y2;
 		if($arr2[1][$loop] == "NaN"){
@@ -424,17 +528,26 @@ if(!is_null($file2)){
 	if($I150>2E-6){
 		$markedB*=5;
 	}
+	if($I150>10E-6){
+		$markedB*=5;
+	}
 	if($I150/$I100>2){
 		$markedB*=7;
 	}
 }
 
 if(!is_null($file3)){
+	$markedC=1;
+	$totmarked=1;
 	for($loop=0;$loop<$datacount3;$loop++){
 
 		$arr3[0][$loop]=$doc3->DATA_SET->DATA[$loop]->VOLTAGE_VOLT;
 		
 		settype($arr3[0][$loop],"float");
+			$arr3[0][$loop] = abs($arr3[0][$loop]);
+
+		$arr3[0][$loop]=abs($arr3[0][$loop]);
+
 
 		$arr3[1][$loop]=$doc3->DATA_SET->DATA[$loop]->$y2;
 		if($arr3[1][$loop] == "NaN"){
@@ -455,8 +568,51 @@ if(!is_null($file3)){
 	if($I150>2E-6){
 		$markedC*=5;
 	}
+	if($I150>10E-6){
+		$markedC*=5;
+	}
 	if($I150/$I100>2){
 		$markedC*=7;
+	}
+}
+
+if(!is_null($file4)){
+	$markedD=1;
+	$totmarked=1;
+	for($loop=0;$loop<$datacount4;$loop++){
+
+		$arr4[0][$loop]=$doc4->DATA_SET->DATA[$loop]->VOLTAGE_VOLT;
+		
+		settype($arr4[0][$loop],"float");
+			$arr4[0][$loop] = abs($arr4[0][$loop]);
+
+		$arr4[0][$loop]=abs($arr4[0][$loop]);
+
+
+		$arr4[1][$loop]=$doc4->DATA_SET->DATA[$loop]->$y2;
+		if($arr4[1][$loop] == "NaN"){
+			$arr4[1][$loop] = 1E-10;
+		}
+			settype($arr4[1][$loop],"float");
+			if($arr4[1][$loop] < 0){
+				#$arr4[1][$loop] = 1E-10;
+				$arr4[1][$loop] *= -1;
+			}
+	}
+	$index100 = array_search(100, $arr4[0]);
+		$I100=$arr4[1][$index100];
+
+	$index150 = array_search(150, $arr4[0]);
+		$I150=$arr4[1][$index150];
+
+	if($I150>2E-6){
+		$markedD*=5;
+	}
+	if($I150>10E-6){
+		$markedD*=5;
+	}
+	if($I150/$I100>2){
+		$markedD*=7;
 	}
 }
 
@@ -465,7 +621,7 @@ if(!is_null($file1) && $level=="wafer"){
 	$totmarked*=$markedA;
 }
 
-if(!is_null($file2) && $level=="bare"){
+if(!is_null($file2) && $level=="module"){
 
 	$totmarked*=$markedB;
 }
@@ -475,7 +631,31 @@ if(!is_null($file3) && $level=="module"){
 	$totmarked*=$markedC;
 }
 
-	return $totmarked;
+if(!is_null($file4) && $level=="module"){
 
+	$totmarked*=$markedD;
+}
+
+if($exclusive == 0){
+	return $totmarked;
+}
+else{
+	switch($level){
+		case "wafer":
+			return $markedA;
+			break;
+		case "module":
+			return $markedB;
+			break;
+		case "assembled":
+			return $markedC;
+			break;
+		case "fnal":
+			return $markedD;
+			break;
+		default:
+			return $totmarked;
+	}
+}
 }
 ?>
