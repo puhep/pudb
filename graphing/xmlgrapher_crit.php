@@ -123,7 +123,7 @@ if(!is_null($file1)){
 		$arr1[0][$loop]=$doc1->DATA_SET->DATA[$loop]->VOLTAGE_VOLT;
 
 		settype($arr1[0][$loop],"float");
-			$arr1[0][$loop] = abs($arr1[0][$loop]);
+			$arr1[0][$loop] = round(abs($arr1[0][$loop]));
 
 		$arr1[1][$loop]=$doc1->DATA_SET->DATA[$loop]->$y;
 		if($arr1[1][$loop] == "NaN"){
@@ -156,7 +156,7 @@ if(!is_null($file2)){
 		$arr2[0][$loop]=$doc2->DATA_SET->DATA[$loop]->VOLTAGE_VOLT;
 		
 		settype($arr2[0][$loop],"float");
-			$arr2[0][$loop] = abs($arr2[0][$loop]);
+			$arr2[0][$loop] = round(abs($arr2[0][$loop]));
 
 		$arr2[1][$loop]=$doc2->DATA_SET->DATA[$loop]->$y2;
 		if($arr2[1][$loop] == "NaN"){
@@ -188,7 +188,7 @@ if(!is_null($file3)){
 		$arr3[0][$loop]=$doc3->DATA_SET->DATA[$loop]->VOLTAGE_VOLT;
 		
 		settype($arr3[0][$loop],"float");
-			$arr3[0][$loop] = abs($arr3[0][$loop]);
+			$arr3[0][$loop] = round(abs($arr3[0][$loop]));
 
 		$arr3[1][$loop]=$doc3->DATA_SET->DATA[$loop]->$y2;
 		if($arr3[1][$loop] == "NaN"){
@@ -220,7 +220,7 @@ if(!is_null($file4)){
 		$arr4[0][$loop]=$doc4->DATA_SET->DATA[$loop]->VOLTAGE_VOLT;
 		
 		settype($arr4[0][$loop],"float");
-			$arr4[0][$loop] = abs($arr4[0][$loop]);
+			$arr4[0][$loop] = round(abs($arr4[0][$loop]));
 
 		$arr4[1][$loop]=$doc4->DATA_SET->DATA[$loop]->$y2;
 		if($arr4[1][$loop] == "NaN"){
@@ -469,7 +469,7 @@ if(!is_null($file1)){
 		$arr1[0][$loop]=$doc1->DATA_SET->DATA[$loop]->VOLTAGE_VOLT;
 
 		settype($arr1[0][$loop],"float");
-			$arr1[0][$loop] = abs($arr1[0][$loop]);
+			$arr1[0][$loop] = round(abs($arr1[0][$loop]));
 
 		$arr1[1][$loop]=$doc1->DATA_SET->DATA[$loop]->$y;
 		if($arr1[1][$loop] == "NaN"){
@@ -507,7 +507,7 @@ if(!is_null($file2)){
 		$arr2[0][$loop]=$doc2->DATA_SET->DATA[$loop]->VOLTAGE_VOLT;
 		
 		settype($arr2[0][$loop],"float");
-			$arr2[0][$loop] = abs($arr2[0][$loop]);
+			$arr2[0][$loop] = round(abs($arr2[0][$loop]));
 
 		$arr2[1][$loop]=$doc2->DATA_SET->DATA[$loop]->$y2;
 		if($arr2[1][$loop] == "NaN"){
@@ -544,7 +544,7 @@ if(!is_null($file3)){
 		$arr3[0][$loop]=$doc3->DATA_SET->DATA[$loop]->VOLTAGE_VOLT;
 		
 		settype($arr3[0][$loop],"float");
-			$arr3[0][$loop] = abs($arr3[0][$loop]);
+			$arr3[0][$loop] = round(abs($arr3[0][$loop]));
 
 		$arr3[0][$loop]=abs($arr3[0][$loop]);
 
@@ -584,7 +584,7 @@ if(!is_null($file4)){
 		$arr4[0][$loop]=$doc4->DATA_SET->DATA[$loop]->VOLTAGE_VOLT;
 		
 		settype($arr4[0][$loop],"float");
-			$arr4[0][$loop] = abs($arr4[0][$loop]);
+			$arr4[0][$loop] = round(abs($arr4[0][$loop]));
 
 		$arr4[0][$loop]=abs($arr4[0][$loop]);
 

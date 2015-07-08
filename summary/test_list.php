@@ -258,7 +258,7 @@ if($param1 != ""){
 	$sortmod1 = "AND location=\"".$_GET['param1']."\" ";
 }
 if($param2 != ""){
-	$sortmod2 = "AND grade".$_GET['comp2']."\"".$_GET['param2']."\" ";
+	#$sortmod2 = "AND grade".$_GET['comp2']."\"".$_GET['param2']."\" ";
 }
 if($param3 != ""){
 	$sortmod3 = "AND badrocs".$_GET['comp3']."\"".$_GET['param3']."\" ";
@@ -339,6 +339,13 @@ while($output1 && $row1 = mysql_fetch_assoc($output1)){
 	#Testing Pass/Fail of IV test
 	$dumped = dump("module_p", $row1['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
+	
+	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row1['id'])){ continue;}
+	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row1['id'])){ continue;}
+	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row1['id'])){ continue;}
+	if($comp2 === ">=" && $param2 !== "" && $param2 < curgrade($row1['id'])){ continue;}
+	if($comp2 === "<=" && $param2 !== "" && $param2 > curgrade($row1['id'])){ continue;}
+	if($comp2 === "!=" && $param2 !== "" && $param2 == curgrade($row1['id'])){ continue;}
 
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
@@ -362,6 +369,13 @@ while($output2 && $row2 = mysql_fetch_assoc($output2)){
 	$dumped = dump("module_p", $row2['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
 	
+	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row2['id'])){ continue;}
+	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row2['id'])){ continue;}
+	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row2['id'])){ continue;}
+	if($comp2 === ">=" && $param2 !== "" && $param2 < curgrade($row2['id'])){ continue;}
+	if($comp2 === "<=" && $param2 !== "" && $param2 > curgrade($row2['id'])){ continue;}
+	if($comp2 === "!=" && $param2 !== "" && $param2 == curgrade($row2['id'])){ continue;}
+
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
 	if($comp18 === "0" && $param18 === "1" && $crit%7 > 0){ continue;}
@@ -385,6 +399,13 @@ while($output3 && $row3 = mysql_fetch_assoc($output3)){
 	#Testing Pass/Fail of IV test
 	$dumped = dump("module_p", $row3['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
+	
+	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row3['id'])){ continue;}
+	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row3['id'])){ continue;}
+	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row3['id'])){ continue;}
+	if($comp2 === ">=" && $param2 !== "" && $param2 < curgrade($row3['id'])){ continue;}
+	if($comp2 === "<=" && $param2 !== "" && $param2 > curgrade($row3['id'])){ continue;}
+	if($comp2 === "!=" && $param2 !== "" && $param2 == curgrade($row3['id'])){ continue;}
 	
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
@@ -410,6 +431,13 @@ while($output4 && $row4 = mysql_fetch_assoc($output4)){
 	$dumped = dump("module_p", $row4['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
 	
+	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row4['id'])){ continue;}
+	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row4['id'])){ continue;}
+	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row4['id'])){ continue;}
+	if($comp2 === ">=" && $param2 !== "" && $param2 < curgrade($row4['id'])){ continue;}
+	if($comp2 === "<=" && $param2 !== "" && $param2 > curgrade($row4['id'])){ continue;}
+	if($comp2 === "!=" && $param2 !== "" && $param2 == curgrade($row4['id'])){ continue;}
+	
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
 	if($comp18 === "0" && $param18 === "1" && $crit%7 > 0){ continue;}
@@ -434,6 +462,13 @@ while($output5 && $row5 = mysql_fetch_assoc($output5)){
 	$dumped = dump("module_p", $row5['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
 	
+	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row5['id'])){ continue;}
+	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row5['id'])){ continue;}
+	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row5['id'])){ continue;}
+	if($comp2 === ">=" && $param2 !== "" && $param2 < curgrade($row5['id'])){ continue;}
+	if($comp2 === "<=" && $param2 !== "" && $param2 > curgrade($row5['id'])){ continue;}
+	if($comp2 === "!=" && $param2 !== "" && $param2 == curgrade($row5['id'])){ continue;}
+
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
 	if($comp18 === "0" && $param18 === "1" && $crit%7 > 0){ continue;}
@@ -457,6 +492,13 @@ while($output6 && $row6 = mysql_fetch_assoc($output6)){
 	#Testing Pass/Fail of IV test
 	$dumped = dump("module_p", $row6['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
+	
+	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row6['id'])){ continue;}
+	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row6['id'])){ continue;}
+	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row6['id'])){ continue;}
+	if($comp2 === ">=" && $param2 !== "" && $param2 < curgrade($row6['id'])){ continue;}
+	if($comp2 === "<=" && $param2 !== "" && $param2 > curgrade($row6['id'])){ continue;}
+	if($comp2 === "!=" && $param2 !== "" && $param2 == curgrade($row6['id'])){ continue;}
 	
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
@@ -482,6 +524,13 @@ while($output7 && $row7 = mysql_fetch_assoc($output7)){
 	$dumped = dump("module_p", $row7['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
 	
+	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row7['id'])){ continue;}
+	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row7['id'])){ continue;}
+	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row7['id'])){ continue;}
+	if($comp2 === ">=" && $param2 !== "" && $param2 < curgrade($row7['id'])){ continue;}
+	if($comp2 === "<=" && $param2 !== "" && $param2 > curgrade($row7['id'])){ continue;}
+	if($comp2 === "!=" && $param2 !== "" && $param2 == curgrade($row7['id'])){ continue;}
+	
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
 	if($comp18 === "0" && $param18 === "1" && $crit%7 > 0){ continue;}
@@ -505,6 +554,13 @@ while($output8 && $row8 = mysql_fetch_assoc($output8)){
 	#Testing Pass/Fail of IV test
 	$dumped = dump("module_p", $row8['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
+	
+	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row8['id'])){ continue;}
+	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row8['id'])){ continue;}
+	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row8['id'])){ continue;}
+	if($comp2 === ">=" && $param2 !== "" && $param2 < curgrade($row8['id'])){ continue;}
+	if($comp2 === "<=" && $param2 !== "" && $param2 > curgrade($row8['id'])){ continue;}
+	if($comp2 === "!=" && $param2 !== "" && $param2 == curgrade($row8['id'])){ continue;}
 	
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}

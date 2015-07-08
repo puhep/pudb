@@ -1,6 +1,7 @@
 <?php
 include('../../../Submission_p_secure_pages/connect.php');
 include('../functions/curfunctions.php');
+include('../graphing/xmlgrapher_crit.php');
 include('../jpgraph/src/jpgraph.php');
 include('../jpgraph/src/jpgraph_date.php');
 include('../jpgraph/src/jpgraph_line.php');
@@ -24,7 +25,7 @@ if($loc == "nebraska"){
 	$loc_condition = "Nebraska";
 }
 
-$func = "SELECT a.HDI_attached, a.tested2, a.assoc_module, b.id FROM times_module_p a, module_p b WHERE a.assoc_module=b.id ORDER BY HDI_attached";
+$func = "SELECT a.HDI_attached, a.tested2, a.assoc_module, b.id, b.assoc_sens FROM times_module_p a, module_p b WHERE a.assoc_module=b.id ORDER BY HDI_attached";
 $func2 = "SELECT a.HDI_attached, a.tested2, a.assoc_module, b.id FROM times_module_p a, module_p b WHERE a.assoc_module=b.id ORDER BY tested2";
 
 $output = mysql_query($func, $connection);
@@ -40,19 +41,22 @@ while($row = mysql_fetch_assoc($output)){
 	$modloc = curloc("module_p", $row['assoc_module']);
 	$id = $row['id'];
 
-	if(!is_null($row['HDI_attached']) && $loc_condition==$modloc){
+	$totgrade = curgrade($id);
+	if($totgrade == "I"){ continue;}
+
+	if(!is_null($row['HDI_attached']) && curgrade($id)!="A" && $loc_condition==$modloc){
 		$arrAssembled[0][$g] = strtotime($row['HDI_attached']);
 		$arrAssembled[1][$g] = $g+1;
 		$g++;
 	}
 	
-	if(!is_null($row['HDI_attached']) && curgrade($id)=="A" && $loc_condition==$modloc){
+	if(!is_null($row['HDI_attached']) && badbumps_crit($id)<"A" && $loc_condition==$modloc){
 		$arr1[0][$i] = strtotime($row['HDI_attached']);
 		$arr1[1][$i] = $i+1;
 		$i++;
 	}
 	
-	if(!is_null($row['HDI_attached']) && curgrade($id)=="B" && $loc_condition==$modloc){
+	if(!is_null($row['HDI_attached']) && xmlgrapher_crit_num($row['assoc_sens'], "IV", "module",0)!=1 && $loc_condition==$modloc){
 		$arr2[0][$j] = strtotime($row['HDI_attached']);
 		$arr2[1][$j] = $j+1;
 		$j++;
@@ -122,14 +126,6 @@ $spA->SetWeight(7);
 $spA->SetStyle("solid");
 $spA->SetStepStyle();
 $spA->SetLegend("Assembled");
-
-$spT = new LinePlot($arrTested[1],$arrTested[0]);
-$spT->SetFillColor('yellow@0.5');
-$graph->Add($spT);
-$spT->SetWeight(7);
-$spT->SetStyle("solid");
-$spT->SetStepStyle();
-$spT->SetLegend("Tested");
 
 $sp1 = new LinePlot($arr1[1],$arr1[0]);
 $sp1->SetFillColor('lightblue@0.5');

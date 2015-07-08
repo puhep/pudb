@@ -12,8 +12,14 @@ $level = $_GET['level'];
 $scan = $_GET['scan'];
 $loc = $_GET['loc'];
 
+if($hider == ""){
+	$imagefile = "../pics/graphs/".$level."_".$loc."_".$scan."_with_preproduction.png";
+}
+else{
+	$imagefile = "../pics/graphs/".$level."_".$loc."_".$scan.".png";
+}
+	
 
-$imagefile = "../pics/graphs/".$level."_".$loc."_".$scan.".png";
 
 $sensorsout = array();
 $sensors = array();

@@ -247,6 +247,8 @@ if(!is_null($file4)){
 		
 		settype($arr4[0][$loop],"float");
 
+		$arr4[0][$loop]=abs($arr4[0][$loop]);
+
 		$arr4[1][$loop]=$doc4->DATA_SET->DATA[$loop]->$y2;
 		if($arr4[1][$loop] == "NaN"){
 			$arr4[1][$loop] = 1E-10;

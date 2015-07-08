@@ -103,15 +103,20 @@ function curgraphs($sensorid, $scan, $level){
 
 function curgraphs_pos_summary($level, $scan, $loc){
 
-	#$imagefile = "../pics/graphs/".$level."_".$loc."_".$scan.".png";
+	if(isset($_SESSION['hidepre']) && $_SESSION['hidepre']){
+		$imagefile = "../pics/graphs/".$level."_".$loc."_".$scan.".png";
+	}
+	else{
+		$imagefile = "../pics/graphs/".$level."_".$loc."_".$scan."_with_preproduction.png";
+	}
 
-	#if(file_exists($imagefile)){
-		#echo "<a href=\"$imagefile\" target=\"_blank\"><img src=\"$imagefile\" width=\"710\" height=\"400\" /></a>";
-	#}
-	#else{
+	if(file_exists($imagefile)){
+		echo "<a href=\"$imagefile\" target=\"_blank\"><img src=\"$imagefile\" width=\"710\" height=\"400\" /></a>";
+	}
+	else{
 
 		echo "<a href=\"../graphing/positiongrapher.php?level=$level&scan=$scan&loc=$loc\" target=\"_blank\"><img src=\"../graphing/positiongrapher.php?level=$level&scan=$scan&loc=$loc\" width=\"710\" height=\"400\" /></a>";
-	#}
+	}
 
 }
 
