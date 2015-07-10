@@ -6,6 +6,49 @@
   <title>Full Test Submission</title>
 </head>
 <body>
+
+<div style="position:absolute;left:500px;top:10px;">
+<form method="GET" action="../summary/summaryFull.php" >
+<?php
+	echo "<input type='hidden' name='name' value='".$_GET['name']."'>";
+?>
+<input type="submit" value="Back to Full Test Summary">
+</form>
+</div>
+
+<div2 style="position:absolute;left:500px;top:38px;">
+<form method="GET" action="../summary/test_list.php" >
+<input type="submit" value="Back to Tested Module List">
+</form>
+</div2>
+
+<div3 style="position:absolute;left:500px;top:66px;">
+<form method="GET" action="../summary/bbm.php" >
+<?php
+	echo "<input type='hidden' name='name' value='".$_GET['name']."'>";
+?>
+<input type="submit" value="Back to Part Summary">
+</form>
+</div3>
+
+<div5 style="position:absolute;left:500px;top:94px;">
+<form method="GET" action="../index.php" >
+<input type="submit" value="MAIN MENU">
+</form>
+</div5>
+
+
+
+
+
+
+
+
+
+
+
+
+
 <form action="fullSubmit_proc.php" method="POST" enctype="multipart/form-data">
 
 <?php
@@ -20,8 +63,8 @@ $id = findid("module_p", $name);
 echo "<input type='hidden' name='name' value='".$_GET['name']."'>";
 
 curname("module_p", $id);
+echo "<br>";
 curtestparams($id);
-curpics("sidet_p", $id);
 
 ?>
 
@@ -59,7 +102,9 @@ Additional Notes <textarea cols="40" rows="5" name="notes"></textarea>
 <br>
 
 <?php
-  conditionalSubmit(0);
+  	conditionalSubmit(0);
+
+	curpics("sidet_p", $id);
 ?>
 
 <br>

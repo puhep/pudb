@@ -7,8 +7,9 @@
 <body>
 <form  action="morewebsubmit_proc.php" method="post" enctype="multipart/form-data">
 
-Tarball to be uploaded to MoReWeb:
-<br>
+Tarball to be uploaded to MoReWeb:<br>
+Uploaded data can be accessed through the "MoReWeb Results" button on the main page<br>
+To populate the database with MoReWeb data (for grading and search filtering), click "Write to database" on the "Full Test Summary" page<br>
 <br>
 <input type="file" name="tarball">
 <br>

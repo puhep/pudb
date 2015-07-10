@@ -1467,3 +1467,98 @@ function log2xml($log, $user, $loc, $partname){
 
 }
 
+function moreweb2database($id, $link){
+include("../../../Submission_p_secure_pages/connect.php");
+#include("../../Submission_p_secure_pages/connect.php");
+
+	mysql_query('USE cmsfpix_u', $connection);
+
+	$predoc = new DOMDocument();
+	
+	libxml_use_internal_errors(true);
+	$predoc->loadHTMLFile($link);
+	libxml_use_internal_errors(false);
+
+	$nextpage;
+
+	$tags = $predoc->getElementsByTagName('a');
+	foreach($tags as $tag){
+		if(strpos($tag->getAttribute('href'), "/QualificationGroup/")){
+			$nextpage = $tag->getAttribute('href');		
+		}
+	}
+
+	$prepage = substr($link,0,-15).substr($nextpage,22, -15);
+
+
+	$i=0;
+	$doc = new DOMDocument();
+
+	$deadpix_arr = array();
+	$unmaskable_arr = array();
+	$unmaskable_tot = 0;
+	$unaddressable_arr = array();
+	$unaddressable_tot = 0;
+	$badbumps_arr = array();
+
+	for($i=0;$i<16;$i++){
+
+		$page = $prepage."Chips/Chip".$i."/TestResult.html";
+
+
+		libxml_use_internal_errors(true);
+		$doc->loadHTMLFile($page);
+		libxml_use_internal_errors(false);
+	
+		$xpath = new DOMXpath($doc);
+
+		$deadpix = $xpath->query("/html/body/div/div[3]/div/div/div[4]/div[8]/div/div[3]/div[1]/table/tbody/tr[2]/td[3]");
+		$badmask = $xpath->query("/html/body/div/div[3]/div/div/div[4]/div[8]/div/div[3]/div[1]/table/tbody/tr[3]/td[3]");
+		$badaddress = $xpath->query("/html/body/div/div[3]/div/div/div[4]/div[8]/div/div[3]/div[1]/table/tbody/tr[6]/td[3]");
+		$badbumps = $xpath->query("/html/body/div/div[3]/div/div/div[4]/div[8]/div/div[3]/div[1]/table/tbody/tr[4]/td[3]");
+
+		$deadpix_arr[$i] = $deadpix->item(0)->nodeValue;
+	
+		$unmaskable_arr[$i] = $badmask->item(0)->nodeValue;
+		$unmaskable_tot += $badmask->item(0)->nodeValue;
+	
+		$unaddressable_arr[$i] = $badaddress->item(0)->nodeValue;
+		$unaddressable_tot += $badaddress->item(0)->nodeValue;
+	
+		$badbumps_arr[$i] = $badbumps->item(0)->nodeValue;
+	}
+	
+	/*
+	echo "Dead Pixels: ";
+	print_r($deadpix_arr);
+	echo "<br>";
+
+	echo "Unmaskable Pixels: ";
+	print_r($unmaskable_arr);
+	echo "<br>";
+
+	echo "Unaddressable Pixels: ";
+	print_r($unaddressable_arr);
+	echo "<br>";
+
+	echo "Bad Bumps: ";
+	print_r($badbumps_arr);
+	echo "<br>";
+	*/
+
+
+	for($j=0;$j<16;$j++){
+
+		$func1 = "UPDATE ROC_p SET deadpix=".$deadpix_arr[$j]." WHERE assoc_module=".$id." AND position=".$j;
+		$func2 = "UPDATE ROC_p SET badbumps_elec=".$badbumps_arr[$j]." WHERE assoc_module=".$id." AND position=".$j;
+
+		mysql_query($func1, $connection);
+		
+		mysql_query($func2, $connection);
+	}
+
+	$func3 = "UPDATE module_p SET unmaskable_pix=".$unmaskable_tot.", unaddressable_pix=".$unaddressable_tot." WHERE id=".$id;
+
+	mysql_query($func3, $connection);
+	
+}

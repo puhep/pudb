@@ -474,7 +474,13 @@ include('../functions/curfunctions.php');
 		$exploded = explode('_',$curlink);
 		
 		if($curid == $modid){
-			echo "<a href=\"../../MoReWeb/Results/$curlink\" target=\"blank_\">".$exploded[2]."</a>";
+			
+			$fulllink = "../../MoReWeb/Results/".$curlink;
+
+			echo "<a href=\"$fulllink\" target=\"blank_\">".$exploded[2]."</a>";
+			echo "&nbsp;";
+			echo "&nbsp;";
+			echo "<a href=\"../submit/moreweboverwrite.php?name=$curname&link=$fulllink\">Write to database</a>";
 			echo "<br>";
 			$found=1;
 		}

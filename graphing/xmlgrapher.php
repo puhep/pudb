@@ -274,7 +274,7 @@ if(!is_null($file4)){
 }
 
 $graph=new Graph(1340,800);
-$graph->SetScale("linlog",1,1,0,1000);
+$graph->SetScale("linlog",1,1,0,600);
 $graph->xaxis->scale->ticks->Set(100,10);
 
 $graph->img->SetMargin(70,80,40,40);	

@@ -463,6 +463,13 @@ function curtestparams($id){
 	echo "<td>";
 	currocparams($id, "deadpix");
 	echo "</td>";
+	#echo "<td>";
+	#curgraphs($dumped['assoc_sens'], "IV", "module");
+	#echo "</td>";
+	echo "<td>";
+	echo "IV Criteria<br>";
+	xmlgrapher_crit($dumped['assoc_sens'], "IV", "module");
+	echo "</td>";
 	echo "</tr>";
 	echo "</table>";
 

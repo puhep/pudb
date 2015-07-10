@@ -38,7 +38,7 @@ curpics("sidet_p", $id);
 <?php
   echo "<input type='hidden' name='name' value='".$name."'>";
 ?>
-<input type="submit" value="Update">
+<input type="submit" value="Manual Update">
 </form>
 </div>
 
