@@ -46,11 +46,6 @@ availmodule($_GET['wafers']);
 <br>
 <br>
 
-<input name="QC" value="accept" type="radio">Accept
-&nbsp; &nbsp; <input name="QC" value="reject"
- type="radio">Reject<br>
-<br>
-
 Location <select name="loc">
 	<option value="Purdue">Purdue</option>
 	<option value="Nebraska">Nebraska</option>
@@ -80,6 +75,11 @@ Additional Notes <textarea cols="40" rows="5" name="notes"></textarea>
 <?php
 
 conditionalSubmit(1);
+
+if($_GET['code'] == 1){
+	echo "<br>Module ".$_GET['val']." has been entered into the database<br>";
+}
+
 
 ?>
 </form>

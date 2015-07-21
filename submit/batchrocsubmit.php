@@ -48,6 +48,13 @@ Additional Notes:
 conditionalSubmit(0);
 echo "<br>";
 
+if($_GET['code'] == "1"){
+	echo "<br>The modules and associated ROCs have been added to the database<br>";
+}
+if($_GET['code'] == "2"){
+	echo "<br>An error occurred and the modules have not been added, please try again<br>";
+}
+
 ?>
 </form>
 

@@ -50,14 +50,12 @@ Additional Notes <textarea cols="40" rows="5" name="notes"></textarea><br>
 include('../functions/submitfunctions.php');
 
 
-if(isset($_GET['submitted'])){
-	if($_GET['submitted'] == "x"){
-		echo "Not all forms were filled, please retry";
+	if($_GET['code'] == "1"){
+		echo "<br>HDI ".$_GET['val']." has successfully been entered into the database<br>";
 	}
-	else{
-		echo "HDI ".$_GET['submitted']." has been added to the database.<br>";
+	elseif($_GET['code'] == "2"){
+		echo "<br>Not all forms were filled, please retry<br>";
 	}
-}
 
 conditionalSubmit(1);
 

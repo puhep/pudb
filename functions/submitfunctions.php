@@ -33,10 +33,10 @@ include('../../../Submission_p_secure_pages/connect.php');
 	
 		mysql_query($timesfunc, $connection);	
 
-		echo("Wafer ".$htmlname." has been added to the database.<br>");
+		#echo("Wafer ".$htmlname." has been added to the database.<br>");
 	}
 	else{
-		echo("An error has occurred and the data has not been added.<br>");
+		#echo("An error has occurred and the data has not been added.<br>");
 	}
 
 
@@ -63,10 +63,10 @@ include('../../../Submission_p_secure_pages/connect.php');
 	mysql_query('USE cmsfpix_u' , $connection);
 
 	if(mysql_query($func,$connection)){
-		echo("Sensor ".$htmlid." has been added to the database.<br>");
+		#echo("Sensor ".$htmlid." has been added to the database.<br>");
 	}
 	else{
-		echo("An error has occurred and the data has not been added.<br>");
+		#echo("An error has occurred and the data has not been added.<br>");
 	}
 
 }
@@ -135,7 +135,7 @@ include('../graphing/positiongrapher_writer.php');
 		positiongrapher_writer($parttype, $scan, $loc);	
 	}
 	else{
-		echo("An error has occurred and the data has not been added.<br>");
+		#echo("An error has occurred and the data has not been added.<br>");
 	}
 	
 }
@@ -222,7 +222,8 @@ include("../../../Submission_p_secure_pages/connect.php");
 	}
 
 	exec("rm $dir*");
-	
+
+	return 1;
 }
 
 function batchfulltest($txtfile, $name, $size, $user){
@@ -250,7 +251,9 @@ include("../functions/editfunctions.php");
 		
 			if(substr($entry, -3) == "xml"){
 
-				$doc = simplexml_load_file($dir.$entry);
+				if(!($doc = simplexml_load_file($dir.$entry))){
+					return 3;
+				}
 				
 				$i=0;
 				while($doc->TEST[$i]->NAME != ""){
@@ -268,32 +271,32 @@ include("../functions/editfunctions.php");
 							if(($status=$doc->TEST[$i]->ROCS->ROC[$k]->IS_DEAD)!=""){
 								$func = "UPDATE ROC_p SET is_dead=\"".$status."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
 								mysql_query($func, $connection);
-								echo "ROC ".$pos." on ".$name." status updated<br>";
+								#echo "ROC ".$pos." on ".$name." status updated<br>";
 							}
 							if(($offset=$doc->TEST[$i]->ROCS->ROC[$k]->XRAY_OFFSET)!=""){
 								$func = "UPDATE ROC_p SET xray_offset=\"".$offset."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
 								mysql_query($func, $connection);
-								echo "ROC ".$pos." on ".$name." X-ray offset: ".$offset."<br>";
+								#echo "ROC ".$pos." on ".$name." X-ray offset: ".$offset."<br>";
 							}
 							if(($slope=$doc->TEST[$i]->ROCS->ROC[$k]->XRAY_SLOPE)!=""){
 								$func = "UPDATE ROC_p SET xray_slope=\"".$slope."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
 								mysql_query($func, $connection);
-								echo "ROC ".$pos." on ".$name." X-ray slope: ".$slope."<br>";
+								#echo "ROC ".$pos." on ".$name." X-ray slope: ".$slope."<br>";
 							}
 							if(($bb_elec=$doc->TEST[$i]->ROCS->ROC[$k]->BADBUMPS_ELEC)!=""){
 								$func = "UPDATE ROC_p SET badbumps_elec=\"".$bb_elec."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
 								mysql_query($func, $connection);
-								echo "ROC ".$pos." on ".$name." Bad Bumps (Electrical): ".$bb_elec."<br>";
+								#echo "ROC ".$pos." on ".$name." Bad Bumps (Electrical): ".$bb_elec."<br>";
 							}
 							if(($bb_xray=$doc->TEST[$i]->ROCS->ROC[$k]->BADBUMPS_XRAY)!=""){
 								$func = "UPDATE ROC_p SET badbumps_xray=\"".$bb_xray."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
 								mysql_query($func, $connection);
-								echo "ROC ".$pos." on ".$name." Bad Bumps (X-Ray): ".$bb_xray."<br>";
+								#echo "ROC ".$pos." on ".$name." Bad Bumps (X-Ray): ".$bb_xray."<br>";
 							}
 							if(($deadpix=$doc->TEST[$i]->ROCS->ROC[$k]->DEAD_PIX)!=""){
 								$func = "UPDATE ROC_p SET deadpix=\"".$deadpix."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
 								mysql_query($func, $connection);
-								echo "ROC ".$pos." on ".$name." Dead Pixels: ".$deadpix."<br>";
+								#echo "ROC ".$pos." on ".$name." Dead Pixels: ".$deadpix."<br>";
 							}
 						}
 					}
@@ -309,8 +312,8 @@ include("../functions/editfunctions.php");
 						$func = "UPDATE ROC_p SET is_dead=\"1\" WHERE assoc_module=\"".$id."\"  AND position=\"".$deadroc."\"";
 						mysql_query($func, $connection);
 
-						echo "Bad ROC on ".$name." at position ".$deadroc;
-						echo "<br>";
+						#echo "Bad ROC on ".$name." at position ".$deadroc;
+						#echo "<br>";
 						$j++;
 					}
 
@@ -327,8 +330,8 @@ include("../functions/editfunctions.php");
 						$func = "UPDATE ROC_p SET is_dead=\"0\" WHERE assoc_module=\"".$id."\"  AND position=\"".$liveroc."\"";
 						mysql_query($func, $connection);
 
-						echo "Good ROC on ".$name." at position ".$liveroc;
-						echo "<br>";
+						#echo "Good ROC on ".$name." at position ".$liveroc;
+						#echo "<br>";
 						$j++;
 					}
 					
@@ -349,8 +352,8 @@ include("../functions/editfunctions.php");
 						$func = "UPDATE module_p SET deadpix=\"".$deadpix."\" WHERE id=\"".$id."\"";
 						mysql_query($func, $connection);
 
-						echo "Dead pixels on ".$name.":  ".$deadpix;
-						echo "<br>";
+						#echo "Dead pixels on ".$name.":  ".$deadpix;
+						#echo "<br>";
 					}
 
 					#####################
@@ -364,8 +367,8 @@ include("../functions/editfunctions.php");
 						$func = "UPDATE module_p SET unmaskable_pix=\"".$umpix."\" WHERE id=\"".$id."\"";
 						mysql_query($func, $connection);
 
-						echo "Unmaskable pixels on ".$name.":  ".$umpix;
-						echo "<br>";
+						#echo "Unmaskable pixels on ".$name.":  ".$umpix;
+						#echo "<br>";
 					}
 
 					#####################
@@ -379,8 +382,8 @@ include("../functions/editfunctions.php");
 						$func = "UPDATE module_p SET unaddressable_pix=\"".$uapix."\" WHERE id=\"".$id."\"";
 						mysql_query($func, $connection);
 
-						echo "Unaddressable pixels on ".$name.":  ".$uapix;
-						echo "<br>";
+						#echo "Unaddressable pixels on ".$name.":  ".$uapix;
+						#echo "<br>";
 					}
 
 					#####################
@@ -394,8 +397,8 @@ include("../functions/editfunctions.php");
 						$func = "UPDATE module_p SET badbumps_electrical=\"".$badbumps_ele."\" WHERE id=\"".$id."\"";
 						mysql_query($func, $connection);
 
-						echo "Bad Bumps (Electrical) on ".$name.":  ".$badbumps_ele;
-						echo "<br>";
+						#echo "Bad Bumps (Electrical) on ".$name.":  ".$badbumps_ele;
+						#echo "<br>";
 					}
 
 					####################
@@ -409,8 +412,8 @@ include("../functions/editfunctions.php");
 						$func = "UPDATE module_p SET badbumps_reversebias=\"".$badbumps_rb."\" WHERE id=\"".$id."\"";
 						mysql_query($func, $connection);
 
-						echo "Bad Bumps (Reverse Bias) on ".$name.":  ".$badbumps_rb;
-						echo "<br>";
+						#echo "Bad Bumps (Reverse Bias) on ".$name.":  ".$badbumps_rb;
+						#echo "<br>";
 					}
 
 					####################
@@ -424,8 +427,8 @@ include("../functions/editfunctions.php");
 						$func = "UPDATE module_p SET badbumps_xray=\"".$badbumps_xray."\" WHERE id=\"".$id."\"";
 						mysql_query($func, $connection);
 
-						echo "Bad Bumps (X-Ray) on ".$name.":  ".$badbumps_xray;
-						echo "<br>";
+						#echo "Bad Bumps (X-Ray) on ".$name.":  ".$badbumps_xray;
+						#echo "<br>";
 					}
 
 					####################
@@ -439,8 +442,8 @@ include("../functions/editfunctions.php");
 						$func = "UPDATE module_p SET xray_slope=\"".$xray_slope."\" WHERE id=\"".$id."\"";
 						mysql_query($func, $connection);
 
-						echo "X-Ray Slope on ".$name.":  ".$xray_slope;
-						echo "<br>";
+						#echo "X-Ray Slope on ".$name.":  ".$xray_slope;
+						#echo "<br>";
 					}
 
 					####################
@@ -454,8 +457,8 @@ include("../functions/editfunctions.php");
 						$func = "UPDATE module_p SET xray_offset=\"".$xray_offset."\" WHERE id=\"".$id."\"";
 						mysql_query($func, $connection);
 
-						echo "X-Ray Offset on ".$name.":  ".$xray_offset;
-						echo "<br>";
+						#echo "X-Ray Offset on ".$name.":  ".$xray_offset;
+						#echo "<br>";
 					}
 
 					####################
@@ -470,8 +473,8 @@ include("../functions/editfunctions.php");
 						$func = "UPDATE module_p SET grade=\"".$grade."\" WHERE id=\"".$id."\"";
 						mysql_query($func, $connection);
 
-						echo "Grade of ".$name.":  ".$grade;
-						echo "<br>";
+						#echo "Grade of ".$name.":  ".$grade;
+						#echo "<br>";
 
 					}
 
@@ -486,13 +489,13 @@ include("../functions/editfunctions.php");
 						$func = "UPDATE module_p SET can_time=\"".$timeable."\" WHERE id=\"".$id."\"";
 						mysql_query($func, $connection);
 
-						echo "Can time ".$name.":  ".$timeable;
-						echo "<br>";
+						#echo "Can time ".$name.":  ".$timeable;
+						#echo "<br>";
 					}
 
 					#####################
 
-					echo "Changes Submitted for ".$name."<br>";
+					#echo "Changes Submitted for ".$name."<br>";
 					
 					lastUpdate("module_p", $id, $user, "Updated Fulltest Values", "");
 					$i++;
@@ -501,7 +504,7 @@ include("../functions/editfunctions.php");
 		}
 
 	}
-
+	return 1;
 }
 
 function bigbatch($zip, $name, $size, $user){
@@ -536,7 +539,9 @@ include("../functions/editfunctions.php");
 		
 			if($entry == "master.xml"){
 
-				$doc = simplexml_load_file($dir.$entry);
+				if(!($doc = simplexml_load_file($dir.$entry))){
+					return 3;
+				}
 
 				$i=0;
 				while($doc->TEST[$i]->NAME != ""){
@@ -554,32 +559,32 @@ include("../functions/editfunctions.php");
 							if(($status=$doc->TEST[$i]->ROCS->ROC[$k]->IS_DEAD)!=""){
 								$func = "UPDATE ROC_p SET is_dead=\"".$status."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
 								mysql_query($func, $connection);
-								echo "ROC ".$pos." on ".$name." status updated<br>";
+								#echo "ROC ".$pos." on ".$name." status updated<br>";
 							}
 							if(($offset=$doc->TEST[$i]->ROCS->ROC[$k]->XRAY_OFFSET)!=""){
 								$func = "UPDATE ROC_p SET xray_offset=\"".$offset."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
 								mysql_query($func, $connection);
-								echo "ROC ".$pos." on ".$name." X-ray offset: ".$offset."<br>";
+								#echo "ROC ".$pos." on ".$name." X-ray offset: ".$offset."<br>";
 							}
 							if(($slope=$doc->TEST[$i]->ROCS->ROC[$k]->XRAY_SLOPE)!=""){
 								$func = "UPDATE ROC_p SET xray_slope=\"".$slope."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
 								mysql_query($func, $connection);
-								echo "ROC ".$pos." on ".$name." X-ray slope: ".$slope."<br>";
+								#echo "ROC ".$pos." on ".$name." X-ray slope: ".$slope."<br>";
 							}
 							if(($bb_elec=$doc->TEST[$i]->ROCS->ROC[$k]->BADBUMPS_ELEC)!=""){
 								$func = "UPDATE ROC_p SET badbumps_elec=\"".$bb_elec."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
 								mysql_query($func, $connection);
-								echo "ROC ".$pos." on ".$name." Bad Bumps (Electrical): ".$bb_elec."<br>";
+								#echo "ROC ".$pos." on ".$name." Bad Bumps (Electrical): ".$bb_elec."<br>";
 							}
 							if(($bb_xray=$doc->TEST[$i]->ROCS->ROC[$k]->BADBUMPS_XRAY)!=""){
 								$func = "UPDATE ROC_p SET badbumps_xray=\"".$bb_xray."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
 								mysql_query($func, $connection);
-								echo "ROC ".$pos." on ".$name." Bad Bumps (X-Ray): ".$bb_xray."<br>";
+								#echo "ROC ".$pos." on ".$name." Bad Bumps (X-Ray): ".$bb_xray."<br>";
 							}
 							if(($deadpix=$doc->TEST[$i]->ROCS->ROC[$k]->DEAD_PIX)!=""){
 								$func = "UPDATE ROC_p SET deadpix=\"".$deadpix."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
 								mysql_query($func, $connection);
-								echo "ROC ".$pos." on ".$name." Dead Pixels: ".$deadpix."<br>";
+								#echo "ROC ".$pos." on ".$name." Dead Pixels: ".$deadpix."<br>";
 							}
 						}
 					}
@@ -593,11 +598,11 @@ include("../functions/editfunctions.php");
 						mysql_query('USE cmsfpix_u', $connection);
 
 						$func = "UPDATE ROC_p SET is_dead=\"1\" WHERE assoc_module=\"".$id."\"  AND position=\"".$deadroc."\"";
-						echo $func;
+						#echo $func;
 						mysql_query($func, $connection);
 
-						echo "Bad ROC on ".$name." at position ".$deadroc;
-						echo "<br>";
+						#echo "Bad ROC on ".$name." at position ".$deadroc;
+						#echo "<br>";
 						$j++;
 					}
 
@@ -614,8 +619,8 @@ include("../functions/editfunctions.php");
 						$func = "UPDATE ROC_p SET is_dead=\"0\" WHERE assoc_module=\"".$id."\"  AND position=\"".$liveroc."\"";
 						mysql_query($func, $connection);
 
-						echo "Good ROC on ".$name." at position ".$liveroc;
-						echo "<br>";
+						#echo "Good ROC on ".$name." at position ".$liveroc;
+						#echo "<br>";
 						$j++;
 					}
 					
@@ -636,8 +641,8 @@ include("../functions/editfunctions.php");
 						$func = "UPDATE module_p SET deadpix=\"".$deadpix."\" WHERE id=\"".$id."\"";
 						mysql_query($func, $connection);
 
-						echo "Dead pixels on ".$name.":  ".$deadpix;
-						echo "<br>";
+						#echo "Dead pixels on ".$name.":  ".$deadpix;
+						#echo "<br>";
 					}
 
 					#####################
@@ -651,8 +656,8 @@ include("../functions/editfunctions.php");
 						$func = "UPDATE module_p SET unmaskable_pix=\"".$umpix."\" WHERE id=\"".$id."\"";
 						mysql_query($func, $connection);
 
-						echo "Unmaskable pixels on ".$name.":  ".$umpix;
-						echo "<br>";
+						#echo "Unmaskable pixels on ".$name.":  ".$umpix;
+						#echo "<br>";
 					}
 
 					#####################
@@ -666,8 +671,8 @@ include("../functions/editfunctions.php");
 						$func = "UPDATE module_p SET unaddressable_pix=\"".$uapix."\" WHERE id=\"".$id."\"";
 						mysql_query($func, $connection);
 
-						echo "Unaddressable pixels on ".$name.":  ".$uapix;
-						echo "<br>";
+						#echo "Unaddressable pixels on ".$name.":  ".$uapix;
+						#echo "<br>";
 					}
 
 					#####################
@@ -681,8 +686,8 @@ include("../functions/editfunctions.php");
 						$func = "UPDATE module_p SET badbumps_electrical=\"".$badbumps_ele."\" WHERE id=\"".$id."\"";
 						mysql_query($func, $connection);
 
-						echo "Bad Bumps (Electrical) on ".$name.":  ".$badbumps_ele;
-						echo "<br>";
+						#echo "Bad Bumps (Electrical) on ".$name.":  ".$badbumps_ele;
+						#echo "<br>";
 					}
 
 					####################
@@ -696,8 +701,8 @@ include("../functions/editfunctions.php");
 						$func = "UPDATE module_p SET badbumps_reversebias=\"".$badbumps_rb."\" WHERE id=\"".$id."\"";
 						mysql_query($func, $connection);
 
-						echo "Bad Bumps (Reverse Bias) on ".$name.":  ".$badbumps_rb;
-						echo "<br>";
+						#echo "Bad Bumps (Reverse Bias) on ".$name.":  ".$badbumps_rb;
+						#echo "<br>";
 					}
 
 					####################
@@ -711,8 +716,8 @@ include("../functions/editfunctions.php");
 						$func = "UPDATE module_p SET badbumps_xray=\"".$badbumps_xray."\" WHERE id=\"".$id."\"";
 						mysql_query($func, $connection);
 
-						echo "Bad Bumps (X-Ray) on ".$name.":  ".$badbumps_xray;
-						echo "<br>";
+						#echo "Bad Bumps (X-Ray) on ".$name.":  ".$badbumps_xray;
+						#echo "<br>";
 					}
 
 					####################
@@ -726,8 +731,8 @@ include("../functions/editfunctions.php");
 						$func = "UPDATE module_p SET xray_slope=\"".$xray_slope."\" WHERE id=\"".$id."\"";
 						mysql_query($func, $connection);
 
-						echo "X-Ray Slope on ".$name.":  ".$xray_slope;
-						echo "<br>";
+						#echo "X-Ray Slope on ".$name.":  ".$xray_slope;
+						#echo "<br>";
 					}
 
 					####################
@@ -741,8 +746,8 @@ include("../functions/editfunctions.php");
 						$func = "UPDATE module_p SET xray_offset=\"".$xray_offset."\" WHERE id=\"".$id."\"";
 						mysql_query($func, $connection);
 
-						echo "X-Ray Offset on ".$name.":  ".$xray_offset;
-						echo "<br>";
+						#echo "X-Ray Offset on ".$name.":  ".$xray_offset;
+						#echo "<br>";
 					}
 
 					####################
@@ -757,8 +762,8 @@ include("../functions/editfunctions.php");
 						$func = "UPDATE module_p SET grade=\"".$grade."\" WHERE id=\"".$id."\"";
 						mysql_query($func, $connection);
 
-						echo "Grade of ".$name.":  ".$grade;
-						echo "<br>";
+						#echo "Grade of ".$name.":  ".$grade;
+						#echo "<br>";
 
 					}
 					#####################
@@ -772,8 +777,8 @@ include("../functions/editfunctions.php");
 						$func = "UPDATE module_p SET can_time=\"".$timeable."\" WHERE id=\"".$id."\"";
 						mysql_query($func, $connection);
 
-						echo "Can time ".$name.":  ".$timeable;
-						echo "<br>";
+						#echo "Can time ".$name.":  ".$timeable;
+						#echo "<br>";
 					}
 
 					#####################
@@ -801,7 +806,7 @@ include("../functions/editfunctions.php");
 
 					$notes = file_get_contents($dir.$notesfile);
 					addpic($picfile, $dir.$picfile,$part, $id, $notes); 
-					echo "Picture for ".$name." added to the database.<br>";
+					#echo "Picture for ".$name." added to the database.<br>";
 					$i++;
 				}
 				##########################
@@ -858,6 +863,8 @@ include("../functions/editfunctions.php");
 
 	}
 
+	return 1;
+
 }
 
 
@@ -895,11 +902,11 @@ include('../../../Submission_p_secure_pages/connect.php');
 	
 		mysql_query($timesfunc, $connection);	
 
-		echo("HDI ".$htmlname." has been added to the database.<br>");
+		#echo("HDI ".$htmlname." has been added to the database.<br>");
 		
 	}
 	else{
-		echo("An error has occurred and the data has not been added.<br>");
+		#echo("An error has occurred and the data has not been added.<br>");
 	}
 
 }
@@ -934,11 +941,11 @@ include('../../../Submission_p_secure_pages/connect.php');
 	
 		#mysql_query($timesfunc, $connection);	
 
-		echo("TBM ".$htmlname." has been added to the database.<br>");
+		#echo("TBM ".$htmlname." has been added to the database.<br>");
 		
 	}
 	else{
-		echo("An error has occurred and the data has not been added.<br>");
+		#echo("An error has occurred and the data has not been added.<br>");
 	}
 
 }
@@ -971,7 +978,7 @@ include('../functions/editfunctions.php');
 		lastUpdate("module_p", $modid, "User", "New Module (Not yet received)");
 	}
 	else{
-		echo("An error has occurred and the data has not been added.<br>");
+		#echo("An error has occurred and the data has not been added.<br>");
 	}
 
 }
@@ -991,12 +998,20 @@ include('../../../Submission_p_secure_pages/connect.php');
 	$func = "INSERT INTO ROC_p(assoc_module, position) VALUES (\"$module\", \"$i\")";
 
 		if(!mysql_query($func,$connection)){
-			echo("An error has occurred.<br>");
+			#echo("An error has occurred.<br>");
 			break;
 		}
 	}
+}
 
+function workorderinfo($neworder){
+include('../../../Submission_p_secure_pages/connect.php');
 
+	mysql_query('USE cmsfpix_u', $connection);
+
+	$func = "INSERT INTO work_orders_p(name) VALUE(\"$neworder\")";
+
+	mysql_query($func, $connection);
 
 }
 
@@ -1059,10 +1074,10 @@ function DAQinfo($module, $C0file, $C0size, $aPfile, $dPfile, $phfile, $sumfile,
 			$modfunc = "UPDATE module_p SET assembly=6 WHERE id=$module";
 			mysql_query($modfunc, $connection);
 		}
-		echo "Parameters have been added to the database.<br>";
+		#echo "Parameters have been added to the database.<br>";
 	}
 	else{
-		echo "An error has occurred and data has not been added.<br>";
+		#echo "An error has occurred and data has not been added.<br>";
 	} 
 
 	fclose($C0);
@@ -1138,7 +1153,8 @@ function addpic($filename, $tmploc, $part, $id, $notes){
 	$newfilename = $part.$id."pic".$num;
 
 	#move_uploaded_file($tmploc, $dir."/pics/".$part."/".$newfilename.".jpg");
-	rename($tmploc, $dir."/pics/".$part."/".$newfilename.".jpg");
+	copy($tmploc, $dir."/pics/".$part."/".$newfilename.".jpg");
+	unlink($tmploc);
 	$textfile = $dir."/pics/".$part."/".$newfilename.".txt";
 
 	$fp = fopen($textfile, 'w');
@@ -1202,7 +1218,7 @@ include("../functions/editfunctions.php");
 	rename($tmploc, $dir.$id."/".$filename);
 	chmod($dir.$id."/".$filename, 0777);
 	
-	echo "Config file for ".$part." added to the database.<br>";
+	#echo "Config file for ".$part." added to the database.<br>";
 
 	lastUpdate("module_p", $id, "User", "Config File Added", "");
 
@@ -1265,8 +1281,8 @@ include("../functions/editfunctions.php");
 					$later_dump = dump("module_p", $later_id);
 					if($dump['assembly'] > 0 || $later_dump['assembly'] > 0){
 						$i++;
-						echo "Module ".$name." was already found in the database.";
-						echo "<br>";
+						#echo "Module ".$name." was already found in the database.";
+						#echo "<br>";
 						continue;
 					}
 
@@ -1302,8 +1318,8 @@ include("../functions/editfunctions.php");
 					}
 					RTIROCs($id); ####RTI's numbering scheme is different ####
 					flipROCs($id); ####RTI's numbering scheme is different ####
-					echo "Module ".$name." added to the database";		
-					echo "<br>";
+					#echo "Module ".$name." added to the database";		
+					#echo "<br>";
 					$i++;
 					
 					lastUpdate("module_p", $id, $user, "Batch Module Submit", "");
@@ -1357,7 +1373,7 @@ include("../functions/editfunctions.php");
 					
 					$wafnum = substr($doc->Worksheet[$i]->attributes('ss', TRUE)->Name, 1);
 					$wafnum = str_pad($wafnum, 3, "0", STR_PAD_LEFT);
-					echo $wafnum."<br>";
+					#echo $wafnum."<br>";
 
 					#wafersensorinfo($wafnum, $date, "Wafer submitted automatically through batch submission");
 

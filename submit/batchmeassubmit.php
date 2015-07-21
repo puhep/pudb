@@ -31,10 +31,21 @@ Additional Notes <textarea cols="40" rows="5" name="notes"></textarea>
 
 <?php
 conditionalSubmit(0);
-echo "<br>";
+
+if($_GET['code'] == "1"){
+	echo "<br>The measurements have successfully been added to the database<br>";
+}
+if($_GET['code'] == "2"){
+	echo "<br>Not all forms were filled, please retry<br>";
+}
+if($_GET['code'] == "3"){
+	echo "<br>An error occurred and the measurements have not been added to the database<br>";
+}
 
 ?>
 </form>
+
+<br>
 
 <form method="link" action="../index.php">
 <input type="submit" value="MAIN MENU">

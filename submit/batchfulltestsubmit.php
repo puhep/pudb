@@ -29,8 +29,19 @@ User:
 
 <?php
 conditionalSubmit(0);
-echo "<br>";
 
+if($_GET['code'] == 1){
+	echo "<br>The testing information has successfully been added to the database<br>";
+}
+if($_GET['code'] == 2){
+	echo "<br>Not all fields were filled, please retry<br>";
+}
+if($_GET['code'] == 3){
+	echo "<br>The xml file could not be parsed and the testing information has not been added to the database<br>";
+}
+if($_GET['code'] == 4){
+	echo "<br>An unknown error has occurred<br>";
+}
 ?>
 </form>
 

@@ -1,7 +1,7 @@
 <?php
 
-ini_set('display_errors', 'On');
-error_reporting(E_ALL | E_STRICT);
+#ini_set('display_errors', 'On');
+#error_reporting(E_ALL | E_STRICT);
 
 function comparepop($comparator){
 	
@@ -445,9 +445,18 @@ include('../../../Submission_p_secure_pages/connect.php');
 
 function HDIbatchpop(){
 
-	echo "<option value=\"YHC69-1015\">YHC69-1015</option>\n";
-	echo "<option value=\"YHD19-1815\">YHD19-1815</option>\n";
+include('../../../Submission_p_secure_pages/connect.php');
 
+	mysql_query('USE cmsfpix_u', $connection);
+
+	$func = "SELECT name FROM work_orders_p";
+
+	$available = mysql_query($func, $connection);
+
+	while($row = mysql_fetch_assoc($available)){
+		$name = $row['name'];
+		echo "<option value=\"$name\">".$name."</option>\n";
+	}	
 }
 
 function morewebLinkList($modid){

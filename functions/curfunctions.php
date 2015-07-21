@@ -362,7 +362,7 @@ function badbumps_crit($id){
 		else if($totbad > 41 && $ret != "C"){
 			$ret = "B";
 		}
-		else if($ret != "B" && $ret != "B"){
+		else if($ret != "B" && $ret != "C"){
 			$ret = "A";
 		}
 	}
@@ -872,7 +872,7 @@ function promoteBoxes($id){
 	while($row = mysql_fetch_assoc($output)){
 		$sensid = $row['id'];
 		$sensname = $row['name'];
-		echo ($sensname."<input name=\"sens[]\" value=\"$sensid\" type=\"checkbox\">"); 
+		echo ($sensname."<input name=\"sens[]\" value=\"$sensid\" type=\"checkbox\" CHECKED>"); 
 		echo "<br>";
 	}
 }

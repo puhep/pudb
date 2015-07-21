@@ -3,9 +3,6 @@ include('../functions/submitfunctions.php');
 include('../functions/curfunctions.php');
 include('../functions/editfunctions.php');
 
-	$gets = "?wafers=".$_POST['wafers'];
-
-	header("Location: meassubmit.php");
 
 if(isset($_POST['submit']) &&  $_FILES['xml']['size'] > 0 && isset($_POST['level']) && isset($_POST['scan']) ){
 	
@@ -20,6 +17,10 @@ if(isset($_POST['submit']) &&  $_FILES['xml']['size'] > 0 && isset($_POST['level
 		isTestedWaferUpdate($_POST['wafers']);
 	}
 
+	$gets = "?code=1&wafers=".$_POST['wafers'];
+
+	header("Location: meassubmit.php".$gets);
+
 	exit();
 }
 else if(isset($_POST['submit']) &&  $_FILES['log']['size'] > 0 && isset($_POST['level']) && isset($_POST['scan']) && $_POST['user'] != ""){
@@ -32,9 +33,17 @@ else if(isset($_POST['submit']) &&  $_FILES['log']['size'] > 0 && isset($_POST['
 
 	$content = log2xml($_FILES['log']['tmp_name'], $_POST['user'], $loc, $names['bbm']);
 
-	#echo $content;
-
 	measurement($_POST['sensors'],$_POST['level'],$_POST['scan'],$_POST['notes'],$content, strlen($content), $_FILES['log']['name'], $_POST['breakdown'], $_POST['compliance']);
 
+	$gets = "?code=1&wafers=".$_POST['wafers'];
+
+	header("Location: meassubmit.php".$gets);
+
+	exit();
+}
+else{
+	$gets = "?code=2&wafers=".$_POST['wafers'];
+
+	header("Location: meassubmit.php".$gets);
 }
 ?>

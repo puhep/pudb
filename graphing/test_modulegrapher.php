@@ -116,7 +116,7 @@ $graph->SetFrame(true,'black',0);
 $graph->img->SetAntiAliasing(false);
 
 $spA = new LinePlot($arrAssembled[1],$arrAssembled[0]);
-$spA->SetFillColor('purple@0.5');
+#$spA->SetFillColor('purple@0.5');
 $graph->Add($spA);
 $spA->SetWeight(7);
 $spA->SetStyle("solid");
@@ -124,7 +124,7 @@ $spA->SetStepStyle();
 $spA->SetLegend("Assembled");
 
 $spT = new LinePlot($arrTested[1],$arrTested[0]);
-$spT->SetFillColor('yellow@0.5');
+#$spT->SetFillColor('yellow@0.5');
 $graph->Add($spT);
 $spT->SetWeight(7);
 $spT->SetStyle("solid");
@@ -132,7 +132,7 @@ $spT->SetStepStyle();
 $spT->SetLegend("Tested");
 
 $sp1 = new LinePlot($arr1[1],$arr1[0]);
-$sp1->SetFillColor('lightblue@0.5');
+#$sp1->SetFillColor('lightblue@0.5');
 $graph->Add($sp1);
 $sp1->SetWeight(7);
 $sp1->SetStyle("solid");
@@ -140,7 +140,7 @@ $sp1->SetStepStyle();
 $sp1->SetLegend("Grade A");
 
 $sp2 = new LinePlot($arr2[1],$arr2[0]);
-$sp2->SetFillColor('lightred@0.5');
+#$sp2->SetFillColor('lightred@0.5');
 $graph->Add($sp2);
 $sp2->SetWeight(7);
 $sp2->SetStyle("solid");
@@ -148,7 +148,7 @@ $sp2->SetStepStyle();
 $sp2->SetLegend("Grade B");
 
 $sp3 = new LinePlot($arr3[1],$arr3[0]);
-$sp3->SetFillColor('lightgreen@0.5');
+#$sp3->SetFillColor('lightgreen@0.5');
 $graph->Add($sp3);
 $sp3->SetWeight(7);
 $sp3->SetStyle("solid");

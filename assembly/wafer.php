@@ -122,7 +122,7 @@ conditionalSubmit(0);
 
 <br>
 
-<form method="post" action="assemblypic.php">
+<form method="GET" action="assemblypic.php">
 <?php
    echo "<input type='hidden' name='part' value='wafer_p'>";
    echo "<input type='hidden' name='id' value='".$id."'>";

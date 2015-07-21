@@ -23,9 +23,13 @@ $location = $row['location'];
 
 $steparray = array("Received", "Inspected", "IV Tested", "Ready for HDI Assembly", "HDI Attached", "Wirebonded", "Encapsulated", "Tested", "Thermally Cycled", "Tested", "Ready for Shipping", "Shipped");
 
-$gets = "?name=".$name;
-
-header("Location: bbm.php".$gets);
+###This is sort of a messy solution. This is because the name changes after HDI assembly###
+if($assembly == 4){
+	header("Location: bbm.php?name=M".substr($name,2));
+}
+else{
+	header("Location: bbm.php?name=".$name);
+}
 
 if(isset($_POST['submit']) && ((isset($_POST['box']) && $_POST['who'] != "") || (isset($_POST['shipbox']) && $_POST['who_ship'] != "" && $_POST['track'])) && (!is_null($_POST['hdi']) || $assembly!=4)){
 	
@@ -61,8 +65,12 @@ if(isset($_POST['submit']) && ((isset($_POST['box']) && $_POST['who'] != "") || 
 	mysql_query($funcassembly, $connection);
 	
 	if(isset($_POST['shipbox'])){
-
-		$formattedtrack = preg_replace("/[ ]/","",$_POST['track']);
+		if(preg_match("/(([0-9])( *))+/", $_POST['track'])){
+			$formattedtrack = preg_replace("/[ ]/","",$_POST['track']);
+		}
+		else{
+			$formattedtrack = $_POST['track'];
+		}
 		$funcship = "UPDATE module_p SET shipped=\"".$_POST['date']."\", destination=\"".$_POST['dest']."\", tracking_number=\"".$formattedtrack."\" WHERE id=$id";
 		mysql_query($funcship, $connection);
 		$flexfunc = "UPDATE flex_p set current=current-1 WHERE name=\"".$location."\"";
@@ -93,9 +101,12 @@ if(isset($_POST['submit']) && ((isset($_POST['box']) && $_POST['who'] != "") || 
 
 		milestone("HDI_p", $hdi, 3);
 	
-		$newgets = "?name=".$hdiname;
-
-		header("Location: bbm.php".$newgets);
+		#echo "<input type='hidden' name='name' value='".$hdiname."'>";
+		#$_GET['name'] = $hdiname;
+	}
+	else{
+		#echo "<input type='hidden' name='name' value='".$name."'>";
+		#$_GET['name'] = $name;
 	}
 	
 	lastUpdate("module_p", $id, $_POST['who'], $steparray[$assembly-1], $submittednotes);

@@ -111,6 +111,10 @@ New Parts Information
   <input name="name" value="Nebraska" type="hidden">
   </form>
 
+<form action="submit/workordersubmit.php" method="get">
+  <input value="New HDI Work Order Submit" type="submit">
+  </form>
+
 <br>
 
 Testing Data

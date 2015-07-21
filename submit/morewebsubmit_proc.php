@@ -2,12 +2,8 @@
 include('../functions/submitfunctions.php');
 include('../functions/curfunctions.php');
 
-	$gets = "?";
-
-	header("Location: morewebsubmit.php".$gets);
 
 if(isset($_POST['submit']) && $_FILES['tarball']['size'] > 0){
-
 
 	$dir = "/project/cmsfpix/.www/Submission_p/morewebInput/";
 	$tmptar = $_FILES['tarball']['tmp_name'];
@@ -15,14 +11,20 @@ if(isset($_POST['submit']) && $_FILES['tarball']['size'] > 0){
 
 	move_uploaded_file($tmptar, $dir.$tar);
 
-	exec("tar -zxvf ".$dir.$tar);
+	#exec("tar -zxvf ".$dir.$tar);
 
-	echo "File uploaded";
+	$gets = "?code=1";
 
+	header("Location: morewebsubmit.php".$gets);
+	
 	exit();
 }
 elseif(isset($_POST['submit'])){
- 	echo "All fields were not filled, please retry";
+
+	$gets = "?code=2";
+
+	header("Location: morewebsubmit.php".$gets);
+	
 	exit();
 }
 ?>

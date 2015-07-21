@@ -82,20 +82,6 @@ $arr2[1][$j] = $j;
 $arr3[0][$k] = $date;
 $arr3[1][$k] = $k;
 
-while($row2 = mysql_fetch_assoc($output2)){
-
-	$modloc = curloc("module_p", $row2['assoc_module']);
-
-	if(!is_null($row2['tested2']) && $loc_condition==$modloc){
-		$arrTested[0][$h] = strtotime($row2['tested2']);
-		$arrTested[1][$h] = $h+1;
-		$h++;
-	}
-}
-$arrTested[0][$h] = $date;
-$arrTested[1][$h] = $h;
-
-
 $graphname = "Module Assembly over Time";
 
 $graph=new Graph(1340,800);
@@ -120,29 +106,30 @@ $graph->SetFrame(true,'black',0);
 $graph->img->SetAntiAliasing(false);
 
 $spA = new LinePlot($arrAssembled[1],$arrAssembled[0]);
-$spA->SetFillColor('purple@0.5');
+#$spA->SetFillColor('purple@0.5');
+$spA->SetColor('purple');
 $graph->Add($spA);
 $spA->SetWeight(7);
-$spA->SetStyle("solid");
+#$spA->SetStyle("solid");
 $spA->SetStepStyle();
 $spA->SetLegend("Assembled");
 
 $sp1 = new LinePlot($arr1[1],$arr1[0]);
-$sp1->SetFillColor('lightblue@0.5');
+#$sp1->SetFillColor('lightblue@0.5');
 $graph->Add($sp1);
 $sp1->SetWeight(7);
 $sp1->SetStyle("solid");
 $sp1->SetStepStyle();
-$sp1->SetLegend("Grade A");
+$sp1->SetLegend("Bad Bumps");
 
 $sp2 = new LinePlot($arr2[1],$arr2[0]);
-$sp2->SetFillColor('lightred@0.5');
+#$sp2->SetFillColor('lightred@0.5');
 $graph->Add($sp2);
 $sp2->SetWeight(7);
 $sp2->SetStyle("solid");
 $sp2->SetStepStyle();
-$sp2->SetLegend("Grade B");
-
+$sp2->SetLegend("Bad IV");
+/*
 $sp3 = new LinePlot($arr3[1],$arr3[0]);
 $sp3->SetFillColor('lightgreen@0.5');
 $graph->Add($sp3);
@@ -150,7 +137,7 @@ $sp3->SetWeight(7);
 $sp3->SetStyle("solid");
 $sp3->SetStepStyle();
 $sp3->SetLegend("Grade C");
-
+*/
 $graph->Stroke();
 
 ?>

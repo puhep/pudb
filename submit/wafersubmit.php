@@ -30,11 +30,14 @@ Additional Notes <textarea cols="40" rows="5" name="notes"></textarea>
 
 include('../functions/submitfunctions.php');
 
-if(isset($_GET['submitted'])){
-	echo "Wafer ".$_GET['submitted']." and all associated sensors added to the database.<br>";
-}
-
 conditionalSubmit(1);
+
+if($_GET['code'] == "1"){
+	echo "<br>Wafer ".$_GET['val']." and all associated sensors have been added to the database<br>";
+}
+elseif($_GET['code'] == "2"){
+	echo "<br>Wafer ID formatting incorrect, please retry<br>";
+}
 ?>
 
 </form>

@@ -70,7 +70,16 @@ User:
 <br>
 <br>
 Additional Notes <textarea cols="40" rows="5" name="notes"></textarea>
+<br>
 <?php
+
+if($_GET['code'] == "1"){
+	echo "<br>The measurement has successfully been added to the database<br>";
+}
+if($_GET['code'] == "2"){
+	echo "<br>An error occurred and the measurement has not been added to the database<br>";
+}
+
 }
 ?>
 

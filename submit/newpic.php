@@ -6,8 +6,6 @@
   <title>New Picture Submission</title>
 </head>
 <body>
-<form action='newpic.php' method='post' enctype='multipart/form-data'>
-
 <?php
 ini_set('display_errors', 'On');
 error_reporting(E_ALL | E_STRICT);
@@ -15,10 +13,9 @@ include('../functions/popfunctions.php');
 include('../functions/editfunctions.php');
 include('../functions/curfunctions.php');
 include('../functions/submitfunctions.php');
-if(!isset($_POST['screen'])){
+if(!isset($_GET['part'])){
 ?>
-  <input type='hidden' name='screen' value='1'>
-
+  <form action='newpic.php' method='GET' enctype='multipart/form-data'>
   Wafer <input name='part' value='wafer_p' type='radio'> or Sensor <input name='part'   value='sensor_p' type='radio'>
   <br>
   Select a wafer:
@@ -49,48 +46,46 @@ if(!isset($_POST['screen'])){
 
 <?php
 }
-elseif($_POST['screen']==1){
-  	echo "<input type='hidden' name='screen' value='1'>";
-	echo "<input type='hidden' name='part' value='".$_POST['part']."'>";
+elseif($_GET['part']=="sensor_p" && !isset($_GET['id'])){
+  	echo "<form action='newpic.php' method='GET' enctype='multipart/form-data'>";
+	echo "<input type='hidden' name='part' value='".$_GET['part']."'>";
 
-	if($_POST['part'] == 'sensor_p' && !isset($_POST['id'])){
+	if($_GET['part'] == 'sensor_p' && !isset($_GET['id'])){
 		echo "Available Sensors";
 		echo "<select name='id'>";
 
-		sensorpop($_POST['wafid']);
+		sensorpop($_GET['wafid']);
 		echo "</select>";
 	}
-	else{
-		if(!isset($_POST['id'])){
-			$part = $_POST['part'];
+}
+elseif(isset($_GET['id']) || $_GET['part'] != "sensor_p"){
+  	echo "<form action='newpic_proc.php' method='POST' enctype='multipart/form-data'>";
+		if(!isset($_GET['id'])){
+			$part = $_GET['part'];
 
 			if($part == 'wafer_p'){
-				echo "<input type='hidden' name='id' value='".$_POST['wafid']."'>";
-				$id=$_POST['wafid'];}
+				echo "<input type='hidden' name='id' value='".$_GET['wafid']."'>";
+				$id=$_GET['wafid'];}
 			if($part == 'sensor_p'){
-				echo "<input type='hidden' name='id' value='".$_POST['sensorid']."'>";
-				$id=$_POST['sensorid'];}
+				echo "<input type='hidden' name='id' value='".$_GET['sensorid']."'>";
+				$id=$_GET['sensorid'];}
 			if($part == 'module_p'){
-				echo "<input type='hidden' name='id' value='".$_POST['bbmid']."'>";
-				$id=$_POST['bbmid'];}
+				echo "<input type='hidden' name='id' value='".$_GET['bbmid']."'>";
+				$id=$_GET['bbmid'];}
 			if($part == 'HDI_p'){
-				echo "<input type='hidden' name='id' value='".$_POST['hdiid']."'>";
-				$id=$_POST['hdiid'];}
+				echo "<input type='hidden' name='id' value='".$_GET['hdiid']."'>";
+				$id=$_GET['hdiid'];}
 		}
 		else{
-			$id=$_POST['id'];
-		}
-		if (isset($_POST['submit']) && isset($_FILES['pic']['size'])){
-
-
-			addpic($_FILES['pic']['name'], $_FILES['pic']['tmp_name'], $_POST['part'], $id, $_POST['notes']);
-
+			$id=$_GET['id'];
+			$part = $_GET['part'];
 		}
 
 		echo "<input type='hidden' name='id' value='".$id."'>";
+		echo "<input type='hidden' name='part' value='".$part."'>";
 	
-		curname($_POST['part'], $id);
-		curpics($_POST['part'], $id);
+		curname($_GET['part'], $id);
+		curpics($_GET['part'], $id);
 
 		echo "<br>";
 
@@ -98,7 +93,7 @@ elseif($_POST['screen']==1){
 		echo "<br>";
 		echo "<br>";
 		echo "Additional Notes <textarea cols=\"40\" rows=\"5\" name=\"notes\"></textarea>";
-	}
+	
 }
 
 echo "<br>";
@@ -108,6 +103,7 @@ conditionalSubmit(1);
 ?>
 
 </form>
+<br>
 <br>
 
 <form method="link" action="../index.php">
