@@ -833,6 +833,9 @@ include("../functions/editfunctions.php");
 					$content = addslashes($content);
 					fclose($fp);
 
+					$breakdown=0;
+					$compliance=0;
+
 					$breakdown = $doc->SCAN[$i]->BREAKDOWN;
 					$compliance = $doc->SCAN[$i]->COMPLIANCE;
 	
@@ -1326,6 +1329,59 @@ include("../functions/editfunctions.php");
 
 				}
 
+			}	
+		}	
+	}	
+}
+
+function batchHDI($xml, $name, $size, $location, $user, $notes, $arrival){
+include("../../../Submission_p_secure_pages/connect.php");
+include("../functions/curfunctions.php");
+include("../functions/editfunctions.php");
+
+	ini_set('display_error', 'On');
+	error_reporting(E_ALL | E_STRICT);
+
+	$dir = "/project/cmsfpix/.www/Submission_p/tmp/tmphdi/";
+	
+	#####Clear the tmp directory before putting in new files#####
+	exec("rm $dir*");
+
+	move_uploaded_file($xml, $dir.$name);
+
+	chmod($dir.$name, 0777);
+
+	$i = 0;
+	
+	if($handle = opendir($dir)){
+		
+		while(false !== ($entry=readdir($handle))){
+		
+			if(substr($entry, -3) == "xml"){
+
+				$doc = simplexml_load_file($dir.$entry);
+	
+				$i=1;
+
+				while(strcmp($doc->Worksheet[0]->Table->Row[$i]->Cell[0]->Data,"") != 0){
+					
+					if($doc->Worksheet[0]->Table->Row[$i]->Cell[0]->Data != $location){
+						$i++;
+						continue;
+					}
+
+					$wo =$doc->Worksheet[0]->Table->Row[$i]->Cell[1]->Data;
+					$dc =$doc->Worksheet[0]->Table->Row[$i]->Cell[2]->Data;
+					$panel =$doc->Worksheet[0]->Table->Row[$i]->Cell[3]->Data;
+					$pos =$doc->Worksheet[0]->Table->Row[$i]->Cell[4]->Data;
+					
+					$name = $wo."-".$dc."-".$panel."-".$pos;
+
+					$date = date('Y-m-d H:i:s');
+
+					hdiinfo($name,$notes,$arrival,$location);
+					$i++;
+				}
 			}	
 		}	
 	}	

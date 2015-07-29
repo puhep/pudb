@@ -15,7 +15,8 @@ $date = time();
 
 $hide= "";
 if($_SESSION['hidepre']){
-	$hide = " WHERE received > \"2015-05-30\"";
+	#$hide = " WHERE received > \"2015-05-30\"";
+	$hide = " AND received > \"2015-05-30\"";
 }
 
 $loc = $_GET['loc'];
@@ -27,9 +28,14 @@ if($loc == "nebraska"){
 	$loc_condition = "Nebraska";
 }
 
-$func1 = "SELECT UNIX_TIMESTAMP(received), assoc_module FROM times_module_p".$hide." ORDER BY received";
-$func2 = "SELECT UNIX_TIMESTAMP(HDI_attached), assoc_module FROM times_module_p".$hide." ORDER BY HDI_attached";
-$func3 = "SELECT UNIX_TIMESTAMP(shipped), assoc_module FROM times_module_p".$hide." ORDER BY shipped";
+#Stress test functions
+$func1 = "SELECT UNIX_TIMESTAMP(a.received), a.assoc_module FROM times_module_p a, module_p b WHERE a.assoc_module=b.id AND (b.name NOT LIKE \"%95%\" AND b.name NOT LIKE \"%96%\" AND b.name NOT LIKE \"%97%\")".$hide." ORDER BY received";
+$func2 = "SELECT UNIX_TIMESTAMP(a.HDI_attached), a.assoc_module FROM times_module_p a, module_p b WHERE a.assoc_module=b.id AND (b.name NOT LIKE \"%95%\" AND b.name NOT LIKE \"%96%\" AND b.name NOT LIKE \"%97%\")".$hide." ORDER BY HDI_attached";
+$func3 = "SELECT UNIX_TIMESTAMP(a.shipped), a.assoc_module FROM times_module_p a, module_p b WHERE a.assoc_module=b.id AND (b.name NOT LIKE \"%95%\" AND b.name NOT LIKE \"%96%\" AND b.name NOT LIKE \"%97%\")".$hide." ORDER BY a.shipped";
+#Old functions. We might want to re-use them after the stress test
+#$func1 = "SELECT UNIX_TIMESTAMP(received), assoc_module FROM times_module_p".$hide." ORDER BY received";
+#$func2 = "SELECT UNIX_TIMESTAMP(HDI_attached), assoc_module FROM times_module_p".$hide." ORDER BY HDI_attached";
+#$func3 = "SELECT UNIX_TIMESTAMP(shipped), assoc_module FROM times_module_p".$hide." ORDER BY shipped";
 
 $output1 = mysql_query($func1, $connection);
 $output2 = mysql_query($func2, $connection);
@@ -40,8 +46,8 @@ while($row1 = mysql_fetch_assoc($output1)){
 
 	$modloc = curloc("module_p", $row1['assoc_module']);
 
-	if(!is_null($row1['UNIX_TIMESTAMP(received)']) && $loc_condition==$modloc){
-		$arr1[0][$i] = $row1['UNIX_TIMESTAMP(received)'];
+	if(!is_null($row1['UNIX_TIMESTAMP(a.received)']) && $loc_condition==$modloc){
+		$arr1[0][$i] = $row1['UNIX_TIMESTAMP(a.received)'];
 		$arr1[1][$i] = $i+1;
 		$i++;
 	}
@@ -55,8 +61,8 @@ while($row2 = mysql_fetch_assoc($output2)){
 
 	$modloc = curloc("module_p", $row2['assoc_module']);
 
-	if(!is_null($row2['UNIX_TIMESTAMP(HDI_attached)']) && $loc_condition==$modloc){
-		$arr2[0][$j] = $row2['UNIX_TIMESTAMP(HDI_attached)'];
+	if(!is_null($row2['UNIX_TIMESTAMP(a.HDI_attached)']) && $loc_condition==$modloc){
+		$arr2[0][$j] = $row2['UNIX_TIMESTAMP(a.HDI_attached)'];
 		$arr2[1][$j] = $j+1;
 		$j++;
 	}
@@ -70,8 +76,8 @@ while($row3 = mysql_fetch_assoc($output3)){
 
 	$modloc = curloc("module_p", $row3['assoc_module']);
 
-	if(!is_null($row3['UNIX_TIMESTAMP(shipped)']) && $loc_condition==$modloc){
-		$arr3[0][$k] = $row3['UNIX_TIMESTAMP(shipped)'];
+	if(!is_null($row3['UNIX_TIMESTAMP(a.shipped)']) && $loc_condition==$modloc){
+		$arr3[0][$k] = $row3['UNIX_TIMESTAMP(a.shipped)'];
 		$arr3[1][$k] = $k+1;
 		$k++;
 	}

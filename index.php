@@ -9,6 +9,8 @@
 <h>
 Purdue University CMS FPix Upgrade Production Database
 </h>
+<br>
+<font color='red'><b>Database stress test ongoing. Expect a large quantity of dummy data</b></font>
 <div style="position:fixed;left:420px;top:2px;">
 <form method="link" action="login.php?prev=index.php">
 <input type="submit" value="LOG IN">
@@ -99,6 +101,10 @@ New Parts Information
 
 <form action="submit/batchrocsubmit.php" method="get">
   <input value="Module Batch Submit" type="submit">
+  </form>
+
+<form action="submit/batchHDIsubmit.php" method="get">
+  <input value="HDI Batch Submit" type="submit">
   </form>
 
 <form action="submit/flexsubmit.php" method="get">

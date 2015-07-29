@@ -5,15 +5,15 @@
   <title>ROC Submission</title>
 </head>
 <body>
-<form action='ROCsubmit.php' method='post' enctype='multipart/form-data'>
 <?php
 include('../../../Submission_p_secure_pages/connect.php');
 include('../functions/submitfunctions.php');
 include('../functions/popfunctions.php');
 include('../functions/curfunctions.php');
 include('../functions/editfunctions.php');
-if(!isset($_POST['modules'])){
+if(!isset($_GET['modules'])){
 ?>
+<form action='ROCsubmit.php' method='GET' enctype='multipart/form-data'>
 Available Modules
 <select name="modules">
 <?php
@@ -22,14 +22,25 @@ modulepopnoroc();
 </select>
 
 <?php
+
+if($_GET['code'] == "1"){
+	echo "<br>The ROCS have successfully been added to the module<br>";
+}
+if($_GET['code'] == "2"){
+	echo "<br>Not all forms were filled, please retry<br>";
+}
+
 }
 else{
+?>
+<form action='ROCsubmit_proc.php' method='post' enctype='multipart/form-data'>
+<?php
 
-echo "<input type='hidden' name='modules' value='".$_POST['modules']."'>";
+echo "<input type='hidden' name='modules' value='".$_GET['modules']."'>";
 
-curname("module_p", $_POST['modules']);
+curname("module_p", $_GET['modules']);
 
-$func = 'SELECT name from ROC_p WHERE assoc_module='.$_POST['modules'].' ORDER BY position';
+$func = 'SELECT name from ROC_p WHERE assoc_module='.$_GET['modules'].' ORDER BY position';
 
 $i = 0;
 
@@ -39,7 +50,7 @@ while($rocrow = mysql_fetch_assoc($output)){
 	$i++;
 }
 if($i == 0){
-	ROCinfo($_POST['modules']);
+	ROCinfo($_GET['modules']);
 }
 
 ?>
@@ -139,30 +150,6 @@ if($i == 0){
 <?php
 
 conditionalSubmit(1);
-
-if(isset($_POST['submit']) && isset($_POST['ROC0'])){
-	
-	$j = 0;
-
-	for($j=0;$j<16;$j++){
-
-		$roctag = 'ROC'.$j;
-		$sqlroc = mysql_real_escape_string($_POST[$roctag]);
-		$func2 = 'UPDATE ROC_p SET name="'.$sqlroc.'" WHERE assoc_module='.$_POST['modules'].' AND position='.$j;
-
-		if(!mysql_query($func2,$connection)){
-			echo "An error occurred and the changes have not been added to the database.";
-		break;
-		}
-
-	}
-	echo "Changes added to the database.";
-
-	$func3 = "UPDATE module_p SET has_ROC=\"1\" WHERE id=".$_POST['modules'];
-	mysql_query($func3, $connection);
-
-	lastUpdate("module_p", $_POST['modules'], "User", "Added ROCs", "");
-}
 
 ?>
 </form>

@@ -117,7 +117,24 @@ function curgraphs_pos_summary($level, $scan, $loc){
 
 		echo "<a href=\"../graphing/positiongrapher.php?level=$level&scan=$scan&loc=$loc\" target=\"_blank\"><img src=\"../graphing/positiongrapher.php?level=$level&scan=$scan&loc=$loc\" width=\"710\" height=\"400\" /></a>";
 	}
+}
 
+function curgraphs_diff_summary($level, $scan, $loc){
+
+	#if(isset($_SESSION['hidepre']) && $_SESSION['hidepre']){
+	#	$imagefile = "../pics/graphs/".$level."_".$loc."_".$scan.".png";
+	#}
+	#else{
+	#	$imagefile = "../pics/graphs/".$level."_".$loc."_".$scan."_with_preproduction.png";
+	#}
+
+	#if(file_exists($imagefile)){
+	#	echo "<a href=\"$imagefile\" target=\"_blank\"><img src=\"$imagefile\" width=\"710\" height=\"400\" /></a>";
+	#}
+	#else{
+
+		echo "<a href=\"../graphing/diff_positiongrapher.php?level=$level&scan=$scan&loc=$loc\" target=\"_blank\"><img src=\"../graphing/diff_positiongrapher.php?level=$level&scan=$scan&loc=$loc\" width=\"710\" height=\"400\" /></a>";
+	#}
 }
 
 function curname($db, $id){
@@ -965,6 +982,19 @@ function human_filesize($bytes, $decimals=2){
 	$sz = 'BKMGTP';
 	$factor = floor((strlen($bytes)-1)/3);
 	return sprintf("%.{$decimals}f", $bytes/pow(1024, $factor)) . @$sz[$factor];
+}
+
+###Found on internet###
+function mean_and_dev($arr){
+	$vals = array();
+	if(is_array($arr)){
+		$mean = array_sum($arr)/count($arr);
+			$vals[0] = $mean;
+		foreach($arr as $key => $num){$devs[$key] = pow($num - $mean, 2);}
+		$stdev = sqrt(array_sum($devs) / (count($devs) - 1));
+			$vals[1] = $stdev;
+	}
+	return $vals;
 }
 
 ####Pulls the breakdown and compliance from the most recently submitted 

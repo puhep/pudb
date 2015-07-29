@@ -144,13 +144,13 @@ if($part == "module_p" && $sl == 12){
 		array_multisort($results[1], SORT_DESC, SORT_STRING,$results[6],$results[2],$results[3],$results[4],$results[5],$results[0]);
 	}
 	if($sortby == "lo"){
-		array_multisort($results[2], SORT_DESC, SORT_STRING,$results[6],$results[1],$results[3],$results[4],$results[5],$results[0]);
+		array_multisort($results[2], SORT_ASC, SORT_STRING,$results[6],$results[1],$results[3],$results[4],$results[5],$results[0]);
 	}
 	if($sortby == "as"){
 		array_multisort($results[3], SORT_DESC, SORT_STRING,$results[6],$results[1],$results[2],$results[4],$results[5],$results[0]);
 	}
 	if($sortby == "sh"){
-		array_multisort($results[4], SORT_ASC, SORT_STRING,$results[6],$results[1],$results[2],$results[3],$results[5],$results[0]);
+		array_multisort($results[4], SORT_DESC, SORT_STRING,$results[6],$results[1],$results[2],$results[3],$results[5],$results[0]);
 	}
 	if($sortby == "de"){
 		array_multisort($results[5], SORT_ASC, SORT_STRING,$results[6],$results[1],$results[2],$results[3],$results[4],$results[0]);
@@ -161,7 +161,7 @@ else if($part == "module_p" || $part == "HDI_p"){
 		array_multisort($results[0], SORT_ASC, SORT_STRING,$results[1],$results[2]);
 	}
 	if($sortby == "lm"){
-		array_multisort($results[1], SORT_ASC, SORT_STRING,$results[0],$results[2]);
+		array_multisort($results[1], SORT_DESC, SORT_STRING,$results[0],$results[2]);
 	}
 	if($sortby == "lo"){
 		array_multisort($results[2], SORT_ASC, SORT_STRING,$results[0],$results[1]);
@@ -172,7 +172,7 @@ else{
 		array_multisort($results[0], SORT_ASC, SORT_STRING, $results[1]);
 	}
 	if($sortby == "lm"){
-		array_multisort($results[1], SORT_ASC, SORT_STRING, $results[0]);
+		array_multisort($results[1], SORT_DESC, SORT_STRING, $results[0]);
 	}
 }
 }
