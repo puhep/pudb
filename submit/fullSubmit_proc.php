@@ -1,6 +1,7 @@
 <?php
 include('../functions/curfunctions.php');
 include('../functions/submitfunctions.php');
+include('../functions/editfunctions.php');
 
 	$id = findid("module_p", $_POST['name']);
 	$gets = "?name=".$_POST['name'];
@@ -35,6 +36,10 @@ if(isset($_POST['submit']) && ($_POST['grade'] != "")){
 
 	$func = "UPDATE module_p SET grade=\"".$_POST['grade']."\" WHERE id=".$id;
 	mysql_query($func, $connection);
+}
+if(isset($_POST['submit']) && ($_POST['notes'] != "")){
+
+	addcomment_fnal($id, $_POST['notes']);
 }
 exit();
 ?>

@@ -5,14 +5,21 @@ require_once('../jpgraph/src/jpgraph_scatter.php');
 require_once('../jpgraph/src/jpgraph_log.php');
 
 include('../../../Submission_p_secure_pages/connect.php');
+include('../functions/curfunctions.php');
 mysql_query('USE cmsfpix_u',$connection);
 
 $level = $_GET['level'];
 $scan = $_GET['scan'];
 $loc = $_GET['loc'];
 
+$hide = hidepre("sensor", 2);
 
-$imagefile = "../pics/graphs/".$level."_".$loc."_".$scan.".png";
+if($hider == ""){
+	$imagefile = "../pics/graphs/".$level."_".$loc."_".$scan."_with_preproduction.png";
+}
+else{
+	$imagefile = "../pics/graphs/".$level."_".$loc."_".$scan.".png";
+}
 
 $sensorsout = array();
 $sensors = array();
@@ -36,8 +43,6 @@ for($loop=0;$loop<=15;$loop++){
 
 $sensorfunc = "SELECT name, id FROM sensor_p WHERE name LIKE \"%".$loc."%\"";
 $sensoroutput = mysql_query($sensorfunc, $connection);
-
-#echo $sensorfunc;
 
 $i = 0;
 while($sensrow = mysql_fetch_assoc($sensoroutput)){

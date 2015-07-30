@@ -30,6 +30,7 @@ $row = mysql_fetch_assoc($table);
 $assembly = $row['assembly'];
 curname("module_p", $id);
 
+echo "<input type='hidden' name='assembly' value='$assembly'>";
 
 $steparray = array("Received", "Inspected", "IV Tested", "Ready for HDI Assembly", "HDI Attached", "Wirebonded", "Encapsulated", "Tested", "Thermally Cycled", "Tested", "Ready for Shipping", "Shipped");
 
@@ -186,7 +187,7 @@ if($assembly >= 6 && $assembly <= 11){
 	echo"User: <input name=\"who_ship\" type=\"text\">   ";
 	echo"Comments: <textarea name=\"notes_ship\"></textarea>   ";
 	echo"Destination: <input name=\"dest\" type=\"text\">   ";
-	echo"Date (yyyy/mm/dd): <input name=\"date\" type=\"text\">   ";
+	echo"Date (yyyy/mm/dd): <textarea cols='10' rows='1'  name=\"date\">".date('Y/m/d')."</textarea>    ";
 	echo"Tracking Number: <input name=\"track\" type=\"text\">   ";
 	$checker = "";
 }
@@ -199,6 +200,10 @@ echo"<br>";
 
 if($assembly > 11){
 	echo "Module fully assembled and shipped to ".$row['destination'];
+}
+
+if($_GET['code']=="2"){
+	echo "Another user has already promoted this part. Your changes have not been added.";
 }
 
 echo"<br>";

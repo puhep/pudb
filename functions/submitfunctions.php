@@ -495,6 +495,15 @@ include("../functions/editfunctions.php");
 
 					#####################
 
+					##########NOTES########
+
+					$testnotes = $doc->TEST[$i]->NOTES;
+					if($testnotes != ""){
+						addcomment_fnal($id, $testnotes);
+					}
+
+					#####################
+
 					#echo "Changes Submitted for ".$name."<br>";
 					
 					lastUpdate("module_p", $id, $user, "Updated Fulltest Values", "");
@@ -779,6 +788,15 @@ include("../functions/editfunctions.php");
 
 						#echo "Can time ".$name.":  ".$timeable;
 						#echo "<br>";
+					}
+
+					#####################
+
+					##########NOTES########
+
+					$testnotes = $doc->TEST[$i]->NOTES;
+					if($testnotes != ""){
+						addcomment_fnal($id, $testnotes);
 					}
 
 					#####################

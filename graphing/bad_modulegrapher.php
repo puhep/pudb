@@ -45,29 +45,48 @@ while($row = mysql_fetch_assoc($output)){
 	if($totgrade == "I"){ continue;}
 
 	if(!is_null($row['HDI_attached']) && curgrade($id)!="A" && $loc_condition==$modloc){
+		if($g==0){
+			$arrAssembled[0][$g] = strtotime($row['HDI_attached']);
+			$arrAssembled[1][$g] = 0;
+			$g++;
+		}
 		$arrAssembled[0][$g] = strtotime($row['HDI_attached']);
-		$arrAssembled[1][$g] = $g+1;
+		$arrAssembled[1][$g] = $g;
 		$g++;
 	}
 	
-	if(!is_null($row['HDI_attached']) && badbumps_crit($id)<"A" && $loc_condition==$modloc){
+	if(!is_null($row['HDI_attached']) && badbumps_crit($id)>"A" && xmlgrapher_crit_num($row['assoc_sens'], "IV", "module",0)!=1 && $loc_condition==$modloc){
+		if($k==0){
+			$arr3[0][$k] = strtotime($row['HDI_attached']);
+			$arr3[1][$k] = 0;
+			$k++;
+		}
+		$arr3[0][$k] = strtotime($row['HDI_attached']);
+		$arr3[1][$k] = $k;
+		$k++;
+	}
+
+	elseif(!is_null($row['HDI_attached']) && badbumps_crit($id)>"A" && $loc_condition==$modloc){
+		if($i==0){
+			$arr1[0][$i] = strtotime($row['HDI_attached']);
+			$arr1[1][$i] = 0;
+			$i++;
+		}
 		$arr1[0][$i] = strtotime($row['HDI_attached']);
-		$arr1[1][$i] = $i+1;
+		$arr1[1][$i] = $i;
 		$i++;
 	}
 	
-	if(!is_null($row['HDI_attached']) && xmlgrapher_crit_num($row['assoc_sens'], "IV", "module",0)!=1 && $loc_condition==$modloc){
+	elseif(!is_null($row['HDI_attached']) && xmlgrapher_crit_num($row['assoc_sens'], "IV", "module",0)!=1 && $loc_condition==$modloc){
+		if($j==0){
+			$arr2[0][$j] = strtotime($row['HDI_attached']);
+			$arr2[1][$j] = 0;
+			$j++;
+		}
 		$arr2[0][$j] = strtotime($row['HDI_attached']);
-		$arr2[1][$j] = $j+1;
+		$arr2[1][$j] = $j;
 		$j++;
 	}
-	
-	if(!is_null($row['HDI_attached']) && curgrade($id)=="C" && $loc_condition==$modloc){
-		$arr3[0][$k] = strtotime($row['HDI_attached']);
-		$arr3[1][$k] = $k+1;
-		$k++;
-	}
-	
 }
 
 $arrAssembled[0][$g] = $date;
@@ -101,6 +120,8 @@ $graph->xaxis->scale->ticks->Set(30*24*60*60);
 #$graph->yaxis->title->Set("");
 
 $graph->yaxis->title->SetMargin(30);
+$graph->yaxis->scale->SetAutoMin(0);
+
 $graph->SetFrame(true,'black',0);
 
 $graph->img->SetAntiAliasing(false);
@@ -129,15 +150,15 @@ $sp2->SetWeight(7);
 $sp2->SetStyle("solid");
 $sp2->SetStepStyle();
 $sp2->SetLegend("Bad IV");
-/*
+
 $sp3 = new LinePlot($arr3[1],$arr3[0]);
-$sp3->SetFillColor('lightgreen@0.5');
+#$sp3->SetFillColor('lightgreen@0.5');
 $graph->Add($sp3);
 $sp3->SetWeight(7);
 $sp3->SetStyle("solid");
 $sp3->SetStepStyle();
-$sp3->SetLegend("Grade C");
-*/
+$sp3->SetLegend("Bad Both");
+
 $graph->Stroke();
 
 ?>

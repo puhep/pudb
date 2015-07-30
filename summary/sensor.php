@@ -62,7 +62,7 @@
 		echo "IV/CV Scans: ";
 		echo "</h>";
 		echo "<br>";
-		curgraphs($id,"IV","sensor");
+		curgraphs($id,"IV","sensor", 0);
 		echo "<br>";
 		echo "<br>";
 		xmlbuttongen($id, "IV","sensor");

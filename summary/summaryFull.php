@@ -25,6 +25,9 @@ curname("module_p", $id);
 echo "<br>";
 curtestparams($id);
 morewebLinkList($id);
+echo "<br>";
+curnotes_fnal($id);
+echo "<br>";
 curpics("sidet_p", $id);
 
 ?>

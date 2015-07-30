@@ -8,7 +8,7 @@
   </script>
   <link rel="stylesheet" type="text/css" href="../css/HDIsubmit.css" />
 </head>
-<body>
+<body onload='FormatDate()'>
 <form action="HDIsubmit_proc.php" method="post" enctype="multipart/form-data">
 <?php
 include('../functions/popfunctions.php');
@@ -29,7 +29,7 @@ Panel <textarea cols="20" rows="1" name="panel"></textarea><br>
 Position <textarea cols="20" rows="1" name="pos"></textarea><br>
 <br>
 <div>
-	<div class="arrival">Arrival Date (YYYY/MM/DD) <textarea cols="10" rows="1" name="arrival" id="arrival" maxlength="10"></textarea></div>
+	<div class="arrival">Arrival Date (YYYY/MM/DD) <textarea cols="10" rows="1" name="arrival" id="arrival" maxlength="10"><?php echo date('Y/m/d');?></textarea></div>
 	<div class="dateresp" id="dateresp"></div>
 </div>
 <br>

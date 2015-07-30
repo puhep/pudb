@@ -17,10 +17,15 @@ $search = "SELECT assembly,name FROM wafer_p WHERE id=$id";
 $table = mysql_query($search, $connection);
 $row = mysql_fetch_assoc($table);
 $assembly = $row['assembly'];
+$gets = "?name=".$name;
+
+if($assembly != $_POST['assembly']){
+	header("Location: wafer.php".$gets."&code=2");
+	exit();
+}
 
 $steparray = array("Inspected", "Tested", "Promoted", "Ready for Shipping", "Shipped");
 
-$gets = "?name=".$name;
 
 header("Location: wafer.php".$gets);
 

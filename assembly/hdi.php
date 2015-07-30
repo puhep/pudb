@@ -29,6 +29,8 @@ $assembly = $row['assembly'];
 
 curname("HDI_p", $id);
 
+echo "<input type='hidden' name='assembly' value='$assembly'>";
+
 $steparray = array("Inspected", "Ready for Assembly", "On Module");
 
 $checker = " CHECKED ";
@@ -96,6 +98,10 @@ if($assembly > 2){
 
 if($assembly < 0){
 	echo "HDI rejected";
+}
+
+if($_GET['code']=="2"){
+	echo "Another user has already promoted this part. Your changes have not been added.";
 }
 
 echo"<br>";

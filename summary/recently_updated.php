@@ -16,7 +16,7 @@ include('../functions/curfunctions.php');
 
 $hide = hidepre("module",2);
 
-$func = "SELECT name, id, time_created, last_user, last_update, last_comment, destination from module_p WHERE assembly>0".$hide." ORDER BY time_created DESC";
+$func = "SELECT name, id, time_created, last_user, last_update, last_comment, destination from module_p WHERE assembly>0 AND (name NOT LIKE '%95%' AND name NOT LIKE '%96%' AND name NOT LIKE '%97%')".$hide." ORDER BY time_created DESC";
 $i=0;
 $j=0;
 $dataarray;

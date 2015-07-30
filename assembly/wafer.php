@@ -30,6 +30,9 @@ $assembly = $row['assembly'];
 
 curname("wafer_p", $id);
 
+ echo "<input type='hidden' name='assembly' value='$assembly'>";
+
+
 $steparray = array("Inspected", "Tested", "Promoted", "Ready for Shipping", "Shipped");
 
 $checker = " CHECKED ";
@@ -107,10 +110,10 @@ echo"<br>";
 if($assembly > 4){
 	echo "Wafer fully tested and shipped";
 }
-#else{
-	#echo"Rework   <input name=\"box\" value=\"rework\" type=\"checkbox\">";
-	#echo"Comments: <textarea name=\"notes\" ".$rework."></textarea>   ";
-#}
+
+if($_GET['code']=="2"){
+	echo "Another user has already promoted this part. Your changes have not been added";
+}
 
 echo"<br>";
 echo"<br>";

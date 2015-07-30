@@ -21,6 +21,11 @@ $row = mysql_fetch_assoc($table);
 $assembly = $row['assembly'];
 $location = $row['location'];
 
+if($assembly != $_POST['assembly']){
+	header("Location: bbm.php?code=2&name=".$name);
+	exit();
+}
+
 $steparray = array("Received", "Inspected", "IV Tested", "Ready for HDI Assembly", "HDI Attached", "Wirebonded", "Encapsulated", "Tested", "Thermally Cycled", "Tested", "Ready for Shipping", "Shipped");
 
 ###This is sort of a messy solution. This is because the name changes after HDI assembly###
@@ -71,7 +76,7 @@ if(isset($_POST['submit']) && ((isset($_POST['box']) && $_POST['who'] != "") || 
 		else{
 			$formattedtrack = $_POST['track'];
 		}
-		$funcship = "UPDATE module_p SET shipped=\"".$_POST['date']."\", destination=\"".$_POST['dest']."\", tracking_number=\"".$formattedtrack."\" WHERE id=$id";
+		$funcship = "UPDATE module_p SET shipped=\"".$_POST['date']."\", destination=\"In transit to ".$_POST['dest']."\", tracking_number=\"".$formattedtrack."\" WHERE id=$id";
 		mysql_query($funcship, $connection);
 		$flexfunc = "UPDATE flex_p set current=current-1 WHERE name=\"".$location."\"";
 		$carrierfunc = "UPDATE carrier_p set current=current-1 WHERE name=\"".$location."\"";

@@ -18,6 +18,24 @@ function curnotes($db, $id){
 	}
 }
 
+function curnotes_fnal($id){
+	include('../../../Submission_p_secure_pages/connect.php');
+
+	mysql_query('USE cmsfpix_u', $connection);
+
+	$func = "SELECT notes_fnal from module_p WHERE id=".$id;
+
+	$output = mysql_query($func, $connection);
+	$noterow = mysql_fetch_assoc($output);
+	if($noterow['notes_fnal']!=""){
+		echo "<br>";
+		echo nl2br(stripslashes(stripslashes($noterow["notes_fnal"])));
+	}
+	else{
+		echo "This part has no comments";
+	}
+}
+
 function curpics($type, $id){
 
 	$cwd = getcwd();
@@ -65,12 +83,12 @@ function curpics($type, $id){
 	}
 }
 
-function curgraphs($sensorid, $scan, $level){
+function curgraphs($sensorid, $scan, $level, $efficient){
 	include('../../../Submission_p_secure_pages/connect.php');
 
 	$imagefile = "../pics/graphs/".$level."_".$sensorid."_".$scan.".png";
 
-	if(file_exists($imagefile)){
+	if(file_exists($imagefile) && $efficient){
 		echo "<a href=\"$imagefile\" target=\"_blank\"><img src=\"$imagefile\" width=\"335\" height=\"200\" /></a>";
 	}
 	else{
@@ -262,6 +280,23 @@ function currocs($module){
 	echo "</tr>";
 
 	echo "</table>";
+}
+
+function currocs_string($module){
+	include('../../../Submission_p_secure_pages/connect.php');
+
+	mysql_query('USE cmsfpix_u', $connection);
+
+	$func = "SELECT name from ROC_p WHERE assoc_module=\"$module\" ORDER BY position ASC";
+	$output = mysql_query($func, $connection);
+
+	$rocstring;
+
+	while($row = mysql_fetch_assoc($output)){
+		$rocstring .= $row['name'].", ";
+	}
+
+	return $rocstring;
 }
 
 function currocparams($module, $param){

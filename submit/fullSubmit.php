@@ -37,18 +37,6 @@
 </form>
 </div5>
 
-
-
-
-
-
-
-
-
-
-
-
-
 <form action="fullSubmit_proc.php" method="POST" enctype="multipart/form-data">
 
 <?php

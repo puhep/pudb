@@ -12,14 +12,14 @@ $level = $_GET['level'];
 $scan = $_GET['scan'];
 $loc = $_GET['loc'];
 
-if($hider == ""){
+$hide = hidepre("sensor", 2);
+
+if($hide == ""){
 	$imagefile = "../pics/graphs/".$level."_".$loc."_".$scan."_with_preproduction.png";
 }
 else{
 	$imagefile = "../pics/graphs/".$level."_".$loc."_".$scan.".png";
 }
-	
-
 
 $sensorsout = array();
 $sensors = array();
@@ -27,8 +27,6 @@ $timestamps = array();
 $measurements = array();
 $colors = array("#000000","#ffff00","#a020f0","#ffa500","#add8e6","#ff0000","#bebebe","#00ff00","#ff1493","#0000ff","#ee82ee","#ffa07a","#98fb98","#8b4513","#9acd32","#6b8e23");
 
-
-$hide = hidepre("sensor", 2);
 
 $arr1 = array();
 $limitarr;

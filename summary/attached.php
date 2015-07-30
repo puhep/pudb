@@ -11,6 +11,9 @@
 </form>
 <br>
 
+<a href="../tmp/modulereport.csv" download>Module Report Document</a>
+<br>
+
 <?php
 #ini_set('display_errors', 'On');
 #error_reporting(E_ALL | E_STRICT);
@@ -24,13 +27,17 @@ if(isset($_GET['sort'])){
 	$sortby = $_GET['sort'];
 }
 
+$dlstring;
+
 $hide = hidepre("module",2);
 
 
 $bbmfunc = "SELECT name, id, assembly, assoc_sens, bonder, location, time_created from module_p WHERE name LIKE 'M%'".$hide." ORDER BY name";
 
-$partarray = array("Module","Location", "Bonder", "HDI", "Sensor", "ROCs", "IV Scans", "Criteria", "Date Assembled", "Last Modified");
-$sortarray = array("mod", "loc", "fcb", "hdi", "sen", "", "", "", "dat", "lm");
+$partarray = array("Module","Location", "Bonder", "Sensor", "HDI", "ROCs", "IV Scans", "Criteria", "Date Assembled", "Last Modified");
+$sortarray = array("mod", "loc", "fcb", "sen", "hdi", "", "", "", "dat", "lm");
+
+$dlstring = "module, sensor, HDI, ROC0, ROC1, ROC2, ROC3, ROC4, ROC5, ROC6, ROC7, ROC8, ROC9, ROC10, ROC11, ROC12, ROC13, ROC14, ROC15,\n";
 
 
 $i=0;
@@ -115,6 +122,7 @@ echo "<tr>";
 
 echo "<td valign=middle>";
 echo "<a href=../summary/bbm.php?name=".$bbmarray[0][$loop].">".$bbmarray[10][$loop]."</a>";
+$dlstring .= $bbmarray[10][$loop].", ";
 echo "</td>";
 
 echo "<td valign=middle>";
@@ -126,19 +134,22 @@ echo $bbmarray[7][$loop];
 echo "</td>";
 
 echo "<td valign=middle>";
-echo "<a href=../summary/hdi.php?name=".$bbmarray[6][$loop].">".$bbmarray[6][$loop]."</a>";
+echo "<a href=../summary/sensor.php?name=".$bbmarray[5][$loop].">".$bbmarray[5][$loop]."</a>";
+$dlstring .= $bbmarray[5][$loop].", ";
 echo "</td>";
 
 echo "<td valign=middle>";
-echo "<a href=../summary/sensor.php?name=".$bbmarray[5][$loop].">".$bbmarray[5][$loop]."</a>";
+echo "<a href=../summary/hdi.php?name=".$bbmarray[6][$loop].">".$bbmarray[6][$loop]."</a>";
+$dlstring .= $bbmarray[6][$loop].", ";
 echo "</td>";
 
 echo "<td valign=middle>";
 currocs($bbmarray[1][$loop]);
+$dlstring .= currocs_string($bbmarray[1][$loop])."\n";
 echo "</td>";
 
 echo "<td valign=middle>";
-curgraphs($bbmarray[3][$loop], "IV", "module");
+curgraphs($bbmarray[3][$loop], "IV", "module", 1);
 echo "</td>";
 
 echo "<td valign=middle>";
@@ -157,6 +168,10 @@ echo "</tr>";
 }
 
 echo "</table>";
+
+$fp = fopen("../tmp/modulereport.csv", "w");
+fwrite($fp, $dlstring);
+fclose($fp);
 
 ?>
 <br>

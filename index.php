@@ -76,6 +76,10 @@ Data Viewing
   <input value="IV by Position"
  type="submit"></form>
 
+<form action="summary/fulltest.php" method="get">
+  <input value="Module Quality Graphs"
+ type="submit"></form>
+
 <form action="../MoReWeb/Results/Overview.html" method="get">
   <input value="MoReWeb Results"
  type="submit"></form>

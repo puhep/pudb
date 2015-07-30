@@ -34,6 +34,38 @@ function addcomment($db, $id, $new){
 	}
 }
 
+function addcomment_fnal($id, $new){
+
+	include('../../../Submission_p_secure_pages/connect.php');
+
+	$sqlnew = mysql_real_escape_string(addslashes($new));
+
+	if($new == ""){
+		return;
+	}
+
+	mysql_query('USE cmsfpix_u', $connection);
+
+	$func1 = "SELECT notes_fnal from module_p WHERE id=".$id;
+	$oldnotes = "";
+
+	$output = mysql_query($func1, $connection);
+	$noterow = mysql_fetch_assoc($output);
+	$oldnotes = mysql_real_escape_string($noterow["notes_fnal"]);
+
+	$date = date('Y-m-d H:i:s');
+
+	$newnotes = $oldnotes.$date."  ".$sqlnew."\n";
+
+	$func2 = "UPDATE module_p SET notes_fnal=\"".$newnotes."\" WHERE id=".$id;
+	
+	if(!mysql_query($func2, $connection)){
+		echo "An error has occurred and the comment has not been added";
+	}
+
+	lastUpdate("module_p", $id, "User", "FNAL Testing Comment", $new);
+}
+
 function connecttbm($hdi, $tbm){
 
 	include('../../../Submission_p_secure_pages/connect.php');

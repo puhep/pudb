@@ -61,7 +61,7 @@ Flip-Chip Bonder <select name="flip">
 <br>
 
 
-Arrival Date (yyyy/mm/dd) <textarea cols="10" rows="1" name="arrival"></textarea>
+Arrival Date (yyyy/mm/dd) <textarea cols="10" rows="1" name="arrival"><?php echo date('Y/m/d');?></textarea>
 <br>
 
 Additional Notes <textarea cols="40" rows="5" name="notes"></textarea>

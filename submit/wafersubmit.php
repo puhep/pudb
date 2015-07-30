@@ -7,7 +7,7 @@
   </script>
   <link rel="stylesheet" type="text/css" href="../css/wafersubmit.css" />
 </head>
-<body>
+<body onload='FormatDate()'>
 <form  action="wafersubmit_proc.php" method="post" enctype="multipart/form-data">
 
 <div> 
@@ -17,7 +17,7 @@
 <br>
 <br>
 <div>
-	<div class="div3">Receive Date (YYYY/MM/DD)<textarea cols="10" rows="1" id="receive" name="receive" maxlength="10"></textarea></div>
+	<div class="div3">Receive Date (YYYY/MM/DD)<textarea cols="10" rows="1" id="receive" name="receive" maxlength="10" ><?php echo date('Y/m/d');?></textarea></div>
 	<div id="dateresp" class="div4"></div>
 </div>
 <br>

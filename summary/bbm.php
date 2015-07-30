@@ -133,7 +133,7 @@
 		echo "<tr>";
 
 		echo "<td>";
-		curgraphs($dumped['assoc_sens'], "IV", "module");
+		curgraphs($dumped['assoc_sens'], "IV", "module", 0);
 		echo "<br>";
 		echo "</td>";
 

@@ -16,10 +16,15 @@ $search = "SELECT assembly FROM HDI_p WHERE id=$id";
 $table = mysql_query($search, $connection);
 $row = mysql_fetch_assoc($table);
 $assembly = $row['assembly'];
+$gets = "?name=".$name;
+
+if($assembly != $_POST['assembly']){
+	header("Location: hdi.php".$gets."&code=2");
+	exit();
+}
 
 $steparray = array("Inspected", "Ready for Assembly", "On Module");
 
-$gets = "?name=".$name;
 
 header("Location: hdi.php".$gets);
 
