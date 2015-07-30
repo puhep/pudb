@@ -231,8 +231,8 @@ include("../../../Submission_p_secure_pages/connect.php");
 include("../functions/curfunctions.php");
 include("../functions/editfunctions.php");
 
-	ini_set('display_error', 'On');
-	error_reporting(E_ALL | E_STRICT);
+	#ini_set('display_error', 'On');
+	#error_reporting(E_ALL | E_STRICT);
 
 	$dir = "/project/cmsfpix/.www/Submission_p/tmp/tmptests/";
 
@@ -521,8 +521,8 @@ include("../../../Submission_p_secure_pages/connect.php");
 include("../functions/curfunctions.php");
 include("../functions/editfunctions.php");
 
-	ini_set('display_error', 'On');
-	error_reporting(E_ALL | E_STRICT);
+	#ini_set('display_error', 'On');
+	#error_reporting(E_ALL | E_STRICT);
 
 	$dir = "/project/cmsfpix/.www/Submission_p/tmp/tmpbig/";
 
@@ -537,6 +537,11 @@ include("../functions/editfunctions.php");
 	move_uploaded_file($zip, $dir.$name);
 
 	chmod($dir.$name, 0777);
+
+	if(substr($dir.$name,-3) != "zip"){
+		return 5;
+	}
+
 
 	exec("/usr/local/bin/unzip ../tmp/tmpbig/".$name." -d ../tmp/tmpbig");
 	
@@ -1250,8 +1255,8 @@ include("../../../Submission_p_secure_pages/connect.php");
 include("../functions/curfunctions.php");
 include("../functions/editfunctions.php");
 
-	ini_set('display_error', 'On');
-	error_reporting(E_ALL | E_STRICT);
+	#ini_set('display_error', 'On');
+	#error_reporting(E_ALL | E_STRICT);
 
 	$dir = "/project/cmsfpix/.www/Submission_p/tmp/tmproc/";
 	
@@ -1357,8 +1362,8 @@ include("../../../Submission_p_secure_pages/connect.php");
 include("../functions/curfunctions.php");
 include("../functions/editfunctions.php");
 
-	ini_set('display_error', 'On');
-	error_reporting(E_ALL | E_STRICT);
+	#ini_set('display_error', 'On');
+	#error_reporting(E_ALL | E_STRICT);
 
 	$dir = "/project/cmsfpix/.www/Submission_p/tmp/tmphdi/";
 	
@@ -1410,8 +1415,8 @@ include("../../../Submission_p_secure_pages/connect.php");
 include("../functions/curfunctions.php");
 include("../functions/editfunctions.php");
 
-	ini_set('display_error', 'On');
-	error_reporting(E_ALL | E_STRICT);
+	#ini_set('display_error', 'On');
+	#error_reporting(E_ALL | E_STRICT);
 
 	$dir = "/project/cmsfpix/.www/Submission_p/tmp/tmpwafer/";
 	$date = date('Y-m-d H:i:s');

@@ -101,59 +101,67 @@ $arr2[1][$j] = $j;
 $arr3[0][$k] = $date;
 $arr3[1][$k] = $k;
 
-$graphname = "Module Assembly over Time";
+$graphname = "Module Defects over Time";
 
 $graph=new Graph(1340,800);
 $graph->SetScale("datlin");
-
-$graph->xaxis->SetLabelAngle(90);
-
-$graph->img->SetMargin(70,80,40,40);	
+$graph->SetFrame(true,'black',0);
 
 $graph->title->Set($graphname);
+$graph->title->SetFont(FF_FONT2,FS_BOLD);
 
-$graph->title->SetFont(FF_FONT1,FS_BOLD);
-
+$graph->xaxis->SetLabelAngle(90);
 $graph->xaxis->title->Set("Time");
 $graph->xaxis->scale->ticks->Set(30*24*60*60);
-
-#$graph->yaxis->title->Set("");
+$graph->xaxis->SetFont(FF_FONT2,FS_BOLD);
+$graph->xaxis->title->SetFont(FF_FONT2,FS_BOLD);
 
 $graph->yaxis->title->SetMargin(30);
 $graph->yaxis->scale->SetAutoMin(0);
+$graph->yaxis->SetFont(FF_FONT2,FS_BOLD);
+$graph->yaxis->title->SetFont(FF_FONT2,FS_BOLD);
 
-$graph->SetFrame(true,'black',0);
+$graph->legend->SetPos(.1,.1,'left','top');
+$graph->legend->SetFont(FF_FONT2,FS_BOLD);
 
+$graph->img->SetMargin(70,80,40,40);	
 $graph->img->SetAntiAliasing(false);
 
+$sp3 = new LinePlot($arr3[1],$arr3[0]);
 $spA = new LinePlot($arrAssembled[1],$arrAssembled[0]);
-#$spA->SetFillColor('purple@0.5');
-$spA->SetColor('purple');
+$sp1 = new LinePlot($arr1[1],$arr1[0]);
+$sp2 = new LinePlot($arr2[1],$arr2[0]);
+
+
+$graph->Add($sp3);
 $graph->Add($spA);
+$graph->Add($sp1);
+$graph->Add($sp2);
+
+
+#$spA->SetFillColor('purple@0.5');
+$spA->SetColor('blue@0.5');
 $spA->SetWeight(7);
 #$spA->SetStyle("solid");
 $spA->SetStepStyle();
 $spA->SetLegend("Assembled");
 
-$sp1 = new LinePlot($arr1[1],$arr1[0]);
 #$sp1->SetFillColor('lightblue@0.5');
-$graph->Add($sp1);
+$sp1->SetColor('green@0.5');
 $sp1->SetWeight(7);
 $sp1->SetStyle("solid");
 $sp1->SetStepStyle();
 $sp1->SetLegend("Bad Bumps");
 
-$sp2 = new LinePlot($arr2[1],$arr2[0]);
 #$sp2->SetFillColor('lightred@0.5');
-$graph->Add($sp2);
+$sp2->SetColor('red@0.5');
 $sp2->SetWeight(7);
 $sp2->SetStyle("solid");
 $sp2->SetStepStyle();
 $sp2->SetLegend("Bad IV");
 
-$sp3 = new LinePlot($arr3[1],$arr3[0]);
 #$sp3->SetFillColor('lightgreen@0.5');
-$graph->Add($sp3);
+$sp3->SetColor('purple@0.5');
 $sp3->SetWeight(7);
 $sp3->SetStyle("solid");
 $sp3->SetStepStyle();

@@ -69,23 +69,25 @@ $graphname = "HDI Assembly over Time";
 
 $graph=new Graph(1340,800);
 $graph->SetScale("datlin");
-
-$graph->xaxis->SetLabelAngle(90);
-
-$graph->img->SetMargin(70,80,40,40);	
-
-$graph->title->Set($graphname);
-
-$graph->title->SetFont(FF_FONT1,FS_BOLD);
-
-$graph->xaxis->title->Set("Time");
-$graph->xaxis->scale->ticks->Set(30*24*60*60);
-
-#$graph->yaxis->title->Set("");
-
-$graph->yaxis->title->SetMargin(30);
 $graph->SetFrame(true,'black',0);
 
+$graph->title->Set($graphname);
+$graph->title->SetFont(FF_FONT2,FS_BOLD);
+
+$graph->xaxis->SetLabelAngle(90);
+$graph->xaxis->title->Set("Time");
+$graph->xaxis->title->SetFont(FF_FONT2,FS_BOLD);
+$graph->xaxis->scale->ticks->Set(30*24*60*60);
+$graph->xaxis->SetFont(FF_FONT2,FS_BOLD);
+
+#$graph->yaxis->title->Set("");
+$graph->yaxis->title->SetMargin(30);
+$graph->yaxis->SetFont(FF_FONT2,FS_BOLD);
+
+$graph->legend->SetPos(.1,.1,'left','top');
+$graph->legend->SetFont(FF_FONT2,FS_BOLD);
+
+$graph->img->SetMargin(70,80,40,40);	
 $graph->img->SetAntiAliasing(false);
 
 $sp1 = new LinePlot($arr1[1],$arr1[0]);

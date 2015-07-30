@@ -14,9 +14,12 @@ include('../functions/popfunctions.php');
 include('../functions/curfunctions.php');
 ?>
 
-<a href="example_xml.xml" target="_blank">Example master.xml Format</a>
-
 <br>
+This form is for adding a wide range of data using a single zip file.<br>
+To use:<br>
+1. Generate a master.xml file (<a href="example_xml.xml" target="_blank">Example</a>) <br>
+2. Put this master.xml file plus any required picture, text, or IV/CV files in the top level of a .zip directory. <br>
+3. Upload this .zip directory in the form below.<br>
 <br>
 User:
 <textarea name="user" rows="1" cols="10"></textarea>
@@ -42,7 +45,9 @@ if($_GET['code'] == 3){
 if($_GET['code'] == 4){
 	echo "<br>An unknown error has occurred<br>";
 }
-
+if($_GET['code'] == 5){
+	echo "<br>Uploaded file was not a .zip, please retry<br>";
+}
 
 ?>
 </form>

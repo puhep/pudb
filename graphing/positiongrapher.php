@@ -138,6 +138,7 @@ $k++;
 }
 
 $graph=new Graph(1340,800);
+$graph->SetFrame(true,'black',0);
 
 if(!$empty){
 $graph->SetScale("linlog");
@@ -147,14 +148,14 @@ $graph->SetScale("linlog",-10,-4,0,600);
 }
 
 $graph->img->SetMargin(70,80,40,40);	
-
 $graph->img->SetAntiAliasing(false);	
 
 $graph->title->Set($graphname);
-
-$graph->title->SetFont(FF_FONT1,FS_BOLD);
+$graph->title->SetFont(FF_FONT2,FS_BOLD);
 
 $graph->xaxis->title->Set("Bias Voltage [V]");
+$graph->xaxis->title->SetFont(FF_FONT2,FS_BOLD);
+$graph->xaxis->SetFont(FF_FONT2,FS_BOLD);
 
 if($scan=="IV"){
 $graph->yaxis->title->Set("Sensor Leakage Current [A]");}
@@ -162,7 +163,8 @@ if($scan=="CV"){
 $graph->yaxis->title->Set("Capacitance [F]");}
 
 $graph->yaxis->title->SetMargin(30);
-$graph->SetFrame(true,'black',0);
+$graph->yaxis->SetFont(FF_FONT2,FS_BOLD);
+$graph->yaxis->title->SetFont(FF_FONT2,FS_BOLD);
 
 $sp1 = array();
 
