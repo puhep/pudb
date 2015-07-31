@@ -826,9 +826,10 @@ include("../functions/editfunctions.php");
 					}
 					$picfile = $doc->PIC[$i]->FILE;
 					$notesfile = $doc->PIC[$i]->TXT;
+					$time = $doc->PIC[$i]->TIME;
 
 					$notes = file_get_contents($dir.$notesfile);
-					addpic($picfile, $dir.$picfile,$part, $id, $notes); 
+					addpic($picfile, $dir.$picfile,$part, $id, $notes, $time); 
 					#echo "Picture for ".$name." added to the database.<br>";
 					$i++;
 				}
@@ -1164,7 +1165,7 @@ function milestone($db, $id, $assembly){
   mysql_query($func, $connection);
 }
 
-function addpic($filename, $tmploc, $part, $id, $notes){
+function addpic($filename, $tmploc, $part, $id, $notes, $time=""){
 	include('../functions/editfunctions.php');
 
 	$cwd = getcwd();
@@ -1185,7 +1186,13 @@ function addpic($filename, $tmploc, $part, $id, $notes){
 
 	$fp = fopen($textfile, 'w');
 
-	$date = date('Y-m-d H:i:s ');
+	$date = "";
+	if($time != "" && preg_match('/\d{4}-\d{2}-\d{2}( \d{2}:\d{2}:\d{2})?/', $time)){
+		$date = $time." ";
+	}
+	else{
+		$date = date('Y-m-d H:i:s ');
+	}
 
 	fwrite($fp, $date.$notes."\n");
 	fclose($fp);

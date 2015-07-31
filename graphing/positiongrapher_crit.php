@@ -8,6 +8,9 @@ require_once('../jpgraph/src/jpgraph_log.php');
 include('../../../Submission_p_secure_pages/connect.php');
 mysql_query('USE cmsfpix_u',$connection);
 
+
+$hide = hidepre("sensor",2);
+
 $sensorsout = array();
 $sensors = array();
 $timestamps = array();
@@ -20,7 +23,7 @@ $limitarr;
 $markedarr = array();
 $empty=1;
 
-$sensorfunc = "SELECT name, id FROM sensor_p WHERE name LIKE \"%".$loc."%\"";
+$sensorfunc = "SELECT name, id FROM sensor_p WHERE name LIKE \"%".$loc."%\"".$hide;
 $sensoroutput = mysql_query($sensorfunc, $connection);
 
 #echo $sensorfunc;

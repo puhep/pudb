@@ -1,5 +1,7 @@
 <?php
 
+
+### Displays the list of notes for a given part
 function curnotes($db, $id){
 	include('../../../Submission_p_secure_pages/connect.php');
 
@@ -18,6 +20,8 @@ function curnotes($db, $id){
 	}
 }
 
+### Displays the list of notes for the Full Test Summary page.
+### The process is slightly different than curnotes
 function curnotes_fnal($id){
 	include('../../../Submission_p_secure_pages/connect.php');
 
@@ -36,6 +40,7 @@ function curnotes_fnal($id){
 	}
 }
 
+### Displays the list of pictures and picture comments for a given part. Also works with "sidet_p".
 function curpics($type, $id){
 
 	$cwd = getcwd();
@@ -83,6 +88,8 @@ function curpics($type, $id){
 	}
 }
 
+### Displays IV/CV graphs for a given part. Can be forced to generate graphs on the fly
+### instead of loading the pre-generated pictures.
 function curgraphs($sensorid, $scan, $level, $efficient){
 	include('../../../Submission_p_secure_pages/connect.php');
 
@@ -119,25 +126,8 @@ function curgraphs($sensorid, $scan, $level, $efficient){
 	}
 }
 
+### Displays "IV by Position" graphs
 function curgraphs_pos_summary($level, $scan, $loc){
-
-	if(isset($_SESSION['hidepre']) && $_SESSION['hidepre']){
-		$imagefile = "../pics/graphs/".$level."_".$loc."_".$scan.".png";
-	}
-	else{
-		$imagefile = "../pics/graphs/".$level."_".$loc."_".$scan."_with_preproduction.png";
-	}
-
-	if(file_exists($imagefile)){
-		echo "<a href=\"$imagefile\" target=\"_blank\"><img src=\"$imagefile\" width=\"710\" height=\"400\" /></a>";
-	}
-	else{
-
-		echo "<a href=\"../graphing/positiongrapher.php?level=$level&scan=$scan&loc=$loc\" target=\"_blank\"><img src=\"../graphing/positiongrapher.php?level=$level&scan=$scan&loc=$loc\" width=\"710\" height=\"400\" /></a>";
-	}
-}
-
-function curgraphs_diff_summary($level, $scan, $loc){
 
 	#if(isset($_SESSION['hidepre']) && $_SESSION['hidepre']){
 	#	$imagefile = "../pics/graphs/".$level."_".$loc."_".$scan.".png";
@@ -151,10 +141,19 @@ function curgraphs_diff_summary($level, $scan, $loc){
 	#}
 	#else{
 
-		echo "<a href=\"../graphing/diff_positiongrapher.php?level=$level&scan=$scan&loc=$loc\" target=\"_blank\"><img src=\"../graphing/diff_positiongrapher.php?level=$level&scan=$scan&loc=$loc\" width=\"710\" height=\"400\" /></a>";
+		echo "<a href=\"../graphing/positiongrapher.php?level=$level&scan=$scan&loc=$loc\" target=\"_blank\"><img src=\"../graphing/positiongrapher.php?level=$level&scan=$scan&loc=$loc\" width=\"710\" height=\"400\" /></a>";
 	#}
 }
 
+### Displays difference graphs
+### Pretty much depreciated
+function curgraphs_diff_summary($level, $scan, $loc){
+
+		echo "<a href=\"../graphing/diff_positiongrapher.php?level=$level&scan=$scan&loc=$loc\" target=\"_blank\"><img src=\"../graphing/diff_positiongrapher.php?level=$level&scan=$scan&loc=$loc\" width=\"710\" height=\"400\" /></a>";
+}
+
+### Displays the name of the part, bolded (usually used for the top of a page)
+### For modules will display the HDI-based name if available
 function curname($db, $id){
 	include('../../../Submission_p_secure_pages/connect.php');
 
@@ -182,6 +181,7 @@ function curname($db, $id){
 	}
 }
 
+### Displays the name of the part's current location in the assembly process
 function curstep($part, $assembly){
 
 	$wafsteps = array("Received", "Inspected", "Tested", "Promoted", "Ready for Shipping", "Shipped");
@@ -203,6 +203,8 @@ function curstep($part, $assembly){
 
 }
 
+### Displays the table of ROCs on the given module. 
+### Dead ROCs are given a red background, live ROCs are given a green background 
 function currocs($module){
 	include('../../../Submission_p_secure_pages/connect.php');
 
@@ -282,6 +284,7 @@ function currocs($module){
 	echo "</table>";
 }
 
+### Generates a comma-delimited string of ROCs on the given module.
 function currocs_string($module){
 	include('../../../Submission_p_secure_pages/connect.php');
 
@@ -299,6 +302,7 @@ function currocs_string($module){
 	return $rocstring;
 }
 
+### Displays a table of values for a given ROC parameter (badbumps_elec, deadpix, etc...)
 function currocparams($module, $param){
 	include('../../../Submission_p_secure_pages/connect.php');
 
@@ -370,6 +374,7 @@ function currocparams($module, $param){
 	echo "</table>";
 }
 
+### Evaluates a module and returns its grade
 function curgrade($id){
 	include('../graphing/xmlgrapher_crit.php');
 	include('../functions/curfunctions.php');
@@ -395,6 +400,8 @@ function curgrade($id){
 	
 }
 
+### Evaluates a module and return's its grade based only on its number of bad bumps.
+### Every ROC is assessed and the grade of the worst ROC is returned
 function badbumps_crit($id){
 	include('../../../Submission_p_secure_pages/connect.php');
 
@@ -421,6 +428,7 @@ function badbumps_crit($id){
 		return $ret;
 }
 
+### Returns the number of ROCs for a given module that are flagged as bad
 function badrocs($id){
 	include('../../../Submission_p_secure_pages/connect.php');
 	
@@ -435,6 +443,7 @@ function badrocs($id){
 	return $count;
 }
 
+### Returns the "location" value of a given part 
 function curloc($db, $id){
 	include('../../../Submission_p_secure_pages/connect.php');
 
@@ -449,6 +458,7 @@ function curloc($db, $id){
 	return $loc;
 }
 
+### Displays a link to the fedex.com tracking page for the given module
 function curtrack($id){
 	include('../../../Submission_p_secure_pages/connect.php');
 
@@ -463,16 +473,18 @@ function curtrack($id){
 			echo "Module transported by hand";
 		}
 		else if(is_numeric($track)){
-			echo "<a target=\"_blank\" href=\"https://www.fedex.com/apps/fedextrack/?trknbr=".$track."\">Track Package</a>";
+			echo "<a target=\"_blank\" href=\"https://www.fedex.com/apps/fedextrack/?trknbr=".$track."\">Tracking Number: $track </a>";
 		}
 		else{
-			echo $track;
+			echo "Tracking information: ".$track;
 		}
 	}
 
 	return;
 }
 
+### Displays a block of text detailing the test parameters of a given module
+### This includes per-roc values
 function curtestparams($id){
 
 	$dumped = dump("module_p", $id);
@@ -529,6 +541,7 @@ function curtestparams($id){
 	return;
 }
 
+### Returns the ID of a part given its name (for modules, either module name or HDI name will work)
 function findid($db, $name){
 	include('../../../Submission_p_secure_pages/connect.php');
 
@@ -549,6 +562,7 @@ function findid($db, $name){
 	return $id;
 }
 
+### Returns the name of a part, given its ID
 function findname($db, $id){
 	include('../../../Submission_p_secure_pages/connect.php');
 
@@ -572,6 +586,8 @@ function findname($db, $id){
 	}
 }
 
+### Returns all the data in the table for a given part
+### Not recommended to use often, but sometimes it's the most efficient way to do it
 function dump($db, $id){
 	include('../../../Submission_p_secure_pages/connect.php');
 
@@ -584,6 +600,7 @@ function dump($db, $id){
 	return $dump;
 }
 
+### Entirely depreciated
 function daqdump($id){
 
 	$src = "../download/dbc0dl.php?id=$id";
@@ -655,6 +672,7 @@ function daqdump($id){
 
 }
 
+### Returns an array of all of the parts that have anything to do with this part
 function namedump($db, $id){
 	include('../../../Submission_p_secure_pages/connect.php');
 
@@ -721,6 +739,7 @@ function namedump($db, $id){
 	return $namearr;
 }
 
+### Displays the buttons and links needed to download IV/CV scan files
 function xmlbuttongen($id, $scan, $level){
 	include('../../../Submission_p_secure_pages/connect.php');
 
@@ -777,6 +796,7 @@ function xmlbuttongen($id, $scan, $level){
 	}
 }
 
+### Displays the name of (and link to) the module associated to a given sensor or HDI
 function curmod($id,$part){
 	include('../../../Submission_p_secure_pages/connect.php');
 
@@ -805,6 +825,7 @@ function curmod($id,$part){
 	}
 }
 
+### Depreciated
 function isTestedWaferDisp($id){
 	include('../../../Submission_p_secure_pages/connect.php');
 	mysql_query("USE cmsfpix_u", $connection);
@@ -839,6 +860,7 @@ function isTestedWaferDisp($id){
 
 }
 
+### Depreciated
 function isTestedWaferUpdate($id){
 	include('../../../Submission_p_secure_pages/connect.php');
 	mysql_query("USE cmsfpix_u", $connection);
@@ -877,6 +899,7 @@ function isTestedWaferUpdate($id){
 
 }
 
+### Depreciated
 function isTestedModuleUpdate($id){
 	include('../../../Submission_p_secure_pages/connect.php');
 	mysql_query("USE cmsfpix_u", $connection);
@@ -911,6 +934,7 @@ function isTestedModuleUpdate($id){
 
 }
 
+### Generates checkboxes for promoting sensors on wafer to modules
 function promoteBoxes($id){
 	include('../../../Submission_p_secure_pages/connect.php');
 	mysql_query("USE cmsfpix_u", $connection);
@@ -929,6 +953,7 @@ function promoteBoxes($id){
 	}
 }
 
+### Flags sensors for promotion
 function sensorSetPromote($id){
 	include('../../../Submission_p_secure_pages/connect.php');
 	mysql_query("USE cmsfpix_u", $connection);
@@ -938,6 +963,7 @@ function sensorSetPromote($id){
 	mysql_query($func, $connection);
 }
 
+### Generates modules based on sensors that were flagged for promotion
 function promoteSensors($id){
 	include('../../../Submission_p_secure_pages/connect.php');
 	include('../functions/submitfunctions.php');
@@ -954,6 +980,7 @@ function promoteSensors($id){
 	}
 }
 
+### Checks to see if the session is by a logged-in user (or user at Purdue)
 function isLoggedIn(){
 	if(!isset($_SESSION)){
 		session_start();
@@ -973,6 +1000,7 @@ function isLoggedIn(){
 	}
 }
 
+### Finds quality issues with a given IV scaN
 function gradeMeas($filestr){
 
 	$arr;
@@ -1053,6 +1081,7 @@ function moduleMeasParams($modid){
 
 }
 
+### Possibly depreciated
 function compareParams($comper, $limit, $param){
 
 $overwrite=0;
@@ -1089,6 +1118,8 @@ switch($comper){
 	return $overwrite;
 }
 
+### Returns a string that, when appended to a MySQL query, restricts the query to
+### parts uploaded after a certain datE
 function hidepre($part, $opt){
 
 	$hider = "";
