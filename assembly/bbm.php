@@ -189,6 +189,7 @@ if($assembly >= 6 && $assembly <= 11){
 	echo"Destination: <input name=\"dest\" type=\"text\">   ";
 	echo"Date (yyyy/mm/dd): <textarea cols='10' rows='1'  name=\"date\">".date('Y/m/d')."</textarea>    ";
 	echo"Tracking Number: <input name=\"track\" type=\"text\">   ";
+	echo"Notify Recipient: <input name=\"recipient\" type=\"text\">   ";
 	$checker = "";
 }
 else{

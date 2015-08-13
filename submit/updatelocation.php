@@ -37,6 +37,13 @@ Additional Notes: <textarea cols="40" rows="5" name="notes"></textarea>
 include('../functions/submitfunctions.php');
 include('../functions/curfunctions.php');
 
+if($_GET['code'] == "1"){
+	echo "Location changed successfully<br>";
+}
+if($_GET['code'] == "2"){
+	echo "Not all forms were filled, please retry<br>";
+}
+
 conditionalSubmit(1);
 
 ?>

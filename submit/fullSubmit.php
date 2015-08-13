@@ -69,15 +69,6 @@ OR
 XML File of Test Results <input name="tests" type="file">
 <br>
 <br>
-Grade: <select name="grade">
-	<option value=""></option>
-	<option value="A">A</option>
-	<option value="B">B</option>
-	<option value="C">C</option>
-	<option value="F">F</option>
-	</select>
-<br>
-<br>
 Timeable: <select name="timeable">
 	<option value=""></option>
 	<option value="YES">YES</option>

@@ -36,7 +36,7 @@ else{
 	header("Location: bbm.php?name=".$name);
 }
 
-if(isset($_POST['submit']) && ((isset($_POST['box']) && $_POST['who'] != "") || (isset($_POST['shipbox']) && $_POST['who_ship'] != "" && $_POST['track'])) && (!is_null($_POST['hdi']) || $assembly!=4)){
+if(isset($_POST['submit']) && ((isset($_POST['box']) && $_POST['who'] != "") || (isset($_POST['shipbox']) && $_POST['who_ship'] != "" && $_POST['track'] && $_POST['recipient'] != "")) && (!is_null($_POST['hdi']) || $assembly!=4)){
 	
 
 	if(isset($_POST['shipbox'])){
@@ -88,6 +88,9 @@ if(isset($_POST['submit']) && ((isset($_POST['box']) && $_POST['who'] != "") || 
 		if($location == "Nebraska"){ $flexid = 2; $carrierid = 2;}
 		addcomment("flex_p", $flexid, "Flex cable shipped out on module ".$name);
 		addcomment("carrier_p", $carrierid, "Module carrier shipped out on module ".$name);
+		$mailsubject = "Purdue DB Module Shipment Message";
+		$mailmessage = "This is an automated message from the Purdue CMSFPIX database. You have been designated as the recipient for module ".$name.". Be prepared to recieve this module soon. The user-submitted tracking information is as follows: ".$formattedtrack;
+		mail($_POST['recipient'], $mailsubject, $mailmessage);
 	}
 	
 	if($assembly==5){

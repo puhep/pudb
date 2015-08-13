@@ -558,6 +558,7 @@ include("../functions/editfunctions.php");
 				}
 
 				$i=0;
+				$time = $doc->TIME;
 				while($doc->TEST[$i]->NAME != ""){
 
 					$name = $doc->TEST[$i]->NAME;
@@ -826,7 +827,6 @@ include("../functions/editfunctions.php");
 					}
 					$picfile = $doc->PIC[$i]->FILE;
 					$notesfile = $doc->PIC[$i]->TXT;
-					$time = $doc->PIC[$i]->TIME;
 
 					$notes = file_get_contents($dir.$notesfile);
 					addpic($picfile, $dir.$picfile,$part, $id, $notes, $time); 
