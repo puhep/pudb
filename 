@@ -273,14 +273,6 @@ include("../functions/editfunctions.php");
 								mysql_query($func, $connection);
 								#echo "ROC ".$pos." on ".$name." status updated<br>";
 							}
-							if(($unadd_roc=$doc->TEST[$i]->ROCS->ROC[$k]->UNADDRESSABLE_PIX)!=""){
-								$func = "UPDATE ROC_p SET unaddressable=\"".$unadd_roc."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
-								mysql_query($func, $connection);
-							}
-							if(($unmask_roc=$doc->TEST[$i]->ROCS->ROC[$k]->UNMASKABLE_PIX)!=""){
-								$func = "UPDATE ROC_p SET unmaskable=\"".$unmask_roc."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
-								mysql_query($func, $connection);
-							}
 							if(($offset=$doc->TEST[$i]->ROCS->ROC[$k]->XRAY_OFFSET)!=""){
 								$func = "UPDATE ROC_p SET xray_offset=\"".$offset."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
 								mysql_query($func, $connection);
@@ -525,9 +517,9 @@ include("../functions/editfunctions.php");
 }
 
 function bigbatch($zip, $name, $size, $user){
-include("../../../Submission_p_secure_pages/connect.php");
-include("../functions/curfunctions.php");
-include("../functions/editfunctions.php");
+include("../../Submission_p_secure_pages/connect.php");
+include("functions/curfunctions.php");
+include("functions/editfunctions.php");
 
 	ini_set('display_error', 'On');
 	error_reporting(E_ALL | E_STRICT);
@@ -535,7 +527,7 @@ include("../functions/editfunctions.php");
 	$dir = "/project/cmsfpix/.www/Submission_p/tmp/tmpbig/";
 
 	#####Clear the tmp directory before putting in new files#####
-	exec("rm $dir*");
+	#exec("rm $dir*");
 
 	if(!file_exists($dir)){
 		mkdir($dir);
@@ -544,9 +536,7 @@ include("../functions/editfunctions.php");
 
 	move_uploaded_file($zip, $dir.$name);
 
-	#echo $dir.$name;
-
-	chmod($dir.$name, 0777);
+	#chmod($dir.$name, 0777);
 
 	if(substr($dir.$name,-3) != "zip"){
 		return 5;
@@ -555,12 +545,13 @@ include("../functions/editfunctions.php");
 	$out = array();
 	$retval;
 
-	exec("/usr/bin/unzip ../tmp/tmpbig/".$name." -d ../tmp/tmpbig",$out,$retval);
+	#exec("usr/bin/unzip ../tmp/tmpbig/".$name." -d ../tmp/tmpbig",$out,$retval);
+	exec("/usr/bin/unzip tmp/tmpbig/".$name." -d /project/cmsfpix/.www/Submission_p/tmp/tmpzip",$out,$retval);
 	
-	#print_r($out);
-	#print_r($retval);
+	print_r($out);
+	print_r($retval);
 
-	#return;
+	return;
 
 	$i = 0;
 
@@ -592,14 +583,6 @@ include("../functions/editfunctions.php");
 								$func = "UPDATE ROC_p SET is_dead=\"".$status."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
 								mysql_query($func, $connection);
 								#echo "ROC ".$pos." on ".$name." status updated<br>";
-							}
-							if(($unadd_roc=$doc->TEST[$i]->ROCS->ROC[$k]->UNADDRESSABLE_PIX)!=""){
-								$func = "UPDATE ROC_p SET unaddressable=\"".$unadd_roc."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
-								mysql_query($func, $connection);
-							}
-							if(($unmask_roc=$doc->TEST[$i]->ROCS->ROC[$k]->UNMASKABLE_PIX)!=""){
-								$func = "UPDATE ROC_p SET unmaskable=\"".$unmask_roc."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
-								mysql_query($func, $connection);
 							}
 							if(($offset=$doc->TEST[$i]->ROCS->ROC[$k]->XRAY_OFFSET)!=""){
 								$func = "UPDATE ROC_p SET xray_offset=\"".$offset."\" WHERE assoc_module=\"".$id."\"  AND position=\"".$pos."\"";
@@ -854,8 +837,8 @@ include("../functions/editfunctions.php");
 					$notesfile = $doc->PIC[$i]->TXT;
 
 					$notes = file_get_contents($dir.$notesfile);
-					addpic($picfile, $dir.$picfile,$part, $id, $notes, $time); 
-					#addpic($picfile, $dir.$picfile,$part, $id, $notes); 
+					#addpic($picfile, $dir.$picfile,$part, $id, $notes, $time); 
+					addpic($picfile, $dir.$picfile,$part, $id, $notes); 
 					#echo "Picture for ".$name." added to the database.<br>";
 					$i++;
 				}
@@ -922,9 +905,9 @@ include("../functions/editfunctions.php");
 
 
 ### Submits a new HDI to the database
-function hdiinfo($name, $notes, $arrival, $loc, $TBM_wafer=""){
+function hdiinfo($name, $notes, $arrival, $loc){
 include('../../../Submission_p_secure_pages/connect.php');
-	$num = 0;
+
 	$sqlname = mysql_real_escape_string($name);
 	$sqlarrival = mysql_real_escape_string($arrival);
 	$sqlnotes = mysql_real_escape_string($notes);
@@ -941,34 +924,27 @@ include('../../../Submission_p_secure_pages/connect.php');
 
 	$assembly = 0;
 
+	$func;
+
+		$func = "INSERT INTO HDI_p(notes, name, arrival, assembly, location) VALUES (\"$sqlnotes\", \"$sqlname\", \"$sqlarrival\", 0, \"$loc\")";
+
 	mysql_query('USE cmsfpix_u' , $connection);
 
-	$func = "SELECT COUNT(name) FROM HDI_p WHERE name=\"$name\" ";
-	$output = mysql_query($func, $connection);
-	$array = mysql_fetch_assoc($output);
-	$count = $array['COUNT(name)'];	
+	if(mysql_query($func,$connection)){
+
+		$id = mysql_insert_id();
+
+		$timesfunc = "INSERT INTO times_HDI_p(received, assoc_hdi) VALUES (\"$date\", \"$id\")";
 	
-	$func2;
-	$func2 = "INSERT INTO HDI_p(notes, name, arrival, assembly, location, TBM_wafer) VALUES (\"$sqlnotes\", \"$sqlname\", \"$sqlarrival\", 0, \"$loc\", \"$TBM_wafer\")";
+		mysql_query($timesfunc, $connection);	
 
-	if ($count == 0){
-	   if(mysql_query($func2,$connection)){
-
-		    $id = mysql_insert_id();
-		    if ($id!=0){
-			    $timesfunc = "INSERT INTO times_HDI_p(received, assoc_hdi) VALUES (\"$date\", \"$id\")";
-
-			    mysql_query($timesfunc, $connection);	
-			    $num = 1;
-			    #echo("HDI ".$htmlname." has been added to the database.<br>"); 
-		    }
-
-	    }
-	    else{
-		    #echo("An error has occurred and the data has not been added.<br>");
-	    }
+		#echo("HDI ".$htmlname." has been added to the database.<br>");
+		
 	}
-	return $num;
+	else{
+		#echo("An error has occurred and the data has not been added.<br>");
+	}
+
 }
 
 ### Submits a new TBM to the database
@@ -1437,12 +1413,12 @@ include("../functions/editfunctions.php");
 					$dc =$doc->Worksheet[0]->Table->Row[$i]->Cell[2]->Data;
 					$panel =$doc->Worksheet[0]->Table->Row[$i]->Cell[3]->Data;
 					$pos =$doc->Worksheet[0]->Table->Row[$i]->Cell[4]->Data;
-					$TBM_wafer =$doc->Worksheet[0]->Table->Row[$i]->Cell[5]->Data;
+					
 					$name = $wo."-".$dc."-".$panel."-".$pos;
 
 					$date = date('Y-m-d H:i:s');
 
-					hdiinfo($name,$notes,$arrival,$location,$TBM_wafer);
+					hdiinfo($name,$notes,$arrival,$location);
 					$i++;
 				}
 			}	

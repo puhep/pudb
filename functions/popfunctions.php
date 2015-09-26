@@ -39,6 +39,10 @@ function locpop($loc){
 	if($loc == "CERN"){ echo 'selected="selected"';}
 	echo ">CERN</option>\n";
 	
+	echo "<option value=\"Cornell\"";
+	if($loc == "Cornell"){ echo 'selected="selected"';}
+	echo ">Cornell</option>\n";
+	
 	echo "<option value=\"Fermilab\"";
 	if($loc == "Fermilab"){ echo 'selected="selected"';}
 	echo ">Fermilab</option>\n";

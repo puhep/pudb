@@ -493,8 +493,8 @@ function curtestparams($id){
 
 	echo "Number of Bad Rocs: ".$badrocs."<br>";
 	#echo "Number of Dead Pixels: ".$dumped['deadpix']."<br>";
-	echo "Number of Unmaskable Pixels: ".$dumped['unmaskable_pix']."<br>";
-	echo "Number of Unaddressable Pixels: ".$dumped['unaddressable_pix']."<br>";
+	#echo "Number of Unmaskable Pixels: ".$dumped['unmaskable_pix']."<br>";
+	#echo "Number of Unaddressable Pixels: ".$dumped['unaddressable_pix']."<br>";
 	#echo "Number of Bad Bump Bonds (Electrical): ".$dumped['badbumps_electrical']."<br>";
 	#echo "Number of Bad Bump Bonds (Reverse Bias): ".$dumped['badbumps_reversebias']."<br>";
 	#echo "Number of Bad Bump Bonds (X-Ray): ".$dumped['badbumps_xray']."<br>";
@@ -512,6 +512,12 @@ function curtestparams($id){
 
 	echo "<table border=0>";
 	echo "<tr>";
+	echo "<td>";
+	currocparams($id, "unaddressable");
+	echo "</td>";
+	echo "<td>";
+	currocparams($id, "unmaskable");
+	echo "</td>";
 	echo "<td>";
 	currocparams($id, "xray_slope");
 	echo "</td>";
@@ -822,6 +828,27 @@ function curmod($id,$part){
 
 	if($any == 0){
 		echo "None";
+	}
+}
+
+### Returns letter code for HDI batch
+function batchCode($curbatch){
+	include('../../../Submission_p_secure_pages/connect.php');
+	
+	$alphabet = array("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z");
+
+	$func = "SELECT id, name FROM work_orders_p";
+	mysql_query('USE cmsfpix_u', $connection);
+
+	$output = mysql_query($func, $connection);
+	
+	while($row = mysql_fetch_assoc($output)){
+
+		if($row['name'] == $curbatch){
+
+			return $alphabet[$row['id']-1];
+		}
+
 	}
 }
 

@@ -158,21 +158,21 @@ if($part == "module_p" && $sl == 12){
 }
 else if($part == "module_p" || $part == "HDI_p"){
 	if($sortby == "nm"){
-		array_multisort($results[0], SORT_ASC, SORT_STRING,$results[1],$results[2]);
+		array_multisort($results[0], SORT_ASC, SORT_STRING,$results[1],$results[2],$results[6]);
 	}
 	if($sortby == "lm"){
-		array_multisort($results[1], SORT_DESC, SORT_STRING,$results[0],$results[2]);
+		array_multisort($results[1], SORT_DESC, SORT_STRING,$results[0],$results[2],$results[6]);
 	}
 	if($sortby == "lo"){
-		array_multisort($results[2], SORT_ASC, SORT_STRING,$results[0],$results[1]);
+		array_multisort($results[2], SORT_ASC, SORT_STRING,$results[0],$results[1],$results[6]);
 	}
 }
 else{
 	if($sortby == "nm"){
-		array_multisort($results[0], SORT_ASC, SORT_STRING, $results[1]);
+		array_multisort($results[0], SORT_ASC, SORT_STRING, $results[1],$results[6]);
 	}
 	if($sortby == "lm"){
-		array_multisort($results[1], SORT_DESC, SORT_STRING, $results[0]);
+		array_multisort($results[1], SORT_DESC, SORT_STRING, $results[0],$results[6]);
 	}
 }
 }

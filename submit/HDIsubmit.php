@@ -56,6 +56,10 @@ include('../functions/submitfunctions.php');
 	elseif($_GET['code'] == "2"){
 		echo "<br>Not all forms were filled, please retry<br>";
 	}
+	elseif($_GET['code'] == "0"){
+		echo "<br>The HDI is already in the database<br>";
+	}
+	
 
 conditionalSubmit(1);
 

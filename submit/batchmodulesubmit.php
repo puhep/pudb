@@ -3,11 +3,11 @@
 <head>
   <meta content="text/html; charset=ISO-8859-1"
  http-equiv="content-type">
-  <title>Batch ROC Submission</title>
+  <title>Batch Module Submission</title>
 </head>
 <body>
 
-<form action='batchrocsubmit_proc.php' method='post' enctype='multipart/form-data'>
+<form action='batchmodulesubmit_proc.php' method='post' enctype='multipart/form-data'>
 <?php
 include('../functions/submitfunctions.php');
 include('../functions/popfunctions.php');
@@ -32,6 +32,13 @@ Location:
 <select name="location">
 <option value="Purdue">Purdue</option>
 <option value="Nebraska">Nebraska</option>
+</select>
+<br>
+<br>
+Bonder:
+<select name="bond">
+<option value="Datacon">Datacon</option>
+<option value="FC150">FC150</option>
 </select>
 <br>
 <br>

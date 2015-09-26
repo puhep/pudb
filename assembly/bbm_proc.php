@@ -64,6 +64,14 @@ if(isset($_POST['submit']) && ((isset($_POST['box']) && $_POST['who'] != "") || 
 			$submittednotes = $_POST['notes'];
 		}
 	}
+	if($_FILES['comments']['size'] > 0 && substr($_FILES['comments']['name'], -3) === "txt"){
+		$fp = fopen($_FILES['comments']['tmp_name'], "r");
+		if($submittednotes != ""){
+			$submittednotes .= "\n";
+		}
+		$submittednotes .= fread($fp, $_FILES['comments']['size']);
+		fclose($fp);
+	}
 	addcomment("module_p", $id, $submittedstep);
 	addcomment("module_p", $id, $submittednotes);
 	$funcassembly = "UPDATE module_p SET assembly=$assembly WHERE id=$id";

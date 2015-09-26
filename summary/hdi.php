@@ -37,6 +37,17 @@
 		#echo $dumped['arrival'];
 		#echo "<br>";
 		#echo "<br>";
+   
+                echo "<h>";
+                echo "TBM wafer: ";
+                echo "</h>";
+                if(is_null($dumped['TBM_wafer'])){
+                   echo "No Data";
+                } else{
+                   echo $dumped['TBM_wafer'];
+                }
+                echo "<br>";
+                echo "<br>";
 
 		echo "<h>";
 		echo "Location: ";

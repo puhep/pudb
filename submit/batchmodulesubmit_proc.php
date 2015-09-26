@@ -5,15 +5,15 @@ include('../functions/curfunctions.php');
 
 if(isset($_POST['submit']) && isset($_POST['user']) && $_FILES['txt']['size'] > 0){
 
-	batchroc($_FILES['txt']['tmp_name'],$_FILES['txt']['name'],$_FILES['txt']['size'],$_POST['location'], $_POST['user'], $_POST['notes']);
+	batchroc($_FILES['txt']['tmp_name'],$_FILES['txt']['name'],$_FILES['txt']['size'],$_POST['location'], $_POST['user'], $_POST['notes'], $_POST['bond']);
 
 	$gets = "?code=1";
 	
-	header("Location: batchrocsubmit.php".$gets);
+	header("Location: batchmodulesubmit.php".$gets);
 }
 else{
 	$gets = "?code=2";
 
-	header("Location: batchrocsubmit.php".$gets);
+	header("Location: batchmodulesubmit.php".$gets);
 }
 ?>

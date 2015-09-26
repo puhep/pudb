@@ -137,11 +137,19 @@ if(!is_null($file1)){
 	}
 	
 	$index100 = array_search(100, $arr1[0]);
+	if($index100 === FALSE){
+		$I100 = INF;
+	}
+	else{
 		$I100=$arr1[1][$index100];
-
+	}
 	$index150 = array_search(150, $arr1[0]);
+	if($index150 === FALSE){
+		$I150 = INF;
+	}
+	else{
 		$I150=$arr1[1][$index150];
-
+	}
 	if($I150>2E-6){
 		$markedA*=2;
 	}
@@ -169,11 +177,19 @@ if(!is_null($file2)){
 			}
 	}
 	$index100 = array_search(100, $arr2[0]);
+	if($index100 === FALSE){
+		$I100 = INF;
+	}
+	else{
 		$I100=$arr2[1][$index100];
-
+	}
 	$index150 = array_search(150, $arr2[0]);
+	if($index150 === FALSE){
+		$I150 = INF;
+	}
+	else{
 		$I150=$arr2[1][$index150];
-
+	}
 	if($I150>2E-6){
 		$markedB*=2;
 	}
@@ -201,11 +217,19 @@ if(!is_null($file3)){
 			}
 	}
 	$index100 = array_search(100, $arr3[0]);
+	if($index100 === FALSE){
+		$I100 = INF;
+	}
+	else{
 		$I100=$arr3[1][$index100];
-
+	}
 	$index150 = array_search(150, $arr3[0]);
+	if($index150 === FALSE){
+		$I150 = INF;
+	}
+	else{
 		$I150=$arr3[1][$index150];
-
+	}
 	if($I150>2E-6){
 		$markedC*=2;
 	}
@@ -233,11 +257,19 @@ if(!is_null($file4)){
 			}
 	}
 	$index100 = array_search(100, $arr4[0]);
+	if($index100 === FALSE){
+		$I100 = INF;
+	}
+	else{
 		$I100=$arr4[1][$index100];
-
+	}
 	$index150 = array_search(150, $arr4[0]);
+	if($index150 === FALSE){
+		$I150 = INF;
+	}
+	else{
 		$I150=$arr4[1][$index150];
-
+	}
 	if($I150>2E-6){
 		$markedD*=2;
 	}

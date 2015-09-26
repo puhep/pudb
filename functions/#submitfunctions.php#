@@ -854,8 +854,8 @@ include("../functions/editfunctions.php");
 					$notesfile = $doc->PIC[$i]->TXT;
 
 					$notes = file_get_contents($dir.$notesfile);
-					addpic($picfile, $dir.$picfile,$part, $id, $notes, $time); 
-					#addpic($picfile, $dir.$picfile,$part, $id, $notes); 
+					#addpic($picfile, $dir.$picfile,$part, $id, $notes, $time); 
+					addpic($picfile, $dir.$picfile,$part, $id, $notes); 
 					#echo "Picture for ".$name." added to the database.<br>";
 					$i++;
 				}
@@ -924,6 +924,7 @@ include("../functions/editfunctions.php");
 ### Submits a new HDI to the database
 function hdiinfo($name, $notes, $arrival, $loc, $TBM_wafer=""){
 include('../../../Submission_p_secure_pages/connect.php');
+	
 	$num = 0;
 	$sqlname = mysql_real_escape_string($name);
 	$sqlarrival = mysql_real_escape_string($arrival);
@@ -944,14 +945,17 @@ include('../../../Submission_p_secure_pages/connect.php');
 	mysql_query('USE cmsfpix_u' , $connection);
 
 	$func = "SELECT COUNT(name) FROM HDI_p WHERE name=\"$name\" ";
+	
 	$output = mysql_query($func, $connection);
-	$array = mysql_fetch_assoc($output);
+	echo " $output";
+	$array = msql_fetch_assoc($output);
+	echo " $array";
 	$count = $array['COUNT(name)'];	
 	
 	$func2;
 	$func2 = "INSERT INTO HDI_p(notes, name, arrival, assembly, location, TBM_wafer) VALUES (\"$sqlnotes\", \"$sqlname\", \"$sqlarrival\", 0, \"$loc\", \"$TBM_wafer\")";
 
-	if ($count == 0){
+	   if ($count == 0) {
 	   if(mysql_query($func2,$connection)){
 
 		    $id = mysql_insert_id();

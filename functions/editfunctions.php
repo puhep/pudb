@@ -149,12 +149,9 @@ function generateHDImodulename($modid){
 
 	$padpos = str_pad($pos, 2, "0", STR_PAD_LEFT);
 
-	if($batch === "YHC69" && $datecode === "1015"){
-		$newname = $newname."A-";
-	}
-	if($batch === "YHD19" && $datecode === "1815"){
-		$newname = $newname."B-";
-	}
+	$batchdate = $batch."-".$datecode;
+
+	$newname .= batchCode($batchdate)."-";
 
 	$newname = $newname.$panel."-".$padpos;
 

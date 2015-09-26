@@ -53,6 +53,7 @@ if($assembly == 1){
 	echo"Inspected   <input name=\"box\" value=\"inspect\" type=\"checkbox\">";
 	echo"User: <input name=\"who\" type=\"text\">   ";
 	echo"Comments: <textarea name=\"notes\"></textarea>   ";
+	echo"Comments File: <input name=\"comments\" type=\"file\">    ";
 	$checker = "";
 }
 else{
@@ -66,6 +67,7 @@ if($assembly == 2){
 	echo"IV Tested   <input name=\"box\" value=\"iv\" type=\"checkbox\">";
 	echo"User: <input name=\"who\" type=\"text\">   ";
 	echo"Comments: <textarea name=\"notes\"></textarea>   ";
+	echo"Comments File: <input name=\"comments\" type=\"file\">    ";
 	$checker = "";
 }
 else{
@@ -79,6 +81,7 @@ if($assembly == 3){
 	echo"Ready for HDI Assembly   <input name=\"box\" value=\"HDIready\" type=\"checkbox\">";
 	echo"User: <input name=\"who\" type=\"text\">   ";
 	echo"Comments: <textarea name=\"notes\"></textarea>   ";
+	echo"Comments File: <input name=\"comments\" type=\"file\">    ";
 	$checker = "";
 }
 else{
@@ -95,6 +98,7 @@ if($assembly == 4){
 	echo"</select>";
 	echo"User: <input name=\"who\" type=\"text\">   ";
 	echo"Comments: <textarea name=\"notes\"></textarea>   ";
+	echo"Comments File: <input name=\"comments\" type=\"file\">    ";
 	$checker = "";
 }
 else{
@@ -108,6 +112,7 @@ if($assembly == 5){
 	echo"Wirebonded   <input name=\"box\" value=\"wb\" type=\"checkbox\">";
 	echo"User: <input name=\"who\" type=\"text\">   ";
 	echo"Comments: <textarea name=\"notes\"></textarea>   ";
+	echo"Comments File: <input name=\"comments\" type=\"file\">    ";
 	$checker = "";
 }
 else{
@@ -121,6 +126,7 @@ if($assembly == 6){
 	echo"Encapsulated   <input name=\"box\" value=\"encapsulate\" type=\"checkbox\">";
 	echo"User: <input name=\"who\" type=\"text\">   ";
 	echo"Comments: <textarea name=\"notes\"></textarea>   ";
+	echo"Comments File: <input name=\"comments\" type=\"file\">    ";
 	$checker = "";
 }
 else{
@@ -134,6 +140,7 @@ if($assembly == 7){
 	echo"Tested   <input name=\"box\" value=\"test2\" type=\"checkbox\">";
 	echo"User: <input name=\"who\" type=\"text\">   ";
 	echo"Comments: <textarea name=\"notes\"></textarea>   ";
+	echo"Comments File: <input name=\"comments\" type=\"file\">    ";
 	$checker = "";
 }
 else{
@@ -147,6 +154,7 @@ If($assembly == 8){
 	echo"Thermally Cycled    <input name=\"box\" value=\"thermal\" type=\"checkbox\">";
 	echo"User: <input name=\"who\" type=\"text\">   ";
 	echo"Comments: <textarea name=\"notes\"></textarea>   ";
+	echo"Comments File: <input name=\"comments\" type=\"file\">    ";
 	$checker = "";
 }
 else{
@@ -160,6 +168,7 @@ if($assembly == 9){
 	echo"Tested    <input name=\"box\" value=\"test3\" type=\"checkbox\">";
 	echo"User: <input name=\"who\" type=\"text\">   ";
 	echo"Comments: <textarea name=\"notes\"></textarea>   ";
+	echo"Comments File: <input name=\"comments\" type=\"file\">    ";
 	$checker = "";
 }
 else{
@@ -173,6 +182,7 @@ if($assembly == 10){
 	echo"Ready for Shipping    <input name=\"box\" value=\"ready\" type=\"checkbox\">";
 	echo"User: <input name=\"who\" type=\"text\">   ";
 	echo"Comments: <textarea name=\"notes\"></textarea>   ";
+	echo"Comments File: <input name=\"comments\" type=\"file\">    ";
 	$checker = "";
 }
 else{
@@ -186,6 +196,7 @@ if($assembly >= 6 && $assembly <= 11){
 	echo"Shipped    <input name=\"shipbox\" value=\"ship\" type=\"checkbox\">";
 	echo"User: <input name=\"who_ship\" type=\"text\">   ";
 	echo"Comments: <textarea name=\"notes_ship\"></textarea>   ";
+	echo"Comments File: <input name=\"comments\" type=\"file\">    ";
 	echo"Destination: <input name=\"dest\" type=\"text\">   ";
 	echo"Date (yyyy/mm/dd): <textarea cols='10' rows='1'  name=\"date\">".date('Y/m/d')."</textarea>    ";
 	echo"Tracking Number: <input name=\"track\" type=\"text\">   ";
