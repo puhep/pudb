@@ -180,6 +180,13 @@
 ?>
 
 
+<form method="get" action="../download/configfiles.php" target="_blank">
+<?php
+   echo "<input type='hidden' name='name' value='".$foundname."'>";
+?>
+<input type="submit" value="Extra Files">
+</form>
+
 <form method="get" action="summarycomment.php">
 <?php
    echo "<input type='hidden' name='part' value='".$part."'>";

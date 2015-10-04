@@ -374,6 +374,76 @@ function currocparams($module, $param){
 	echo "</table>";
 }
 
+### Echoes a string of grades that are not A
+### For each ROC, includes the number that contributed most to the grade (bad bumps, dead pix, etc)
+function curgrades_string($id){
+	include('../../../Submission_p_secure_pages/connect.php');
+	include('../graphing/xmlgrapher_crit.php');
+	$dumped = dump("module_p", $id);
+
+	mysql_query('USE cmsfpix_u', $connection);
+	
+	$func = "SELECT badbumps_elec, deadpix from ROC_p WHERE assoc_module=".$id;
+	$output = mysql_query($func, $connection);
+	$rocgrades = "";
+	$biggest_contributors = array();
+	$ret = "";
+	$i = 0;
+	while($array = mysql_fetch_assoc($output)){
+		if(is_null($array['badbumps_elec']) || is_null($array['deadpix']) ){
+			return "";
+		}
+		if(is_null($array['unaddressable'])){
+			$array['unaddressable']=0;
+		}
+		if(is_null($array['unmaskable'])){
+			$array['unmaskable']=0;
+		}
+		$totbad = $array['badbumps_elec'] + $array['deadpix'] + $array['unaddressable'] + $array['unmaskable'];
+		if($totbad > 166){
+			$rocgrades = $rocgrades."C";
+		}
+		else if($totbad > 41 && $totbad <= 166){
+			$rocgrades = $rocgrades."B";
+		}
+		else if($totbad <= 41){
+			$rocgrades = $rocgrades."A";
+		}
+		if($array['badbumps_elec'] > $array['deadpix'] and $array['badbumps_elec'] > $array['unaddressable'] and $array['badbumps_elec'] > $array['unmaskable']){
+			$biggest_contributors[$i] = $array['badbumps_elec']." bad bumps";
+		}
+		else if(($array['deadpix'] > $array['badbumps_elec']) and ($array['deadpix'] > $array['unaddressable']) and ($array['deadpix'] > $array['unmaskable'])){
+			$biggest_contributors[$i] = $array['deadpix']." dead pixels";
+		}
+		else if(($array['unaddressable'] > $array['badbumps_elec']) and ($array['unaddressable'] > $array['deadpix']) and ($array['unaddressable'] > $array['unmaskable'])){
+			$biggest_contributors[$i] = $array['unaddressable']." unaddressable pixels";
+		}
+		else if(($array['unmaskable'] > $array['badbumps_elec']) and ($array['unmaskable'] > $array['deadpix']) and ($array['unmaskable'] > $array['unaddressable'])){
+			$biggest_contributors[$i] = $array['unmaskable']." unmaskable pixels";
+		}
+		else{
+			$biggest_contributors[] = "";
+		}
+		$i++;
+	}
+	for($i=0; $i<16; $i++){
+		  if($rocgrades[$i] != "A"){
+		  	$ret = $ret."ROC".$i.": Grade ".$rocgrades[$i]."; biggest contribution: ".$biggest_contributors[$i]."<br>";
+		  }
+	}
+	$crit = xmlgrapher_crit_num($dumped['assoc_sens'], "IV", "module", 0);
+	if($crit%25 == 0 || $crit%7 == 0){
+		    $ret = $ret."IV: C <br>";
+	}
+	elseif($crit%5 == 0){
+		   $ret = $ret."IV: B <br>";
+	}
+	if($ret == ""){
+		$ret = "None <br>";
+	}
+	echo $ret;	 
+}
+
 ### Evaluates a module and returns its grade
 function curgrade($id){
 	include('../graphing/xmlgrapher_crit.php');
@@ -401,20 +471,27 @@ function curgrade($id){
 }
 
 ### Evaluates a module and return's its grade based only on its number of bad bumps.
+### Bad bumps include electrically bad, unaddressable, unmaskable, dead pixels
 ### Every ROC is assessed and the grade of the worst ROC is returned
 function badbumps_crit($id){
 	include('../../../Submission_p_secure_pages/connect.php');
 
 	mysql_query('USE cmsfpix_u', $connection);
 	
-	$func = "SELECT badbumps_elec, deadpix from ROC_p WHERE assoc_module=".$id;
+	$func = "SELECT badbumps_elec, deadpix, unaddressable, unmaskable from ROC_p WHERE assoc_module=".$id;
 	$output = mysql_query($func, $connection);
 	$ret = "";
 	while($array = mysql_fetch_assoc($output)){
 		if(is_null($array['badbumps_elec']) || is_null($array['deadpix'])){
 			return "";
 		}
-		$totbad = $array['badbumps_elec'] + $array['deadpix'];
+		if(is_null($array['unaddressable'])){
+			$array['unaddressable']=0;
+		}
+		if(is_null($array['unmaskable'])){
+			$array['unmaskable']=0;
+		}
+		$totbad = $array['badbumps_elec'] + $array['deadpix'] + $array['unaddressable'] + $array['unmaskable'];
 		if($totbad > 166){
 			$ret = "C";
 		}
@@ -427,6 +504,26 @@ function badbumps_crit($id){
 	}
 		return $ret;
 }
+
+### Returns the total number of electrically bad bumps on a module
+function badbumps($id){
+	include('../../../Submission_p_secure_pages/connect.php');
+
+	mysql_query('USE cmsfpix_u', $connection);
+	$func = "SELECT badbumps_elec, deadpix from ROC_p WHERE assoc_module=".$id;
+	$output = mysql_query($func, $connection);
+	$totbad = 0;
+	while($array = mysql_fetch_assoc($output)){
+		     if(is_null($array['badbumps_elec'])){
+			return "No Data";
+		     }
+		     $totbad += $array['badbumps_elec'];
+		     
+	}
+	return $totbad;
+}
+
+
 
 ### Returns the number of ROCs for a given module that are flagged as bad
 function badrocs($id){
@@ -490,15 +587,32 @@ function curtestparams($id){
 	$dumped = dump("module_p", $id);
 
 	$badrocs = badrocs($id);
+	$badbumps = badbumps($id);
+	if($badbumps == "No Data"){
+		$percent_badbumps = "No Data";	    
+	}
+	else{
+		$percent_badbumps = round($badbumps/(16*4160)*100,2)."%";	
+	}
 
 	echo "Number of Bad Rocs: ".$badrocs."<br>";
+
 	#echo "Number of Dead Pixels: ".$dumped['deadpix']."<br>";
 	#echo "Number of Unmaskable Pixels: ".$dumped['unmaskable_pix']."<br>";
 	#echo "Number of Unaddressable Pixels: ".$dumped['unaddressable_pix']."<br>";
 	#echo "Number of Bad Bump Bonds (Electrical): ".$dumped['badbumps_electrical']."<br>";
+	#echo "Number of Bad Bump Bonds (Electrical): ".$badbumps."<br>";
+	echo "Percent Bad Bump Bonds (Electrical): ".$percent_badbumps."<br>";
 	#echo "Number of Bad Bump Bonds (Reverse Bias): ".$dumped['badbumps_reversebias']."<br>";
 	#echo "Number of Bad Bump Bonds (X-Ray): ".$dumped['badbumps_xray']."<br>";
-	echo "Grade: ".curgrade($id)."<br>";
+	
+	$grade = curgrade($id);
+	echo "Grade: ".$grade."<br>";
+	if($grade != "A"){
+		  echo "Grades that were not A: <br>";
+		  curgrades_string($id);
+	}
+	
 	if($dumped['can_time']==1){
 	echo "Timeable: Yes<br>";
 	}
@@ -542,7 +656,6 @@ function curtestparams($id){
 	echo "</td>";
 	echo "</tr>";
 	echo "</table>";
-
 
 	return;
 }

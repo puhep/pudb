@@ -1,10 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<?php $title = $_GET['name']; ?>
+
+
 <html>
 <head>
   <meta content="text/html; charset=ISO-8859-1"
  http-equiv="content-type">
-  <title><?php echo $title." " ?>Full Test</title>
+  <title>Full Test Summary</title>
 </head>
 <body>
 <form action="summaryFull.php" method="GET" enctype="multipart/form-data">
@@ -51,7 +52,7 @@ curpics("sidet_p", $id);
 <?php
   echo "<input type='hidden' name='name' value='".$name."'>";
 ?>
-<input type="submit" value="Extra Files">
+<input type="submit" value="Config Files">
 </form>
 </div2>
 
