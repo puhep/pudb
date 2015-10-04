@@ -107,7 +107,7 @@ curpics("sidet_p", $id);
 </form>
 <br>
 <form method="link" action="../index.php">
-<input type="submit" value="MAIN MENU">
+d<input type="submit" value="MAIN MENU">
 </form>
 </body>
 </html>
