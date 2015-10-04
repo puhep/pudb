@@ -469,7 +469,11 @@ function curgrade($id){
 	
 }
 
+<<<<<<< HEAD
 ### Evaluates a module and returns its grade based only on its number of bad bumps.
+=======
+### Evaluates a module and return's its grade based only on its number of bad bumps.
+>>>>>>> b2d49fe9a69304826a60dc9b5108f18fccac5403
 ### Bad bumps include electrically bad, unaddressable, unmaskable, dead pixels
 ### Every ROC is assessed and the grade of the worst ROC is returned
 function badbumps_crit($id){
@@ -477,7 +481,7 @@ function badbumps_crit($id){
 
 	mysql_query('USE cmsfpix_u', $connection);
 	
-	$func = "SELECT badbumps_elec, deadpix from ROC_p WHERE assoc_module=".$id;
+	$func = "SELECT badbumps_elec, deadpix, unaddressable, unmaskable from ROC_p WHERE assoc_module=".$id;
 	$output = mysql_query($func, $connection);
 	$ret = "";
 	while($array = mysql_fetch_assoc($output)){
@@ -593,9 +597,15 @@ function curtestparams($id){
 	else{
 		$percent_badbumps = round($badbumps/(16*4160)*100,2)."%";	
 	}
+<<<<<<< HEAD
 	
 	echo "Number of Bad Rocs: ".$badrocs."<br>";
 	
+=======
+
+	echo "Number of Bad Rocs: ".$badrocs."<br>";
+
+>>>>>>> b2d49fe9a69304826a60dc9b5108f18fccac5403
 	#echo "Number of Dead Pixels: ".$dumped['deadpix']."<br>";
 	#echo "Number of Unmaskable Pixels: ".$dumped['unmaskable_pix']."<br>";
 	#echo "Number of Unaddressable Pixels: ".$dumped['unaddressable_pix']."<br>";
@@ -604,13 +614,20 @@ function curtestparams($id){
 	echo "Percent Bad Bump Bonds (Electrical): ".$percent_badbumps."<br>";
 	#echo "Number of Bad Bump Bonds (Reverse Bias): ".$dumped['badbumps_reversebias']."<br>";
 	#echo "Number of Bad Bump Bonds (X-Ray): ".$dumped['badbumps_xray']."<br>";
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> b2d49fe9a69304826a60dc9b5108f18fccac5403
 	$grade = curgrade($id);
 	echo "Grade: ".$grade."<br>";
 	if($grade != "A"){
 		  echo "Grades that were not A: <br>";
 		  curgrades_string($id);
+<<<<<<< HEAD
 		  #echo "<br>";
+=======
+>>>>>>> b2d49fe9a69304826a60dc9b5108f18fccac5403
 	}
 	
 	if($dumped['can_time']==1){
