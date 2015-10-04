@@ -610,7 +610,6 @@ function curtestparams($id){
 	if($grade != "A"){
 		  echo "Grades that were not A: <br>";
 		  curgrades_string($id);
-		  #echo "<br>";
 	}
 	
 	if($dumped['can_time']==1){

@@ -468,7 +468,7 @@ include('../../../Submission_p_secure_pages/connect.php');
 }
 
 function morewebLinkList($modid){
-include('../functions/curfunctions.php');
+include_once('../functions/curfunctions.php');
 
 	$doc = new DOMDocument();
 	

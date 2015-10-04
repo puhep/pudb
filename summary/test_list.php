@@ -20,6 +20,7 @@ include('../graphing/xmlgrapher_crit.php');
 	$param15 = "";
 	$param18 = "";
 	$param19 = "";
+	$param20 = "";
 
 	$comp2 = "";
 	$comp3 = "";
@@ -51,6 +52,7 @@ include('../graphing/xmlgrapher_crit.php');
 		#$param15 = $_GET['param15'];
 		$param18 = $_GET['param18'];
 		$param19 = $_GET['param19'];
+		$param20 = $_GET['param20'];
 
 		$comp2 = $_GET['comp2'];
 		$comp3 = $_GET['comp3'];
@@ -93,6 +95,15 @@ Assembly Location:
 <option value=""></option>
 <option value="Nebraska"<?php echo $param1 == 'Nebraska' ? 'selected="selected"' : ''; ?>>Nebraska</option>
 <option value="Purdue"<?php echo $param1 == 'Purdue' ? 'selected="selected"' : ''; ?>>Purdue</option>
+</select>
+<br>
+<br>
+
+Flip-Chip Bonder:
+<select name="param20">
+<option value=""></option>
+<option value="FC150"<?php echo $param20 == 'FC150' ? 'selected="selected"' : ''; ?>>FC150</option>
+<option value="Datacon"<?php echo $param20 == 'Datacon' ? 'selected="selected"' : ''; ?>>Datacon</option>
 </select>
 <br>
 <br>
@@ -254,6 +265,8 @@ $sortmod13 = "";
 $sortmod14 = "";
 $sortmod15 = "";
 $sortmod19 = "";
+$sortmod20 = "";
+
 if($param1 != ""){
 	$sortmod1 = "AND location=\"".$_GET['param1']."\" ";
 }
@@ -267,7 +280,7 @@ if($param4 != ""){
 	$sortmod4 = "AND c.deadpix".$_GET['comp4']."\"".$_GET['param4']."\" ";
 }
 if($param5 != ""){
-	$sortmod5 = "AND c.badbumps_electrical".$_GET['comp5']."\"".$_GET['param5']."\" ";
+	$sortmod5 = "AND c.badbumps_elec".$_GET['comp5']."\"".$_GET['param5']."\" ";
 }
 if($param6 != ""){
 	$sortmod6 = "AND badbumps_reversebias".$_GET['comp6']."\"".$_GET['param6']."\" ";
@@ -302,10 +315,13 @@ if($param15 != ""){
 if($param19 != ""){
 	$sortmod19 = "AND (a.name LIKE \"%".$param19."%\" OR a.name_hdi LIKE \"%".$param19."%\")";
 }
+if($param20 != ""){
+	$sortmod20 = "AND bonder=\"".$_GET['param20']."\" ";
+}
 
-$sortmod20 = "AND a.name NOT LIKE '%95%' AND a.name NOT LIKE '%96%' AND a.name NOT LIKE '%97%' ";
+$sortmod21 = "AND a.name NOT LIKE '%95%' AND a.name NOT LIKE '%96%' AND a.name NOT LIKE '%97%' ";
 
-$sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19.$sortmod20;
+$sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19.$sortmod20.$sortmod21;
 
 ?>
 <input type="submit" value="Apply">
@@ -315,7 +331,9 @@ $sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sor
 
 <?php
 include('../../../Submission_p_secure_pages/connect.php');
-include('../functions/curfunctions.php');
+
+#include('../functions/curfunctions.php');
+
 
 #Using joins to sort by parameters in the times_* tables. Probably helpful in the future.#
 $func1 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_BB%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";

@@ -1,9 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<?php $title = $_GET['name']; ?>
 <html>
 <head>
   <meta content="text/html; charset=ISO-8859-1"
  http-equiv="content-type">
-  <title>Full Test Summary</title>
+  <title><?php echo $title." "?>Full Test Summary</title>
 </head>
 <body>
 <form action="summaryFull.php" method="GET" enctype="multipart/form-data">
@@ -11,9 +12,9 @@
 <?php
  #ini_set('display_errors', 'On');
  #error_reporting(E_ALL | E_STRICT);
-include('../functions/curfunctions.php');
-include('../functions/submitfunctions.php');
-include('../functions/popfunctions.php');
+include_once('../functions/curfunctions.php');
+include_once('../functions/submitfunctions.php');
+include_once('../functions/popfunctions.php');
 
 $name = $_GET['name'];
 $id = findid("module_p", $name);
