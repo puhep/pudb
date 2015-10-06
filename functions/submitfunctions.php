@@ -72,7 +72,7 @@ include('../../../Submission_p_secure_pages/connect.php');
 }
 
 function wafersensorinfo($wafname, $rec, $notes){
-	include('../functions/curfunctions.php');
+	include_once('../functions/curfunctions.php');
 
 	waferinfo($wafname, $rec, $notes);
 
@@ -108,10 +108,10 @@ function wafersensorinfo($wafname, $rec, $notes){
 ### Submits a new IV or CV scan to the database
 function measurement($id, $parttype, $scan, $notes, $file, $size, $name, $breakdown, $compliance){
 include('../../../Submission_p_secure_pages/connect.php');
-include('../functions/curfunctions.php');
-include('../functions/editfunctions.php');
-include('../graphing/xmlgrapher_writer.php');
-include('../graphing/positiongrapher_writer.php');
+include_once('../functions/curfunctions.php');
+include_once('../functions/editfunctions.php');
+include_once('../graphing/xmlgrapher_writer.php');
+include_once('../graphing/positiongrapher_writer.php');
 
 	$sqlnotes = mysql_real_escape_string($notes);
 
@@ -228,8 +228,8 @@ include("../../../Submission_p_secure_pages/connect.php");
 
 function batchfulltest($txtfile, $name, $size, $user){
 include("../../../Submission_p_secure_pages/connect.php");
-include("../functions/curfunctions.php");
-include("../functions/editfunctions.php");
+include_once("../functions/curfunctions.php");
+include_once("../functions/editfunctions.php");
 
 	#ini_set('display_error', 'On');
 	#error_reporting(E_ALL | E_STRICT);
@@ -526,8 +526,8 @@ include("../functions/editfunctions.php");
 
 function bigbatch($zip, $name, $size, $user){
 include("../../../Submission_p_secure_pages/connect.php");
-include("../functions/curfunctions.php");
-include("../functions/editfunctions.php");
+include_once("../functions/curfunctions.php");
+include_once("../functions/editfunctions.php");
 
 	ini_set('display_error', 'On');
 	error_reporting(E_ALL | E_STRICT);
@@ -1013,8 +1013,8 @@ include('../../../Submission_p_secure_pages/connect.php');
 ### Submits a new module to the database
 function moduleinfo($sensor){
 include('../../../Submission_p_secure_pages/connect.php');
-include('../functions/curfunctions.php');
-include('../functions/editfunctions.php');
+include_once('../functions/curfunctions.php');
+include_once('../functions/editfunctions.php');
 
 	mysql_query('USE cmsfpix_u' , $connection);
 	
@@ -1081,7 +1081,7 @@ include('../../../Submission_p_secure_pages/connect.php');
 function DAQinfo($module, $C0file, $C0size, $aPfile, $dPfile, $phfile, $sumfile, $SCDfile, $tPfile, $tP60file, $notes, $noise, $gain){
 
 	include('../../../Submission_p_secure_pages/connect.php');
-	include('../functions/curfunctions.php');
+	include_once('../functions/curfunctions.php');
 
 	$date = date('Y-m-d H:i:s');
 	
@@ -1153,7 +1153,7 @@ function DAQinfo($module, $C0file, $C0size, $aPfile, $dPfile, $phfile, $sumfile,
 ### Generates submit button if user is logged in
 ### Links to login page if user is only one page away from the main menu
 function conditionalSubmit($link){
-  include("../functions/curfunctions.php");
+  include_once("../functions/curfunctions.php");
   if(isLoggedIn()){ 
       echo "<input name=\"submit\" id=\"submit\" value=\"SUBMIT\" type=\"submit\">";
   }
@@ -1199,7 +1199,7 @@ function milestone($db, $id, $assembly){
 }
 
 function addpic($filename, $tmploc, $part, $id, $notes, $time=""){
-	include('../functions/editfunctions.php');
+	include_once('../functions/editfunctions.php');
 
 	$cwd = getcwd();
 	$dir = "/project/cmsfpix/.www/Submission_p";
@@ -1270,11 +1270,12 @@ function batchpic($zipfile, $name, $part, $id){
 }
 
 function addconfig($filename, $tmploc, $part, $id){
-include("../functions/editfunctions.php");
+include_once("../functions/editfunctions.php");
 
 	$dir = "/project/cmsfpix/.www/Submission_p/module_config_files/";
 	
-	$id = findid("module_p", $part);
+	###Not sure why this line is here, it seems to be redundant
+	#$id = findid("module_p", $part);
 
 	if(!file_exists($dir.$id)){
 		mkdir($dir.$id);
@@ -1292,8 +1293,8 @@ include("../functions/editfunctions.php");
 
 function batchroc($xml, $name, $size, $location, $user, $notes, $bonder){
 include("../../../Submission_p_secure_pages/connect.php");
-include("../functions/curfunctions.php");
-include("../functions/editfunctions.php");
+include_once("../functions/curfunctions.php");
+include_once("../functions/editfunctions.php");
 
 	#ini_set('display_error', 'On');
 	#error_reporting(E_ALL | E_STRICT);
@@ -1399,8 +1400,8 @@ include("../functions/editfunctions.php");
 
 function batchHDI($xml, $name, $size, $location, $user, $notes, $arrival){
 include("../../../Submission_p_secure_pages/connect.php");
-include("../functions/curfunctions.php");
-include("../functions/editfunctions.php");
+include_once("../functions/curfunctions.php");
+include_once("../functions/editfunctions.php");
 
 	#ini_set('display_error', 'On');
 	#error_reporting(E_ALL | E_STRICT);
@@ -1452,8 +1453,8 @@ include("../functions/editfunctions.php");
 
 function batchwafer($xml, $name, $size, $user, $loc){
 include("../../../Submission_p_secure_pages/connect.php");
-include("../functions/curfunctions.php");
-include("../functions/editfunctions.php");
+include_once("../functions/curfunctions.php");
+include_once("../functions/editfunctions.php");
 
 	#ini_set('display_error', 'On');
 	#error_reporting(E_ALL | E_STRICT);
@@ -1485,7 +1486,7 @@ include("../functions/editfunctions.php");
 				while(strpos($doc->Worksheet[$i]->attributes('ss',TRUE)->Name,"") === false){
 					
 					
-					if(strpos($doc->Worksheet[$i]->attributes('ss',TRUE)->Name,"B") === false){
+					if($doc->Worksheet[$i]->attributes('ss',TRUE)->Name === "Summary"){
 						$i++;
 						continue;
 					}

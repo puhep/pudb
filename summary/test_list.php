@@ -331,7 +331,9 @@ $sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sor
 
 <?php
 include('../../../Submission_p_secure_pages/connect.php');
-include('../functions/curfunctions.php');
+
+#include('../functions/curfunctions.php');
+
 
 #Using joins to sort by parameters in the times_* tables. Probably helpful in the future.#
 $func1 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_BB%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";

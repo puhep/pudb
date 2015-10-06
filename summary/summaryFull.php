@@ -12,9 +12,9 @@
 <?php
  #ini_set('display_errors', 'On');
  #error_reporting(E_ALL | E_STRICT);
-include('../functions/curfunctions.php');
-include('../functions/submitfunctions.php');
-include('../functions/popfunctions.php');
+include_once('../functions/curfunctions.php');
+include_once('../functions/submitfunctions.php');
+include_once('../functions/popfunctions.php');
 
 $name = $_GET['name'];
 $id = findid("module_p", $name);
@@ -103,7 +103,7 @@ curpics("sidet_p", $id);
 </form>
 <br>
 <form method="link" action="../index.php">
-<input type="submit" value="MAIN MENU">
+d<input type="submit" value="MAIN MENU">
 </form>
 </body>
 </html>

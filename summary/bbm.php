@@ -5,8 +5,8 @@
 	error_reporting(E_ALL | E_STRICT);
 
 
-	include('../functions/curfunctions.php');
-	include('../graphing/xmlgrapher_crit.php');
+	include_once('../functions/curfunctions.php');
+	include_once('../graphing/xmlgrapher_crit.php');
 
 	$name = $_GET['name'];
 	$part = "module_p";
@@ -185,6 +185,14 @@
    echo "<input type='hidden' name='name' value='".$foundname."'>";
 ?>
 <input type="submit" value="Extra Files">
+</form>
+
+<form method="get" action="summaryfile.php">
+<?php
+   echo "<input type='hidden' name='part' value='".$part."'>";
+   echo "<input type='hidden' name='id' value='".$id."'>";
+?>
+<input type="submit" value="Add Extra File to This Part">
 </form>
 
 <form method="get" action="summarycomment.php">

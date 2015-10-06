@@ -378,7 +378,7 @@ function currocparams($module, $param){
 ### For each ROC, includes the number that contributed most to the grade (bad bumps, dead pix, etc)
 function curgrades_string($id){
 	include('../../../Submission_p_secure_pages/connect.php');
-	include('../graphing/xmlgrapher_crit.php');
+	include_once('../graphing/xmlgrapher_crit.php');
 	$dumped = dump("module_p", $id);
 
 	mysql_query('USE cmsfpix_u', $connection);
@@ -446,9 +446,8 @@ function curgrades_string($id){
 
 ### Evaluates a module and returns its grade
 function curgrade($id){
-	include('../graphing/xmlgrapher_crit.php');
-	include('../functions/curfunctions.php');
-
+	include_once('../graphing/xmlgrapher_crit.php');
+	#include_once('../functions/curfunctions.php');
 	$dumped = dump("module_p", $id);
 
 	$crit = xmlgrapher_crit_num($dumped['assoc_sens'], "IV", "module", 0);
@@ -470,6 +469,7 @@ function curgrade($id){
 	
 }
 
+
 ### Evaluates a module and return's its grade based only on its number of bad bumps.
 ### Bad bumps include electrically bad, unaddressable, unmaskable, dead pixels
 ### Every ROC is assessed and the grade of the worst ROC is returned
@@ -482,7 +482,7 @@ function badbumps_crit($id){
 	$output = mysql_query($func, $connection);
 	$ret = "";
 	while($array = mysql_fetch_assoc($output)){
-		if(is_null($array['badbumps_elec']) || is_null($array['deadpix'])){
+		if(is_null($array['badbumps_elec']) || is_null($array['deadpix']) ){
 			return "";
 		}
 		if(is_null($array['unaddressable'])){
@@ -594,9 +594,9 @@ function curtestparams($id){
 	else{
 		$percent_badbumps = round($badbumps/(16*4160)*100,2)."%";	
 	}
-
+	
 	echo "Number of Bad Rocs: ".$badrocs."<br>";
-
+	
 	#echo "Number of Dead Pixels: ".$dumped['deadpix']."<br>";
 	#echo "Number of Unmaskable Pixels: ".$dumped['unmaskable_pix']."<br>";
 	#echo "Number of Unaddressable Pixels: ".$dumped['unaddressable_pix']."<br>";
@@ -605,12 +605,13 @@ function curtestparams($id){
 	echo "Percent Bad Bump Bonds (Electrical): ".$percent_badbumps."<br>";
 	#echo "Number of Bad Bump Bonds (Reverse Bias): ".$dumped['badbumps_reversebias']."<br>";
 	#echo "Number of Bad Bump Bonds (X-Ray): ".$dumped['badbumps_xray']."<br>";
-	
+
 	$grade = curgrade($id);
 	echo "Grade: ".$grade."<br>";
 	if($grade != "A"){
 		  echo "Grades that were not A: <br>";
 		  curgrades_string($id);
+		  #echo "<br>";
 	}
 	
 	if($dumped['can_time']==1){
@@ -622,11 +623,20 @@ function curtestparams($id){
 	else{
 	echo "Timeable: No<br>";
 	}
+	if(is_null($dumped['tested_status'])){
+		echo "FNAL Testing Status: Not Set<br>";
+	}
+	else{
+		echo "FNAL Testing Status: ".$dumped['tested_status']."<br>";
+	}
 	echo "<br>";
 
 	echo "<table border=0>";
 	echo "<tr>";
 	echo "<td>";
+	#currocgrades($id);
+	#echo "</td>";
+	#echo "<td>";
 	currocparams($id, "unaddressable");
 	echo "</td>";
 	echo "<td>";
@@ -1106,7 +1116,7 @@ function sensorSetPromote($id){
 ### Generates modules based on sensors that were flagged for promotion
 function promoteSensors($id){
 	include('../../../Submission_p_secure_pages/connect.php');
-	include('../functions/submitfunctions.php');
+	include_once('../functions/submitfunctions.php');
 	mysql_query("USE cmsfpix_u", $connection);
 	
 	$func = "SELECT name,promote,id FROM sensor_p WHERE assoc_wafer=$id";
@@ -1203,7 +1213,7 @@ function mean_and_dev($arr){
 ####Pulls the breakdown and compliance from the most recently submitted 
 function moduleMeasParams($modid){
 	include('../../../Submission_p_secure_pages/connect.php');
-	include('../functions/submitfunctions.php');
+	include_once('../functions/submitfunctions.php');
 
 	$moddumped = dump("module_p", $modid);
 
