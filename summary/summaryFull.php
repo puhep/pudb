@@ -4,11 +4,7 @@
 <head>
   <meta content="text/html; charset=ISO-8859-1"
  http-equiv="content-type">
-<<<<<<< HEAD
   <title><?php echo $title." "?>Full Test Summary</title>
-=======
-  <title><?php echo $title." " ?>Full Test</title>
->>>>>>> b2d49fe9a69304826a60dc9b5108f18fccac5403
 </head>
 <body>
 <form action="summaryFull.php" method="GET" enctype="multipart/form-data">

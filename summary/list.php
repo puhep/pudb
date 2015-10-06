@@ -52,7 +52,7 @@ if($_POST['loc'] == "nebraska"){
 
 <?php
 include('../../../Submission_p_secure_pages/connect.php');
-include('../functions/curfunctions.php');
+include_once('../functions/curfunctions.php');
 
 $hidew =  hidepre("wafer",1);
 $hides =  hidepre("sensor",1);

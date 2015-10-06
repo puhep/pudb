@@ -1,4 +1,5 @@
 <?php
+
 include('../functions/curfunctions.php');
 include('../functions/submitfunctions.php');
 include('../functions/editfunctions.php');
@@ -37,6 +38,13 @@ if(isset($_POST['submit']) && ($_POST['grade'] != "")){
 	$func = "UPDATE module_p SET grade=\"".$_POST['grade']."\" WHERE id=".$id;
 	mysql_query($func, $connection);
 }
+if(isset($_POST['submit']) && ($_POST['status'] != "")){
+	include('../../../Submission_p_secure_pages/connect.php');
+	$func = "UPDATE module_p SET tested_status=\"".$_POST['status']."\" WHERE id=".$id;
+	mysql_query('USE cmsfpix_u', $connection);
+	mysql_query($func, $connection);
+}
+
 if(isset($_POST['submit']) && ($_POST['notes'] != "")){
 
 	addcomment_fnal($id, $_POST['notes']);
