@@ -91,6 +91,10 @@ New Parts Information
   <input value="Wafer Submit" type="submit">
   </form>
 
+<form action="submit/batchwafersubmit.php" method="get">
+  <input value="Batch Wafer Submit UNDER TEST" type="submit">
+  </form>
+
 <form action="submit/HDIsubmit.php" method="get">
   <input value="HDI Submit" type="submit">
   </form>

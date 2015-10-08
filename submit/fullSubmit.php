@@ -76,12 +76,12 @@ Timeable: <select name="timeable">
 	</select>
 <br>
 <br>
-FNAL Testing Status: <select name=”status”>
-	<option value=””></option>
-	<option value=”Fully Tested”>Fully Tested</option>
-	<option value=”To Be Tested”>To Be Tested</option>
-	<option value=”To Be X-Rayed”>To Be X-Rayed</option>
-	<option value=”To Be Debugged”>To Be Debugged</option>
+FNAL Testing Status: <select name="status">
+	<option value=""></option>
+	<option value="Fully Tested">Fully Tested</option>
+	<option value="To Be Tested">To Be Tested</option>
+	<option value="To Be X-Rayed">To Be X-Rayed</option>
+	<option value="To Be Debugged">To Be Debugged</option>
 	</select>
 <br>
 <br>

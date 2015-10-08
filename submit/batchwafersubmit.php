@@ -28,7 +28,7 @@ User:
 <textarea cols="10" rows="1" name="user"></textarea>
 <br>
 <br>
-Location:
+Location of IV scan:
 <textarea cols="10" rows="1" name="loc"></textarea>
 <br>
 <br>

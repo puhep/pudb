@@ -1471,7 +1471,9 @@ include_once("../functions/editfunctions.php");
 
 	$i = 0;
 	$RTI2PDB = array("","TT","FL","LL","CL","CR","RR","FR","BB");
-	
+	$ALPHA2IND = array("B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z");
+
+
 	if($handle = opendir($dir)){
 		
 		while(false !== ($entry=readdir($handle))){
@@ -1491,9 +1493,17 @@ include_once("../functions/editfunctions.php");
 						continue;
 					}
 					
+					$batchlet = substr($doc->Worksheet[$i]->attributes('ss', TRUE)->Name,0, 1);
+					$batchnum = array_search($batchlet, $ALPHA2IND);
 					$wafnum = substr($doc->Worksheet[$i]->attributes('ss', TRUE)->Name, 1);
-					$wafnum = str_pad($wafnum, 3, "0", STR_PAD_LEFT);
-					#echo $wafnum."<br>";
+					$wafnum = str_pad($wafnum, 2, "0", STR_PAD_LEFT);
+					$wafnum = $batchnum.$wafnum;
+
+					if(findid("wafer_p",$wafnum) !== NULL){
+						$i++;
+						continue;
+					}
+					echo $wafnum."<br>";
 
 					#wafersensorinfo($wafnum, $date, "Wafer submitted automatically through batch submission");
 
