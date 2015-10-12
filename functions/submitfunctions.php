@@ -100,13 +100,12 @@ function wafersensorinfo($wafname, $rec, $notes){
 	#sensorinfo("WD_TL_".$wafname, "Diode automatically added to the database",$wafid);
 	#sensorinfo("WD_BL_".$wafname, "Diode automatically added to the database",$wafid);
 	#sensorinfo("WD_TR_".$wafname, "Diode automatically added to the database",$wafid);
-	#sensorinfo("WD_BR_".$wafname, "Diode automatically added to the database",$wafid);
 
 
 }
 
 ### Submits a new IV or CV scan to the database
-function measurement($id, $parttype, $scan, $notes, $file, $size, $name, $breakdown, $compliance){
+function measurement($id, $parttype, $scan, $notes, $file, $size, $name, $breakdown, $compliance, $update_graphs=1){
 include('../../../Submission_p_secure_pages/connect.php');
 include_once('../functions/curfunctions.php');
 include_once('../functions/editfunctions.php');
@@ -124,19 +123,26 @@ include_once('../graphing/positiongrapher_writer.php');
 	if($sqlnotes != ""){
 		$sqlnotes = $date."  ".$sqlnotes."\n";
 	}
+
 	$func = "INSERT INTO measurement_p(part_ID, part_type, scan_type, notes, file, filesize, filename, breakdown, compliance) VALUES (\"$id\", \"$parttype\", \"$scan\", \"$sqlnotes\", \"$file\",\"$size\",\"$name\", $breakdown, $compliance)";
 	
+
+	#echo $func;
 
 	mysql_query('USE cmsfpix_u', $connection);
 
 	if(mysql_query($func,$connection)){
 		#echo "The $scan measurement on sensor $sensorname has been added to the database.<br>";
-		xmlgrapher_writer($id, $scan, $parttype);	
-		positiongrapher_writer($parttype, $scan, $loc);	
+		if($update_graphs == 1){
+			xmlgrapher_writer($id, $scan, $parttype);	
+			positiongrapher_writer($parttype, $scan, $loc);
+		}	
 	}
 	else{
 		#echo("An error has occurred and the data has not been added.<br>");
 	}
+
+	return;
 	
 }
 
@@ -1487,8 +1493,7 @@ include_once("../functions/editfunctions.php");
 
 				while(strpos($doc->Worksheet[$i]->attributes('ss',TRUE)->Name,"") === false){
 					
-					
-					if($doc->Worksheet[$i]->attributes('ss',TRUE)->Name === "Summary"){
+					if($doc->Worksheet[$i]->attributes('ss',TRUE)->Name == "Summary"){
 						$i++;
 						continue;
 					}
@@ -1499,13 +1504,11 @@ include_once("../functions/editfunctions.php");
 					$wafnum = str_pad($wafnum, 2, "0", STR_PAD_LEFT);
 					$wafnum = $batchnum.$wafnum;
 
-					if(findid("wafer_p",$wafnum) !== NULL){
-						$i++;
-						continue;
+					if(findid("wafer_p",$wafnum) === NULL){
+						wafersensorinfo($wafnum, $date, "Wafer submitted automatically through batch submission");
 					}
-					echo $wafnum."<br>";
+					#echo $wafnum."<br>";
 
-					#wafersensorinfo($wafnum, $date, "Wafer submitted automatically through batch submission");
 
 
 					$k=0;
@@ -1513,20 +1516,21 @@ include_once("../functions/editfunctions.php");
 
 						$sensnum = "WL_".$RTI2PDB[$j+1]."_".$wafnum;
 
-						$xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"true\"?>";
+						$xml = "";
+						$xml .= "<?xml version=\"1.0\" ?>";
 						$xml .= "<ROOT xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">";
 						$xml .= "<HEADER>";
-						$xml .= "<TYPE><EXTENSION_TABLE_NAME>UPGRADE_FPIX_SNSRWAFR_IV</EXTENSION_TABLE_NAME><NAME/>";
-						$xml .= "<RUN><RUN_NAME/><RUN_BEGIN_TIMESTAMP>";
+						$xml .= "<TYPE><EXTENSION_TABLE_NAME>UPGRADE_FPIX_SNSRWAFR_IV</EXTENSION_TABLE_NAME><NAME></NAME></TYPE>";
+						$xml .= "<RUN><RUN_NAME></RUN_NAME><RUN_BEGIN_TIMESTAMP>";
 						$xml .= $date;
 						$xml .= "</RUN_BEGIN_TIMESTAMP>";
 
 						$xml .= "<INITIATED_BY_USER>".$user."</INITIATED_BY_USER>";
 						$xml .= "<LOCATION>".$loc."</LOCATION>";
-						$xml .= "<COMMENT_DESCRIPTION/></RUN></HEADER>";
+						$xml .= "<COMMENT_DESCRIPTION></COMMENT_DESCRIPTION></RUN></HEADER>";
 
-						$xml .= "<DATA_SET><VERSION/><COMMENT_DESCRIPTION/>";
-						$xml .= "<PART><SERIAL_NUMBER>".$sensnum."</SERIAL_NUMBER><KIND_OF_PART/></PART>";
+						$xml .= "<DATA_SET><VERSION></VERSION><COMMENT_DESCRIPTION></COMMENT_DESCRIPTION>";
+						$xml .= "<PART><SERIAL_NUMBER>".$sensnum."</SERIAL_NUMBER><KIND_OF_PART></KIND_OF_PART></PART>";
 						
 						$l=0;
 						while(!($doc->Worksheet[$i]->Table->Row[$k]->Cell[0]->Data->attributes('ss',TRUE)->Type == "Number")){
@@ -1549,10 +1553,11 @@ include_once("../functions/editfunctions.php");
 						}
 
 						$xml .= "</DATA_SET></ROOT>";
-
+							
 						$sensid = findid("sensor_p", $sensnum);
 
-						#measurement($sensid, "wafer", "IV", "Automatically uploaded through batch submission", $xml, strlen($xml), $sensnum."_IV.xml", 0, 0){
+						#echo $sensid."<br>";
+						measurement($sensid, "wafer", "IV", "Automatically uploaded through batch submission", addslashes($xml), strlen($xml), $sensnum."_IV.xml", 0, 0, 0);
 						
 					}
 
