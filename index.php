@@ -92,7 +92,7 @@ New Parts Information
   </form>
 
 <form action="submit/batchwafersubmit.php" method="get">
-  <input value="Batch Wafer Submit UNDER TEST" type="submit">
+  <input value="Batch Wafer Submit" type="submit">
   </form>
 
 <form action="submit/HDIsubmit.php" method="get">

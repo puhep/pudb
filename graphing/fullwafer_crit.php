@@ -67,6 +67,7 @@ $doc1=simplexml_load_string($xml);
 		$arr1[$k][0][$loop]=$doc1->DATA_SET->DATA[$loop]->VOLTAGE_VOLT;
 
 		settype($arr1[$k][0][$loop],"float");
+			$arr1[$k][0][$loop] = round(abs($arr1[$k][0][$loop]));
 
 		$arr1[$k][1][$loop]=$doc1->DATA_SET->DATA[$loop]->$y;
 		if($arr1[$k][1][$loop] == "NaN"){
