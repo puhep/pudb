@@ -648,28 +648,31 @@ if(!is_null($file4)){
 	}
 }
 
-if(!is_null($file1) && $level=="wafer"){
-
-	$totmarked*=$markedA;
-}
-
-if(!is_null($file2) && $level=="module"){
-
-	$totmarked*=$markedB;
-}
-
-if(!is_null($file3) && $level=="module"){
-
-	$totmarked*=$markedC;
-}
-
-if(!is_null($file4) && $level=="module"){
-
-	$totmarked*=$markedD;
-}
-
 if($exclusive == 0){
-	return $totmarked;
+
+	if(!is_null($file1) && $level=="wafer"){
+
+		#$totmarked*=$markedA;
+		return $markedA;
+	}
+
+	if(!is_null($file4) && $level=="module"){
+
+		#$totmarked*=$markedD;
+		return $markedD;
+	}
+	if(!is_null($file3) && $level=="module"){
+
+		#$totmarked*=$markedC;
+		return $markedC;
+	}
+	if(!is_null($file2) && $level=="module"){
+
+		#$totmarked*=$markedB;
+		return $markedB;
+	}
+
+	#return $totmarked;
 }
 else{
 	switch($level){
@@ -686,7 +689,7 @@ else{
 			return $markedD;
 			break;
 		default:
-			return $totmarked;
+			return 1;
 	}
 }
 }
