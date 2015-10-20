@@ -17,6 +17,28 @@ include("../graphing/positiongrapher_crit.php");
 include("../functions/curfunctions.php");
 
 		echo "<h>";
+		echo "Total";
+		echo "</h>";
+		echo "<br>";
+		
+		echo "<div id=\"Total\">";
+		echo "<br>";
+		echo "<table>";
+		echo "<tr>";
+		echo "<td>";
+		curgraphs_pos_summary("fnal", "IV","");
+		echo "</td>";
+		echo "<td>";
+		positiongrapher_crit("fnal", "IV","");
+		echo "</td>";
+		echo "</tr>";
+		echo "</table>";
+		
+		echo "<br>";
+		echo "<br>";
+		echo "</div>";
+
+		echo "<h>";
 		echo "TT";
 		echo "</h>";
 		echo "<br>";
