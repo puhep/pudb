@@ -3,7 +3,6 @@ include('../functions/submitfunctions.php');
 include('../functions/popfunctions.php');
 include('../functions/curfunctions.php');
 
-
 if(isset($_POST['submit']) && isset($_POST['modules']) && isset($_POST['arrival'])){
 
 	include('../../../Submission_p_secure_pages/connect.php');
@@ -54,7 +53,7 @@ if(isset($_POST['submit']) && isset($_POST['modules']) && isset($_POST['arrival'
 		#echo "An error occurred and the module was not added to the database";
 	}
 	
-	$gets = "?wafers=".$_POST['wafers']."&code=1&val="findname("module_p", $_POST['modules']);
+	$gets = "?wafers=".$_POST['wafers']."&code=1&val=".findname("module_p", $_POST['modules']);
 
 	header("Location: modulesubmit.php".$gets);
 }

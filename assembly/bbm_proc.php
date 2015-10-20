@@ -41,6 +41,8 @@ if(isset($_POST['submit']) && ((isset($_POST['box']) && $_POST['who'] != "") || 
 
 	if(isset($_POST['shipbox'])){
 		$assembly = 11;
+		$functested = "UPDATE module_p SET tested_status=\"To Be Tested\" WHERE id=".$id;
+		mysql_query($functested, $connection);
 	}
 	
 	if(isset($_POST['shipbox'])){
