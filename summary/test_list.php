@@ -21,6 +21,7 @@ include('../graphing/xmlgrapher_crit.php');
 	$param18 = "";
 	$param19 = "";
 	$param20 = "";
+	$param21 = "";
 
 	$comp2 = "";
 	$comp3 = "";
@@ -53,6 +54,7 @@ include('../graphing/xmlgrapher_crit.php');
 		$param18 = $_GET['param18'];
 		$param19 = $_GET['param19'];
 		$param20 = $_GET['param20'];
+		$param21 = $_GET['param21'];
 
 		$comp2 = $_GET['comp2'];
 		$comp3 = $_GET['comp3'];
@@ -111,6 +113,18 @@ Flip-Chip Bonder:
 Current Location:
 <select name="param8">
 <?php locpop($param8); ?>
+</select>
+<br>
+<br>
+
+FNAL Testing Status:
+<select name="param21">
+<option value=""></option>
+<option value="Not Set"<?php echo $param21 == 'Not Set' ? 'selected="selected"' : ''; ?>>Not Set</option>
+<option value="Fully Tested"<?php echo $param21 == 'Fully Tested' ? 'selected="selected"' : ''; ?>>Fully Tested</option>
+<option value="To Be Tested"<?php echo $param21 == 'To Be Tested' ? 'selected="selected"' : ''; ?>>To Be Tested</option>
+<option value="To Be X-Rayed"<?php echo $param21 == 'To Be X-Rayed' ? 'selected="selected"' : ''; ?>>To Be X-Rayed</option>
+<option value="To Be Debugged"<?php echo $param21 == 'To Be Debugged' ? 'selected="selected"' : ''; ?>>To Be Debugged</option>
 </select>
 <br>
 <br>
@@ -266,6 +280,7 @@ $sortmod14 = "";
 $sortmod15 = "";
 $sortmod19 = "";
 $sortmod20 = "";
+$sortmod21 = "";
 
 if($param1 != ""){
 	$sortmod1 = "AND location=\"".$_GET['param1']."\" ";
@@ -318,10 +333,18 @@ if($param19 != ""){
 if($param20 != ""){
 	$sortmod20 = "AND bonder=\"".$_GET['param20']."\" ";
 }
+if($param21 != ""){
+	if($_GET['param21'] == 'Not Set'){
+		$sortmod21 = "AND tested_status IS NULL ";	
+	}
+	else{
+		$sortmod21 = "AND tested_status=\"".$_GET['param21']."\" ";
+	}
+}
 
-$sortmod21 = "AND a.name NOT LIKE '%95%' AND a.name NOT LIKE '%96%' AND a.name NOT LIKE '%97%' ";
+$sortmod22 = "AND a.name NOT LIKE '%95%' AND a.name NOT LIKE '%96%' AND a.name NOT LIKE '%97%' ";
 
-$sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19.$sortmod20.$sortmod21;
+$sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19.$sortmod20.$sortmod21.$sortmod22;
 
 ?>
 <input type="submit" value="Apply">
