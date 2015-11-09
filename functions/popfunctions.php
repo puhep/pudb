@@ -508,4 +508,42 @@ include_once('../functions/curfunctions.php');
 	echo "<br>";
 }
 
+function postassembly_radio_pop($id, $active){
+
+include('../../../Submission_p_secure_pages/connect.php');
+
+	mysql_query('USE cmsfpix_u', $connection);
+
+	$func = "SELECT assembly_post FROM module_p WHERE id=".$id;
+
+	$output = mysql_query($func, $connection);
+	$row = mysql_fetch_assoc($output);
+	$PAval = $row['assembly_post'];
+
+	$disabled = " DISABLED";
+
+	$checker = " CHECKED";
+
+	if($active == 1){
+		$disabled = "";
+	}
+
+	if($PAval%2 == 0){ $checker = " CHECKED";}
+	else{ $checker = "";}
+	echo "Full Test at 17C <input name=\"PA[]\" value=\"2\" type=\"checkbox\"".$checker.$disabled.">";
+	
+	if($PAval%3 == 0){ $checker = " CHECKED";}
+	else{ $checker = "";}
+	echo "Full Test at -20C <input name=\"PA[]\" value=\"3\" type=\"checkbox\"".$checker.$disabled.">";
+	
+	if($PAval%5 == 0){ $checker = " CHECKED";}
+	else{ $checker = "";}
+	echo "X-ray Testing <input name=\"PA[]\" value=\"5\" type=\"checkbox\"".$checker.$disabled.">";
+	
+	if($PAval%7 == 0){ $checker = " CHECKED";}
+	else{ $checker = "";}
+	echo "Thermal Cycling <input name=\"PA[]\" value=\"7\" type=\"checkbox\"".$checker.$disabled.">";
+	
+}
+	echo "<br>";
 ?>

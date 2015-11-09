@@ -32,6 +32,9 @@ Picture File <input name="pic" type="file">
 <br>
 Additional Notes <textarea cols="40" rows="5" name="notes"></textarea><br>
 <br>
+User: <input name="user" type="text">
+<br>
+<br>
 
 <?php
   conditionalSubmit(0);

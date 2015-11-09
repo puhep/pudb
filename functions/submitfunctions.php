@@ -1197,7 +1197,7 @@ function milestone($db, $id, $assembly){
   	$func = "UPDATE times_HDI_p SET $steps[$assembly]=\"$date\" WHERE assoc_hdi=\"$id\"";
   }
   if($db == "module_p"){
-	$steps = array("expected", "received","inspected", "IV_tested","ready_HDI", "HDI_attached", "wirebonded", "encapsulated","tested2","thermal_cycling","tested3","ready_ship", "shipped");
+	$steps = array("expected", "received","inspected", "IV_tested","ready_HDI", "HDI_attached", "wirebonded", "encapsulated","tested2","thermal_cycling","tested3","ready_ship", "shipped", "fnal_tested", "on_blade");
   	$func = "UPDATE times_module_p SET $steps[$assembly]=\"$date\" WHERE assoc_module=\"$id\"";
   }
   

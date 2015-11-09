@@ -29,6 +29,9 @@ curname($part, $id);
 <br>
 Additional File: <input type="file" name="file"><br>
 <br>
+User: <input name="user" type="text">
+<br>
+<br>
 
 <?php
   conditionalSubmit(0);

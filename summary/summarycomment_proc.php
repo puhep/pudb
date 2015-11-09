@@ -9,9 +9,9 @@ include('../functions/submitfunctions.php');
 
 	header("Location: summarycomment.php".$gets);
 
-if (isset($_POST['submit']) && $_POST['notes'] != ""){
+if (isset($_POST['submit']) && $_POST['notes'] != "" && $_POST['user'] != ""){
 
-	addcomment($_POST['part'],$_POST['id'], $_POST['notes']);
+	addcomment($_POST['part'],$_POST['id'], $_POST['notes']."&nbsp;&nbsp;&nbsp;&nbsp; --".$_POST['user']);
 	exit();
 }
 

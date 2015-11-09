@@ -69,7 +69,6 @@ $datacountlim = 0;
 $k=0;
 foreach($measurements as $xml){
 
-
 $doc1=simplexml_load_string($xml);
 
 	$datacount1 = count($doc1->DATA_SET->DATA);
@@ -84,6 +83,7 @@ $doc1=simplexml_load_string($xml);
 		$arr1[$k][0][$loop]=$doc1->DATA_SET->DATA[$loop]->VOLTAGE_VOLT;
 
 		settype($arr1[$k][0][$loop],"float");
+			$arr1[$k][0][$loop] = round(abs($arr1[$k][0][$loop]));
 
 		$arr1[$k][0][$loop] = abs($arr1[$k][0][$loop]);
 

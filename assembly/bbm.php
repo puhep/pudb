@@ -32,7 +32,7 @@ curname("module_p", $id);
 
 echo "<input type='hidden' name='assembly' value='$assembly'>";
 
-$steparray = array("Received", "Inspected", "IV Tested", "Ready for HDI Assembly", "HDI Attached", "Wirebonded", "Encapsulated", "Tested", "Thermally Cycled", "Tested", "Ready for Shipping", "Shipped");
+$steparray = array("Received", "Inspected", "IV Tested", "Ready for HDI Assembly", "HDI Attached", "Wirebonded", "Encapsulated", "Tested", "Thermally Cycled", "Tested", "Ready for Shipping", "Shipped", "Ready for Mounting", "On Blade");
 
 $checker = " CHECKED ";
 
@@ -210,8 +210,21 @@ else{
 
 echo"<br>";
 
-if($assembly > 11){
+if($assembly == 12){
 	echo "Module fully assembled and shipped to ".$row['destination'];
+	echo "<br>To promote module to Ready for Mounting, update the Next Testing Step on the Full Test Summary Page.";
+}
+if($assembly == 13){
+	echo "Module Fully Tested at FNAL and ready for mounting on blade<br>";
+	echo "On Blade   <input name=\"box\" value=\"on_blade\" type=\"checkbox\">";
+	echo "Position on blade:  <textarea name=\"pos_on_blade\"></textarea>   ";
+	echo"User: <input name=\"who\" type=\"text\">   ";
+	echo"Comments: <textarea name=\"notes\"></textarea>   ";
+	echo"Comments File: <input name=\"comments\" type=\"file\">    ";
+	$checker = "";
+}
+if($assembly == 14){
+	echo "Module installed on blade";
 }
 
 if($_GET['code']=="2"){

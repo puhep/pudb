@@ -84,6 +84,9 @@
 		echo "Status: ";
 		echo "</h>";
 		curstep("module", $dumped['assembly']);
+                if($dumped['assembly'] == 14){
+                       echo " at position ".$dumped['pos_on_blade'];
+                }
 		echo "<br>";
 		echo "<a href=\"../assembly/bbm.php?name=$foundname\">Update Status</a>";
 		echo "<br>";

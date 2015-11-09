@@ -44,6 +44,7 @@
  #error_reporting(E_ALL | E_STRICT);
 include('../functions/curfunctions.php');
 include('../functions/submitfunctions.php');
+include('../functions/popfunctions.php');
 
 $name = $_GET['name'];
 $id = findid("module_p", $name);
@@ -52,7 +53,7 @@ echo "<input type='hidden' name='name' value='".$_GET['name']."'>";
 
 curname("module_p", $id);
 echo "<br>";
-curtestparams($id);
+curtestparams($id,1);
 
 ?>
 
@@ -76,12 +77,15 @@ Timeable: <select name="timeable">
 	</select>
 <br>
 <br>
-FNAL Testing Status: <select name="status">
+Next Testing Step: <select name="status">
 	<option value=""></option>
-	<option value="Fully Tested">Fully Tested</option>
-	<option value="To Be Tested">To Be Tested</option>
-	<option value="To Be X-Rayed">To Be X-Rayed</option>
-	<option value="To Be Debugged">To Be Debugged</option>
+	<option value="Full test at 17C">Full test at 17C</option>
+	<option value="Full test at -20C">Full test at -20C</option>
+	<option value="X-ray testing">X-ray testing</option>
+	<option value="Thermal cycling">Thermal cycling</option>
+	<option value="Debugging">Debugging</option>
+	<option value="Ready for Mounting">Ready for Mounting</option>
+	<option value="Rejected">Rejected</option>
 	</select>
 <br>
 <br>
@@ -90,9 +94,15 @@ Additional Notes <textarea cols="40" rows="5" name="notes"></textarea>
 <br>
 <br>
 
+User: <input name="user" type="text">
+<br>
+Note: User field is required
+<br>
+<br>
+
 <?php
   	conditionalSubmit(0);
-
+        echo "<br> <br>";
 	curpics("sidet_p", $id);
 ?>
 

@@ -42,7 +42,7 @@ if($part == "wafer_p"){
 	$page = "wafer.php";
 }
 elseif($part == "module_p"){
-	$steparray = array("Expected", "Received", "Inspected", "IV Tested", "Ready for HDI Assembly", "HDI Attached", "Wirebonded", "Encapsulated", "Tested", "Thermally Cycled", "Tested", "Ready for Shipping", "Shipped");
+	$steparray = array("Expected", "Received", "Inspected", "IV Tested", "Ready for HDI Assembly", "HDI Attached", "Wirebonded", "Encapsulated", "Tested", "Thermally Cycled", "Tested", "Ready for Shipping", "Shipped", "Ready for Mounting", "On Blade");
 	$page = "bbm.php"; 
 }
 elseif($part == "HDI_p"){
@@ -68,7 +68,7 @@ echo "<td valign=top>";
 echo "<a href=step.php?sort=lm&part=".$prepart."&sl=".$sl."><b>Last Modified</b></a>";
 echo "</td>";
 
-if($part=="module_p" || $part=="HDI_p"){
+if($part=="module_p" && $sl != 14 || $part=="HDI_p"){
 echo "<td valign=top>";
 echo "<a href=step.php?sort=lo&part=".$prepart."&sl=".$sl."><b>Assembly Location</b></a>";
 echo "</td>";
@@ -86,6 +86,16 @@ echo "</td>";
 echo "<td valign=top>";
 echo "<a href=step.php?sort=de&part=".$prepart."&sl=".$sl."><b>Destination</b></a>";
 echo "</td>";
+}
+
+if($part=="module_p" && $sl==14){
+   echo "<td valign=top>";
+   echo "<a href=step.php?sort=po&part=".$prepart."&sl=".$sl."><b>Position on Half-Disk</b></a>";
+   echo "</td>";
+
+   echo "<td valign=top>";
+   echo "<a href=step.php?sort=in&part=".$prepart."&sl=".$sl."><b>Installation Date</b></a>";
+   echo "</td>";
 }
 
 echo "</tr>";
@@ -106,7 +116,7 @@ while($output && $row = mysql_fetch_assoc($output)){
 
 	$results[1][$i] = $row['time_created'];
 
-	if($part=="module_p" || $part=="HDI_p"){
+	if($part=="module_p" && $sl != 14 || $part=="HDI_p"){
 
 	$locfunc = "SELECT location FROM ".$part." WHERE id=".$row['id'];
 	$locout = mysql_query($locfunc, $connection);
@@ -132,6 +142,20 @@ while($output && $row = mysql_fetch_assoc($output)){
 
 	}
 
+        if($part=="module_p" && $sl==14){
+                $posfunc = "SELECT pos_on_blade FROM module_p WHERE id=".$row['id'];
+                $posout = mysql_query($posfunc, $connection);
+                $posrow = mysql_fetch_assoc($posout);
+                #echo $posrow['pos_on_blade'];
+
+                $timefunc = "SELECT DATE(on_blade) FROM times_module_p WHERE assoc_module=".$row['id'];
+	        $timeout = mysql_query($timefunc, $connection);
+	        $timerow = mysql_fetch_assoc($timeout);              
+                
+                $results[2][$i] = $posrow['pos_on_blade'];
+                $results[3][$i] = $timerow['DATE(on_blade)'];
+        }
+
 	$i++;
 }
 
@@ -154,6 +178,20 @@ if($part == "module_p" && $sl == 12){
 	}
 	if($sortby == "de"){
 		array_multisort($results[5], SORT_ASC, SORT_STRING,$results[6],$results[1],$results[2],$results[3],$results[4],$results[0]);
+	}
+}
+else if($part == "module_p" && $sl == 14){
+	if($sortby == "nm"){
+		array_multisort($results[6], SORT_ASC, SORT_STRING,$results[1],$results[2],$results[3],$results[0]);
+	}
+	if($sortby == "lm"){
+		array_multisort($results[1], SORT_DESC, SORT_STRING,$results[6],$results[2],$results[3],$results[0]);
+	}
+	if($sortby == "po"){
+		array_multisort($results[2], SORT_ASC, SORT_STRING,$results[6],$results[1],$results[3],$results[0]);
+	}
+	if($sortby == "in"){
+		array_multisort($results[3], SORT_DESC, SORT_STRING,$results[6],$results[1],$results[2],$results[0]);
 	}
 }
 else if($part == "module_p" || $part == "HDI_p"){
@@ -189,7 +227,7 @@ for($loop=0;$loop<$i;$loop++){
 	echo $results[1][$loop];
 	echo "</td>";
 
-	if($part=="module_p" || $part=="HDI_p"){
+	if($part=="module_p" && $sl != 14 || $part=="HDI_p"){
 	
 	echo "<td valign=top>";
 	echo $results[2][$loop];
@@ -209,6 +247,16 @@ for($loop=0;$loop<$i;$loop++){
 	echo "<td valign=top>";
 	echo $results[5][$loop];
 	echo "</td>";
+	}
+
+	if($part=="module_p" && $sl==14){
+		echo "<td valign=top>";
+		echo $results[2][$loop];
+		echo "</td>";
+
+	        echo "<td valign=top>";
+ 	        echo $results[3][$loop];
+	        echo "</td>";		    
 	}
 
 	echo "</tr>";

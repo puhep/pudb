@@ -22,7 +22,7 @@ $bbmfunc = "SELECT name, id, assembly, location FROM module_p ".$hidem." ORDER B
 $hdifunc = "SELECT name, id, assembly, location FROM HDI_p ".$hideh." ORDER BY name";
 
 $wafersteparray = array("Received", "Inspected", "Tested", "Promoted", "Ready for Shipping", "Shipped");
-$bbmsteparray = array("Expected", "Received", "Inspected", "IV Tested", "Ready for HDI Assembly",  "HDI Attached", "Wirebonded", "Encapsulated", "Tested", "Thermally Cycled", "Tested", "Ready for Shipping", "Shipped"); 
+$bbmsteparray = array("Expected", "Received", "Inspected", "IV Tested", "Ready for HDI Assembly",  "HDI Attached", "Wirebonded", "Encapsulated", "Tested", "Thermally Cycled", "Tested", "Ready for Shipping", "Shipped", "Ready for Mounting", "On Blade"); 
 $hdisteparray = array("Received", "Inspected", "Ready for Assembly","On Module", "Rejected");
 
 $wafernum=count($wafersteparray);

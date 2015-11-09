@@ -9,9 +9,10 @@ include('../functions/submitfunctions.php');
 
 	header("Location: summaryfile.php".$gets);
 
-if (isset($_POST['submit']) && $_FILES['file']['size']>0 ){
+if (isset($_POST['submit']) && $_FILES['file']['size']>0 && $_POST['user'] != ""){
 
 	addconfig($_FILES['file']['name'], $_FILES['file']['tmp_name'],$_POST['part'],$_POST['id']);
+	addcomment($_POST['part'],$_POST['id'], $_FILES['file']['name']." added by ".$_POST['user']);
 	exit();
 }
 

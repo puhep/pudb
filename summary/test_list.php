@@ -117,14 +117,17 @@ Current Location:
 <br>
 <br>
 
-FNAL Testing Status:
+Next Testing Step:
 <select name="param21">
 <option value=""></option>
 <option value="Not Set"<?php echo $param21 == 'Not Set' ? 'selected="selected"' : ''; ?>>Not Set</option>
-<option value="Fully Tested"<?php echo $param21 == 'Fully Tested' ? 'selected="selected"' : ''; ?>>Fully Tested</option>
-<option value="To Be Tested"<?php echo $param21 == 'To Be Tested' ? 'selected="selected"' : ''; ?>>To Be Tested</option>
-<option value="To Be X-Rayed"<?php echo $param21 == 'To Be X-Rayed' ? 'selected="selected"' : ''; ?>>To Be X-Rayed</option>
-<option value="To Be Debugged"<?php echo $param21 == 'To Be Debugged' ? 'selected="selected"' : ''; ?>>To Be Debugged</option>
+<option value="Full test at 17C"<?php echo $param21 == 'Full test at 17C' ? 'selected="selected"' : ''; ?>>Full test at 17C</option>
+<option value="Full test at -20C"<?php echo $param21 == 'Full test at -20C' ? 'selected="selected"' : ''; ?>>Full test at -20C</option>
+<option value="X-ray testing"<?php echo $param21 == 'X-ray testing' ? 'selected="selected"' : ''; ?>>X-ray testing</option>
+<option value="Thermal cycling"<?php echo $param21 == 'Thermal cycling' ? 'selected="selected"' : ''; ?>>Thermal cycling</option>
+<option value="Debugging"<?php echo $param21 == 'Debugging' ? 'selected="selected"' : ''; ?>>Debugging</option>
+<option value="Ready for Mounting"<?php echo $param21 == 'Ready for Mounting' ? 'selected="selected"' : ''; ?>>Ready for Mounting</option>
+<option value="Rejected"<?php echo $param21 == 'Rejected' ? 'selected="selected"' : ''; ?>>Rejected</option>
 </select>
 <br>
 <br>

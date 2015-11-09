@@ -185,7 +185,7 @@ function curname($db, $id){
 function curstep($part, $assembly){
 
 	$wafsteps = array("Received", "Inspected", "Tested", "Promoted", "Ready for Shipping", "Shipped");
-	$modulesteps = array("Expected", "Recieved", "Inspected", "IV Tested", "Ready for HDI Assembly", "HDI Attached", "Wirebonded", "Encapsulated", "Tested (Post-Encapsulation)", "Thermally Cycled", "Tested (Post-Thermal Cycling)", "Ready for Shipping", "Shipped");
+	$modulesteps = array("Expected", "Recieved", "Inspected", "IV Tested", "Ready for HDI Assembly", "HDI Attached", "Wirebonded", "Encapsulated", "Tested (Post-Encapsulation)", "Thermally Cycled", "Tested (Post-Thermal Cycling)", "Ready for Shipping", "Shipped", "Ready for Mounting", "On Blade");
 	$hdisteps = array("Recieved", "Inspected", "Ready for Assembly", "On Module", "Rejected");
 
 	if(!strcmp($part, "wafer")){
@@ -582,7 +582,9 @@ function curtrack($id){
 
 ### Displays a block of text detailing the test parameters of a given module
 ### This includes per-roc values
-function curtestparams($id){
+function curtestparams($id, $edit=0){
+
+	include_once("../functions/popfunctions.php");
 
 	$dumped = dump("module_p", $id);
 
@@ -624,11 +626,13 @@ function curtestparams($id){
 	echo "Timeable: No<br>";
 	}
 	if(is_null($dumped['tested_status'])){
-		echo "FNAL Testing Status: Not Set<br>";
+		echo "Next Testing Step: Not Set<br>";
 	}
 	else{
-		echo "FNAL Testing Status: ".$dumped['tested_status']."<br>";
+		echo "Next Testing Step: ".$dumped['tested_status']."<br>";
 	}
+	echo "<br>";
+	postassembly_radio_pop($id, $edit);
 	echo "<br>";
 
 	echo "<table border=0>";
@@ -713,6 +717,17 @@ function findname($db, $id){
 	else{
 		return  $name_hdi;
 	}
+}
+
+### Returns the current assembly step of a module, given its id
+function findmodassembly($id){
+	include('../../../Submission_p_secure_pages/connect.php');
+	mysql_query('USE cmsfpix_u', $connection);
+	$func = "SELECT assembly FROM module_p  WHERE id=$id";
+	$output = mysql_query($func, $connection);
+	$array = mysql_fetch_assoc($output);
+	$assembly = $array['assembly'];
+	return $assembly;
 }
 
 ### Returns all the data in the table for a given part

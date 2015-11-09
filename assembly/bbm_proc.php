@@ -26,7 +26,7 @@ if($assembly != $_POST['assembly']){
 	exit();
 }
 
-$steparray = array("Received", "Inspected", "IV Tested", "Ready for HDI Assembly", "HDI Attached", "Wirebonded", "Encapsulated", "Tested", "Thermally Cycled", "Tested", "Ready for Shipping", "Shipped");
+$steparray = array("Received", "Inspected", "IV Tested", "Ready for HDI Assembly", "HDI Attached", "Wirebonded", "Encapsulated", "Tested", "Thermally Cycled", "Tested", "Ready for Shipping", "Shipped", "Ready for Mounting", "On Blade");
 
 ###This is sort of a messy solution. This is because the name changes after HDI assembly###
 if($assembly == 4){
@@ -41,15 +41,15 @@ if(isset($_POST['submit']) && ((isset($_POST['box']) && $_POST['who'] != "") || 
 
 	if(isset($_POST['shipbox'])){
 		$assembly = 11;
-		$functested = "UPDATE module_p SET tested_status=\"To Be Tested\" WHERE id=".$id;
-		mysql_query($functested, $connection);
+		#$functested = "UPDATE module_p SET tested_status=\"To Be Tested\" WHERE id=".$id;
+		#mysql_query($functested, $connection);
 	}
 	
 	if(isset($_POST['shipbox'])){
-	$submittedstep = $steparray[$assembly]." by ".$_POST['who_ship']." to ".$_POST['dest'];
+		$submittedstep = $steparray[$assembly]." by ".$_POST['who_ship']." to ".$_POST['dest'];
 	}
 	else{
-	$submittedstep = $steparray[$assembly]." by ".$_POST['who'];
+		$submittedstep = $steparray[$assembly]." by ".$_POST['who'];
 	}
 	$assembly++;
 	
@@ -73,6 +73,11 @@ if(isset($_POST['submit']) && ((isset($_POST['box']) && $_POST['who'] != "") || 
 		}
 		$submittednotes .= fread($fp, $_FILES['comments']['size']);
 		fclose($fp);
+	}
+	if(isset($_POST['pos_on_blade'])){
+		$pos = $_POST['pos_on_blade'];
+		$funcpos = "UPDATE module_p SET pos_on_blade=\"$pos\" WHERE id=$id";
+		mysql_query($funcpos, $connection);
 	}
 	addcomment("module_p", $id, $submittedstep);
 	addcomment("module_p", $id, $submittednotes);
