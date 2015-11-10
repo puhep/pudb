@@ -215,7 +215,8 @@ if($assembly == 12){
 	echo "<br>To promote module to Ready for Mounting, update the Next Testing Step on the Full Test Summary Page.";
 }
 if($assembly == 13){
-	echo "Module Fully Tested at FNAL and ready for mounting on blade<br>";
+	echo "Ready for Mounting on blade";
+	echo "<br>";
 	echo "On Blade   <input name=\"box\" value=\"on_blade\" type=\"checkbox\">";
 	echo "Position on blade:  <textarea name=\"pos_on_blade\"></textarea>   ";
 	echo"User: <input name=\"who\" type=\"text\">   ";
@@ -224,7 +225,13 @@ if($assembly == 13){
 	$checker = "";
 }
 if($assembly == 14){
-	echo "Module installed on blade";
+	$posfunc = "SELECT pos_on_blade FROM module_p WHERE id=$id";
+	$out = mysql_query($posfunc,$connection);
+	$array = mysql_fetch_assoc($out);
+	$pos = $array['pos_on_blade'];
+	echo "On Blade at $pos   <input name=\"box\" value=\"on_blade\"
+	type=\"checkbox\"".$checker."DISABLED>";
+	#echo "<br>Module installed on blade at position ".$pos;
 }
 
 if($_GET['code']=="2"){

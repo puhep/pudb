@@ -1,13 +1,12 @@
 <?php
-ini_set('display_error', 'On');
-error_reporting(E_ALL | E_STRICT);
+#ini_set('display_error', 'On');
+#error_reporting(E_ALL | E_STRICT);
 
 include('../../../Submission_p_secure_pages/connect.php');
 include('../functions/editfunctions.php');
 include('../functions/curfunctions.php');
 include('../functions/popfunctions.php');
 include('../functions/submitfunctions.php');
-
 
 mysql_query('USE cmsfpix_u', $connection);
 
@@ -131,11 +130,8 @@ if(isset($_POST['submit']) && ((isset($_POST['box']) && $_POST['who'] != "") || 
 		#echo "<input type='hidden' name='name' value='".$name."'>";
 		#$_GET['name'] = $name;
 	}
-	
 	lastUpdate("module_p", $id, $_POST['who'], $steparray[$assembly-1], $submittednotes);
-
 	exit();
-
 }
 
 ?>

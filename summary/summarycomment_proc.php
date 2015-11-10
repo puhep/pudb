@@ -11,7 +11,7 @@ include('../functions/submitfunctions.php');
 
 if (isset($_POST['submit']) && $_POST['notes'] != "" && $_POST['user'] != ""){
 
-	addcomment($_POST['part'],$_POST['id'], $_POST['notes']."&nbsp;&nbsp;&nbsp;&nbsp; --".$_POST['user']);
+	addcomment($_POST['part'],$_POST['id'], $_POST['notes']."&nbsp;&nbsp;&nbsp;&nbsp; --".$_POST['user'], $_POST['user']);
 	exit();
 }
 

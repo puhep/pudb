@@ -1,6 +1,6 @@
 <?php
 
-function addcomment($db, $id, $new){
+function addcomment($db, $id, $new, $user="User"){
 
 	include('../../../Submission_p_secure_pages/connect.php');
 
@@ -30,11 +30,11 @@ function addcomment($db, $id, $new){
 	}
 
 	if($db == "module_p"){
-		lastUpdate($db, $id, "User", "Comment", $new);
+		lastUpdate($db, $id, $user, "Comment", $new);
 	}
 }
 
-function addcomment_fnal($id, $new){
+function addcomment_fnal($id, $new, $user="User"){
 
 	include('../../../Submission_p_secure_pages/connect.php');
 
@@ -63,7 +63,7 @@ function addcomment_fnal($id, $new){
 		echo "An error has occurred and the comment has not been added";
 	}
 
-	lastUpdate("module_p", $id, "User", "FNAL Testing Comment", $new);
+	lastUpdate("module_p", $id, $user, "FNAL Testing Comment", $new);
 }
 
 function connecttbm($hdi, $tbm){

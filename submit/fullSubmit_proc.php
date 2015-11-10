@@ -57,7 +57,7 @@ if(isset($_POST['submit']) && ($_POST['status'] != "" &&  $_POST['status'] != "R
 	$func = "UPDATE module_p SET tested_status=\"".$_POST['status']."\" WHERE id=".$id;
 	mysql_query('USE cmsfpix_u', $connection);
 	mysql_query($func, $connection);
-	addcomment_fnal($id, "Next Testing Step set to ".$_POST['status']." by ".$_POST['user']);
+	addcomment_fnal($id, "Next Testing Step set to ".$_POST['status']." by ".$_POST['user'], $_POST['user']);
 }
 elseif(isset($_POST['submit']) && ($_POST['status'] == "Ready for Mounting" && ($assembly == 12 || $assembly == 13) || $assembly == 14)){
 	include('../../../Submission_p_secure_pages/connect.php');
@@ -66,14 +66,14 @@ elseif(isset($_POST['submit']) && ($_POST['status'] == "Ready for Mounting" && (
 	mysql_query($func, $connection);    
 	$funcassembly = "UPDATE module_p SET assembly=13 WHERE id=".$id;
 	mysql_query($funcassembly, $connection);
-	addcomment("module_p", $id, $_POST['status']." by ".$_POST['user']);
-	addcomment_fnal($id, "Set to ".$_POST['status']." by ".$_POST['user']);
+	addcomment("module_p", $id, $_POST['status']." by ".$_POST['user'], $_POST['user']);
+	addcomment_fnal($id, "Set to ".$_POST['status']." by ".$_POST['user'], $_POST['user']);
 	
 }
 
 if(isset($_POST['submit']) && ($_POST['notes'] != "")){
 
-	addcomment_fnal($id, $_POST['notes']."&nbsp;&nbsp;&nbsp;&nbsp; --".$_POST['user']);
+	addcomment_fnal($id, $_POST['notes']."&nbsp;&nbsp;&nbsp;&nbsp; --".$_POST['user'], $_POST['user']);
 }
 }
 exit();

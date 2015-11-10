@@ -543,7 +543,6 @@ include('../../../Submission_p_secure_pages/connect.php');
 	if($PAval%7 == 0){ $checker = " CHECKED";}
 	else{ $checker = "";}
 	echo "Thermal Cycling <input name=\"PA[]\" value=\"7\" type=\"checkbox\"".$checker.$disabled.">";
-	
-}
 	echo "<br>";
+}
 ?>
