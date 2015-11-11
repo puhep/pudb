@@ -127,7 +127,7 @@ echo "</td>";
 echo "</tr>";
 echo "<tr>";
 echo "<td>";
-echo "Purdue <br> Nebraska <br> Total";
+echo "Total <br> Purdue <br> Nebraska";
 echo "</td>";
 
 $purduetot = 0;
@@ -154,12 +154,12 @@ $nebraskanum = 0;
 	}
 
 	echo "<td>";
-	echo $purduenum."<br>".$nebraskanum."<br>".$numatthislevel;
+	echo $numatthislevel."<br>".$purduenum."<br>".$nebraskanum;
 	echo "</td>";
 }
 
 echo "<td>";
-echo $purduetot."<br>".$nebraskatot."<br>".$l;
+echo $l."<br>".$purduetot."<br>".$nebraskatot;
 echo "</td>";
 
 	echo "</tr>";
@@ -185,7 +185,7 @@ echo "</td>";
 echo "</tr>";
 echo "<tr>";
 echo "<td>";
-echo "Purdue <br> Nebraska <br> Total";
+echo "Total <br> Purdue <br> Nebraska";
 echo "</td>";
 
 $purduetot = 0;
@@ -209,12 +209,17 @@ $nebraskanum = 0;
 		}
 	}
 	echo "<td>";
-	echo $purduenum."<br>".$nebraskanum."<br>".$numatthislevel;
+	if($loop == $bbmnum-1 || $loop == $bbmnum-2){
+		echo $numatthislevel."<br><br><br>";
+	}
+	else{
+		echo $numatthislevel."<br>".$purduenum."<br>".$nebraskanum;
+	}
 	echo "</td>";
 }
 
 echo "<td>";
-echo $purduetot."<br>".$nebraskatot."<br>".$k_adj;
+echo $k_adj."<br>".$purduetot."<br>".$nebraskatot;
 echo "</td>";
 
 	echo "</tr>";
