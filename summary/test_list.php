@@ -22,6 +22,7 @@ include('../graphing/xmlgrapher_crit.php');
 	$param19 = "";
 	$param20 = "";
 	$param21 = "";
+	$param22 = "";
 
 	$comp2 = "";
 	$comp3 = "";
@@ -55,6 +56,7 @@ include('../graphing/xmlgrapher_crit.php');
 		$param19 = $_GET['param19'];
 		$param20 = $_GET['param20'];
 		$param21 = $_GET['param21'];
+		$param22 = $_GET['param22'];
 
 		$comp2 = $_GET['comp2'];
 		$comp3 = $_GET['comp3'];
@@ -128,6 +130,15 @@ Next Testing Step:
 <option value="Debugging"<?php echo $param21 == 'Debugging' ? 'selected="selected"' : ''; ?>>Debugging</option>
 <option value="Ready for Mounting"<?php echo $param21 == 'Ready for Mounting' ? 'selected="selected"' : ''; ?>>Ready for Mounting</option>
 <option value="Rejected"<?php echo $param21 == 'Rejected' ? 'selected="selected"' : ''; ?>>Rejected</option>
+</select>
+<br>
+<br>
+
+Mounted on Blade: 
+<select name="param22">
+<option value=""></option>
+<option value="Yes"<?php echo $param22 == 'Yes' ? 'selected="selected"' : ''; ?>>Yes</option>
+<option value="No"<?php echo $param22 == 'No' ? 'selected="selected"' : ''; ?>>No</option>
 </select>
 <br>
 <br>
@@ -284,6 +295,7 @@ $sortmod15 = "";
 $sortmod19 = "";
 $sortmod20 = "";
 $sortmod21 = "";
+$sortmod22 = "";
 
 if($param1 != ""){
 	$sortmod1 = "AND location=\"".$_GET['param1']."\" ";
@@ -344,10 +356,19 @@ if($param21 != ""){
 		$sortmod21 = "AND tested_status=\"".$_GET['param21']."\" ";
 	}
 }
+if($param22 != ""){
+	if($_GET['param22'] == 'Yes'){
+		$sortmod22 = "AND assembly = 14 ";
+	}
+	elseif($_GET['param22'] == "No"){
+		$sortmod22 = "AND assembly != 14 ";
+	}
+}
 
-$sortmod22 = "AND a.name NOT LIKE '%95%' AND a.name NOT LIKE '%96%' AND a.name NOT LIKE '%97%' ";
+$sortmod23 = "AND a.name NOT LIKE '%95%' AND a.name NOT LIKE '%96%' AND a.name NOT LIKE '%97%' ";
+#$sortmod23 = "";
 
-$sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19.$sortmod20.$sortmod21.$sortmod22;
+$sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19.$sortmod20.$sortmod21.$sortmod22.$sortmod23;
 
 ?>
 <input type="submit" value="Apply">
