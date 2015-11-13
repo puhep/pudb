@@ -391,7 +391,8 @@ function curgrades_string($id){
 	$i = 0;
 	while($array = mysql_fetch_assoc($output)){
 		if(is_null($array['badbumps_elec']) || is_null($array['deadpix']) ){
-			return "";
+			$rocsnull = 1;
+			break;
 		}
 		if(is_null($array['unaddressable'])){
 			$array['unaddressable']=0;
@@ -426,10 +427,18 @@ function curgrades_string($id){
 		}
 		$i++;
 	}
+	if($rocsnull == 1){
+		     $ret = $ret."ROCs: I <br>";
+	}
+	else{
 	for($i=0; $i<16; $i++){
-		  if($rocgrades[$i] != "A"){
+		  if($rocgrades[$i] != "A" && isset($rocgrades[$i])){
 		  	$ret = $ret."ROC".$i.": Grade ".$rocgrades[$i]."; biggest contribution: ".$biggest_contributors[$i]."<br>";
 		  }
+		  elseif(!isset($rocgrades[$i])){
+			#$ret = $ret."ROC".$i.": Grade not set <br>";
+		  }
+	}
 	}
 	$crit = xmlgrapher_crit_num($dumped['assoc_sens'], "IV", "module", 0);
 	if($crit%25 == 0 || $crit%7 == 0){
@@ -628,8 +637,11 @@ function curtestparams($id, $edit=0){
 	if(is_null($dumped['tested_status'])){
 		echo "Next Testing Step: Not Set<br>";
 	}
-	else{
+	elseif(!is_null($dumped['tested_status']) && $dumped['tested_status'] != "Mounted" ){
 		echo "Next Testing Step: ".$dumped['tested_status']."<br>";
+	}
+	elseif($dumped['tested_status'] == "Mounted"){
+		echo "Module mounted on blade at position ".$dumped['pos_on_blade']."<br>";
 	}
 	echo "<br>";
 	postassembly_radio_pop($id, $edit);

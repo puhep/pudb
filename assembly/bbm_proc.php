@@ -77,6 +77,9 @@ if(isset($_POST['submit']) && ((isset($_POST['box']) && $_POST['who'] != "") || 
 		$pos = $_POST['pos_on_blade'];
 		$funcpos = "UPDATE module_p SET pos_on_blade=\"$pos\" WHERE id=$id";
 		mysql_query($funcpos, $connection);
+		$funcmounted = "UPDATE module_p SET tested_status = \"Mounted\" WHERE id=$id";
+		mysql_query($funcmounted, $connection);
+		addcomment_fnal($id, "Mounted on blade at position ".$pos." by ".$_POST['who'],$_POST['who']);
 	}
 	addcomment("module_p", $id, $submittedstep);
 	addcomment("module_p", $id, $submittednotes);
