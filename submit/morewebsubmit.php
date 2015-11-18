@@ -25,7 +25,7 @@ if($_GET['code'] == 1){
 	echo "<br>The data is uploaded and ready to be parsed<br>";
 }
 if($_GET['code'] == 2){
-	echo "<br>Not all forms were filled, please retry<br>";
+	echo "<br>Not all forms were filled or the filetype is incorrect, please retry<br>";
 }
 
 ?>
