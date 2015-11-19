@@ -545,4 +545,46 @@ include('../../../Submission_p_secure_pages/connect.php');
 	echo "Thermal Cycling <input name=\"PA[]\" value=\"7\" type=\"checkbox\"".$checker.$disabled.">";
 	echo "<br>";
 }
+
+function postassembly_radio_show($PAval){
+
+	if($PAval%2 == 0){ $checker = " CHECKED";}
+	else{ $checker = "";}
+	echo "Full Test at 17C <input name=\"PA[]\" value=\"2\" type=\"checkbox\"".$checker.">";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "&nbsp;";
+
+	if($PAval%3 == 0){ $checker = " CHECKED";}
+	else{ $checker = "";}
+	echo "Full Test at -20C <input name=\"PA[]\" value=\"3\" type=\"checkbox\"".$checker.">";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	
+	if($PAval%5 == 0){ $checker = " CHECKED";}
+	else{ $checker = "";}
+	echo "X-ray Testing <input name=\"PA[]\" value=\"5\" type=\"checkbox\"".$checker.">";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	
+	if($PAval%7 == 0){ $checker = " CHECKED";}
+	else{ $checker = "";}
+	echo "Thermal Cycling <input name=\"PA[]\" value=\"7\" type=\"checkbox\"".$checker.">";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "<br>";
+
+}
+
 ?>
