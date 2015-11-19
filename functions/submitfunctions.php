@@ -1508,7 +1508,7 @@ include_once("../functions/editfunctions.php");
 						wafersensorinfo($wafnum, $date, "Wafer submitted automatically through batch submission");
 						$wafid = findid("wafer_p", $wafnum);
 						###update assembly variable to shipped
-						$funcassembly = "UPDATE sensor_p SET assembly=5 WHERE assoc_wafer=$wafid";
+						$funcassembly = "UPDATE wafer_p SET assembly=5 WHERE id=$wafid";
 						mysql_query($funcassembly, $connection);
 						###call setpromote() for each sensor in wafer; easier to do here
 						$funcpromote = "UPDATE sensor_p SET promote=1 WHERE assoc_wafer=$wafid";
