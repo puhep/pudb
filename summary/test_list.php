@@ -23,6 +23,7 @@ include('../graphing/xmlgrapher_crit.php');
 	$param20 = "";
 	$param21 = "";
 	$param22 = "";
+	$param24 = 1;
 
 	$comp2 = "";
 	$comp3 = "";
@@ -35,7 +36,7 @@ include('../graphing/xmlgrapher_crit.php');
 	$comp12 = "";
 	$comp13 = "";
 	$comp18 = "";
-
+	
 	if(!empty($_GET)){
 		$param1 = $_GET['param1'];
 		$param2 = $_GET['param2'];
@@ -57,6 +58,13 @@ include('../graphing/xmlgrapher_crit.php');
 		$param20 = $_GET['param20'];
 		$param21 = $_GET['param21'];
 		$param22 = $_GET['param22'];
+		if(!empty($_GET['PA'])){
+			$param24 = 1;
+			foreach($_GET['PA'] as $check){
+				$param24 *= $check;
+			}
+			echo "<input type='hidden' name='param24' value='".$param24."'>";
+		}
 
 		$comp2 = $_GET['comp2'];
 		$comp3 = $_GET['comp3'];
@@ -83,6 +91,7 @@ include('../graphing/xmlgrapher_crit.php');
 <form method="link" action="../index.php">
 <input type="submit" value="MAIN MENU">
 </form>
+
 <br>
 <br>
 <form name="filter" action="../summary/test_list.php" method="GET">
@@ -131,6 +140,13 @@ Next Testing Step:
 <option value="Ready for Mounting"<?php echo $param21 == 'Ready for Mounting' ? 'selected="selected"' : ''; ?>>Ready for Mounting</option>
 <option value="Rejected"<?php echo $param21 == 'Rejected' ? 'selected="selected"' : ''; ?>>Rejected</option>
 </select>
+<br>
+<br>
+
+Completed Testing Steps:
+<?php
+postassembly_radio_show($param24);?>
+ 
 <br>
 <br>
 
@@ -296,6 +312,7 @@ $sortmod19 = "";
 $sortmod20 = "";
 $sortmod21 = "";
 $sortmod22 = "";
+$sortmod24 = "";
 
 if($param1 != ""){
 	$sortmod1 = "AND location=\"".$_GET['param1']."\" ";
@@ -368,13 +385,18 @@ if($param22 != ""){
 $sortmod23 = "AND a.name NOT LIKE '%95%' AND a.name NOT LIKE '%96%' AND a.name NOT LIKE '%97%' ";
 #$sortmod23 = "";
 
-$sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19.$sortmod20.$sortmod21.$sortmod22.$sortmod23;
+$sortmod24 = "AND a.assembly_post % ".$param24." = 0 ";
+
+$sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19.$sortmod20.$sortmod21.$sortmod22.$sortmod23.$sortmod24;
 
 ?>
 <input type="submit" value="Apply">
+
 </form>
 
-
+<form method="link" action="../summary/test_list.php">
+<input type="submit" value="Reset Form">
+</form>
 
 <?php
 include('../../../Submission_p_secure_pages/connect.php');
