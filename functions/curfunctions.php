@@ -985,7 +985,7 @@ function curmod($id,$part){
 function batchCode($curbatch){
 	include('../../../Submission_p_secure_pages/connect.php');
 	
-	$alphabet = array("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z");
+	$alphabet = array("A","B","C","D","E","F","G","Z","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z");
 
 	$func = "SELECT id, name FROM work_orders_p";
 	mysql_query('USE cmsfpix_u', $connection);
