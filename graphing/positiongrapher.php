@@ -189,11 +189,13 @@ else{
 	#$sp1[$l]->link->Show();
 	$sp1[$l]->SetLegend($sensors[$l][0]);
 }
-$sp1[$l]->mark->SetWidth(8);
+
 $color = sprintf('#%06X', mt_rand(0,0xFFFFFF));
 $sp1[$l]->mark->SetFillColor($color);
 #$sp1[$l]->link->Show();
 $graph->Add($sp1[$l]);
+#$sp1[$l]->mark->SetWidth(7);
+$sp1[$l]->SetWeight(5);
 
 }
 
