@@ -180,13 +180,20 @@ if($markedarr[$l]==2){
 	$QC = " FAIL2";
 }
 
-$sp1[$l] = new ScatterPlot($arr1[$l][1],$arr1[$l][0]);
+
+$sp1[$l] = new LinePlot($arr1[$l][1],$arr1[$l][0]);
+if($level == "fnal"){
+}
+else{
+	#$sp1[$l] = new ScatterPlot($arr1[$l][1],$arr1[$l][0]);
+	#$sp1[$l]->link->Show();
+	$sp1[$l]->SetLegend($sensors[$l][0]);
+}
 $sp1[$l]->mark->SetWidth(8);
 $color = sprintf('#%06X', mt_rand(0,0xFFFFFF));
 $sp1[$l]->mark->SetFillColor($color);
-$sp1[$l]->link->Show();
+#$sp1[$l]->link->Show();
 $graph->Add($sp1[$l]);
-$sp1[$l]->SetLegend($sensors[$l][0]);
 
 }
 
