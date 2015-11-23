@@ -25,7 +25,7 @@ curpics($part, $id);
 
 ?>
 
-
+<br>
 <br>
 Picture File <input name="pic" type="file">
 <br>
