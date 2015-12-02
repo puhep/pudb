@@ -19,10 +19,23 @@ if(isset($_POST['submit'])){
 			$newval *= $check;
 		}
 	}
-	include('../../../Submission_p_secure_pages/connect.php');
-	$func = "UPDATE module_p SET assembly_post=".$newval." WHERE id=".$id;
-	mysql_query('USE cmsfpix_u', $connection);
-	mysql_query($func, $connection);
+	$dumped = dump("module_p", $id);
+	if($dumped['assembly_post'] != $newval){
+		include('../../../Submission_p_secure_pages/connect.php');
+		$func = "UPDATE module_p SET assembly_post=".$newval." WHERE id=".$id;
+		mysql_query('USE cmsfpix_u', $connection);
+		mysql_query($func, $connection);
+		$newcomment = "Completed post-assembly tests: ";
+		if($newval == 1){ $newcomment .= "None, ";}
+		else{
+			if($newval%2 == 0){ $newcomment .= "Full test at 17C, ";}
+			if($newval%3 == 0){ $newcomment .= "Full test at -20C, ";}
+			if($newval%5 == 0){ $newcomment .= "X-ray Testing, ";}
+			if($newval%7 == 0){ $newcomment .= "Thermal Cycling, ";}
+		}
+		$newcomment .= "by ".$_POST['user'];
+		addcomment_fnal($id, $newcomment, $_POST['user']);
+	}
 	
 }
 if ($_FILES['pic']['size'] > 0){

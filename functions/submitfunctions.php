@@ -112,6 +112,7 @@ include_once('../functions/editfunctions.php');
 include_once('../graphing/xmlgrapher_writer.php');
 include_once('../graphing/positiongrapher_writer.php');
 
+	
 	$sqlnotes = mysql_real_escape_string($notes);
 
 	$sensordata = dump("sensor_p", $id);
@@ -124,11 +125,9 @@ include_once('../graphing/positiongrapher_writer.php');
 		$sqlnotes = $date."  ".$sqlnotes."\n";
 	}
 
+
 	$func = "INSERT INTO measurement_p(part_ID, part_type, scan_type, notes, file, filesize, filename, breakdown, compliance) VALUES (\"$id\", \"$parttype\", \"$scan\", \"$sqlnotes\", \"$file\",\"$size\",\"$name\", $breakdown, $compliance)";
 	
-
-	#echo $func;
-
 	mysql_query('USE cmsfpix_u', $connection);
 
 	if(mysql_query($func,$connection)){
@@ -538,7 +537,7 @@ include_once("../functions/editfunctions.php");
 	ini_set('display_error', 'On');
 	error_reporting(E_ALL | E_STRICT);
 
-	$dir = "/project/cmsfpix/.www/Submission_p/tmp/tmpbig/";
+	$dir = "/project/cmsfpix/.www/Submission_t/tmp/tmpbig/";
 
 	#####Clear the tmp directory before putting in new files#####
 	exec("rm $dir*");
@@ -866,7 +865,6 @@ include_once("../functions/editfunctions.php");
 					$i++;
 				}
 				##########################
-
 				#####IV/CV SCAN SUBMISSION####
 				$i=0;
 				while($doc->SCAN[$i]->NAME != ""){
@@ -889,12 +887,17 @@ include_once("../functions/editfunctions.php");
 					$content = addslashes($content);
 					fclose($fp);
 
-					$breakdown=0;
-					$compliance=0;
+					$breakdown = 0;				
+					$compliance = 0;
 
-					$breakdown = $doc->SCAN[$i]->BREAKDOWN;
-					$compliance = $doc->SCAN[$i]->COMPLIANCE;
-	
+					if(isset($doc->SCAN[$i]->BREAKDOWN)){
+						$breakdown = $doc->SCAN[$i]->BREAKDOWN;
+						$breakdown = settype($breakdown, "float");
+					}
+					if(isset($doc->SCAN[$i]->COMPLIANCE)){
+						$compliance = $doc->SCAN[$i]->COMPLIANCE;
+						$compliance = settype($compliance, "float");
+					}
 					measurement($id, $level, $type, $notes, $content, filesize($dir.$file), $file, $breakdown, $compliance);
 
 					lastUpdate("module_p", $modid, $user, "Fulltest IV/CV scan", $notes);
@@ -1275,7 +1278,7 @@ function batchpic($zipfile, $name, $part, $id){
 	}
 }
 
-function addconfig($filename, $tmploc, $part, $id){
+function addconfig($filename, $tmploc, $part, $id, $user="User"){
 include_once("../functions/editfunctions.php");
 
 	$dir = "/project/cmsfpix/.www/Submission_p/module_config_files/";
@@ -1293,7 +1296,7 @@ include_once("../functions/editfunctions.php");
 	
 	#echo "Config file for ".$part." added to the database.<br>";
 
-	lastUpdate("module_p", $id, "User", "Config File Added", "");
+	lastUpdate("module_p", $id, $user, "Config File Added", "");
 
 }
 

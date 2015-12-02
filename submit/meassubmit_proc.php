@@ -4,7 +4,7 @@ include('../functions/curfunctions.php');
 include('../functions/editfunctions.php');
 
 
-if(isset($_POST['submit']) &&  $_FILES['xml']['size'] > 0 && isset($_POST['level']) && isset($_POST['scan']) ){
+if(isset($_POST['submit']) &&  $_FILES['xml']['size'] > 0 && isset($_POST['level']) && isset($_POST['scan']) && !is_null($_POST['sensors']) ){
 	
 	$fp = fopen($_FILES['xml']['tmp_name'],'r');
 	$content = fread($fp,filesize($_FILES['xml']['tmp_name']));

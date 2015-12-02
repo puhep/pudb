@@ -1,16 +1,18 @@
 <?php
 function positiongrapher_writer($level, $scan, $loc){
+
 require_once('../jpgraph/src/jpgraph.php');
 require_once('../jpgraph/src/jpgraph_scatter.php');
+require_once('../jpgraph/src/jpgraph_line.php');
 require_once('../jpgraph/src/jpgraph_log.php');
 
-include('../../../Submission_p_secure_pages/connect.php');
-include('../functions/curfunctions.php');
+include_once('../../../Submission_p_secure_pages/connect.php');
+include_once('../functions/curfunctions.php');
 mysql_query('USE cmsfpix_u',$connection);
 
-$level = $_GET['level'];
-$scan = $_GET['scan'];
-$loc = $_GET['loc'];
+#$level = $_GET['level'];
+#$scan = $_GET['scan'];
+#$loc = $_GET['loc'];
 
 $hide = hidepre("sensor", 2);
 
@@ -170,29 +172,29 @@ $l=0;
 for($l=0;$l<$k;$l++){
 
 
-$QC = " PASS";
-if($markedarr[$l]==1){
-	$QC = " FAIL1";
-}
-if($markedarr[$l]==2){
-	$QC = " FAIL2";
-}
+	$QC = " PASS";
+	if($markedarr[$l]==1){
+		$QC = " FAIL1";
+	}
+	if($markedarr[$l]==2){
+		$QC = " FAIL2";
+	}
 
-$sp1[$l] = new ScatterPlot($arr1[$l][1],$arr1[$l][0]);
-$sp1[$l]->mark->SetWidth(8);
-$color = sprintf('#%06X', mt_rand(0,0xFFFFFF));
-$sp1[$l]->mark->SetFillColor($color);
-$sp1[$l]->link->Show();
-$graph->Add($sp1[$l]);
-$sp1[$l]->SetLegend($sensors[$l][0]);
+	$sp1[$l] = new ScatterPlot($arr1[$l][1],$arr1[$l][0]);
+	$sp1[$l]->mark->SetWidth(8);
+	$color = sprintf('#%06X', mt_rand(0,0xFFFFFF));
+	$sp1[$l]->mark->SetFillColor($color);
+	$sp1[$l]->link->Show();
+	$graph->Add($sp1[$l]);
+	$sp1[$l]->SetLegend($sensors[$l][0]);
 }
 
 if($scan=="IV"){
-$splim = new LinePlot($limitarr[1],$limitarr[0]);
-$graph->Add($splim);
-$splim->SetWeight(2);
-$splim->SetColor("black");
-$splim->SetLegend("2uA at 150V Limit");
+	$splim = new LinePlot($limitarr[1],$limitarr[0]);
+	$graph->Add($splim);
+	$splim->SetWeight(2);
+	$splim->SetColor("black");
+	$splim->SetLegend("2uA at 150V Limit");
 }
 
  $graph->Stroke($imagefile);
