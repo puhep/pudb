@@ -27,13 +27,13 @@ Purdue University CMS FPix Upgrade Production Database
 <?php if($_SESSION['hidepre']){ ?>
 <div3 style="position:fixed;left:420px;top:58px;">
 <form method="link" action="hidepre.php">
-<input type="submit" value="SHOW PREPRODUCTION">
+<input type="submit" value="HIDE PREPRODUCTION">
 </form>
 </div3>
 <?php } else{ ?>
 <div3 style="position:fixed;left:420px;top:58px;">
 <form method="link" action="hidepre.php">
-<input type="submit" value="HIDE PREPRODUCTION">
+<input type="submit" value="SHOW PREPRODUCTION">
 </form>
 </div3>
 <?php } ?>

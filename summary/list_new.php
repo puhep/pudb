@@ -61,7 +61,7 @@ $hide = hidepre("module",2);
 ###This is a quick way to fix the fact that hidepre doesn't account for the table references needed 
 ###for the join statement
 if($hide != ""){
-	$hide = "AND a.id IN (SELECT assoc_module FROM times_module_p WHERE received > \"2015-05-30\")";
+	$hide = "AND a.id IN (SELECT assoc_module FROM times_module_p WHERE received > \"2015-09-01\")";
 }
 
 

@@ -1300,10 +1300,10 @@ switch($comper){
 function hidepre($part, $opt){
 
 	$hider = "";
-	$cutoff = "\"2015-05-30\"";
+	$cutoff = "\"2015-09-01\"";
 
 
-	if(isset($_SESSION['hidepre']) && $_SESSION['hidepre']){
+	if(!isset($_SESSION['hidepre']) || !($_SESSION['hidepre'])){
 
 		if($opt == 1){ $hider .= " WHERE ";}
 		if($opt == 2){ $hider .= " AND ";}

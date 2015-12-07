@@ -12,8 +12,8 @@ $arr3;
 $date = time();
 
 $hide = "";
-if($_SESSION['hidepre']){
-	$hide = " WHERE received > \"2015-05-30\"";
+if(!$_SESSION['hidepre']){
+	$hide = " WHERE received > \"2015-09-01\"";
 }
 
 $loc = $_GET['loc'];

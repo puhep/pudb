@@ -14,7 +14,7 @@ mysql_query("USE cmsfpix_u", $connection);
 $date = time();
 
 $hide= "";
-if(!$_SESSION['hidepre']){
+if($_SESSION['hidepre']){
 	#$hide = " WHERE received > \"2015-09-01\"";
 	$hide = " AND received > \"2015-09-01\"";
 }

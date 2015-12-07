@@ -261,6 +261,17 @@ function RTIROCs($id){
 
 }
 
+function ROCThickness($id, $newTh){
+
+	include('../../../Submission_p_secure_pages/connect.php');
+	
+	$func = "UPDATE ROC_p SET thickness=".$newTh." WHERE id=".$id;
+
+	mysql_query('USE cmsfpix_u', $connection);
+	mysql_query($func, $connection);
+
+}
+
 function lastUpdate($db, $id, $who, $what, $comments){
 	include('../../../Submission_p_secure_pages/connect.php');
 
