@@ -1305,8 +1305,8 @@ include("../../../Submission_p_secure_pages/connect.php");
 include_once("../functions/curfunctions.php");
 include_once("../functions/editfunctions.php");
 
-	#ini_set('display_error', 'On');
-	#error_reporting(E_ALL | E_STRICT);
+	ini_set('display_error', 'On');
+	error_reporting(E_ALL | E_STRICT);
 
 	$dir = "/project/cmsfpix/.www/Submission_p/tmp/tmproc/";
 	
@@ -1338,10 +1338,14 @@ include_once("../functions/editfunctions.php");
 					}
 
 					$delivered =$doc->Worksheet[0]->Table->Row[$i]->Cell[1]->Data;
-					sscanf($delivered, "A%s", $strwafer);
-
-					$wafer = intval($strwafer)+900;
-
+					#echo "delivered: ".$delivered."<br>";
+					
+					sscanf($delivered, "C%s", $strwafer);
+					
+					#echo "strwafer: ".$strwafer."<br>";
+					$wafer = intval($strwafer)+100;
+					#echo "wafer: ".$wafer."<br>";
+					
 					$rtimodule = $doc->Worksheet[0]->Table->Row[$i]->Cell[2]->Data;
 					$pdbmodule = $RTI2PDB[intval($rtimodule)];
 

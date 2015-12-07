@@ -202,7 +202,7 @@ function spinROCs($id){
 ####Transpose 0 and 15; 8 and 7 ####
 function flipROCs($id){
 	include('../../../Submission_p_secure_pages/connect.php');
-	
+
 	mysql_query('USE cmsfpix_u', $connection);
 
 	$func = "SELECT name from ROC_p WHERE assoc_module=".$id." ORDER BY position";
@@ -221,7 +221,8 @@ function flipROCs($id){
 			$flipfunc = "UPDATE ROC_p SET name=\"".$rocs[$j]."\" WHERE assoc_module=".$id." AND position=".(15-$j);
 
 		if(!mysql_query($flipfunc, $connection)){
-			echo "An error has occurred and the changes have not been added to the database.";
+			#echo "An error has occurred and the changes have not been added to the database.";
+			echo "<br>There was an error in flipROCs()<br>";
 			break;
 		}
 	}
@@ -252,7 +253,8 @@ function RTIROCs($id){
 			$flipfunc = "UPDATE ROC_p SET name=\"".$rocs[$j]."\" WHERE assoc_module=".$id." AND position=".(23-$j);
 
 		if(!mysql_query($flipfunc, $connection)){
-			echo "An error has occurred and the changes have not been added to the database.";
+			#echo "An error has occurred and the changes have not been added to the database.";
+			echo "<br> There was an error in RTIROCs()<br>";
 			break;
 		}
 	}
