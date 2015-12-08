@@ -29,6 +29,12 @@ if($_GET['code'] == "1"){
 if($_GET['code'] == "2"){
 	echo "<br>Not all forms were filled, please retry<br>";
 }
+if($_GET['code'] == "3"){
+	echo "<br>An error ocurred (code 3), please retry<br>";
+}
+if($_GET['code'] == "4"){
+	echo "<br>An error ocurred (code 4), please retry<br>";
+}
 
 }
 else{
