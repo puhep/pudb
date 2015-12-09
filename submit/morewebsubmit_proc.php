@@ -12,10 +12,15 @@ if(isset($_POST['submit']) && $_FILES['tarball']['size'] > 0 && $ext == "tar"){
 	$tar = $_FILES['tarball']['name'];
 
 	move_uploaded_file($tmptar, $dir.$tar);
-	chmod("$dir.$tar", 0666);
+	if(!chmod($dir.$tar, 0666)){
+		$gets = "?code=3";
+	}
+	else{
+		$gets = "?code=1";
+	}
+
 	#exec("tar -zxvf ".$dir.$tar);
 
-	$gets = "?code=1";
 
 	header("Location: morewebsubmit.php".$gets);
 	
