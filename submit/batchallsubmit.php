@@ -37,7 +37,7 @@ if($_GET['code'] == 1){
 	echo "<br>The data has successfully been uploaded to the database<br>";
 }
 if($_GET['code'] == 2){
-	echo "<br>Not all fields were filled, please retry<br>";
+	echo "<br>Either username or file upload fields were left blank, please retry<br>";
 }
 if($_GET['code'] == 3){
 	echo "<br>The xml file could not be parsed and the data has not been uploaded<br>";

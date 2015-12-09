@@ -846,7 +846,7 @@ include_once("../functions/editfunctions.php");
 				####PICTURE SUBMISSION####
 				$i=0;
 				while($doc->PIC[$i]->NAME != ""){
-
+					
 					$part = $doc->PIC[$i]->PART;
 					$name = $doc->PIC[$i]->NAME;
 					if($part == "sidet_p"){
@@ -855,11 +855,13 @@ include_once("../functions/editfunctions.php");
 					else{
 						$id = findid($part, $name);
 					}
+					
 					$picfile = $doc->PIC[$i]->FILE;
 					$notesfile = $doc->PIC[$i]->TXT;
 
 					$notes = file_get_contents($dir.$notesfile);
 					addpic($picfile, $dir.$picfile,$part, $id, $notes, $time); 
+					
 					#addpic($picfile, $dir.$picfile,$part, $id, $notes); 
 					#echo "Picture for ".$name." added to the database.<br>";
 					$i++;
@@ -1337,13 +1339,23 @@ include_once("../functions/editfunctions.php");
 						continue;
 					}
 
-					$delivered =$doc->Worksheet[0]->Table->Row[$i]->Cell[1]->Data;
+					$delivered = $doc->Worksheet[0]->Table->Row[$i]->Cell[1]->Data;
 					#echo "delivered: ".$delivered."<br>";
 					
-					sscanf($delivered, "C%s", $strwafer);
-					
+					#sscanf($delivered, "C%s", $strwafer);
+					### strings now have several different formats
+					$strwafer = substr($delivered,1);
 					#echo "strwafer: ".$strwafer."<br>";
-					$wafer = intval($strwafer)+100;
+					if($delivered[0] == "C"){
+						$wafer = intval($strwafer)+100;
+					}
+					elseif($delivered[0] == "B"){
+						$wafer = intval($strwafer)+000;	
+					}
+					elseif($delivered[0] == "D"){
+						$wafer = intval($strwafer)+200;	
+					}
+					#$wafer = intval($strwafer)+100;
 					#echo "wafer: ".$wafer."<br>";
 					
 					$rtimodule = $doc->Worksheet[0]->Table->Row[$i]->Cell[2]->Data;

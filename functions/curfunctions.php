@@ -696,7 +696,7 @@ function findid($db, $name){
 
 	$func = "SELECT id FROM $db WHERE name=\"$sqlname\"";
 
-	if($db === "module_p"){
+	if($db == "module_p"){
 		$func = "SELECT id FROM $db WHERE name=\"$sqlname\" OR name_hdi=\"$sqlname\"";
 	}
 	
