@@ -12,7 +12,7 @@ if(isset($_POST['submit']) && $_FILES['tarball']['size'] > 0 && $ext == "tar"){
 	$tar = $_FILES['tarball']['name'];
 
 	move_uploaded_file($tmptar, $dir.$tar);
-
+	chmod("$dir.$tar", 0666);
 	#exec("tar -zxvf ".$dir.$tar);
 
 	$gets = "?code=1";
