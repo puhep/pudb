@@ -74,7 +74,8 @@ $doc4=simplexml_load_string($file4);}
 
 if($scan == "IV"){
 $y = "ACTV_CURRENT_AMP";
-$y2 = "TOT_CURRENT_AMP";}
+$y2 = "TOT_CURRENT_AMP";
+$y3 = "GRD_CURRENT_AMP";}
 if($scan == "CV"){
 $y = "ACTV_CAP_FRD";}
 
@@ -162,6 +163,9 @@ if(!is_null($file1)){
 			$arr1[1][$loop] = 1E-10;
 		}
 			settype($arr1[1][$loop],"float");
+			if($arr1[1][$loop] == 0){
+				$arr1[1][$loop] = 1E-10;
+			}
 			if($arr1[1][$loop] < 0 || $arr1[1][$loop] == "NaN"){
 				#$arr1[1][$loop] = 1E-10;
 				$arr1[1][$loop] *= -1;
@@ -188,11 +192,23 @@ if(!is_null($file2)){
 
 		$arr2[0][$loop]=abs($arr2[0][$loop]);
 
-		$arr2[1][$loop]=$doc2->DATA_SET->DATA[$loop]->$y2;
+		if($doc2->DATA_SET->DATA[$loop]->$y3 != "" && $doc2->DATA_SET->DATA[$loop]->$y != ""){
+			$tmp1 = $doc2->DATA_SET->DATA[$loop]->$y3;
+			$tmp2 = $doc2->DATA_SET->DATA[$loop]->$y;
+			settype($tmp1,"float");
+			settype($tmp2,"float");
+			$arr2[1][$loop]=$tmp1 + $tmp2;
+		}
+		else{
+			$arr2[1][$loop]=$doc2->DATA_SET->DATA[$loop]->$y2;
+		}
 		if($arr2[1][$loop] == "NaN"){
 			$arr2[1][$loop] = 1E-10;
 		}
 			settype($arr2[1][$loop],"float");
+			if($arr2[1][$loop] == 0){
+				$arr2[1][$loop] = 1E-10;
+			}
 			if($arr2[1][$loop] < 0){
 				#$arr2[1][$loop] = 1E-10;
 				$arr2[1][$loop] *= -1;
@@ -226,6 +242,9 @@ if(!is_null($file3)){
 			$arr3[1][$loop] = 1E-10;
 		}
 			settype($arr3[1][$loop],"float");
+			if($arr3[1][$loop] == 0){
+				$arr3[1][$loop] = 1E-10;
+			}
 			if($arr3[1][$loop] < 0){
 				#$arr3[1][$loop] = 1E-10;
 				$arr3[1][$loop] *= -1;
@@ -257,6 +276,9 @@ if(!is_null($file4)){
 			$arr4[1][$loop] = 1E-10;
 		}
 			settype($arr4[1][$loop],"float");
+			if($arr4[1][$loop] == 0){
+				$arr4[1][$loop] = 1E-10;
+			}
 			if($arr4[1][$loop] < 0){
 				#$arr4[1][$loop] = 1E-10;
 				$arr4[1][$loop] *= -1;

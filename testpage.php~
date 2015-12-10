@@ -1,0 +1,46 @@
+<?php
+
+ini_set('display_errors','On');
+error_reporting(E_ALL | E_STRICT);
+include('functions/submitfunctions.php');
+include('functions/curfunctions.php');
+
+
+	#echo batchCode("YHC69-1015");
+
+ #phpinfo();
+
+	#moreweb2database(78, "http://www.physics.purdue.edu/cmsfpix/MoReWeb/Results/REV001/R001/P-A-3-22_ElComandanteTest_2015-06-19_15h31m_1434745873/QualificationGroup/TestResult.html");
+
+	#$dir = "/project/cmsfpix/.www/Submission_p/tmp/tmpbig/";
+
+	#$out = array();
+
+	#exec("tar -zxvf /project/cmsfpix/.www/Submission_p/morewebInput/P-A-3-41_ElComandanteTest_2015-07-01_14h43m_1435779818.tar");
+
+	#print_r($out);
+
+	#bigbatch("tmp/P-A-3-02_3.zip","P-A-3-02_3.zip",3,"Kamal");
+	
+	#chmod("tmp/P-A-3-02_3.zip", 0777);
+	#exec("chmod 777 tmp/P-A-3_02_3.zip");
+
+	#print_r(dump("module_p", 140));
+
+$delivered = "D51";
+echo "delivered: ".$delivered."<br>";
+#sscanf($delivered, "C%s", $strwafer);
+$strwafer = substr($delivered,1);
+echo "Base num: ".$strwafer."<br>";	
+if($delivered[0] == "C"){
+	$wafer = intval($strwafer)+100;
+}
+elseif($delivered[0] == "B"){
+	$wafer = intval($strwafer)+000;	
+}
+elseif($delivered[0] == "D"){
+	$wafer = intval($strwafer)+200;	
+}
+
+echo "wafer: ".$wafer."<br>";
+?>

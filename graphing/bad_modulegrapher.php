@@ -16,6 +16,11 @@ mysql_query("USE cmsfpix_u", $connection);
 
 $date = time();
 
+$hide="";
+if(!$_SESSION['hidepre']){
+	$hide = " AND received > \"2015-09-01\"";
+}
+
 $loc = $_GET['loc'];
 $loc_condition=TRUE;
 if($loc == "purdue"){
@@ -25,8 +30,8 @@ if($loc == "nebraska"){
 	$loc_condition = "Nebraska";
 }
 
-$func = "SELECT a.HDI_attached, a.tested2, a.assoc_module, b.id, b.assoc_sens FROM times_module_p a, module_p b WHERE a.assoc_module=b.id ORDER BY HDI_attached";
-$func2 = "SELECT a.HDI_attached, a.tested2, a.assoc_module, b.id FROM times_module_p a, module_p b WHERE a.assoc_module=b.id ORDER BY tested2";
+$func = "SELECT a.HDI_attached, a.tested2, a.assoc_module, b.id, b.assoc_sens FROM times_module_p a, module_p b WHERE a.assoc_module=b.id".$hide." ORDER BY HDI_attached";
+$func2 = "SELECT a.HDI_attached, a.tested2, a.assoc_module, b.id FROM times_module_p a, module_p b WHERE a.assoc_module=b.id".$hide." ORDER BY tested2";
 
 $output = mysql_query($func, $connection);
 $output2 = mysql_query($func2, $connection);
