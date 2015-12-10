@@ -175,7 +175,7 @@ if(!is_null($file2)){
 			$tmp2 = $doc2->DATA_SET->DATA[$loop]->$y;
 			settype($tmp1,"float");
 			settype($tmp2,"float");
-			$arr2[1][$loop] = $tmp1 + $tmp2
+			$arr2[1][$loop] = $tmp1 + $tmp2;
 		}
 		else{
 			$arr2[1][$loop]=$doc2->DATA_SET->DATA[$loop]->$y2;
