@@ -1346,16 +1346,18 @@ include_once("../functions/editfunctions.php");
 					### strings now have several different formats
 					$strwafer = substr($delivered,1);
 					#echo "strwafer: ".$strwafer."<br>";
-					if($delivered[0] == "C"){
+					#echo "Delivered[0]: ".$delivered[0]."<br>";
+					#echo "Delivered_sub = ".substr($delivered,0,1)."<br>";
+					if(substr($delivered,0,1) == "C"){
 						$wafer = intval($strwafer)+100;
 					}
-					elseif($delivered[0] == "B"){
+					elseif(substr($delivered,0,1) == "B"){
 						$wafer = intval($strwafer)+000;	
 					}
-					elseif($delivered[0] == "D"){
+					elseif(substr($delivered,0,1) == "D"){
 						$wafer = intval($strwafer)+200;	
 					}
-					#$wafer = intval($strwafer)+100;
+					
 					#echo "wafer: ".$wafer."<br>";
 					
 					$rtimodule = $doc->Worksheet[0]->Table->Row[$i]->Cell[2]->Data;

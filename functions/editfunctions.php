@@ -221,8 +221,8 @@ function flipROCs($id){
 			$flipfunc = "UPDATE ROC_p SET name=\"".$rocs[$j]."\" WHERE assoc_module=".$id." AND position=".(15-$j);
 
 		if(!mysql_query($flipfunc, $connection)){
-			echo "An error has occurred and the changes have not been added to the database.";
-			#echo "<br>There was an error in flipROCs()<br>";
+			#echo "An error has occurred and the changes have not been added to the database.";
+			echo "<br>There was an error in flipROCs()<br>";
 			break;
 		}
 	}
@@ -253,8 +253,8 @@ function RTIROCs($id){
 			$flipfunc = "UPDATE ROC_p SET name=\"".$rocs[$j]."\" WHERE assoc_module=".$id." AND position=".(23-$j);
 
 		if(!mysql_query($flipfunc, $connection)){
-			echo "An error has occurred and the changes have not been added to the database.";
-			#echo "<br> There was an error in RTIROCs()<br>";
+			#echo "An error has occurred and the changes have not been added to the database.";
+			echo "<br> There was an error in RTIROCs()<br>";
 			break;
 		}
 	}

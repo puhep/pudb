@@ -210,12 +210,14 @@ function currocs($module){
 
 	mysql_query('USE cmsfpix_u', $connection);
 
-	$func = "SELECT name,is_dead from ROC_p WHERE assoc_module=\"$module\" AND position<=7 ORDER BY position ASC";
-	$revfunc = "SELECT name,is_dead from ROC_p WHERE assoc_module=\"$module\" AND position>=8 ORDER BY position DESC";
+	$func = "SELECT name,is_dead,thickness from ROC_p WHERE assoc_module=\"$module\" AND position<=7 ORDER BY position ASC";
+	$revfunc = "SELECT name,is_dead,thickness from ROC_p WHERE assoc_module=\"$module\" AND position>=8 ORDER BY position DESC";
 
 	$output = mysql_query($func, $connection);
 	$outputrev = mysql_query($revfunc, $connection);
-
+	
+	$out = mysql_fetch_assoc($output);
+	echo "(".$out['thickness']."um):<br>";
 	echo "<table border=0>";
 
 	echo "<tr>";
@@ -223,8 +225,8 @@ function currocs($module){
 
 	echo "<table border=1>";
 	for($i=0;$i<8;$i++){
-
-		$rocrow = mysql_fetch_assoc($output);
+		if($i==0){$rocrow = $out;}
+		else{$rocrow = mysql_fetch_assoc($output);}
 		echo "<tr>";
 
 		echo "<td>";
