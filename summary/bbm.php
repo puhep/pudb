@@ -115,8 +115,8 @@
 		echo "<br>";
 		echo "HDI: <a href=\"hdi.php?name=".$hdiid."\">$hdiid</a>";
 		echo "<br>";
-		echo "ROCs:";
-		echo "<br>";
+		echo "ROCs ";
+		#echo "<br>";
 		currocs($dumped['id']);
 		echo "<br>";
 

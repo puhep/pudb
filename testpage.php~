@@ -27,20 +27,29 @@ include('functions/curfunctions.php');
 
 	#print_r(dump("module_p", 140));
 
-$delivered = "D51";
-echo "delivered: ".$delivered."<br>";
+#$delivered = "D51";
+#echo "delivered: ".$delivered."<br>";
 #sscanf($delivered, "C%s", $strwafer);
-$strwafer = substr($delivered,1);
-echo "Base num: ".$strwafer."<br>";	
-if($delivered[0] == "C"){
-	$wafer = intval($strwafer)+100;
-}
-elseif($delivered[0] == "B"){
-	$wafer = intval($strwafer)+000;	
-}
-elseif($delivered[0] == "D"){
-	$wafer = intval($strwafer)+200;	
-}
+#$strwafer = substr($delivered,1);
+#echo "Base num: ".$strwafer."<br>";	
+#if($delivered[0] == "C"){
+#	$wafer = intval($strwafer)+100;
+#}
+#elseif($delivered[0] == "B"){
+#	$wafer = intval($strwafer)+000;	
+#}
+#elseif($delivered[0] == "D"){
+#	$wafer = intval($strwafer)+200;	
+#}
+#echo "wafer: ".$wafer."<br>";
 
-echo "wafer: ".$wafer."<br>";
+$part = "module_p";
+$name = "P-A-test-test";
+$id = findid($part,$name);
+echo "<br>$id<br>";
+
+
+
+
+
 ?>

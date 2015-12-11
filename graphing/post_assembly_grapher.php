@@ -106,7 +106,7 @@ $graph->xaxis->SetLabelAngle(90);
 $graph->xaxis->title->SetFont(FF_FONT2,FS_BOLD);
 $graph->xaxis->title->Set("Time");
 $graph->xaxis->SetFont(FF_FONT2, FS_BOLD);
-$graph->xaxis->scale->ticks->Set(30*24*60*60);
+#$graph->xaxis->scale->ticks->Set(30*24*60*60);
 
 #$graph->yaxis->title->Set("");
 $graph->yaxis->SetFont(FF_FONT2, FS_BOLD);
