@@ -537,7 +537,7 @@ include_once("../functions/editfunctions.php");
 	ini_set('display_error', 'On');
 	error_reporting(E_ALL | E_STRICT);
 
-	$dir = "/project/cmsfpix/.www/Submission_t/tmp/tmpbig/";
+	$dir = "/project/cmsfpix/.www/Submission_p/tmp/tmpbig/";
 
 	#####Clear the tmp directory before putting in new files#####
 	exec("rm $dir*");
