@@ -17,7 +17,9 @@ $hide= "";
 if(!$_SESSION['hidepre']){
 	#$hide = " WHERE received > \"2015-09-01\"";
 	$hide = " AND received > \"2015-09-01\"";
+	$day = 1;
 }
+else{$day=30;}
 
 $loc = $_GET['loc'];
 $loc_condition=TRUE;
@@ -102,7 +104,7 @@ $graph->xaxis->SetLabelAngle(90);
 $graph->xaxis->title->SetFont(FF_FONT2,FS_BOLD);
 $graph->xaxis->title->Set("Time");
 $graph->xaxis->SetFont(FF_FONT2, FS_BOLD);
-$graph->xaxis->scale->ticks->Set(30*24*60*60);
+$graph->xaxis->scale->ticks->Set($day*24*60*60);
 
 #$graph->yaxis->title->Set("");
 $graph->yaxis->SetFont(FF_FONT2, FS_BOLD);
