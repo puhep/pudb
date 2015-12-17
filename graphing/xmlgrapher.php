@@ -299,22 +299,26 @@ $graph=new Graph(1340,800);
 $graph->SetScale("linlog",1,1,0,600);
 $graph->xaxis->scale->ticks->Set(100,10);
 
-$graph->img->SetMargin(70,80,40,40);	
+$graph->img->SetMargin(85,80,40,40);	
 
 $graph->title->Set($graphname);
 
-$graph->title->SetFont(FF_FONT1,FS_BOLD);
+$graph->title->SetFont(FF_FONT2,FS_BOLD);
 
 $graph->xaxis->title->Set("Bias Voltage [V]");
+$graph->xaxis->SetFont(FF_FONT2,FS_BOLD);
+$graph->xaxis->title->SetFont(FF_FONT2,FS_BOLD);
 
 if($scan=="IV"){
 $graph->yaxis->title->Set("Sensor Leakage Current [A]");}
 if($scan=="CV"){
 $graph->yaxis->title->Set("Capacitance [F]");}
+$graph->yaxis->SetFont(FF_FONT2,FS_BOLD);
+$graph->yaxis->title->SetFont(FF_FONT2,FS_BOLD);
 
-$graph->yaxis->title->SetMargin(30);
+$graph->yaxis->title->SetMargin(40);
 $graph->SetFrame(true,'black',0);
-
+$graph->legend->SetFont(FF_FONT2,FS_BOLD);
 
 
 if(!is_null($file1)){

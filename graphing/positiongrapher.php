@@ -147,7 +147,7 @@ else{
 $graph->SetScale("linlog",-10,-4,0,600);
 }
 
-$graph->img->SetMargin(70,80,40,40);	
+$graph->img->SetMargin(85,80,40,40);	
 $graph->img->SetAntiAliasing(false);	
 
 $graph->title->Set($graphname);
@@ -162,9 +162,11 @@ $graph->yaxis->title->Set("Sensor Leakage Current [A]");}
 if($scan=="CV"){
 $graph->yaxis->title->Set("Capacitance [F]");}
 
-$graph->yaxis->title->SetMargin(30);
+$graph->yaxis->title->SetMargin(40);
 $graph->yaxis->SetFont(FF_FONT2,FS_BOLD);
 $graph->yaxis->title->SetFont(FF_FONT2,FS_BOLD);
+$graph->legend->SetLineWeight(12);
+$graph->legend->SetFont(FF_FONT2,FS_BOLD);
 
 $sp1 = array();
 
@@ -195,7 +197,7 @@ $sp1[$l]->mark->SetFillColor($color);
 #$sp1[$l]->link->Show();
 $graph->Add($sp1[$l]);
 #$sp1[$l]->mark->SetWidth(7);
-$sp1[$l]->SetWeight(5);
+$sp1[$l]->SetWeight(7);
 
 }
 
