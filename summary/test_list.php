@@ -23,7 +23,9 @@ include('../graphing/xmlgrapher_crit.php');
 	$param20 = "";
 	$param21 = "";
 	$param22 = "";
+	$param23 = "";
 	$param24 = 1;
+
 
 	$comp2 = "";
 	$comp3 = "";
@@ -58,6 +60,7 @@ include('../graphing/xmlgrapher_crit.php');
 		$param20 = $_GET['param20'];
 		$param21 = $_GET['param21'];
 		$param22 = $_GET['param22'];
+		$param23 = $_GET['param23'];
 		if(!empty($_GET['PA'])){
 			$param24 = 1;
 			foreach($_GET['PA'] as $check){
@@ -121,6 +124,15 @@ Flip-Chip Bonder:
 <br>
 <br>
 
+ROC Thickness:
+<select name="param23">
+<option value=""></option>
+<option value="150"<?php echo $param23 == '150' ? 'selected="selected"' : ''; ?>>150um</option>
+<option value="200"<?php echo $param23 == '200' ? 'selected="selected"' : ''; ?>>200um</option>
+</select>
+<br>
+<br>
+
 Current Location:
 <select name="param8">
 <?php locpop($param8); ?>
@@ -147,7 +159,6 @@ Completed Testing Steps:
 <?php
 postassembly_radio_show($param24);?>
  
-<br>
 <br>
 
 Mounted on Blade: 
@@ -312,6 +323,7 @@ $sortmod19 = "";
 $sortmod20 = "";
 $sortmod21 = "";
 $sortmod22 = "";
+$sortmod23 = "";
 $sortmod24 = "";
 
 if($param1 != ""){
@@ -381,13 +393,16 @@ if($param22 != ""){
 		$sortmod22 = "AND assembly != 14 ";
 	}
 }
-
-$sortmod23 = "AND a.name NOT LIKE '%95%' AND a.name NOT LIKE '%96%' AND a.name NOT LIKE '%97%' ";
-#$sortmod23 = "";
+if($param23 != ""){
+	    $sortmod23 = "AND c.thickness =". $_GET['param23']." ";
+}
 
 $sortmod24 = "AND a.assembly_post % ".$param24." = 0 ";
 
-$sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19.$sortmod20.$sortmod21.$sortmod22.$sortmod23.$sortmod24;
+$sortmod25 = "AND a.name NOT LIKE '%95%' AND a.name NOT LIKE '%96%' AND a.name NOT LIKE '%97%' ";
+#$sortmod25 = "";
+
+$sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19.$sortmod20.$sortmod21.$sortmod22.$sortmod23.$sortmod24.$sortmod25;
 
 ?>
 <input type="submit" value="Apply">
