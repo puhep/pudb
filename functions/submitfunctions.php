@@ -537,7 +537,11 @@ include_once("../functions/editfunctions.php");
 	ini_set('display_error', 'On');
 	error_reporting(E_ALL | E_STRICT);
 
+<<<<<<< HEAD
 	$dir = "/project/cmsfpix/.www/Submission_p/tmp/tmpbig/";
+=======
+	$dir = "../tmp/tmpbig/";
+>>>>>>> 33fcd6be3482c1bafd236705af7da7d860a18e20
 
 	#####Clear the tmp directory before putting in new files#####
 	exec("rm $dir*");

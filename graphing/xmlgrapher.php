@@ -319,6 +319,7 @@ $graph->yaxis->title->SetFont(FF_FONT2,FS_BOLD);
 $graph->yaxis->title->SetMargin(40);
 $graph->SetFrame(true,'black',0);
 $graph->legend->SetFont(FF_FONT2,FS_BOLD);
+$graph->legend->SetLineWeight(10);
 
 
 if(!is_null($file1)){
