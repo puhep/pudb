@@ -178,7 +178,7 @@ echo"<br>";
 #
 #echo"<br>";
 
-if($assembly >= 6 && $assembly <= 11){
+if($assembly >= 8 && $assembly <= 11){
 	echo"Ready for Shipping    <input name=\"box\" value=\"ready\" type=\"checkbox\">";
 	echo"User: <input name=\"who\" type=\"text\">   ";
 	echo"Comments: <textarea name=\"notes\"></textarea>   ";
