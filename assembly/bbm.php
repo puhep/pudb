@@ -150,35 +150,35 @@ else{
 
 echo"<br>";
 
-If($assembly == 8){
-	echo"Thermally Cycled    <input name=\"box\" value=\"thermal\" type=\"checkbox\">";
-	echo"User: <input name=\"who\" type=\"text\">   ";
-	echo"Comments: <textarea name=\"notes\"></textarea>   ";
-	echo"Comments File: <input name=\"comments\" type=\"file\">    ";
-	$checker = "";
-}
-else{
-	echo"Thermally Cycled    <input name=\"box\" value=\"thermal\"
- 	type=\"checkbox\"".$checker."DISABLED>";
-}
+#If($assembly == 8){
+#	echo"Thermally Cycled    <input name=\"box\" value=\"thermal\" type=\"checkbox\">";
+#	echo"User: <input name=\"who\" type=\"text\">   ";
+#	echo"Comments: <textarea name=\"notes\"></textarea>   ";
+#	echo"Comments File: <input name=\"comments\" type=\"file\">    ";
+#	$checker = "";
+#}
+#else{
+#	echo"Thermally Cycled    <input name=\"box\" value=\"thermal\"
+# 	type=\"checkbox\"".$checker."DISABLED>";
+#}
+#
+#echo"<br>";
+#
+#if($assembly == 9){
+#	echo"Tested    <input name=\"box\" value=\"test3\" type=\"checkbox\">";
+#	echo"User: <input name=\"who\" type=\"text\">   ";
+#	echo"Comments: <textarea name=\"notes\"></textarea>   ";
+#	echo"Comments File: <input name=\"comments\" type=\"file\">    ";
+#	$checker = "";
+#}
+#else{
+#	echo"Tested    <input name=\"box\" value=\"test3\"
+# 	type=\"checkbox\"".$checker."DISABLED>";
+#}
+#
+#echo"<br>";
 
-echo"<br>";
-
-if($assembly == 9){
-	echo"Tested    <input name=\"box\" value=\"test3\" type=\"checkbox\">";
-	echo"User: <input name=\"who\" type=\"text\">   ";
-	echo"Comments: <textarea name=\"notes\"></textarea>   ";
-	echo"Comments File: <input name=\"comments\" type=\"file\">    ";
-	$checker = "";
-}
-else{
-	echo"Tested    <input name=\"box\" value=\"test3\"
- 	type=\"checkbox\"".$checker."DISABLED>";
-}
-
-echo"<br>";
-
-if($assembly == 10){
+if($assembly >= 6 && $assembly <= 11){
 	echo"Ready for Shipping    <input name=\"box\" value=\"ready\" type=\"checkbox\">";
 	echo"User: <input name=\"who\" type=\"text\">   ";
 	echo"Comments: <textarea name=\"notes\"></textarea>   ";

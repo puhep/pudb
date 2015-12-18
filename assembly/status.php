@@ -172,10 +172,11 @@ echo "Modules";
 echo "</td>";
 for($loop=1;$loop<$bbmnum;$loop++){
 
-echo "<td valign=middle>";
-echo "<a href=\"step.php?sort=sh&part=module&sl=".$loop."\">".$bbmsteparray[$loop]."</a>";
-echo "</td>";
-
+if($loop != 9 && $loop != 10){
+	echo "<td valign=middle>";
+	echo "<a href=\"step.php?sort=sh&part=module&sl=".$loop."\">".$bbmsteparray[$loop]."</a>";
+	echo "</td>";
+}
 }
 
 echo "<td valign=middle>";
@@ -208,14 +209,18 @@ $nebraskanum = 0;
 			}
 		}
 	}
-	echo "<td>";
+
 	if($loop == $bbmnum-1 || $loop == $bbmnum-2){
+		echo "<td>";
 		echo $numatthislevel."<br><br><br>";
+		echo "</td>";
 	}
+	elseif($loop == 9 || $loop == 10){}
 	else{
+		echo "<td>";
 		echo $numatthislevel."<br>".$purduenum."<br>".$nebraskanum;
+		echo "</td>";
 	}
-	echo "</td>";
 }
 
 echo "<td>";
