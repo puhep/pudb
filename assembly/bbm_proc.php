@@ -43,7 +43,9 @@ if(isset($_POST['submit']) && ((isset($_POST['box']) && $_POST['who'] != "") || 
 		#$functested = "UPDATE module_p SET tested_status=\"To Be Tested\" WHERE id=".$id;
 		#mysql_query($functested, $connection);
 	}
-	
+	if($_POST['box'] == "ready"){
+		$assembly = 9;
+	}
 	if(isset($_POST['shipbox'])){
 		$submittedstep = $steparray[$assembly]." by ".$_POST['who_ship']." to ".$_POST['dest'];
 	}
