@@ -1352,7 +1352,7 @@ include_once("../functions/editfunctions.php");
 						$wafer = intval($strwafer)+100;
 					}
 					elseif(substr($delivered,0,1) == "B"){
-						$wafer = intval($strwafer)+000;	
+						$wafer = "0".$strwafer;	
 					}
 					elseif(substr($delivered,0,1) == "D"){
 						$wafer = intval($strwafer)+200;	
@@ -1410,8 +1410,8 @@ include_once("../functions/editfunctions.php");
 						$rocfunc = "UPDATE ROC_p SET name=\"".$rocname."\" WHERE assoc_module=".$id." AND position=".($j-1);	
 						mysql_query($rocfunc, $connection);
 					}
-					RTIROCs($id); ####RTI's numbering scheme is different ####
-					flipROCs($id); ####RTI's numbering scheme is different ####
+					#RTIROCs($id); ####RTI's numbering scheme is different ####
+					#flipROCs($id); ####RTI's numbering scheme is different ####
 					#echo "Module ".$name." added to the database";		
 					#echo "<br>";
 					$i++;
