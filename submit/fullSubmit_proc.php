@@ -28,10 +28,30 @@ if(isset($_POST['submit'])){
 		$newcomment = "Completed post-assembly tests: ";
 		if($newval == 1){ $newcomment .= "None, ";}
 		else{
-			if($newval%2 == 0){ $newcomment .= "Full test at 17C, ";}
-			if($newval%3 == 0){ $newcomment .= "Full test at -20C, ";}
-			if($newval%5 == 0){ $newcomment .= "X-ray Testing, ";}
-			if($newval%7 == 0){ $newcomment .= "Thermal Cycling, ";}
+			if($newval%2 == 0){ 
+				$newcomment .= "Full test at 17C, ";
+				#$timesfunc = "UPDATE times_module_p SET post_tested_17c = NOW() WHERE assoc_module=".$id;
+				$timesfunc = "UPDATE times_module_p SET post_tested_17c= CASE WHEN (post_tested_17c IS NULL OR UNIX_TIMESTAMP(post_tested_17c)=0) AND assoc_module=$id THEN NOW() ELSE post_tested_17c END";
+				mysql_query($timesfunc,$connection);
+			}
+			if($newval%3 == 0){ 
+				$newcomment .= "Full test at -20C, ";
+				#$timesfunc = "UPDATE times_module_p SET post_tested_n20c = NOW() WHERE assoc_module=".$id;
+				$timesfunc = "UPDATE times_module_p SET post_tested_n20c= CASE WHEN (post_tested_n20c IS NULL OR UNIX_TIMESTAMP(post_tested_n20c)=0) AND assoc_module=$id THEN NOW() ELSE post_tested_n20c END";
+				mysql_query($timesfunc,$connection);
+			}
+			if($newval%5 == 0){ 
+				$newcomment .= "X-ray Testing, ";
+				#$timesfunc = "UPDATE times_module_p SET post_tested_xray = NOW() WHERE assoc_module=".$id;
+				$timesfunc = "UPDATE times_module_p SET post_tested_xray= CASE WHEN (post_tested_xray IS NULL OR UNIX_TIMESTAMP(post_tested_xray)=0) AND assoc_module=$id THEN NOW() ELSE post_tested_xray END";
+				mysql_query($timesfunc,$connection);
+			}
+			if($newval%7 == 0){ 
+				$newcomment .= "Thermal Cycling, ";
+				#$timesfunc = "UPDATE times_module_p SET post_tested_thermal_cycle = NOW() WHERE assoc_module=".$id;
+				$timesfunc = "UPDATE times_module_p SET post_tested_thermal_cycle= CASE WHEN (post_tested_thermal_cycle IS NULL OR UNIX_TIMESTAMP(post_tested_thermal_cycle)=0) AND assoc_module=$id THEN NOW() ELSE post_tested_thermal_cycle END";
+				mysql_query($timesfunc,$connection);
+			}
 		}
 		$newcomment .= "by ".$_POST['user'];
 		addcomment_fnal($id, $newcomment, $_POST['user']);

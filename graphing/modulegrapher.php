@@ -17,7 +17,7 @@ $hide= "";
 if(!$_SESSION['hidepre']){
 	#$hide = " WHERE received > \"2015-09-01\"";
 	$hide = " AND received > \"2015-09-01\"";
-	$day = 1;
+	$day = 7;
 }
 else{$day=30;}
 

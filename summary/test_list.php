@@ -96,7 +96,6 @@ include('../graphing/xmlgrapher_crit.php');
 </form>
 
 <br>
-<br>
 <form name="filter" action="../summary/test_list.php" method="GET">
 Filters:
 <br>
@@ -715,7 +714,7 @@ echo "</tr>";
 echo "</table>";
 
 echo"<br>";
-echo"<br>";
+
 ?>
 
 <form method="link" action="../index.php">
