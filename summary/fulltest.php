@@ -37,7 +37,7 @@
 		echo "Defects Over Time";
 		echo "</h>";
 		echo "<br>";
-                echo "<p>Includes modules that have been tested at -20C and have a grade of neither A nor I</p>";
+                echo "<p>Includes modules that have been tested at -20C and have a grade of B or C</p>";
 		echo "Total";
 		echo "<br>";
 		echo "<a href=\"../graphing/bad_modulegrapher.php\" target=\"blank\"><img src=\"../graphing/bad_modulegrapher.php\" width=\"710\" height=\"400\" /></a>";
