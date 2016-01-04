@@ -5,6 +5,9 @@ error_reporting(E_ALL | E_STRICT);
 include('functions/submitfunctions.php');
 include('functions/curfunctions.php');
 
+echo "Before include statement<br>";
+include('graphing/xmlgrapher_crit.php');
+echo "After include statement<br>";
 
 	#echo batchCode("YHC69-1015");
 
@@ -43,10 +46,10 @@ include('functions/curfunctions.php');
 #}
 #echo "wafer: ".$wafer."<br>";
 
-$part = "module_p";
-$name = "P-A-test-test";
-$id = findid($part,$name);
-echo "<br>$id<br>";
+#$part = "module_p";
+#$name = "P-A-test-test";
+#$id = findid($part,$name);
+#echo "<br>$id<br>";
 
 
 

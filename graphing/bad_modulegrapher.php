@@ -30,8 +30,8 @@ if($loc == "nebraska"){
 	$loc_condition = "Nebraska";
 }
 
-$func = "SELECT a.HDI_attached, a.tested2, a.assoc_module, b.id, b.assoc_sens FROM times_module_p a, module_p b WHERE a.assoc_module=b.id".$hide." ORDER BY HDI_attached";
-$func2 = "SELECT a.HDI_attached, a.tested2, a.assoc_module, b.id FROM times_module_p a, module_p b WHERE a.assoc_module=b.id".$hide." ORDER BY tested2";
+$func = "SELECT a.HDI_attached, a.post_tested_n20c, a.assoc_module, b.id, b.assoc_sens FROM times_module_p a, module_p b WHERE a.assoc_module=b.id".$hide." ORDER BY HDI_attached";
+$func2 = "SELECT a.HDI_attached, a.post_tested_n20c, a.assoc_module, b.id FROM times_module_p a, module_p b WHERE a.assoc_module=b.id".$hide." ORDER BY post_tested_n20c";
 
 $output = mysql_query($func, $connection);
 $output2 = mysql_query($func2, $connection);
@@ -49,7 +49,7 @@ while($row = mysql_fetch_assoc($output)){
 	$totgrade = curgrade($id);
 	if($totgrade == "I"){ continue;}
 
-	if(!is_null($row['HDI_attached']) && curgrade($id)!="A" && $loc_condition==$modloc){
+	if(!is_null($row['HDI_attached']) && curgrade($id)!="A" && !is_null($row['post_tested_n20c']) && $loc_condition==$modloc){
 		if($g==0){
 			$arrAssembled[0][$g] = strtotime($row['HDI_attached']);
 			$arrAssembled[1][$g] = 0;
@@ -60,35 +60,35 @@ while($row = mysql_fetch_assoc($output)){
 		$g++;
 	}
 	
-	if(!is_null($row['HDI_attached']) && badbumps_crit($id)>"A" && xmlgrapher_crit_num($row['assoc_sens'], "IV", "module",0)!=1 && $loc_condition==$modloc){
+	if(!is_null($row['post_tested_n20c']) && badbumps_crit($id)>"A" && xmlgrapher_crit_num($row['assoc_sens'], "IV", "module",0)!=1 && $loc_condition==$modloc){
 		if($k==0){
-			$arr3[0][$k] = strtotime($row['HDI_attached']);
+			$arr3[0][$k] = strtotime($row['post_tested_n20c']);
 			$arr3[1][$k] = 0;
 			$k++;
 		}
-		$arr3[0][$k] = strtotime($row['HDI_attached']);
+		$arr3[0][$k] = strtotime($row['post_tested_n20c']);
 		$arr3[1][$k] = $k;
 		$k++;
 	}
 
-	elseif(!is_null($row['HDI_attached']) && badbumps_crit($id)>"A" && $loc_condition==$modloc){
+	elseif(!is_null($row['post_tested_n20c']) && badbumps_crit($id)>"A" && $loc_condition==$modloc){
 		if($i==0){
-			$arr1[0][$i] = strtotime($row['HDI_attached']);
+			$arr1[0][$i] = strtotime($row['post_tested_n20c']);
 			$arr1[1][$i] = 0;
 			$i++;
 		}
-		$arr1[0][$i] = strtotime($row['HDI_attached']);
+		$arr1[0][$i] = strtotime($row['post_tested_n20c']);
 		$arr1[1][$i] = $i;
 		$i++;
 	}
 	
-	elseif(!is_null($row['HDI_attached']) && xmlgrapher_crit_num($row['assoc_sens'], "IV", "module",0)!=1 && $loc_condition==$modloc){
+	elseif(!is_null($row['post_tested_n20c']) && xmlgrapher_crit_num($row['assoc_sens'], "IV", "module",0)!=1 && $loc_condition==$modloc){
 		if($j==0){
-			$arr2[0][$j] = strtotime($row['HDI_attached']);
+			$arr2[0][$j] = strtotime($row['post_tested_n20c']);
 			$arr2[1][$j] = 0;
 			$j++;
 		}
-		$arr2[0][$j] = strtotime($row['HDI_attached']);
+		$arr2[0][$j] = strtotime($row['post_tested_n20c']);
 		$arr2[1][$j] = $j;
 		$j++;
 	}
@@ -117,7 +117,7 @@ $graph->title->SetFont(FF_FONT2,FS_BOLD);
 
 $graph->xaxis->SetLabelAngle(90);
 $graph->xaxis->title->Set("Time");
-$graph->xaxis->scale->ticks->Set(30*24*60*60);
+$graph->xaxis->scale->ticks->Set(7*24*60*60);
 $graph->xaxis->SetFont(FF_FONT2,FS_BOLD);
 $graph->xaxis->title->SetFont(FF_FONT2,FS_BOLD);
 
@@ -145,7 +145,7 @@ $graph->Add($sp2);
 
 
 #$spA->SetFillColor('purple@0.5');
-$spA->SetColor('blue@0.5');
+$spA->SetColor('purple');
 $spA->SetWeight(7);
 #$spA->SetStyle("solid");
 $spA->SetStepStyle();
@@ -166,12 +166,13 @@ $sp2->SetStepStyle();
 $sp2->SetLegend("Bad IV");
 
 #$sp3->SetFillColor('lightgreen@0.5');
-$sp3->SetColor('purple@0.5');
+$sp3->SetColor('blue@0.5');
 $sp3->SetWeight(7);
 $sp3->SetStyle("solid");
 $sp3->SetStepStyle();
 $sp3->SetLegend("Bad Both");
 
+$graph->legend->SetLineWeight(10);
 $graph->Stroke();
 
 ?>

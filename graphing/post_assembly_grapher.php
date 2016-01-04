@@ -115,7 +115,7 @@ $graph->xaxis->SetLabelAngle(90);
 $graph->xaxis->title->SetFont(FF_FONT2,FS_BOLD);
 $graph->xaxis->title->Set("Time");
 $graph->xaxis->SetFont(FF_FONT2, FS_BOLD);
-$graph->xaxis->scale->ticks->Set(1*24*60*60);
+$graph->xaxis->scale->ticks->Set(7*24*60*60);
 
 #$graph->yaxis->title->Set("");
 $graph->yaxis->SetFont(FF_FONT2, FS_BOLD);
@@ -130,7 +130,7 @@ $graph->legend->SetFont(FF_FONT2,FS_BOLD);
 
 $sp1 = new LinePlot($arr1[1],$arr1[0]);
 $graph->Add($sp1);
-$sp1->SetColor('blue@0.5');
+$sp1->SetColor('red@0.5');
 $sp1->SetWeight(7);
 $sp1->SetStyle("solid");
 $sp1->SetStepStyle();
@@ -138,7 +138,7 @@ $sp1->SetLegend("Tested at 17C");
 
 $sp2 = new LinePlot($arr2[1],$arr2[0]);
 $graph->Add($sp2);
-$sp2->SetColor('red@0.5');
+$sp2->SetColor('blue@0.5');
 $sp2->SetWeight(7);
 $sp2->SetStyle("solid");
 $sp2->SetStepStyle();

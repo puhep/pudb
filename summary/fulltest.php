@@ -14,6 +14,7 @@
 		echo "Grade Over Time";
 		echo "</h>";
 		echo "<br>";
+                echo "<p>Grades and test dates are based on the -20C Full Test at FNAL</p>";
 		
 		echo "<div id=\"module\">";
 		echo "Total";
@@ -36,6 +37,7 @@
 		echo "Defects Over Time";
 		echo "</h>";
 		echo "<br>";
+                echo "<p>Includes modules that have been tested at -20C and have a grade of neither A nor I</p>";
 		echo "Total";
 		echo "<br>";
 		echo "<a href=\"../graphing/bad_modulegrapher.php\" target=\"blank\"><img src=\"../graphing/bad_modulegrapher.php\" width=\"710\" height=\"400\" /></a>";
