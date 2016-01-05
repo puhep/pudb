@@ -17,41 +17,38 @@ mysql_query("USE cmsfpix_u", $connection);
 
 $date = time();
 
-$hide = "";
-#if(!$_SESSION['hidepre']){
-	$hide = " AND received > \"2015-09-01 \"";
-#}
+#$hide = "";
+$hide = " AND received > \"2015-09-01 \"";
 
 
-#$loc = $_GET['loc'];
-#$loc_condition=TRUE;
-#if($loc == "purdue"){
-#	$loc_condition = "Purdue";
-#}
-#if($loc == "nebraska"){
-#	$loc_condition = "Nebraska";
-#}
-
+$funcShipped = "SELECT UNIX_TIMESTAMP(shipped) FROM times_module_p WHERE shipped IS NOT NULL".$hide."ORDER BY UNIX_TIMESTAMP(shipped)";
 $func1 =  "SELECT UNIX_TIMESTAMP(post_tested_17c), assoc_module FROM times_module_p WHERE UNIX_TIMESTAMP(post_tested_17c) IS NOT NULL AND UNIX_TIMESTAMP(post_tested_17c) != 0".$hide." ORDER BY UNIX_TIMESTAMP(post_tested_17c)";
 $func2 =  "SELECT UNIX_TIMESTAMP(post_tested_n20c), assoc_module FROM times_module_p WHERE UNIX_TIMESTAMP(post_tested_n20c) IS NOT NULL AND UNIX_TIMESTAMP(post_tested_n20c) != 0".$hide." ORDER BY UNIX_TIMESTAMP(post_tested_n20c)";
 $func3 =  "SELECT UNIX_TIMESTAMP(post_tested_xray), assoc_module FROM times_module_p WHERE UNIX_TIMESTAMP(post_tested_xray) IS NOT NULL AND UNIX_TIMESTAMP(post_tested_xray) != 0".$hide." ORDER BY UNIX_TIMESTAMP(post_tested_xray)";
 $func4 =  "SELECT UNIX_TIMESTAMP(post_tested_thermal_cycle), assoc_module FROM times_module_p WHERE UNIX_TIMESTAMP(post_tested_thermal_cycle) IS NOT NULL AND UNIX_TIMESTAMP(post_tested_thermal_cycle) != 0".$hide." ORDER BY UNIX_TIMESTAMP(post_tested_thermal_cycle)";
 
+$outputShipped = mysql_query($funcShipped, $connection);
 $output1 = mysql_query($func1, $connection);
 $output2 = mysql_query($func2, $connection);
 $output3 = mysql_query($func3, $connection);
 $output4 = mysql_query($func4, $connection);
 
+$x=0;
+while($row1 = mysql_fetch_assoc($outputShipped)){
+
+		$arrShipped[0][$x] = $row1['UNIX_TIMESTAMP(shipped)'];
+		$arrShipped[1][$x] = $x+1;
+		$x++;
+}
+$arrShipped[0][$x] = $date;
+$arrShipped[1][$x] = $x;
+
 $i=0;
 while($row1 = mysql_fetch_assoc($output1)){
 
-	#$modloc = curloc("module_p", $row1['assoc_module']);
-
-	#if(!is_null($row1['UNIX_TIMESTAMP(a.post_tested_17c)']) && $loc_condition==$modloc){
 		$arr1[0][$i] = $row1['UNIX_TIMESTAMP(post_tested_17c)'];
 		$arr1[1][$i] = $i+1;
 		$i++;
-	#}
 }
 $arr1[0][$i] = $date;
 $arr1[1][$i] = $i;
@@ -60,13 +57,9 @@ $arr1[1][$i] = $i;
 $j=0;
 while($row2 = mysql_fetch_assoc($output2)){
 
-	#$modloc = curloc("module_p", $row2['assoc_module']);
-
-	#if(!is_null($row2['UNIX_TIMESTAMP(a.post_tested_n20c)']) && $loc_condition==$modloc){
 		$arr2[0][$j] = $row2['UNIX_TIMESTAMP(post_tested_n20c)'];
 		$arr2[1][$j] = $j+1;
 		$j++;
-	#}
 }
 $arr2[0][$j] = $date;
 $arr2[1][$j] = $j;
@@ -75,13 +68,9 @@ $arr2[1][$j] = $j;
 $k=0;
 while($row3 = mysql_fetch_assoc($output3)){
 
-	#$modloc = curloc("module_p", $row3['assoc_module']);
-
-	#if(!is_null($row3['UNIX_TIMESTAMP(a.post_tested_xray)']) && $loc_condition==$modloc){
 		$arr3[0][$k] = $row3['UNIX_TIMESTAMP(post_tested_xray)'];
 		$arr3[1][$k] = $k+1;
 		$k++;
-	#}
 }
 $arr3[0][$k] = $date;
 $arr3[1][$k] = $k;
@@ -89,13 +78,9 @@ $arr3[1][$k] = $k;
 $l=0;
 while($row4 = mysql_fetch_assoc($output4)){
 
-	#$modloc = curloc("module_p", $row4['assoc_module']);
-
-	#if(!is_null($row4['UNIX_TIMESTAMP(a.post_tested_thermal_cycle)']) && $loc_condition==$modloc){
 		$arr4[0][$l] = $row4['UNIX_TIMESTAMP(post_tested_thermal_cycle)'];
 		$arr4[1][$l] = $l+1;
 		$l++;
-	#}
 }
 $arr4[0][$l] = $date;
 $arr4[1][$l] = $l;
@@ -127,6 +112,14 @@ $graph->img->SetMargin(70,80,40,40);
 
 $graph->legend->SetPos(.1, .1, 'left','top');
 $graph->legend->SetFont(FF_FONT2,FS_BOLD);
+
+$sp0 = new LinePlot($arrShipped[1],$arrShipped[0]);
+$graph->Add($sp0);
+$sp0->SetColor('black@0.2');
+$sp0->SetWeight(7);
+$sp0->SetStyle("solid");
+$sp0->SetStepStyle();
+$sp0->SetLegend("Shipped");
 
 $sp1 = new LinePlot($arr1[1],$arr1[0]);
 $graph->Add($sp1);

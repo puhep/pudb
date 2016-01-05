@@ -149,14 +149,14 @@ $spA->SetColor('purple');
 $spA->SetWeight(7);
 #$spA->SetStyle("solid");
 $spA->SetStepStyle();
-$spA->SetLegend("Assembled");
+$spA->SetLegend("Defective Modules");
 
 #$sp1->SetFillColor('lightblue@0.5');
 $sp1->SetColor('green@0.5');
 $sp1->SetWeight(7);
 $sp1->SetStyle("solid");
 $sp1->SetStepStyle();
-$sp1->SetLegend("Bad Bumps");
+$sp1->SetLegend("Bad Pixels");
 
 #$sp2->SetFillColor('lightred@0.5');
 $sp2->SetColor('red@0.5');
