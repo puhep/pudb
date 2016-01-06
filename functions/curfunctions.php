@@ -636,6 +636,12 @@ function curtestparams($id, $edit=0){
 	else{
 	echo "Timeable: No<br>";
 	}
+
+	echo "RTD temperature during testing: ";
+	if(!is_null($dumped['rtd_temp'])){ echo $dumped['rtd_temp']."C"; }
+	else{ echo "Not Set"; }
+	echo "<br>";
+	
 	if(is_null($dumped['tested_status'])){
 		echo "Next Testing Step: Not Set<br>";
 	}

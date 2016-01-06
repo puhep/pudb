@@ -25,6 +25,7 @@ include('../graphing/xmlgrapher_crit.php');
 	$param22 = "";
 	$param23 = "";
 	$param24 = 1;
+	$param25 = "";
 
 
 	$comp2 = "";
@@ -38,6 +39,7 @@ include('../graphing/xmlgrapher_crit.php');
 	$comp12 = "";
 	$comp13 = "";
 	$comp18 = "";
+	$comp25 = "";
 	
 	if(!empty($_GET)){
 		$param1 = $_GET['param1'];
@@ -68,6 +70,7 @@ include('../graphing/xmlgrapher_crit.php');
 			}
 			echo "<input type='hidden' name='param24' value='".$param24."'>";
 		}
+		$param25 = $_GET['param25'];
 
 		$comp2 = $_GET['comp2'];
 		$comp3 = $_GET['comp3'];
@@ -80,6 +83,7 @@ include('../graphing/xmlgrapher_crit.php');
 		$comp12 = $_GET['comp12'];
 		$comp13 = $_GET['comp13'];
 		$comp18 = $_GET['comp18'];
+		$comp25 = $_GET['comp25'];
 	}
 
 ?>
@@ -278,6 +282,14 @@ Timeable:
 <br>
 <br>
 
+RTD Temperature:
+<select name="comp25">
+<?php comparepop($comp25); ?>
+</select>
+<textarea name="param25" cols="10" rows="1"><?php echo $param25; ?></textarea>
+<br>
+<br>
+
 IV Scan Thresholds:
 <select name="comp18">
 <option value=""></option>
@@ -328,6 +340,7 @@ $sortmod21 = "";
 $sortmod22 = "";
 $sortmod23 = "";
 $sortmod24 = "";
+$sortmod25 = "";
 
 if($param1 != ""){
 	$sortmod1 = "AND location=\"".$_GET['param1']."\" ";
@@ -402,10 +415,14 @@ if($param23 != ""){
 
 $sortmod24 = "AND a.assembly_post % ".$param24." = 0 ";
 
-$sortmod25 = "AND a.name NOT LIKE '%95%' AND a.name NOT LIKE '%96%' AND a.name NOT LIKE '%97%' ";
-#$sortmod25 = "";
+if($param25 != ""){
+	 $sortmod25 = "AND rtd_temp ".$_GET['comp25']." ".$_GET['param25'];
+}
 
-$sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19.$sortmod20.$sortmod21.$sortmod22.$sortmod23.$sortmod24.$sortmod25;
+$sortmod26 = "AND a.name NOT LIKE '%95%' AND a.name NOT LIKE '%96%' AND a.name NOT LIKE '%97%' ";
+#$sortmod26 = "";
+
+$sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19.$sortmod20.$sortmod21.$sortmod22.$sortmod23.$sortmod24.$sortmod25.$sortmod26;
 
 ?>
 <input type="submit" value="Apply">

@@ -828,6 +828,21 @@ include_once("../functions/editfunctions.php");
 
 					#####################
 
+					##########RTD TEMPERATURE########
+
+					$temp = $doc->TEST[$i]->RTD_TEMP;
+					if($temp != ""){
+						mysql_query('USE cmsfpix_u', $connection);
+
+						$func = "UPDATE module_p SET rtd_temp=".$temp." WHERE id=\"".$id."\"";
+						mysql_query($func, $connection);
+
+						#echo "RTD Temperature ".$name.":  ".$temp;
+						#echo "<br>";
+					}
+
+					#####################
+
 					##########NOTES########
 
 					$testnotes = $doc->TEST[$i]->NOTES;
