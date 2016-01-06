@@ -126,7 +126,7 @@ $graph->yaxis->scale->SetAutoMin(0);
 $graph->yaxis->SetFont(FF_FONT2,FS_BOLD);
 $graph->yaxis->title->SetFont(FF_FONT2,FS_BOLD);
 
-$graph->legend->SetPos(.1,.1,'left','top');
+$graph->legend->SetPos(.08,.08,'left','top');
 $graph->legend->SetFont(FF_FONT2,FS_BOLD);
 
 $graph->img->SetMargin(70,80,40,40);	
@@ -156,7 +156,7 @@ $sp1->SetColor('green@0.5');
 $sp1->SetWeight(7);
 $sp1->SetStyle("solid");
 $sp1->SetStepStyle();
-$sp1->SetLegend("Bad Pixels");
+$sp1->SetLegend("Bad Pixels/Bumps");
 
 #$sp2->SetFillColor('lightred@0.5');
 $sp2->SetColor('red@0.5');
