@@ -51,11 +51,11 @@ while($row = mysql_fetch_assoc($output)){
 
 	if(!is_null($row['HDI_attached']) && curgrade($id)!="A" && !is_null($row['post_tested_n20c']) && $loc_condition==$modloc){
 		if($g==0){
-			$arrAssembled[0][$g] = strtotime($row['HDI_attached']);
+			$arrAssembled[0][$g] = strtotime($row['post_tested_n20c']);
 			$arrAssembled[1][$g] = 0;
 			$g++;
 		}
-		$arrAssembled[0][$g] = strtotime($row['HDI_attached']);
+		$arrAssembled[0][$g] = strtotime($row['post_tested_n20c']);
 		$arrAssembled[1][$g] = $g;
 		$g++;
 	}
