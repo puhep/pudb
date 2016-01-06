@@ -516,6 +516,70 @@ function badbumps_crit($id){
 		return $ret;
 }
 
+### Evaluates a module and return's its grade based only on its number of electrically bad bumps.
+### Every ROC is assessed and the grade of the worst ROC is returned
+function badbumps_elec_crit($id){
+	include('../../../Submission_p_secure_pages/connect.php');
+
+	mysql_query('USE cmsfpix_u', $connection);
+	
+	$func = "SELECT badbumps_elec from ROC_p WHERE assoc_module=".$id;
+	$output = mysql_query($func, $connection);
+	$ret = "";
+	while($array = mysql_fetch_assoc($output)){
+		if(is_null($array['badbumps_elec']) ){
+			return "";
+		}
+		$totbad = $array['badbumps_elec'];
+		if($totbad > 166){
+			$ret = "C";
+		}
+		else if($totbad > 41 && $ret != "C"){
+			$ret = "B";
+		}
+		else if($ret != "B" && $ret != "C"){
+			$ret = "A";
+		}
+	}
+		return $ret;
+}
+
+### Evaluates a module and return's its grade based only on its number of bad pixels
+### Bad pixels include unaddressable, unmaskable, dead pixels
+### Every ROC is assessed and the grade of the worst ROC is returned
+function badpix_crit($id){
+	include('../../../Submission_p_secure_pages/connect.php');
+
+	mysql_query('USE cmsfpix_u', $connection);
+	
+	$func = "SELECT deadpix, unaddressable, unmaskable from ROC_p WHERE assoc_module=".$id;
+	$output = mysql_query($func, $connection);
+	$ret = "";
+	while($array = mysql_fetch_assoc($output)){
+		if(is_null($array['deadpix']) ){
+			return "";
+		}
+		if(is_null($array['unaddressable'])){
+			$array['unaddressable']=0;
+		}
+		if(is_null($array['unmaskable'])){
+			$array['unmaskable']=0;
+		}
+		$totbad = $array['deadpix'] + $array['unaddressable'] + $array['unmaskable'];
+		if($totbad > 166){
+			$ret = "C";
+		}
+		else if($totbad > 41 && $ret != "C"){
+			$ret = "B";
+		}
+		else if($ret != "B" && $ret != "C"){
+			$ret = "A";
+		}
+	}
+		return $ret;
+}
+
+
 ### Returns the total number of electrically bad bumps on a module
 function badbumps($id){
 	include('../../../Submission_p_secure_pages/connect.php');
