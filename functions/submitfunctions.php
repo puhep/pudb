@@ -584,8 +584,9 @@ include_once("../functions/editfunctions.php");
 				while($doc->TEST[$i]->NAME != ""){
 
 					$name = $doc->TEST[$i]->NAME;
+					#echo "Name of test #$i is $name<br>";
 					$id = findid("module_p", $name);
-
+					
 					########ALL ROCS##########
 				
 					for($k=0;$k<16;$k++){
@@ -830,15 +831,17 @@ include_once("../functions/editfunctions.php");
 
 					##########RTD TEMPERATURE########
 
-					$temp = $doc->TEST[$i]->RTD_TEMP;
-					if($temp != ""){
-						mysql_query('USE cmsfpix_u', $connection);
+					if(isset($doc->TEST[$i]->RTD_TEMP)){
+					    $temp = $doc->TEST[$i]->RTD_TEMP;
+					    if($temp != ""){
+						    mysql_query('USE cmsfpix_u', $connection);
 
-						$func = "UPDATE module_p SET rtd_temp=".$temp." WHERE id=\"".$id."\"";
-						mysql_query($func, $connection);
+						    $func = "UPDATE module_p SET rtd_temp=".$temp." WHERE id=\"".$id."\"";
+						    mysql_query($func, $connection);
 
-						#echo "RTD Temperature ".$name.":  ".$temp;
-						#echo "<br>";
+						    #echo "RTD Temperature ".$name.":  ".$temp;
+						    #echo "<br>";
+					    }
 					}
 
 					#####################
@@ -847,7 +850,11 @@ include_once("../functions/editfunctions.php");
 
 					$testnotes = $doc->TEST[$i]->NOTES;
 					if($testnotes != ""){
+						#echo "Testnotes: ".$testnotes."<br>";
+						#echo "module id: $id<br>";
+						#echo "Trying to add comments...";
 						addcomment_fnal($id, $testnotes);
+						#echo "...after the fact<br>";
 					}
 
 					#####################

@@ -12,12 +12,17 @@
 <img src="../pics/SINTEF_numbering_diagram_2x8s_Updated.jpg">
 </div>
 
+<form method="link" action="../index.php">
+<input type="submit" value="MAIN MENU">
+</form>
+<br>
+
 <?php
 include("../graphing/positiongrapher_crit.php");
 include("../functions/curfunctions.php");
 
 		echo "<h>";
-		echo "Total";
+		echo "All -20C FNAL Scans";
 		echo "</h>";
 		echo "<br>";
 		
@@ -30,6 +35,28 @@ include("../functions/curfunctions.php");
 		echo "</td>";
 		echo "<td>";
 		positiongrapher_crit("fnal", "IV","");
+		echo "</td>";
+		echo "</tr>";
+		echo "</table>";
+		
+		echo "<br>";
+		echo "<br>";
+		echo "</div>";
+
+		echo "<h>";
+		echo "All +17C FNAL Scans";
+		echo "</h>";
+		echo "<br>";
+		
+		echo "<div id=\"Total\">";
+		echo "<br>";
+		echo "<table>";
+		echo "<tr>";
+		echo "<td>";
+		curgraphs_pos_summary("fnal_17c", "IV","");
+		echo "</td>";
+		echo "<td>";
+		positiongrapher_crit("fnal_17c", "IV","");
 		echo "</td>";
 		echo "</tr>";
 		echo "</table>";

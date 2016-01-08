@@ -1,7 +1,11 @@
 <?php
+ini_set('display_error', 'On');
+error_reporting(E_ALL | E_STRICT);
+
 include('../functions/popfunctions.php');
 include('../functions/curfunctions.php');
 include('../graphing/xmlgrapher_crit.php');
+
 
 	$param1 = "";
 	$param2 = "";

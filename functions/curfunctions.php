@@ -977,6 +977,7 @@ function xmlbuttongen($id, $scan, $level){
 	$id2=0;
 	$id3=0;
 	$id4=0;
+	$id5=0;
 	
 	mysql_query('USE cmsfpix_u', $connection);
 
@@ -995,6 +996,9 @@ function xmlbuttongen($id, $scan, $level){
 		}
 		if($row['part_type'] == "fnal"){
 			$id4 = $row['id'];
+		}
+		if($row['part_type'] == "fnal_17c"){
+			$id5 = $row['id'];
 		}
 	}
 
@@ -1016,8 +1020,14 @@ function xmlbuttongen($id, $scan, $level){
 		echo "   ";
 		echo "<a href=\"../download/XMLfiles.php?part=assembled&partid=$id&scan=$scan\" target=\"_blank\">More Files</a>";
 	}
+	if($id5>0 && $level!="sensor"){
+		echo "<form><input type=\"button\" value=\"Download FNAL (+17C) Module $scan Data\" onClick=\"window.location.href='../download/dbxmldl.php?id=$id4'\"></form>";
+		echo "<a href=\"../download/dbcsvdl.php?id=$id5\" target=\"_blank\">Download as .txt</a>";
+		echo "   ";
+		echo "<a href=\"../download/XMLfiles.php?part=fnal&partid=$id&scan=$scan\" target=\"_blank\">More Files</a>";
+	}
 	if($id4>0 && $level!="sensor"){
-		echo "<form><input type=\"button\" value=\"Download FNAL Module $scan Data\" onClick=\"window.location.href='../download/dbxmldl.php?id=$id4'\"></form>";
+		echo "<form><input type=\"button\" value=\"Download FNAL (-20C) Module $scan Data\" onClick=\"window.location.href='../download/dbxmldl.php?id=$id4'\"></form>";
 		echo "<a href=\"../download/dbcsvdl.php?id=$id4\" target=\"_blank\">Download as .txt</a>";
 		echo "   ";
 		echo "<a href=\"../download/XMLfiles.php?part=fnal&partid=$id&scan=$scan\" target=\"_blank\">More Files</a>";

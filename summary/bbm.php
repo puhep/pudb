@@ -1,8 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <?php 
-	ini_set('display_error', 'On');
-	error_reporting(E_ALL | E_STRICT);
+	#ini_set('display_error', 'On');
+	#error_reporting(E_ALL | E_STRICT);
 
 
 	include_once('../functions/curfunctions.php');

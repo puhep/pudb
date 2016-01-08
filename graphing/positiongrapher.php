@@ -80,6 +80,7 @@ if($scan == "CV"){
 $y = "ACTV_CAP_FRD";}
 
 $graphname = "All ".$loc." ".$scan." Scans";
+
 $datacountlim = 0;
 
 $k=0;
@@ -184,7 +185,7 @@ if($markedarr[$l]==2){
 
 
 $sp1[$l] = new LinePlot($arr1[$l][1],$arr1[$l][0]);
-if($level == "fnal"){
+if($level == "fnal" || $level == "fnal_17c"){
 }
 else{
 	#$sp1[$l] = new ScatterPlot($arr1[$l][1],$arr1[$l][0]);

@@ -1,16 +1,19 @@
 <?php
 function xmlgrapher_writer($id, $scan, $level){
-include('../jpgraph/src/jpgraph.php');
-include('../jpgraph/src/jpgraph_scatter.php');
-include('../jpgraph/src/jpgraph_log.php');
+include_once('../jpgraph/src/jpgraph.php');
+include_once('../jpgraph/src/jpgraph_scatter.php');
+include_once('../jpgraph/src/jpgraph_log.php');
 
 include('../../../Submission_p_secure_pages/connect.php');
+
+#ini_set('display_errors','On');
+#error_reporting(E_ALL | E_STRICT);
 
 #$id = $_GET['id'];
 #$scan = $_GET['scan'];
 #$level = $_GET['level'];
 
-if($level == "assembled" || $level == "fnal"){
+if($level == "assembled" || $level == "fnal" || $level == "fnal_17c"){
 	$level = "module";
 }
 
@@ -37,6 +40,7 @@ $file1 = NULL;
 $file2 = NULL;
 $file3 = NULL;
 $file4 = NULL;
+$file5 = NULL;
 
 while($row = mysql_fetch_assoc($file)){
 	
@@ -53,6 +57,9 @@ while($row = mysql_fetch_assoc($file)){
 			}
 			if($row['part_type'] == "fnal"){
 				$file4 = $row['file'];
+			}
+			if($row['part_type'] == "fnal_17c"){
+				$file5 = $row['file'];
 			}
 		}
 	}
@@ -72,6 +79,9 @@ $doc3=simplexml_load_string($file3);}
 if(!is_null($file4)){
 $doc4=simplexml_load_string($file4);}
 
+if(!is_null($file5)){
+$doc5=simplexml_load_string($file5);}
+
 if($scan == "IV"){
 $y = "ACTV_CURRENT_AMP";
 $y2 = "TOT_CURRENT_AMP";
@@ -79,7 +89,7 @@ $y3 = "GRD_CURRENT_AMP";}
 if($scan == "CV"){
 $y = "ACTV_CAP_FRD";}
 
-$graphname = $partname." ".$scan." Scan";
+$graphname = $name." ".$scan." Scan";
 $datacountlim = 0;
 
 if(!is_null($file1)){
@@ -123,16 +133,29 @@ if(!is_null($file4)){
 		$timestamp4 = "No Timestamp";
 	}
 }
+if(!is_null($file5)){
+	$datacount5 = count($doc5->DATA_SET->DATA);
+	if($datacount5 > $datacountlim){
+		$datacountlim = $datacount5;
+	}
+
+	$timestamp5 = $doc5->HEADER->RUN->RUN_BEGIN_TIMESTAMP;
+	if($timestamp5 == ""){
+		$timestamp5 = "No Timestamp";
+	}
+}
+
 $arr1;
 $arr2;
 $arr3;
 $arr4;
+$arr5;
 $limitarr;
 $markedA=0;
 $markedB=0;
 $markedC=0;
 $markedD=0;
-
+$markedE=0;
 
 ###Array for a limit line
 #for($loop=0;$loop<$datacountlim;$loop++){
@@ -213,9 +236,9 @@ if(!is_null($file2)){
 				#$arr2[1][$loop] = 1E-10;
 				$arr2[1][$loop] *= -1;
 			}
-			if($arr2[1][$loop] > $limitarr[$loop]){
-				$markedB=1;
-			}
+			#if($arr2[1][$loop] > $limitarr[$loop]){
+			#	$markedB=1;
+			#}
 	}
 	$index100 = array_search(100, $arr2[0]);
 		$I100=$arr2[1][$index100];
@@ -249,9 +272,9 @@ if(!is_null($file3)){
 				#$arr3[1][$loop] = 1E-10;
 				$arr3[1][$loop] *= -1;
 			}
-			if($arr3[1][$loop] > $limitarr[$loop]){
-				$markedC=1;
-			}
+			#if($arr3[1][$loop] > $limitarr[$loop]){
+			#	$markedC=1;
+			#}
 	}
 	$index100 = array_search(100, $arr3[0]);
 		$I100=$arr3[1][$index100];
@@ -283,9 +306,9 @@ if(!is_null($file4)){
 				#$arr4[1][$loop] = 1E-10;
 				$arr4[1][$loop] *= -1;
 			}
-			if($arr4[1][$loop] > $limitarr[$loop]){
-				$markedD=1;
-			}
+			#if($arr4[1][$loop] > $limitarr[$loop]){
+			#	$markedD=1;
+			#}
 	}
 	$index100 = array_search(100, $arr4[0]);
 		$I100=$arr4[1][$index100];
@@ -295,6 +318,40 @@ if(!is_null($file4)){
 
 	if($I150>1E-6 || $I150/$I100>2){
 		$markedD=1;
+	}
+}
+
+if(!is_null($file5)){
+	for($loop=0;$loop<$datacount5;$loop++){
+
+		$arr5[0][$loop]=$doc5->DATA_SET->DATA[$loop]->VOLTAGE_VOLT;
+		
+		settype($arr5[0][$loop],"float");
+
+		$arr5[1][$loop]=$doc5->DATA_SET->DATA[$loop]->$y2;
+		if($arr5[1][$loop] == "NaN"){
+			$arr5[1][$loop] = 1E-10;
+		}
+			settype($arr5[1][$loop],"float");
+			if($arr5[1][$loop] == 0){
+				$arr5[1][$loop] = 1E-10;
+			}
+			if($arr5[1][$loop] < 0){
+				#$arr5[1][$loop] = 1E-10;
+				$arr5[1][$loop] *= -1;
+			}
+			#if($arr5[1][$loop] > $limitarr[$loop]){
+			#	$markedE=1;
+			#}
+	}
+	$index100 = array_search(100, $arr5[0]);
+		$I100=$arr5[1][$index100];
+
+	$index150 = array_search(150, $arr5[0]);
+		$I150=$arr5[1][$index150];
+
+	if($I150>1E-6 || $I150/$I100>2){
+		$markedE=1;
 	}
 }
 
@@ -352,7 +409,16 @@ $sp4->mark->SetWidth(8);
 $sp4->mark->SetFillColor("red");
 $sp4->link->Show();
 $graph->Add($sp4);
-$sp4->SetLegend("Module at FNAL\n".$timestamp4);
+$sp4->SetLegend("Module at FNAL (-20C)\n".$timestamp4);
+}
+
+if(!is_null($file5)){
+$sp5 = new ScatterPlot($arr5[1],$arr5[0]);
+$sp5->mark->SetWidth(8);
+$sp5->mark->SetFillColor("purple");
+$sp5->link->Show();
+$graph->Add($sp5);
+$sp5->SetLegend("Module at FNAL (+17C)\n".$timestamp4);
 }
 
 #if($scan=="IV"){

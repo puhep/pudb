@@ -6,7 +6,7 @@ require_once('../jpgraph/src/jpgraph_scatter.php');
 require_once('../jpgraph/src/jpgraph_line.php');
 require_once('../jpgraph/src/jpgraph_log.php');
 
-include_once('../../../Submission_p_secure_pages/connect.php');
+include('../../../Submission_p_secure_pages/connect.php');
 include_once('../functions/curfunctions.php');
 mysql_query('USE cmsfpix_u',$connection);
 
@@ -16,7 +16,7 @@ mysql_query('USE cmsfpix_u',$connection);
 
 $hide = hidepre("sensor", 2);
 
-if($hider == ""){
+if($hide == ""){
 	$imagefile = "../pics/graphs/".$level."_".$loc."_".$scan."_with_preproduction.png";
 }
 else{
