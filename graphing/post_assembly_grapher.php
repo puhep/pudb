@@ -5,8 +5,8 @@ require_once('../jpgraph/src/jpgraph.php');
 require_once('../jpgraph/src/jpgraph_date.php');
 require_once('../jpgraph/src/jpgraph_line.php');
 
-ini_set('display_errors','On');
-error_reporting(E_ALL | E_STRICT);
+#ini_set('display_errors','On');
+#error_reporting(E_ALL | E_STRICT);
 
 $arr1;
 $arr2;

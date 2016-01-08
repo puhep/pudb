@@ -484,8 +484,8 @@ echo "</table>";
 }
 
 function xmlgrapher_crit_num($id, $scan, $level, $exclusive){
-ini_set('display_errors','On');
-error_reporting(E_ALL | E_STRICT);
+#ini_set('display_errors','On');
+#error_reporting(E_ALL | E_STRICT);
 include('../../../Submission_p_secure_pages/connect.php');
 
 $func = "SELECT file, filesize, part_type FROM measurement_p WHERE part_ID=\"$id\" AND scan_type=\"$scan\"";

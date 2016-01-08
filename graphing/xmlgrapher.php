@@ -5,8 +5,8 @@ require_once('../jpgraph/src/jpgraph_log.php');
 
 include('../../../Submission_p_secure_pages/connect.php');
 
-ini_set('display_errors','On');
-error_reporting(E_ALL | E_STRICT);
+#ini_set('display_errors','On');
+#error_reporting(E_ALL | E_STRICT);
 
 $id = $_GET['id'];
 $scan = $_GET['scan'];

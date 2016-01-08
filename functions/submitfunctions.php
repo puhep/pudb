@@ -534,8 +534,8 @@ include("../../../Submission_p_secure_pages/connect.php");
 include_once("../functions/curfunctions.php");
 include_once("../functions/editfunctions.php");
 
-	ini_set('display_error', 'On');
-	error_reporting(E_ALL | E_STRICT);
+	#ini_set('display_error', 'On');
+	#error_reporting(E_ALL | E_STRICT);
 
 	$dir = "../tmp/tmpbig/";
 
