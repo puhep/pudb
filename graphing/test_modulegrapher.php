@@ -49,28 +49,47 @@ while($row = mysql_fetch_assoc($output)){
 		$g++;
 	}
 	
-	if(!is_null($row['post_tested_n20c']) && curgrade($id)=="A" && $loc_condition==$modloc){
-		$arr1[0][$i] = strtotime($row['post_tested_n20c']);
-		$arr1[1][$i] = $i+1;
-		$i++;
-	}
-	
-	if(!is_null($row['post_tested_n20c']) && curgrade($id)=="B" && $loc_condition==$modloc){
-		$arr2[0][$j] = strtotime($row['post_tested_n20c']);
-		$arr2[1][$j] = $j+1;
-		$j++;
-	}
-	
-	if(!is_null($row['post_tested_n20c']) && curgrade($id)=="C" && $loc_condition==$modloc){
-		$arr3[0][$k] = strtotime($row['post_tested_n20c']);
-		$arr3[1][$k] = $k+1;
-		$k++;
-	}
+
 	
 }
 
 $arrAssembled[0][$g] = $date;
 $arrAssembled[1][$g] = $g;
+
+
+
+while($row2 = mysql_fetch_assoc($output2)){
+
+	$modloc = curloc("module_p", $row2['assoc_module']);
+	$id = $row2['id'];
+
+	if(!is_null($row2['post_tested_n20c']) && $loc_condition==$modloc){
+		$arrTested[0][$h] = strtotime($row2['post_tested_n20c']);
+		$arrTested[1][$h] = $h+1;
+		$h++;
+	}
+	if(!is_null($row2['post_tested_n20c']) && curgrade($id)=="A" && $loc_condition==$modloc){
+		$arr1[0][$i] = strtotime($row2['post_tested_n20c']);
+		$arr1[1][$i] = $i+1;
+		$i++;
+	}
+	
+	if(!is_null($row2['post_tested_n20c']) && curgrade($id)=="B" && $loc_condition==$modloc){
+		$arr2[0][$j] = strtotime($row2['post_tested_n20c']);
+		$arr2[1][$j] = $j+1;
+		$j++;
+	}
+	
+	if(!is_null($row2['post_tested_n20c']) && curgrade($id)=="C" && $loc_condition==$modloc){
+		$arr3[0][$k] = strtotime($row2['post_tested_n20c']);
+		$arr3[1][$k] = $k+1;
+		$k++;
+	}
+
+
+}
+$arrTested[0][$h] = $date;
+$arrTested[1][$h] = $h;
 
 $arr1[0][$i] = $date;
 $arr1[1][$i] = $i;
@@ -80,20 +99,6 @@ $arr2[1][$j] = $j;
 
 $arr3[0][$k] = $date;
 $arr3[1][$k] = $k;
-
-while($row2 = mysql_fetch_assoc($output2)){
-
-	$modloc = curloc("module_p", $row2['assoc_module']);
-
-	if(!is_null($row2['post_tested_n20c']) && $loc_condition==$modloc){
-		$arrTested[0][$h] = strtotime($row2['post_tested_n20c']);
-		$arrTested[1][$h] = $h+1;
-		$h++;
-	}
-}
-$arrTested[0][$h] = $date;
-$arrTested[1][$h] = $h;
-
 
 $graphname = "Module Grade over Time";
 

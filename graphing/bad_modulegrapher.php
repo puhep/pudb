@@ -46,7 +46,7 @@ $i=0;
 $j=0;
 $k=0;
 $l=0;
-while($row = mysql_fetch_assoc($output)){
+while($row = mysql_fetch_assoc($output2)){
 
 	$modloc = curloc("module_p", $row['assoc_module']);
 	$id = $row['id'];

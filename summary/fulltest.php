@@ -1,5 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
+
+<form method="link" action="../index.php">
+<input type="submit" value="MAIN MENU">
+</form>
+<br>
+
 <head>
   <title>Module Quality Graphs</title>
   <meta content="text/html; charset=ISO-8859-1"
