@@ -1,6 +1,8 @@
 <?php
 include('../functions/submitfunctions.php');
 
+#ini_set('display_errors', 'On');
+#error_reporting(E_ALL | E_STRICT);
 
 if(isset($_POST['submit']) && isset($_POST['panel']) && isset($_POST['pos']) && isset($_POST['arrival'])){
 	

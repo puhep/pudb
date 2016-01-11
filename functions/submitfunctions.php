@@ -991,8 +991,7 @@ include('../../../Submission_p_secure_pages/connect.php');
 		    if ($id!=0){
 			    $timesfunc = "INSERT INTO times_HDI_p(received, assoc_hdi) VALUES (\"$date\", \"$id\")";
 
-			    mysql_query($timesfunc, $connection);	
-			    $num = 1;
+			    if(mysql_query($timesfunc, $connection)){ $num = 1;}
 			    #echo("HDI ".$htmlname." has been added to the database.<br>"); 
 		    }
 
