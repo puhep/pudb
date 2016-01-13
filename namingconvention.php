@@ -13,9 +13,9 @@
 <br>
 <br>
 
-<img src="pics/RTI_Numbering_Scheme.png" width="250" height="250">
-<img src="pics/SINTEF_numbering_diagram_2x8s_Updated.jpg" width="320" height="300">
-<img src="pics/HDI_labels.png" width="320" height="300">
+<img src="../Submission_p/pics/RTI_Numbering_Scheme.png" width="250" height="250">
+<img src="../Submission_p/pics/SINTEF_numbering_diagram_2x8s_Updated.jpg" width="320" height="300">
+<img src="../Submission_p/pics/HDI_labels.png" width="320" height="300">
 
 <br>
 <br>
@@ -98,7 +98,7 @@ Examples:
 <br>
 <br>
 <br>
-The following is based on a document detailing a new module naming scheme based on HDI labels and is an update from the original naming scheme. The full document can be downloaded <a href="pics/ModuleNameHDIBase.pdf" target="_blank">here</a>.
+The following is based on a document detailing a new module naming scheme based on HDI labels and is an update from the original naming scheme. The full document can be downloaded <a href="../Submission_p/pics/HDI_Naming_Convention.pdf" target="_blank">here</a>.
 <br>
 The naming convention for a fully assembled 2x8 module (including HDI) is "W-X-Y-ZZ"(a total of 8 characters) where:
 <br>
