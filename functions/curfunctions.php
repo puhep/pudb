@@ -47,12 +47,12 @@ function curpics($type, $id){
 	$num = 0;
 
 	echo "<table border=1 align=\"center\">";
-	while(file_exists($cwd."/../pics/".$type."/".$type.$id."pic".$num.".jpg")){
+	while(file_exists($cwd."/../../Submission_p/pics/".$type."/".$type.$id."pic".$num.".jpg")){
 	
 		echo "<tr>";
 
-		$src = "../pics/".$type."/".$type.$id."pic".$num.".jpg";
-		$txt = "../pics/".$type."/".$type.$id."pic".$num.".txt";
+		$src = "../../Submission_p/pics/".$type."/".$type.$id."pic".$num.".jpg";
+		$txt = "../../Submission_p/pics/".$type."/".$type.$id."pic".$num.".txt";
 	
 		echo "<td>";	
 		echo "<a href=".$src." target =\"_blank\"><img src=".$src." width=\"200\" height=\"200\" /></a>";
@@ -812,6 +812,17 @@ function findmodassembly($id){
 	$array = mysql_fetch_assoc($output);
 	$assembly = $array['assembly'];
 	return $assembly;
+}
+
+### Returns the current post-assembly testing status, given its id
+function findassembly_post($id){
+	include('../../../Submission_p_secure_pages/connect.php');
+	mysql_query('USE cmsfpix_u', $connection);
+	$func = "SELECT assembly_post FROM module_p  WHERE id=$id";
+	$output = mysql_query($func, $connection);
+	$array = mysql_fetch_assoc($output);
+	$assembly_post = $array['assembly_post'];
+	return $assembly_post;
 }
 
 ### Returns all the data in the table for a given part

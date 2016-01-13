@@ -3,8 +3,8 @@
 <title>Purdue University CMS FPix Upgrade Production Database</title>
 <link rel="stylesheet" type="text/css" href="css/summary3.css" />
 <body>
-<img src="pics/pu_logo.jpg" width="200" height="100">
-<img src="pics/CMS_logo_col.gif" width="100" height="100">
+<img src="../Submission_p/pics/pu_logo.jpg" width="200" height="100">
+<img src="../Submission_p/pics/CMS_logo_col.gif" width="100" height="100">
 <br>
 <h>
 Purdue University CMS FPix Upgrade Production Database

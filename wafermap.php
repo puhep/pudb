@@ -13,11 +13,11 @@
 <tr>
 
 <td>
-<img src="pics/RTI_Numbering_Scheme.png" width="300" height="300">
+<img src="../Submission_p/pics/RTI_Numbering_Scheme.png" width="300" height="300">
 </td>
 
 <td>
-<img src="pics/SINTEF_numbering_diagram_2x8s_Updated.jpg" width="370" height="350">
+<img src="../Submission_p/pics/SINTEF_numbering_diagram_2x8s_Updated.jpg" width="370" height="350">
 </td>
 
 </tr>

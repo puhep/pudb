@@ -4,10 +4,12 @@ ini_set('display_errors','On');
 error_reporting(E_ALL | E_STRICT);
 include('functions/submitfunctions.php');
 include('functions/curfunctions.php');
-
-echo "Before include statement<br>";
 include('graphing/xmlgrapher_crit.php');
-echo "After include statement<br>";
+include('../../Submission_p_secure_pages/connect.php');
+
+#require_once('../jpgraph/src/jpgraph.php');
+#require_once('../jpgraph/src/jpgraph_date.php');
+#require_once('../jpgraph/src/jpgraph_line.php');
 
 	#echo batchCode("YHC69-1015");
 
@@ -51,8 +53,18 @@ echo "After include statement<br>";
 #$id = findid($part,$name);
 #echo "<br>$id<br>";
 
-
-
+mysql_query("USE cmsfpix_u", $connection);
+$arr1;
+$func1 =  "SELECT UNIX_TIMESTAMP(post_tested_17c), assoc_module FROM times_module_p WHERE UNIX_TIMESTAMP(post_tested_17c) IS NOT NULL AND UNIX_TIMESTAMP(post_tested_17c) != 0 ORDER BY UNIX_TIMESTAMP(post_tested_17c)";
+$output1 = mysql_query($func1, $connection);
+echo "output1: ".$output1;
+echo "<br>";
+$row1 = mysql_fetch_assoc($output1);
+echo "row1: ".$row1;
+echo "<br>";
+$arr1[0][0] = $row1['post_tested_17c'];
+echo $arr1[0][0];
+echo "<br>";
 
 
 ?>
