@@ -832,7 +832,7 @@ include_once("../functions/editfunctions.php");
 					##########X-RAY TESTED########
 
 					$xrayed = $doc->TEST[$i]->XRAY_TESTED;
-					if($xrayed != "" && findassembly_post($id)%5 != 0){
+					if($xrayed == 1 && findassembly_post($id)%5 != 0){
 						      	$num = findassembly_post($id)*5;
 							mysql_query('USE cmsfpix_u', $connection);
 							$func = "UPDATE module_p SET assembly_post= $num WHERE id=\"".$id."\"";
