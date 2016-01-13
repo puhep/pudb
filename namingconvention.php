@@ -134,7 +134,7 @@ The naming convention for a fully assembled 2x8 module (including HDI) is "W-X-Y
 <tr>
 <td>Batch 2</td> 
 <td>YHD27-1015</td> 
-<td>No production modules</td> 
+<td>M-C-x-yy</td> 
 <td>P-C-x-yy</td> 
 </tr>
 <tr>
@@ -165,6 +165,18 @@ The naming convention for a fully assembled 2x8 module (including HDI) is "W-X-Y
 <td>Batch 7</td> 
 <td>YFC84-3915</td> 
 <td>M-H-x-yy</td> 
+<td>No preproduction modules</td> 
+</tr>
+<tr>
+<td>Batch 8</td> 
+<td>YFD00-4715</td> 
+<td>M-I-x-yy</td> 
+<td>No preproduction modules</td> 
+</tr>
+<tr>
+<td>Batch 9</td> 
+<td>YFD04-4715</td> 
+<td>M-J-x-yy</td> 
 <td>No preproduction modules</td> 
 </tr>
 </table>
