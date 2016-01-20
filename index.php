@@ -84,6 +84,10 @@ Data Viewing
   <input value="MoReWeb Results"
  type="submit"></form>
 
+<form action="summary/modulereport.php" method="get">
+  <input value="Module Report"
+ type="submit"></form>
+
 <br>
 
 New Parts Information
