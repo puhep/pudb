@@ -292,13 +292,30 @@ function currocs_string($module){
 
 	mysql_query('USE cmsfpix_u', $connection);
 
-	$func = "SELECT name from ROC_p WHERE assoc_module=\"$module\" ORDER BY position ASC";
+	$func = "SELECT name,thickness from ROC_p WHERE assoc_module=\"$module\" ORDER BY position ASC";
 	$output = mysql_query($func, $connection);
 
-	$rocstring;
+	$rocstring = "";
 
 	while($row = mysql_fetch_assoc($output)){
-		$rocstring .= $row['name'].", ";
+		$name = $row['name'];
+		if(strpos($name, " ") == false){}
+		else{
+			$first = substr($name, 0,strpos($name, " "));
+			$second = substr($name, strpos($name," ")+1, strlen($name));
+			$name = $first."-".$second;
+		}
+		if(strpos($rocstring, "um") == false){
+			$rocstring .= $row['thickness']."um, ";
+		}	
+		if(strpos($name, '(') == false){
+			$rocstring .= $name.", ";
+		}
+		else{ 
+			$first = substr($name,0,strpos($name,'('));
+			$second = substr($name,strpos($name,')')+1,strlen($name));
+			$rocstring .= $first.$second.", ";
+		}
 	}
 
 	return $rocstring;
