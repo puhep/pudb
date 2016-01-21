@@ -28,16 +28,17 @@ if(isset($_GET['sort'])){
 }
 
 $dlstring;
+#$hide = "";
+$hide = " AND c.received > \"2015-09-01\" and c.assoc_module=a.id and c.assoc_module = b.module";
+#$hide = hidepre("module",2);
 
-$hide = hidepre("module",2);
 
-
-$bbmfunc = "SELECT name, id, assembly, assoc_sens, bonder, location, time_created from module_p WHERE name LIKE 'M%'".$hide." ORDER BY name";
+$bbmfunc = "SELECT a.name, a.id, a.assembly, a.assoc_sens, a.bonder, a.location, a.time_created, b.module, b.TBM_wafer, c.received from module_p a, HDI_p b, times_module_p c WHERE a.name LIKE 'M%' AND a.id=b.module ".$hide." ORDER BY name";
 
 $partarray = array("Module","Location", "Bonder", "Sensor", "HDI", "ROCs", "IV Scans", "Criteria", "Date Assembled", "Last Modified");
 $sortarray = array("mod", "loc", "fcb", "sen", "hdi", "", "", "", "dat", "lm");
 
-$dlstring = "module, sensor, HDI, ROC0, ROC1, ROC2, ROC3, ROC4, ROC5, ROC6, ROC7, ROC8, ROC9, ROC10, ROC11, ROC12, ROC13, ROC14, ROC15,\n";
+$dlstring = "module, assembly site, assembly date, sensor, HDI, TBM wafer, ROC thickness, ROC0, ROC1, ROC2, ROC3, ROC4, ROC5, ROC6, ROC7, ROC8, ROC9, ROC10, ROC11, ROC12, ROC13, ROC14, ROC15,\n";
 
 
 $i=0;
@@ -67,7 +68,9 @@ while($row = mysql_fetch_assoc($output)){
 	$bbmarray[8][$k] = $row['location'];
 	$bbmarray[9][$k] = $row['time_created'];
 	$bbmarray[10][$k] = findname("module_p", $row['id']);
-
+   
+        $bbmarray[11][$k] = $row['TBM_wafer'];
+   
 	if($bbmarray[2][$k] != 0){
 		$k_adj++;
 	}
@@ -127,7 +130,10 @@ echo "</td>";
 
 echo "<td valign=middle>";
 echo $bbmarray[8][$loop];
+$dlstring .= $bbmarray[8][$loop].", ";
 echo "</td>";
+
+$dlstring .= $bbmarray[4][$loop].", ";
 
 echo "<td valign=middle>";
 echo $bbmarray[7][$loop];
@@ -142,6 +148,8 @@ echo "<td valign=middle>";
 echo "<a href=../summary/hdi.php?name=".$bbmarray[6][$loop].">".$bbmarray[6][$loop]."</a>";
 $dlstring .= $bbmarray[6][$loop].", ";
 echo "</td>";
+
+$dlstring .= $bbmarray[11][$loop].", ";
 
 echo "<td valign=middle>";
 currocs($bbmarray[1][$loop]);
