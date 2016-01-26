@@ -18,11 +18,11 @@ $hideh = hidepre("HDI",1);
 $hidem = hidepre("module",1);
 
 $waferfunc = "SELECT name, id, assembly FROM wafer_p ".$hidew." ORDER BY name";
-$bbmfunc = "SELECT name, id, assembly, location FROM module_p ".$hidem." ORDER BY name";
+$bbmfunc = "SELECT name, id, assembly, location, tested_status FROM module_p ".$hidem." ORDER BY name";
 $hdifunc = "SELECT name, id, assembly, location FROM HDI_p ".$hideh." ORDER BY name";
 
 $wafersteparray = array("Received", "Inspected", "Tested", "Promoted", "Ready for Shipping", "Shipped");
-$bbmsteparray = array("Expected", "Received", "Inspected", "IV Tested", "Ready for HDI Assembly",  "HDI Attached", "Wirebonded", "Encapsulated", "Tested", "Thermally Cycled", "Tested", "Ready for Shipping", "Shipped", "Ready for Mounting", "On Blade"); 
+$bbmsteparray = array("Expected", "Received", "Inspected", "IV Tested", "Ready for HDI Assembly",  "HDI Attached", "Wirebonded", "Encapsulated", "Tested", "Thermally Cycled", "Tested", "Ready for Shipping", "Shipped", "Ready for Mounting", "On Blade", "Rejected"); 
 $hdisteparray = array("Received", "Inspected", "Ready for Assembly","On Module", "Rejected");
 
 $wafernum=count($wafersteparray);
@@ -49,6 +49,7 @@ while($output && $row = mysql_fetch_assoc($output)){
 	$bbmarray[$k][1] = $row['id'];
 	$bbmarray[$k][2] = $row['assembly'];
 	$bbmarray[$k][3] = $row['location'];
+        $bbmarray[$k][4] = $row['tested_status'];
 	if($bbmarray[$k][2] != 0){
 		$k_adj++;
 	}
@@ -172,11 +173,11 @@ echo "Modules";
 echo "</td>";
 for($loop=1;$loop<$bbmnum;$loop++){
 
-if($loop != 9 && $loop != 10){
+    if($loop != 9 && $loop != 10){
 	echo "<td valign=middle>";
 	echo "<a href=\"step.php?sort=sh&part=module&sl=".$loop."\">".$bbmsteparray[$loop]."</a>";
 	echo "</td>";
-}
+    }
 }
 
 echo "<td valign=middle>";
@@ -195,6 +196,7 @@ for($loop=1; $loop<$bbmnum; $loop++){
 $numatthislevel=0;
 $purduenum = 0;
 $nebraskanum = 0;
+$numrejected = 0;
 
 	for($subloop=0; $subloop<$k; $subloop++){
 		if($bbmarray[$subloop][2] == $loop){
@@ -210,7 +212,7 @@ $nebraskanum = 0;
 		}
 	}
 
-	if($loop == $bbmnum-1 || $loop == $bbmnum-2){
+	if($loop > 12){
 		echo "<td>";
 		echo $numatthislevel."<br><br><br>";
 		echo "</td>";
@@ -221,6 +223,7 @@ $nebraskanum = 0;
 		echo $numatthislevel."<br>".$purduenum."<br>".$nebraskanum;
 		echo "</td>";
 	}
+
 }
 
 echo "<td>";

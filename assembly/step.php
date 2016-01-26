@@ -42,7 +42,7 @@ if($part == "wafer_p"){
 	$page = "wafer.php";
 }
 elseif($part == "module_p"){
-	$steparray = array("Expected", "Received", "Inspected", "IV Tested", "Ready for HDI Assembly", "HDI Attached", "Wirebonded", "Encapsulated", "Tested", "Thermally Cycled", "Tested", "Ready for Shipping", "Shipped", "Ready for Mounting", "On Blade");
+	$steparray = array("Expected", "Received", "Inspected", "IV Tested", "Ready for HDI Assembly", "HDI Attached", "Wirebonded", "Encapsulated", "Tested", "Thermally Cycled", "Tested", "Ready for Shipping", "Shipped", "Ready for Mounting", "On Blade", "Rejected");
 	$page = "bbm.php"; 
 }
 elseif($part == "HDI_p"){

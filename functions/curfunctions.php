@@ -185,7 +185,7 @@ function curname($db, $id){
 function curstep($part, $assembly){
 
 	$wafsteps = array("Received", "Inspected", "Tested", "Promoted", "Ready for Shipping", "Shipped");
-	$modulesteps = array("Expected", "Recieved", "Inspected", "IV Tested", "Ready for HDI Assembly", "HDI Attached", "Wirebonded", "Encapsulated", "Tested (Post-Encapsulation)", "Thermally Cycled", "Tested (Post-Thermal Cycling)", "Ready for Shipping", "Shipped", "Ready for Mounting", "On Blade");
+	$modulesteps = array("Expected", "Recieved", "Inspected", "IV Tested", "Ready for HDI Assembly", "HDI Attached", "Wirebonded", "Encapsulated", "Tested (Post-Encapsulation)", "Thermally Cycled", "Tested (Post-Thermal Cycling)", "Ready for Shipping", "Shipped", "Ready for Mounting", "On Blade", "Rejected");
 	$hdisteps = array("Recieved", "Inspected", "Ready for Assembly", "On Module", "Rejected");
 
 	if(!strcmp($part, "wafer")){
