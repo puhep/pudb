@@ -460,7 +460,7 @@ if($param27 != ""){
 		$sortmod27 = "AND destination LIKE \"In transit%\" ";
 	}
 	elseif($_GET['param27'] == "No"){
-		$sortmod27 = "AND destination NOT LIKE \"In transit\" ";
+		$sortmod27 = "AND destination NOT LIKE \"In transit%\" ";
 	}
 }
 
