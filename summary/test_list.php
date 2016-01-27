@@ -30,6 +30,7 @@ include('../graphing/xmlgrapher_crit.php');
 	$param23 = "";
 	$param24 = 1;
 	$param25 = "";
+	$param26 = 1;
 
 
 	$comp2 = "";
@@ -75,7 +76,15 @@ include('../graphing/xmlgrapher_crit.php');
 			echo "<input type='hidden' name='param24' value='".$param24."'>";
 		}
 		$param25 = $_GET['param25'];
-
+		$checkarr;
+		if(!empty($_GET['PAN'])){
+			$param26 = 1;
+			foreach($_GET['PAN'] as $checkn){
+				$checkarr[] = $checkn;
+				$param26 *= $checkn;
+			}
+			echo "<input type='hidden' name='param26' value='".$param26."'>";
+		}
 		$comp2 = $_GET['comp2'];
 		$comp3 = $_GET['comp3'];
 		$comp4 = $_GET['comp4'];
@@ -169,7 +178,11 @@ Next Testing Step:
 Completed Testing Steps:
 <?php
 postassembly_radio_show($param24);?>
- 
+<br>
+
+Testing Steps not Completed:
+<?php
+postassembly_radio_show_not($param26);?>
 <br>
 
 Mounted on Blade: 
@@ -345,6 +358,7 @@ $sortmod22 = "";
 $sortmod23 = "";
 $sortmod24 = "";
 $sortmod25 = "";
+$sortmod26 = "";
 
 if($param1 != ""){
 	$sortmod1 = "AND location=\"".$_GET['param1']."\" ";
@@ -423,10 +437,16 @@ if($param25 != ""){
 	 $sortmod25 = "AND rtd_temp ".$_GET['comp25']." ".$_GET['param25'];
 }
 
-$sortmod26 = "AND a.name NOT LIKE '%95%' AND a.name NOT LIKE '%96%' AND a.name NOT LIKE '%97%' ";
-#$sortmod26 = "";
+if($param26 != 1){
+	    for($i=0; $i<count($checkarr); $i++){ 
+	    	      $sortmod26 .= "AND a.assembly_post % ".$checkarr[$i]." != 0 ";
+	    }
+}
 
-$sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19.$sortmod20.$sortmod21.$sortmod22.$sortmod23.$sortmod24.$sortmod25.$sortmod26;
+$sortmod27 = "AND a.name NOT LIKE '%95%' AND a.name NOT LIKE '%96%' AND a.name NOT LIKE '%97%' ";
+#$sortmod27 = "";
+
+$sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19.$sortmod20.$sortmod21.$sortmod22.$sortmod23.$sortmod24.$sortmod25.$sortmod26.$sortmod27;
 
 ?>
 <input type="submit" value="Apply">

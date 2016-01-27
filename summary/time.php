@@ -16,6 +16,10 @@
 		echo "<br>";
 		
 		echo "<div id=\"module\">";
+                echo "<a href=\"../graphing/module_summary_grapher.php\" target=\"blank\"><img src=\"../graphing/module_summary_grapher.php\" width=\"710\" height=\"400\" /></a>";
+                echo "<br>";
+                echo "<a href=\"../graphing/module_summary_grapher.php?plot_condition=log\" target=\"blank\"><img src=\"../graphing/module_summary_grapher.php?plot_condition=log\" width=\"710\" height=\"400\" /></a>";
+                echo "<br>";
 		echo "Total";
 		echo "<br>";
 		echo "<a href=\"../graphing/modulegrapher.php\" target=\"blank\"><img src=\"../graphing/modulegrapher.php\" width=\"710\" height=\"400\" /></a>";

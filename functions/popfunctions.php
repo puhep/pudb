@@ -587,4 +587,45 @@ function postassembly_radio_show($PAval){
 
 }
 
+function postassembly_radio_show_not($PAvaln){
+
+	if($PAvaln%2 == 0){ $checker = " CHECKED";}
+	else{ $checker = "";}
+	echo "Full Test at 17C <input name=\"PAN[]\" value=\"2\" type=\"checkbox\"".$checker.">";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "&nbsp;";
+
+	if($PAvaln%3 == 0){ $checker = " CHECKED";}
+	else{ $checker = "";}
+	echo "Full Test at -20C <input name=\"PAN[]\" value=\"3\" type=\"checkbox\"".$checker.">";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	
+	if($PAvaln%5 == 0){ $checker = " CHECKED";}
+	else{ $checker = "";}
+	echo "X-ray Testing <input name=\"PAN[]\" value=\"5\" type=\"checkbox\"".$checker.">";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	
+	if($PAvaln%7 == 0){ $checker = " CHECKED";}
+	else{ $checker = "";}
+	echo "Thermal Cycling <input name=\"PAN[]\" value=\"7\" type=\"checkbox\"".$checker.">";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "&nbsp;";
+	echo "<br>";
+
+}
+
 ?>
