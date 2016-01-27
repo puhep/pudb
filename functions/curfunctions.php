@@ -402,7 +402,7 @@ function curgrades_string($id){
 
 	mysql_query('USE cmsfpix_u', $connection);
 	
-	$func = "SELECT badbumps_elec, deadpix from ROC_p WHERE assoc_module=".$id;
+	$func = "SELECT badbumps_elec, deadpix, position from ROC_p WHERE assoc_module=".$id." ORDER BY position";
 	$output = mysql_query($func, $connection);
 	$rocgrades = "";
 	$biggest_contributors = array();
