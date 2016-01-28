@@ -16,7 +16,10 @@ echo "<input type='hidden' name='name' value='".$_GET['name']."'>";
 
 $id = findid("module_p", $_GET['name']);
 curname("module_p", $id);
+echo "<br>";
 
+$checker = " CHECKED ";
+echo "In transit to <input name=\"box\" value=\"transit\" type=\"checkbox\">"
 ?>
 
 <br>
