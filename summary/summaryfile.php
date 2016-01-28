@@ -67,7 +67,7 @@ User: <input name="user" type="text">
 ">
 <?php
   $dumped=dump($part,$id);
-  echo "<input type='hidden' name='name' value='".$dumped['name']."'>";
+  echo "<input type='hidden' name='name' value='".findname($part,$id)."'>";
 ?>
 <input type="submit" value="Back to Summary">
 </form>
