@@ -180,6 +180,7 @@ Next Testing Step:
 <option value="Full test at -20C"<?php echo $param21 == 'Full test at -20C' ? 'selected="selected"' : ''; ?>>Full test at -20C</option>
 <option value="X-ray testing"<?php echo $param21 == 'X-ray testing' ? 'selected="selected"' : ''; ?>>X-ray testing</option>
 <option value="Thermal cycling"<?php echo $param21 == 'Thermal cycling' ? 'selected="selected"' : ''; ?>>Thermal cycling</option>
+<option value="Final Judgement"<?php echo $param21 == 'Final Judgement' ? 'selected="selected"' : ''; ?>>Final Judgement</option>
 <option value="Debugging"<?php echo $param21 == 'Debugging' ? 'selected="selected"' : ''; ?>>Debugging</option>
 <option value="Ready for Mounting"<?php echo $param21 == 'Ready for Mounting' ? 'selected="selected"' : ''; ?>>Ready for Mounting</option>
 <option value="Rejected"<?php echo $param21 == 'Rejected' ? 'selected="selected"' : ''; ?>>Rejected</option>
