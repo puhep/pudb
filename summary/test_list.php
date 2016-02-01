@@ -468,7 +468,9 @@ if($param27 != ""){
 $sortmod28 = "AND a.name NOT LIKE '%95%' AND a.name NOT LIKE '%96%' AND a.name NOT LIKE '%97%' ";
 #$sortmod28 = "";
 
-$sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19.$sortmod20.$sortmod21.$sortmod22.$sortmod23.$sortmod24.$sortmod25.$sortmod26.$sortmod27.$sortmod28;
+$sortmod29 = "AND a.assembly >= 11 ";
+
+$sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19.$sortmod20.$sortmod21.$sortmod22.$sortmod23.$sortmod24.$sortmod25.$sortmod26.$sortmod27.$sortmod28.$sortmod29;
 
 ?>
 <input type="submit" value="Apply">
@@ -484,7 +486,6 @@ include('../../../Submission_p_secure_pages/connect.php');
 
 #include('../functions/curfunctions.php');
 
-
 #Using joins to sort by parameters in the times_* tables. Probably helpful in the future.#
 $func1 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_BB%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
 $func2 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_CL%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
@@ -498,6 +499,7 @@ $func8 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a
 
 $i=0;
 $j=0;
+$total=0;
 $dataarray;
 $partarray = array("bbm", "bbm", "bbm", "bbm", "bbm", "bbm", "bbm", "bbm");
 $fpartarray = array("M_BB", "M_CL", "M_CR", "M_FL", "M_FR", "M_LL", "M_RR", "M_TT");
@@ -748,6 +750,9 @@ while($output8 && $row8 = mysql_fetch_assoc($output8)){
 $fpartarray[7] = $fpartarray[7]." (".$j.")";
 
 if($j > $i){$i = $j;}
+
+$total = mysql_num_rows($output1)+mysql_num_rows($output2)+mysql_num_rows($output3)+mysql_num_rows($output4)+mysql_num_rows($output5)+mysql_num_rows($output6)+mysql_num_rows($output7)+mysql_num_rows($output8);
+echo $total." matching modules<br>";
 
 echo "<table cellspacing=60 border=0>";
 echo "<tr valign=top>";

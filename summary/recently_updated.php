@@ -10,6 +10,14 @@
 <input type="submit" value="MAIN MENU">
 </form>
 
+<form name="filter" action="../summary/recently_updated.php" method="GET">
+Enter number of modules to display:
+<br>
+<textarea name="num" cols="10" rows="1"><?php if($_GET['num']==""){echo 40;} else{ echo $_GET['num'];} ?></textarea>
+<br>
+<input type="submit" value="Apply">
+</form>
+
 <?php
 include('../../../Submission_p_secure_pages/connect.php');
 include('../functions/curfunctions.php');
@@ -68,8 +76,9 @@ echo "<table cellspacing=20 border=0>";
 
 	echo "</tr>";
 
-
-	for($k=0; $k<40; $k++){
+        if($_GET['num'] != ""){$num = $_GET['num']; }
+        else{ $num = 40; }
+	for($k=0; $k<$num; $k++){
 
 			echo "<tr>";
 
