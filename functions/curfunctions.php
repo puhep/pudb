@@ -478,6 +478,10 @@ function curgrade($id){
 	#include_once('../functions/curfunctions.php');
 	$dumped = dump("module_p", $id);
 
+	if($dumped['tested_status']=="Rejected"){
+		return "C";
+	}	
+
 	$crit = xmlgrapher_crit_num($dumped['assoc_sens'], "IV", "module", 0);
 
 	$bumpcrit = badbumps_crit($id);

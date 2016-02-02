@@ -89,46 +89,57 @@ if($_POST['grade'] != ""){
 	$func = "UPDATE module_p SET grade=\"".$_POST['grade']."\" WHERE id=".$id;
 	mysql_query($func, $connection);
 }
-### if the module is rejected, we don't care about anything else, just do it
-if($_POST['status'] == "Rejected"){
-	include('../../../Submission_p_secure_pages/connect.php');
+
+include('../../../Submission_p_secure_pages/connect.php');
+mysql_query('USE cmsfpix_u', $connection);
+
+### if the module is rejected and there is a comment, we don't care about anything else, just do it
+if($_POST['status'] == "Rejected" && $_POST['notes'] != ""){
+	
 	$func = "UPDATE module_p SET tested_status=\"".$_POST['status']."\" WHERE id=".$id;
-	mysql_query('USE cmsfpix_u', $connection);
 	mysql_query($func, $connection);
+	
 	$funcassembly = "UPDATE module_p SET assembly=15 WHERE id=".$id;
 	mysql_query($funcassembly, $connection);
+	
 	addcomment("module_p", $id, $_POST['status']." by ".$_POST['user'], $_POST['user']);
 	addcomment_fnal($id, "Set to ".$_POST['status']." by ".$_POST['user'], $_POST['user']);
 }
+
+elseif($_POST['status'] == "Rejected" && $_POST['notes'] == ""){}
+
 ### if the status is filled, but not Ready for Mounting or Rejected, and assembly is shipped or lower, set next step
 elseif($_POST['status'] != "" &&  $_POST['status'] != "Ready for Mounting" && $assembly <= 12){
-	include('../../../Submission_p_secure_pages/connect.php');
+
 	$func = "UPDATE module_p SET tested_status=\"".$_POST['status']."\" WHERE id=".$id;
-	mysql_query('USE cmsfpix_u', $connection);
 	mysql_query($func, $connection);
+
 	addcomment_fnal($id, "Next Testing Step set to ".$_POST['status']." by ".$_POST['user'], $_POST['user']);
 }
 ### The next step should only be allowed to be set to Ready for Mounting if the assembly is Shipped or greater
 elseif($_POST['status'] == "Ready for Mounting" && $assembly >= 12){
-	include('../../../Submission_p_secure_pages/connect.php');
+	
 	$func = "UPDATE module_p SET tested_status=\"".$_POST['status']."\" WHERE id=".$id;
-	mysql_query('USE cmsfpix_u', $connection);
 	mysql_query($func, $connection);    
+	
 	$funcassembly = "UPDATE module_p SET assembly=13 WHERE id=".$id;
 	mysql_query($funcassembly, $connection);
+	
 	$timesfunc = "UPDATE times_module_p SET fnal_tested = NOW() WHERE assoc_module=".$id;
 	mysql_query($timesfunc, $connection);
+	
 	addcomment("module_p", $id, $_POST['status']." by ".$_POST['user'], $_POST['user']);
 	addcomment_fnal($id, "Set to ".$_POST['status']." by ".$_POST['user'], $_POST['user']);	
 }
 ### if the module is mounted or ready for mounting and the next step is changed, demote to shipped
 elseif($_POST['status'] != "" && $_POST['status'] != "Ready for Mounting" && $assembly >= 13){
-	include('../../../Submission_p_secure_pages/connect.php');
+	
 	$func = "UPDATE module_p SET tested_status=\"".$_POST['status']."\" WHERE id=".$id;
-	mysql_query('USE cmsfpix_u', $connection);
 	mysql_query($func, $connection);    
+	
 	$funcassembly = "UPDATE module_p SET assembly=12 WHERE id=$id";
 	mysql_query($funcassembly, $connection);
+	
 	addcomment("module_p", $id, $_POST['status']." by ".$_POST['user'], $_POST['user']);
 	addcomment_fnal($id, "Set to ".$_POST['status']." by ".$_POST['user'], $_POST['user']);	
 }

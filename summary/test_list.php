@@ -496,7 +496,6 @@ $func6 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a
 $func7 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_RR%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
 $func8 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_TT%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
 
-
 $i=0;
 $j=0;
 $total=0;
@@ -533,7 +532,7 @@ while($output1 && $row1 = mysql_fetch_assoc($output1)){
 	$i++;
 }
 $fpartarray[0] = $fpartarray[0]." (".$i.")";
-
+$total = $total + $i;
 
 $output2 = mysql_query($func2, $connection);
 while($output2 && $row2 = mysql_fetch_assoc($output2)){
@@ -562,6 +561,7 @@ while($output2 && $row2 = mysql_fetch_assoc($output2)){
 	$j++;
 }
 $fpartarray[1] = $fpartarray[1]." (".$j.")";
+$total = $total + $j;
 
 if($j > $i){$i = $j;}
 $j=0;
@@ -593,6 +593,7 @@ while($output3 && $row3 = mysql_fetch_assoc($output3)){
 	$j++;
 }
 $fpartarray[2] = $fpartarray[2]." (".$j.")";
+$total = $total + $j;
 
 if($j > $i){$i = $j;}
 $j=0;
@@ -624,6 +625,7 @@ while($output4 && $row4 = mysql_fetch_assoc($output4)){
 	$j++;
 }
 $fpartarray[3] = $fpartarray[3]." (".$j.")";
+$total = $total + $j;
 
 if($j > $i){$i = $j;}
 $j=0;
@@ -655,6 +657,7 @@ while($output5 && $row5 = mysql_fetch_assoc($output5)){
 	$j++;
 }
 $fpartarray[4] = $fpartarray[4]." (".$j.")";
+$total = $total + $j;
 
 if($j > $i){$i = $j;}
 $j=0;
@@ -686,6 +689,7 @@ while($output6 && $row6 = mysql_fetch_assoc($output6)){
 	$j++;
 }
 $fpartarray[5] = $fpartarray[5]." (".$j.")";
+$total = $total + $j;
 
 if($j > $i){$i = $j;}
 $j=0;
@@ -717,6 +721,7 @@ while($output7 && $row7 = mysql_fetch_assoc($output7)){
 	$j++;
 }
 $fpartarray[6] = $fpartarray[6]." (".$j.")";
+$total = $total + $j;
 
 if($j > $i){$i = $j;}
 $j=0;
@@ -748,11 +753,11 @@ while($output8 && $row8 = mysql_fetch_assoc($output8)){
 	$j++;
 }
 $fpartarray[7] = $fpartarray[7]." (".$j.")";
+$total = $total + $j;
 
 if($j > $i){$i = $j;}
 
-$total = mysql_num_rows($output1)+mysql_num_rows($output2)+mysql_num_rows($output3)+mysql_num_rows($output4)+mysql_num_rows($output5)+mysql_num_rows($output6)+mysql_num_rows($output7)+mysql_num_rows($output8);
-echo $total." matching modules<br>";
+echo $total." matching modules";
 
 echo "<table cellspacing=60 border=0>";
 echo "<tr valign=top>";
