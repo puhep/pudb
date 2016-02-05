@@ -42,7 +42,7 @@
 		#echo "<br>";
 		#echo "<br>";
 
-		if($dumped['assembly'] != 12){
+		if($dumped['assembly'] < 12){
 		echo "<h>";
 		echo "Processing at: ";
 		echo "</h>";
@@ -53,14 +53,15 @@
 		echo "Processed at: ";
 		echo "</h>";
 		echo $dumped['location'];
-		echo "<br>";
-		curtrack($id);
+		if($dumped['assembly']==12){
+			echo "<br>";
+			curtrack($id); }
 		}
 
 		echo "<br>";
 		echo "<br>";
 
-		if($dumped['assembly'] == 12){
+		if($dumped['assembly'] >= 12){
 		echo "<h>";
 		echo "Current Location: ";
 		echo "</h>";
