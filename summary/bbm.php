@@ -53,7 +53,7 @@
 		echo "Processed at: ";
 		echo "</h>";
 		echo $dumped['location'];
-		if($dumped['assembly']==12){
+		if($dumped['assembly']==12 && strpos($dumped['destination'], "n transit")){
 			echo "<br>";
 			curtrack($id); }
 		}
