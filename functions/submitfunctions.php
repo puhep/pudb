@@ -632,6 +632,26 @@ include_once("../functions/editfunctions.php");
 								mysql_query($func, $connection);
 								#echo "ROC ".$pos." on ".$name." Dead Pixels: ".$deadpix."<br>";
 							}
+							if(($vcal_thresh=$doc->TEST[$i]->ROCS->ROC[$k]->VCAL_THRESH)!=""){
+								$func = "UPDATE ROC_p SET vcal_thresh=$vcal_thresh WHERE assoc_module=$id  AND position=$pos";
+								mysql_query($func, $connection);
+							}
+							if(($low_DC_uni=$doc->TEST[$i]->ROCS->ROC[$k]->LOW_DC_UNI)!=""){
+								$func = "UPDATE ROC_p SET low_DC_uni=$low_DC_uni WHERE assoc_module=$id  AND position=$pos";
+								mysql_query($func, $connection);
+							}
+							if(($high_DC_uni=$doc->TEST[$i]->ROCS->ROC[$k]->HIGH_DC_UNI)!=""){
+								$func = "UPDATE ROC_p SET high_DC_uni=$high_DC_uni WHERE assoc_module=$id  AND position=$pos";
+								mysql_query($func, $connection);
+							}
+							if(($low_DC_lowrate_eff=$doc->TEST[$i]->ROCS->ROC[$k]->LOW_DC_LOWRATE_EFF)!=""){
+								$func = "UPDATE ROC_p SET low_DC_lowrate_eff=$low_DC_lowrate_eff WHERE assoc_module=$id  AND position=$pos";
+								mysql_query($func, $connection);
+							}
+							if(($low_DC_highrate_eff=$doc->TEST[$i]->ROCS->ROC[$k]->LOW_DC_HIGHRATE_EFF)!=""){
+								$func = "UPDATE ROC_p SET low_DC_highrate_eff=$low_DC_highrate_eff WHERE assoc_module=$id  AND position=$pos";
+								mysql_query($func, $connection);
+							}
 						}
 					}
 
@@ -859,6 +879,44 @@ include_once("../functions/editfunctions.php");
 					    }
 					}
 
+
+					##########PXAR ERRORS########
+
+					if(isset($doc->TEST[$i]->PXAR_ERRORS)){
+					    $errors = $doc->TEST[$i]->PXAR_ERRORS;
+					    if($errors != ""){
+						    mysql_query('USE cmsfpix_u', $connection);
+
+						    $func = "UPDATE module_p SET pxar_errors=$errors WHERE id=$id";
+						    mysql_query($func, $connection);
+					    }
+					}
+					#####################
+
+					##########NUMBER OF DOUBLE COLUMNS BELOW 98% EFFICIENCY########
+
+					if(isset($doc->TEST[$i]->DC_BELOW_98)){
+					    $DC_below_98 = $doc->TEST[$i]->DC_BELOW_98;
+					    if($DC_below_98 != ""){
+						    mysql_query('USE cmsfpix_u', $connection);
+
+						    $func = "UPDATE module_p SET DC_below_98=$DC_below_98 WHERE id=$id";
+						    mysql_query($func, $connection);
+					    }
+					}
+					#####################
+
+					##########NUMBER OF DOUBLE COLUMNS BELOW 95% EFFICIENCY########
+
+					if(isset($doc->TEST[$i]->DC_BELOW_95)){
+					    $DC_below_95 = $doc->TEST[$i]->DC_BELOW_95;
+					    if($DC_below_95 != ""){
+						    mysql_query('USE cmsfpix_u', $connection);
+
+						    $func = "UPDATE module_p SET DC_below_95=$DC_below_95 WHERE id=$id";
+						    mysql_query($func, $connection);
+					    }
+					}
 					#####################
 
 					##########NOTES########
@@ -962,13 +1020,14 @@ include_once("../functions/editfunctions.php");
 				#####COMMENT SUBMISSION####
 				$i=0;
 				while($doc->COMMENT[$i]->NAME != ""){
-
+					#echo "Trying to add comment...<br>";
 					$name = $doc->COMMENT[$i]->NAME;
 								
 					$commentfile = $doc->COMMENT[$i]->TXT;
 					$comment = file_get_contents($dir.$commentfile);
+					#echo "Comment: ".$comment;
 					addcomment("module_p", $id, $comment, $user);
-
+					#echo "After trying to add comment...";
 					$i++;
 				}
 				##########################

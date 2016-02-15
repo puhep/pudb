@@ -106,6 +106,7 @@ if($_POST['status'] == "Rejected" && $_POST['notes'] != ""){
 	addcomment_fnal($id, "Set to ".$_POST['status']." by ".$_POST['user'], $_POST['user']);
 }
 
+### Don't do anything if the next step is rejected but the comment field is blank
 elseif($_POST['status'] == "Rejected" && $_POST['notes'] == ""){}
 
 ### if the status is filled, but not Ready for Mounting or Rejected, and assembly is shipped or lower, set next step

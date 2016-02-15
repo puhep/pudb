@@ -333,13 +333,57 @@ function currocparams($module, $param){
 	$output = mysql_query($func, $connection);
 	$outputrev = mysql_query($revfunc, $connection);
 
+	if($param=="unaddressable+unmaskable"){
+		echo "<strong>Unaddressable &<br>Unmaskable Pix</strong>";
+	}
+	elseif($param=="unaddressable"){
+		echo "<strong>Unaddressable Pix</strong>";
+	}
+	elseif($param=="unmaskable"){
+		echo "<strong>Unmaskable Pix</strong>";
+	}
+	elseif($param=="xray_slope"){
+		echo "<strong>X-Ray Slope</strong>";
+	}
+	elseif($param=="xray_offset"){
+		echo "<strong>X-Ray Offset</strong>";
+	}
+	elseif($param=="badbumps_elec"){
+		echo "<strong>Bad Bumps (elec)</strong>";
+	}
+	elseif($param=="badbumps_xray"){
+		echo "<strong>Bad Bumps (X-Ray)</strong>";
+	}
+	elseif($param=="deadpix"){
+		echo "<strong>Dead Pix</strong>";
+	}
+	elseif($param=="low_DC_uni"){
+		echo "<strong>Lowest DC Uniformity</strong>";
+	}
+	elseif($param=="vcal_thresh"){
+		echo "<strong>Vcal Thresh Defect Pix</strong>";
+	}
+	elseif($param=="high_DC_uni"){
+		echo "<strong>Highest DC Uniformity</strong>";
+	}
+	elseif($param=="low_DC_lowrate_eff"){
+		echo "<strong>Lowest DC Efficiency<br>(Low Rate)</strong>";
+	}
+	elseif($param=="low_DC_highrate_eff"){
+		echo "<strong>Lowest DC Efficiency<br>(High Rate)</strong>";
+	}
+	else{
+		echo "<strong>$param</strong>";
+	}
+	#echo "<table border=0>";
+	#echo "<th>$param</th>;
 	echo "<table border=0>";
 	
-	echo "<tr>";
-	echo "<td>".$param."</td>";
-	echo "<td>";
-	echo "</td>";
-	echo "</tr>";
+	#echo "<tr>";
+	
+	#echo "<td>";
+	#echo "</td>";
+	#echo "</tr>";
 	
 	echo "<tr>";
 	echo "<td>";
@@ -355,8 +399,8 @@ function currocparams($module, $param){
 		echo "</td>";
 
 		echo "<td style=\"height: 100%;\">";
-	
-		echo $rocrow[$param];
+		if(isset($rocrow[$param])){ echo $rocrow[$param];}
+		else{ echo "&nbsp"; }
 
 		echo "</td>";
 
@@ -379,8 +423,8 @@ function currocparams($module, $param){
 		echo "</td>";
 
 		echo "<td>";
-		echo $rocrowrev[$param];
-
+		if(isset($rocrowrev[$param])){ echo $rocrowrev[$param];}
+		else{ echo "&nbsp"; }
 		echo "</td>";
 
 		echo "</tr>";
@@ -391,6 +435,7 @@ function currocparams($module, $param){
 	echo "</tr>";
 
 	echo "</table>";
+	#echo "</table>";
 }
 
 ### Echoes a string of grades that are not A
@@ -402,7 +447,7 @@ function curgrades_string($id){
 
 	mysql_query('USE cmsfpix_u', $connection);
 	
-	$func = "SELECT badbumps_elec, deadpix, position from ROC_p WHERE assoc_module=".$id." ORDER BY position";
+	$func = "SELECT badbumps_elec, deadpix, vcal_thresh, position from ROC_p WHERE assoc_module=".$id." ORDER BY position";
 	$output = mysql_query($func, $connection);
 	$rocgrades = "";
 	$biggest_contributors = array();
@@ -419,7 +464,10 @@ function curgrades_string($id){
 		if(is_null($array['unmaskable'])){
 			$array['unmaskable']=0;
 		}
-		$totbad = $array['badbumps_elec'] + $array['deadpix'] + $array['unaddressable'] + $array['unmaskable'];
+		if(is_null($array['vcal_thresh'])){
+			$array['vcal_thresh']=0;
+		}
+		$totbad = $array['badbumps_elec'] + $array['deadpix'] + $array['unaddressable'] + $array['unmaskable'] + $array['vcal_thresh'];
 		if($totbad > 166){
 			$rocgrades = $rocgrades."C";
 		}
@@ -440,6 +488,9 @@ function curgrades_string($id){
 		}
 		else if(($array['unmaskable'] > $array['badbumps_elec']) and ($array['unmaskable'] > $array['deadpix']) and ($array['unmaskable'] > $array['unaddressable'])){
 			$biggest_contributors[$i] = $array['unmaskable']." unmaskable pixels";
+		}
+		else if(($array['vcal_thresh'] > $array['badbumps_elec']) and ($array['vcal_thresh'] > $array['deadpix']) and ($array['vcal_thresh'] > $array['unaddressable'])){
+			$biggest_contributors[$i] = $array['vcal_thresh']." VCal threshhold defect pixels";
 		}
 		else{
 			$biggest_contributors[] = "";
@@ -726,6 +777,21 @@ function curtestparams($id, $edit=0){
 	if(!is_null($dumped['rtd_temp'])){ echo $dumped['rtd_temp']."C"; }
 	else{ echo "Not Set"; }
 	echo "<br>";
+
+	echo "Number of pXar errors during testing: ";
+	if(!is_null($dumped['pxar_errors'])){ echo $dumped['pxar_errors']; }
+	else{ echo "Not Set"; }
+	echo "<br>";
+
+	echo "Number of Double Columns below 95% efficiency: ";
+	if(!is_null($dumped['DC_below_95'])){ echo $dumped['DC_below_95']; }
+	else{ echo "Not Set"; }
+	echo "<br>";
+
+	echo "Number of Double Columns below 98% efficiency: ";
+	if(!is_null($dumped['DC_below_98'])){ echo $dumped['DC_below_98']; }
+	else{ echo "Not Set"; }
+	echo "<br>";
 	
 	if(is_null($dumped['tested_status'])){
 		echo "Next Testing Step: Not Set<br>";
@@ -746,35 +812,67 @@ function curtestparams($id, $edit=0){
 	#currocgrades($id);
 	#echo "</td>";
 	#echo "<td>";
-	currocparams($id, "unaddressable");
+	currocparams($id, "unaddressable+unmaskable");
 	echo "</td>";
-	echo "<td>";
-	currocparams($id, "unmaskable");
-	echo "</td>";
-	echo "<td>";
-	currocparams($id, "xray_slope");
-	echo "</td>";
-	echo "<td>";
-	currocparams($id, "xray_offset");
-	echo "</td>";
+	echo "<td>";echo "&nbsp;";echo "</td>";
+	#echo "<td>";
+	#currocparams($id, "unmaskable");
+	#echo "</td>";
+	#echo "<td>";echo "&nbsp;";echo "</td>";
+
 	echo "<td>";
 	currocparams($id, "badbumps_elec");
 	echo "</td>";
-	echo "<td>";
-	currocparams($id, "badbumps_xray");
-	echo "</td>";
+	echo "<td>";echo "&nbsp;";echo "</td>";
+
 	echo "<td>";
 	currocparams($id, "deadpix");
 	echo "</td>";
-	#echo "<td>";
-	#curgraphs($dumped['assoc_sens'], "IV", "module");
-	#echo "</td>";
 	echo "<td>";
-	echo "IV Criteria<br>";
+	currocparams($id, "vcal_thresh");
+	echo "</td>";
+	echo "<td>";echo "&nbsp;";echo "</td>";
+	echo "<td>";
+	echo "<strong>IV Criteria</strong><br>";
 	xmlgrapher_crit($dumped['assoc_sens'], "IV", "module");
 	echo "</td>";
 	echo "</tr>";
 	echo "</table>";
+
+	echo "<table border=0>";
+	#echo "<td>";
+	#currocparams($id, "badbumps_xray");
+	#echo "</td>";
+	#echo "<td>";echo "&nbsp;";echo "</td>";
+	echo "<td>";
+	currocparams($id, "xray_slope");
+	echo "</td>";
+	echo "<td>";echo "&nbsp;";echo "</td>";
+	echo "<td>";
+	currocparams($id, "xray_offset");
+	echo "</td>";
+	echo "<td>";echo "&nbsp;";echo "</td>";	
+
+	echo "<td>";
+	currocparams($id, "low_DC_uni");
+	echo "</td>";
+	echo "<td>";echo "&nbsp;";echo "</td>";
+	echo "<td>";
+	currocparams($id, "high_DC_uni");
+	echo "</td>";
+	echo "<td>";echo "&nbsp;";echo "</td>";
+	echo "<td>";
+	currocparams($id, "low_DC_lowrate_eff");
+	echo "</td>";
+	echo "<td>";echo "&nbsp;";echo "</td>";
+	echo "<td>";
+	currocparams($id, "low_DC_highrate_eff");
+	echo "</td>";
+	echo "</table>";
+
+	#echo "<table border=0>";
+
+	#echo "</table>";
 
 	return;
 }

@@ -18,13 +18,13 @@ function addcomment($db, $id, $new, $user="User"){
 	$output = mysql_query($func1, $connection);
 	$noterow = mysql_fetch_assoc($output);
 	$oldnotes = mysql_real_escape_string($noterow["notes"]);
-
+	#echo "oldnotes: ".nl2br($oldnotes)."<br>";
 	$date = date('Y-m-d H:i:s');
 
 	$newnotes = $oldnotes.$date."  ".$sqlnew."\n";
-
+	#echo $newnotes."<br>";
 	$func2 = "UPDATE ".$db." SET notes=\"".$newnotes."\" WHERE id=".$id;
-	
+	#echo $func2;
 	if(!mysql_query($func2, $connection)){
 		echo "An error has occurred and the comment has not been added";
 	}
