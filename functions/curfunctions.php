@@ -477,20 +477,20 @@ function curgrades_string($id){
 		else if($totbad <= 41){
 			$rocgrades = $rocgrades."A";
 		}
-		if($array['badbumps_elec'] > $array['deadpix'] and $array['badbumps_elec'] > $array['unaddressable'] and $array['badbumps_elec'] > $array['unmaskable']){
+		if($array['badbumps_elec'] > $array['deadpix'] and $array['badbumps_elec'] > $array['unaddressable'] and $array['badbumps_elec'] > $array['unmaskable'] and $array['badbumps_elec'] > $array['vcal_thresh']){
 			$biggest_contributors[$i] = $array['badbumps_elec']." bad bumps";
 		}
-		else if(($array['deadpix'] > $array['badbumps_elec']) and ($array['deadpix'] > $array['unaddressable']) and ($array['deadpix'] > $array['unmaskable'])){
+		else if(($array['deadpix'] > $array['badbumps_elec']) and ($array['deadpix'] > $array['unaddressable']) and ($array['deadpix'] > $array['unmaskable']) and $array['deadpix'] > $array['vcal_thresh']){
 			$biggest_contributors[$i] = $array['deadpix']." dead pixels";
 		}
-		else if(($array['unaddressable'] > $array['badbumps_elec']) and ($array['unaddressable'] > $array['deadpix']) and ($array['unaddressable'] > $array['unmaskable'])){
+		else if(($array['unaddressable'] > $array['badbumps_elec']) and ($array['unaddressable'] > $array['deadpix']) and ($array['unaddressable'] > $array['unmaskable']) and $array['unaddressable'] > $array['vcal_thresh']){
 			$biggest_contributors[$i] = $array['unaddressable']." unaddressable pixels";
 		}
-		else if(($array['unmaskable'] > $array['badbumps_elec']) and ($array['unmaskable'] > $array['deadpix']) and ($array['unmaskable'] > $array['unaddressable'])){
+		else if(($array['unmaskable'] > $array['badbumps_elec']) and ($array['unmaskable'] > $array['deadpix']) and ($array['unmaskable'] > $array['unaddressable']) and $array['unmaskable'] > $array['vcal_thresh']){
 			$biggest_contributors[$i] = $array['unmaskable']." unmaskable pixels";
 		}
-		else if(($array['vcal_thresh'] > $array['badbumps_elec']) and ($array['vcal_thresh'] > $array['deadpix']) and ($array['vcal_thresh'] > $array['unaddressable'])){
-			$biggest_contributors[$i] = $array['vcal_thresh']." VCal threshhold defect pixels";
+		else if(($array['vcal_thresh'] > $array['badbumps_elec']) and ($array['vcal_thresh'] > $array['deadpix']) and ($array['vcal_thresh'] > $array['unaddressable']) and $array['vcal_thresh'] > $array['unmaskable']){
+			$biggest_contributors[$i] = $array['vcal_thresh']." VCal threshold defect pixels";
 		}
 		else{
 			$biggest_contributors[] = "";
