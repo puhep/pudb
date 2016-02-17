@@ -25,7 +25,7 @@ include('../graphing/xmlgrapher_crit.php');
 	$param18 = "";
 	$param19 = "";
 	$param20 = "";
-	$param21 = "";
+	#$param21 = "";
 	$param22 = "";
 	$param23 = "";
 	$param24 = 1;
@@ -66,7 +66,7 @@ include('../graphing/xmlgrapher_crit.php');
 		$param18 = $_GET['param18'];
 		$param19 = $_GET['param19'];
 		$param20 = $_GET['param20'];
-		$param21 = $_GET['param21'];
+		#$param21 = $_GET['param21'];
 		$param22 = $_GET['param22'];
 		$param23 = $_GET['param23'];
 		if(!empty($_GET['PA'])){
@@ -172,6 +172,7 @@ In transit?
 <br>
 <br>
 
+<!-- commenting out redundant feature
 Next Testing Step:
 <select name="param21">
 <option value=""></option>
@@ -187,6 +188,7 @@ Next Testing Step:
 </select>
 <br>
 <br>
+-->
 
 Completed Testing Steps:
 <?php
@@ -425,14 +427,14 @@ if($param19 != ""){
 if($param20 != ""){
 	$sortmod20 = "AND bonder=\"".$_GET['param20']."\" ";
 }
-if($param21 != ""){
-	if($_GET['param21'] == 'Not Set'){
-		$sortmod21 = "AND tested_status IS NULL ";	
-	}
-	else{
-		$sortmod21 = "AND tested_status=\"".$_GET['param21']."\" ";
-	}
-}
+#if($param21 != ""){
+#	if($_GET['param21'] == 'Not Set'){
+#		$sortmod21 = "AND tested_status IS NULL ";	
+#	}
+#	else{
+#		$sortmod21 = "AND tested_status=\"".$_GET['param21']."\" ";
+#	}
+#}
 if($param22 != ""){
 	if($_GET['param22'] == 'Yes'){
 		$sortmod22 = "AND assembly = 14 ";
@@ -489,21 +491,33 @@ include('../../../Submission_p_secure_pages/connect.php');
 #include('../functions/curfunctions.php');
 
 #Using joins to sort by parameters in the times_* tables. Probably helpful in the future.#
-$func1 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_BB%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
-$func2 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_CL%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
-$func3 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_CR%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
-$func4 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_FL%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
-$func5 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_FR%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
-$func6 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_LL%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
-$func7 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_RR%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
-$func8 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_TT%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
+#$func1 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_BB%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
+#$func2 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_CL%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
+#$func3 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_CR%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
+#$func4 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_FL%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
+#$func5 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_FR%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
+#$func6 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_LL%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
+#$func7 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_RR%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
+#$func8 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_TT%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
+
+#Updated grouping by next testing step instead of wafer position
+$func1 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Full test at 17C\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY name_hdi ASC";
+$func2 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Full test at -20C\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY name_hdi ASC";
+$func3 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"X-ray testing\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY name_hdi ASC";
+$func4 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Thermal cycling\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY name_hdi ASC";
+$func5 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Final Judgement\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY name_hdi ASC";
+$func6 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Debugging\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY name_hdi ASC";
+$func7 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Ready for Mounting\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY name_hdi ASC";
+$func8 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Rejected\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY name_hdi ASC";
+$func9 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status IS NULL AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY name_hdi ASC";
+
 
 $i=0;
 $j=0;
 $total=0;
 $dataarray;
 $partarray = array("bbm", "bbm", "bbm", "bbm", "bbm", "bbm", "bbm", "bbm");
-$fpartarray = array("M_BB", "M_CL", "M_CR", "M_FL", "M_FR", "M_LL", "M_RR", "M_TT");
+$fpartarray = array("Full Test at 17C", "Full Test at -20C", "X-ray testing", "Thermal cycling", "Final Judgement", "Debugging", "Ready for Mounting", "Rejected", "Not Set");
 
 mysql_query('USE cmsfpix_u', $connection);
 
@@ -758,13 +772,45 @@ $fpartarray[7] = $fpartarray[7]." (".$j.")";
 $total = $total + $j;
 
 if($j > $i){$i = $j;}
+$j=0;
+
+$output9 = mysql_query($func9, $connection);
+while($output9 && $row9 = mysql_fetch_assoc($output9)){
+	#Testing Pass/Fail of IV test
+	$dumped = dump("module_p", $row9['id']);
+	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
+	
+	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row9['id'])){ continue;}
+	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row9['id'])){ continue;}
+	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row9['id'])){ continue;}
+	if($comp2 === ">=" && $param2 !== "" && $param2 < curgrade($row9['id'])){ continue;}
+	if($comp2 === "<=" && $param2 !== "" && $param2 > curgrade($row9['id'])){ continue;}
+	if($comp2 === "!=" && $param2 !== "" && $param2 == curgrade($row9['id'])){ continue;}
+	
+	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
+	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
+	if($comp18 === "0" && $param18 === "1" && $crit%7 > 0){ continue;}
+	if($comp18 === "1" && $param18 === "1" && $crit%7 == 0){ continue;}
+	if($comp18 === "0" && $param18 === "2" && $crit%35 > 0){ continue;}
+	if($comp18 === "1" && $param18 === "2" && $crit != 1){ continue;}
+	if($comp18 === "0" && $param18 === "3" && $crit == 1){ continue;}
+	if($comp18 === "1" && $param18 === "3" && $crit == 35){ continue;}
+
+	$dataarray[14][$j] = $row9['name'];
+	$dataarray[15][$j] = $row9['id'];
+	$j++;
+}
+$fpartarray[8] = $fpartarray[8]." (".$j.")";
+$total = $total + $j;
+
+if($j > $i){$i = $j;}
 
 echo $total." matching modules";
 
 echo "<table cellspacing=60 border=0>";
 echo "<tr valign=top>";
 
-for($l=0;$l<8;$l++){
+for($l=0;$l<9;$l++){
 	echo "<td>";
 
 
