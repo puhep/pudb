@@ -32,6 +32,9 @@ include('../graphing/xmlgrapher_crit.php');
 	$param25 = "";
 	$param26 = 1;
 	$param27 = "";
+	$param28 = "";
+	$param29 = "";
+	#$param30 = "";
 
 
 	$comp2 = "";
@@ -46,6 +49,9 @@ include('../graphing/xmlgrapher_crit.php');
 	$comp13 = "";
 	$comp18 = "";
 	$comp25 = "";
+	$comp28 = "";
+	$comp29 = "";
+	#$comp30 = "";
 	
 	if(!empty($_GET)){
 		$param1 = $_GET['param1'];
@@ -87,7 +93,10 @@ include('../graphing/xmlgrapher_crit.php');
 			echo "<input type='hidden' name='param26' value='".$param26."'>";
 		}
 		$param27 = $_GET['param27'];
-
+		$param28 = $_GET['param28'];
+		$param29 = $_GET['param29'];
+		#$param30 = $_GET['param30'];
+		
 		$comp2 = $_GET['comp2'];
 		$comp3 = $_GET['comp3'];
 		$comp4 = $_GET['comp4'];
@@ -100,6 +109,9 @@ include('../graphing/xmlgrapher_crit.php');
 		$comp13 = $_GET['comp13'];
 		$comp18 = $_GET['comp18'];
 		$comp25 = $_GET['comp25'];
+		$comp28 = $_GET['comp28'];
+		$comp29 = $_GET['comp29'];
+		#$comp30 = $_GET['comp30'];
 	}
 
 ?>
@@ -237,6 +249,13 @@ Grade:
 <textarea name="param4" cols="10" rows="1"><?php echo $param4; ?></textarea>
 <br>
 
+# VCal thresh defect Pixels per ROC: 
+<select name="comp28">
+<?php comparepop($comp28); ?>
+</select>
+<textarea name="param28" cols="10" rows="1"><?php echo $param28; ?></textarea>
+<br>
+
 # Un-Maskable Pixels: 
 <select name="comp10">
 <?php comparepop($comp10); ?>
@@ -338,6 +357,24 @@ IV Scan Thresholds:
 <br>
 <br>
 
+<!--
+IV Scan Thresholds (+17C):
+<select name="comp29">
+<option value=""></option>
+<option value="1"<?php echo $comp29 == '1' ? 'selected="selected"' : ''; ?>>Pass</option>
+<option value="0"<?php echo $comp29 == '0' ? 'selected="selected"' : ''; ?>>Fail</option>
+</select>
+<select name="param29">
+<option value=""></option>
+<option value="0"<?php echo $param29 == '0' ? 'selected="selected"' : ''; ?>>I(V=150)<2uA</option>
+<option value="1"<?php echo $param29 == '1' ? 'selected="selected"' : ''; ?>>I(V=150)/I(V=100)<2</option>
+<option value="2"<?php echo $param29 == '2' ? 'selected="selected"' : ''; ?>>Both</option>
+<option value="3"<?php echo $param29 == '3' ? 'selected="selected"' : ''; ?>>Either</option>
+</select>
+<br>
+<br>
+-->
+
 <?php
 
 $pursel = "";
@@ -375,6 +412,8 @@ $sortmod24 = "";
 $sortmod25 = "";
 $sortmod26 = "";
 $sortmod27 = "";
+$sortmod28 = "";
+$sortmod29 = "";
 
 if($param1 != ""){
 	$sortmod1 = "AND location=\"".$_GET['param1']."\" ";
@@ -466,13 +505,15 @@ if($param27 != ""){
 		$sortmod27 = "AND destination NOT LIKE \"In transit%\" ";
 	}
 }
+if($param28 != ""){
+	$sortmod28 = "AND c.vcal_thresh".$_GET['comp28']."\"".$_GET['param28']."\" ";
+}
+#$sortmod30 = "AND a.name NOT LIKE '%95%' AND a.name NOT LIKE '%96%' AND a.name NOT LIKE '%97%' ";
+$sortmod30 = "";
 
-$sortmod28 = "AND a.name NOT LIKE '%95%' AND a.name NOT LIKE '%96%' AND a.name NOT LIKE '%97%' ";
-#$sortmod28 = "";
+$sortmod31 = "AND a.assembly >= 11 ";
 
-$sortmod29 = "AND a.assembly >= 11 ";
-
-$sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19.$sortmod20.$sortmod21.$sortmod22.$sortmod23.$sortmod24.$sortmod25.$sortmod26.$sortmod27.$sortmod28.$sortmod29;
+$sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19.$sortmod20.$sortmod21.$sortmod22.$sortmod23.$sortmod24.$sortmod25.$sortmod26.$sortmod27.$sortmod28.$sortmod29.$sortmod30.$sortmod31;
 
 #echo $sorter;
 
@@ -796,8 +837,8 @@ while($output9 && $row9 = mysql_fetch_assoc($output9)){
 	if($comp18 === "0" && $param18 === "3" && $crit == 1){ continue;}
 	if($comp18 === "1" && $param18 === "3" && $crit == 35){ continue;}
 
-	$dataarray[14][$j] = $row9['name'];
-	$dataarray[15][$j] = $row9['id'];
+	$dataarray[16][$j] = $row9['name'];
+	$dataarray[17][$j] = $row9['id'];
 	$j++;
 }
 $fpartarray[8] = $fpartarray[8]." (".$j.")";
