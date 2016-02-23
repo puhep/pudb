@@ -554,14 +554,14 @@ function curgrade($id){
 
 
 ### Evaluates a module and return's its grade based only on its number of bad bumps.
-### Bad bumps include electrically bad, unaddressable, unmaskable, dead pixels
+### Bad bumps include electrically bad, unaddressable, unmaskable, dead pixels, and VCal thresh defect pixels
 ### Every ROC is assessed and the grade of the worst ROC is returned
 function badbumps_crit($id){
 	include('../../../Submission_p_secure_pages/connect.php');
 
 	mysql_query('USE cmsfpix_u', $connection);
 	
-	$func = "SELECT badbumps_elec, deadpix, unaddressable, unmaskable from ROC_p WHERE assoc_module=".$id;
+	$func = "SELECT badbumps_elec, deadpix, unaddressable, unmaskable, vcal_thresh from ROC_p WHERE assoc_module=".$id;
 	$output = mysql_query($func, $connection);
 	$ret = "";
 	while($array = mysql_fetch_assoc($output)){
@@ -574,7 +574,10 @@ function badbumps_crit($id){
 		if(is_null($array['unmaskable'])){
 			$array['unmaskable']=0;
 		}
-		$totbad = $array['badbumps_elec'] + $array['deadpix'] + $array['unaddressable'] + $array['unmaskable'];
+		if(is_null($array['vcal_thresh'])){
+			$array['vcal_thresh']=0;
+		}
+		$totbad = $array['badbumps_elec'] + $array['deadpix'] + $array['unaddressable'] + $array['unmaskable']+$array['vcal_thresh'];
 		if($totbad > 166){
 			$ret = "C";
 		}
