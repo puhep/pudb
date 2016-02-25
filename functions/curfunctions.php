@@ -591,6 +591,34 @@ function badbumps_crit($id){
 		return $ret;
 }
 
+### Evaluates a module and returns the total number of defective pixels used in grading
+### Includes electrically bad, unaddressable, unmaskable, dead pixels, and VCal thresh defect pixels
+function totbad_crit($id){
+	include('../../../Submission_p_secure_pages/connect.php');
+
+	mysql_query('USE cmsfpix_u', $connection);
+	
+	$func = "SELECT badbumps_elec, deadpix, unaddressable, unmaskable, vcal_thresh from ROC_p WHERE assoc_module=".$id;
+	$output = mysql_query($func, $connection);
+	while($array = mysql_fetch_assoc($output)){
+		if(is_null($array['badbumps_elec']) || is_null($array['deadpix']) ){
+			return "No Data";
+		}
+		if(is_null($array['unaddressable'])){
+			$array['unaddressable']=0;
+		}
+		if(is_null($array['unmaskable'])){
+			$array['unmaskable']=0;
+		}
+		if(is_null($array['vcal_thresh'])){
+			$array['vcal_thresh']=0;
+		}
+		$totbad += $array['badbumps_elec'] + $array['deadpix'] + $array['unaddressable'] + $array['unmaskable']+$array['vcal_thresh'];
+
+	}
+		return $totbad;
+}
+
 ### Evaluates a module and return's its grade based only on its number of electrically bad bumps.
 ### Every ROC is assessed and the grade of the worst ROC is returned
 function badbumps_elec_crit($id){
@@ -754,6 +782,7 @@ function curtestparams($id, $edit=0){
 	#echo "Number of Unaddressable Pixels: ".$dumped['unaddressable_pix']."<br>";
 	#echo "Number of Bad Bump Bonds (Electrical): ".$dumped['badbumps_electrical']."<br>";
 	#echo "Number of Bad Bump Bonds (Electrical): ".$badbumps."<br>";
+	echo "Total number bad/defective pixels: ".totbad_crit($id)."<br>";
 	echo "Percent Bad Bump Bonds (Electrical): ".$percent_badbumps."<br>";
 	#echo "Number of Bad Bump Bonds (Reverse Bias): ".$dumped['badbumps_reversebias']."<br>";
 	#echo "Number of Bad Bump Bonds (X-Ray): ".$dumped['badbumps_xray']."<br>";
