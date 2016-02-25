@@ -542,15 +542,15 @@ include('../../../Submission_p_secure_pages/connect.php');
 #$func8 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_TT%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
 
 #Updated grouping by next testing step instead of wafer position
-$func1 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Full test at 17C\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY name_hdi ASC";
-$func2 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Full test at -20C\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY name_hdi ASC";
-$func3 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"X-ray testing\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY name_hdi ASC";
-$func4 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Thermal cycling\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY name_hdi ASC";
-$func5 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Final Judgement\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY name_hdi ASC";
-$func6 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Debugging\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY name_hdi ASC";
-$func7 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Ready for Mounting\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY name_hdi ASC";
-$func8 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Rejected\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY name_hdi ASC";
-$func9 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status IS NULL AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY name_hdi ASC";
+$func1 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Full test at 17C\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.shipped DESC";
+$func2 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Full test at -20C\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.shipped DESC";
+$func3 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"X-ray testing\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.shipped DESC";
+$func4 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Thermal cycling\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.shipped DESC";
+$func5 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Final Judgement\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.shipped DESC";
+$func6 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Debugging\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.shipped DESC";
+$func7 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Ready for Mounting\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.shipped DESC";
+$func8 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Rejected\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.shipped DESC";
+$func9 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status IS NULL AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.shipped DESC";
 
 
 $i=0;
