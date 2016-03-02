@@ -20,18 +20,29 @@ $date = time();
 #$hide = "";
 $hide = " AND received > \"2015-09-01 \"";
 
-
+$funcReceived = "SELECT UNIX_TIMESTAMP(received) FROM times_module_p WHERE received IS NOT NULL".$hide."ORDER BY UNIX_TIMESTAMP(received)";
 $funcShipped = "SELECT UNIX_TIMESTAMP(shipped) FROM times_module_p WHERE shipped IS NOT NULL".$hide."ORDER BY UNIX_TIMESTAMP(shipped)";
 $func1 =  "SELECT UNIX_TIMESTAMP(post_tested_17c), assoc_module FROM times_module_p WHERE UNIX_TIMESTAMP(post_tested_17c) IS NOT NULL AND UNIX_TIMESTAMP(post_tested_17c) != 0".$hide." ORDER BY UNIX_TIMESTAMP(post_tested_17c)";
 $func2 =  "SELECT UNIX_TIMESTAMP(post_tested_n20c), assoc_module FROM times_module_p WHERE UNIX_TIMESTAMP(post_tested_n20c) IS NOT NULL AND UNIX_TIMESTAMP(post_tested_n20c) != 0".$hide." ORDER BY UNIX_TIMESTAMP(post_tested_n20c)";
 $func3 =  "SELECT UNIX_TIMESTAMP(post_tested_xray), assoc_module FROM times_module_p WHERE UNIX_TIMESTAMP(post_tested_xray) IS NOT NULL AND UNIX_TIMESTAMP(post_tested_xray) != 0".$hide." ORDER BY UNIX_TIMESTAMP(post_tested_xray)";
 $func4 =  "SELECT UNIX_TIMESTAMP(post_tested_thermal_cycle), assoc_module FROM times_module_p WHERE UNIX_TIMESTAMP(post_tested_thermal_cycle) IS NOT NULL AND UNIX_TIMESTAMP(post_tested_thermal_cycle) != 0".$hide." ORDER BY UNIX_TIMESTAMP(post_tested_thermal_cycle)";
 
+$outputReceived = mysql_query($funcReceived, $connection);
 $outputShipped = mysql_query($funcShipped, $connection);
 $output1 = mysql_query($func1, $connection);
 $output2 = mysql_query($func2, $connection);
 $output3 = mysql_query($func3, $connection);
 $output4 = mysql_query($func4, $connection);
+
+$y=0;
+while($row1 = mysql_fetch_assoc($outputReceived)){
+
+		$arrReceived[0][$y] = $row1['UNIX_TIMESTAMP(received)'];
+		$arrReceived[1][$y] = $y+1;
+		$y++;
+}
+$arrReceived[0][$y] = $date;
+$arrReceived[1][$y] = $y;
 
 $x=0;
 while($row1 = mysql_fetch_assoc($outputShipped)){
@@ -113,9 +124,17 @@ $graph->img->SetMargin(70,80,40,40);
 $graph->legend->SetPos(.1, .1, 'left','top');
 $graph->legend->SetFont(FF_FONT2,FS_BOLD);
 
+$sp9 = new LinePlot($arrReceived[1],$arrReceived[0]);
+$graph->Add($sp9);
+$sp9->SetColor('black@0.2');
+$sp9->SetWeight(7);
+$sp9->SetStyle("solid");
+$sp9->SetStepStyle();
+$sp9->SetLegend("Received");
+
 $sp0 = new LinePlot($arrShipped[1],$arrShipped[0]);
 $graph->Add($sp0);
-$sp0->SetColor('black@0.2');
+$sp0->SetColor('purple@0.2');
 $sp0->SetWeight(7);
 $sp0->SetStyle("solid");
 $sp0->SetStepStyle();
