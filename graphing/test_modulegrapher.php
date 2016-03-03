@@ -5,6 +5,7 @@ include('../jpgraph/src/jpgraph.php');
 include('../jpgraph/src/jpgraph_date.php');
 include('../jpgraph/src/jpgraph_line.php');
 
+$arrReceived;
 $arrAssembled;
 $arrTested;
 $arr1;
@@ -27,9 +28,11 @@ if($loc == "nebraska"){
 	$loc_condition = "Nebraska";
 }
 
+$func0 = "SELECT a.received, a.post_tested_n20c, a.assoc_module, b.id FROM times_module_p a, module_p b WHERE a.assoc_module=b.id".$hide." ORDER BY a.received";
 $func = "SELECT a.HDI_attached, a.post_tested_n20c, a.assoc_module, b.id FROM times_module_p a, module_p b WHERE a.assoc_module=b.id".$hide." ORDER BY HDI_attached";
 $func2 = "SELECT a.HDI_attached, a.post_tested_n20c, a.assoc_module, b.id FROM times_module_p a, module_p b WHERE a.assoc_module=b.id".$hide." ORDER BY post_tested_n20c";
 
+$output0 = mysql_query($func0, $connection);
 $output = mysql_query($func, $connection);
 $output2 = mysql_query($func2, $connection);
 
@@ -38,6 +41,23 @@ $h=0;
 $i=0;
 $j=0;
 $k=0;
+$l=0;
+
+while($row0 = mysql_fetch_assoc($output0)){
+
+	$modloc = curloc("module_p", $row0['assoc_module']);
+	$id = $row0['id'];
+
+	if(!is_null($row0['received']) && $loc_condition==$modloc){
+		$arrReceived[0][$l] = strtotime($row0['received']);
+		$arrReceived[1][$l] = $l+1;
+		$l++;
+	}	
+}
+
+$arrReceived[0][$l] = $date;
+$arrReceived[1][$l] = $l;
+
 while($row = mysql_fetch_assoc($output)){
 
 	$modloc = curloc("module_p", $row['assoc_module']);
@@ -47,10 +67,7 @@ while($row = mysql_fetch_assoc($output)){
 		$arrAssembled[0][$g] = strtotime($row['HDI_attached']);
 		$arrAssembled[1][$g] = $g+1;
 		$g++;
-	}
-	
-
-	
+	}	
 }
 
 $arrAssembled[0][$g] = $date;
@@ -100,7 +117,10 @@ $arr2[1][$j] = $j;
 $arr3[0][$k] = $date;
 $arr3[1][$k] = $k;
 
-$graphname = "Module Grade over Time";
+#print_r($arrReceived);
+#print_r($arrTested);
+
+$graphname = "Module Grades over Time";
 
 $graph=new Graph(1340,800);
 $graph->SetScale("datlin");
@@ -124,6 +144,15 @@ $graph->legend->SetFont(FF_FONT2,FS_BOLD);
 $graph->img->SetAntiAliasing(false);
 $graph->img->SetMargin(70,80,40,40);	
 
+$spR = new LinePlot($arrReceived[1],$arrReceived[0]);
+#$spA->SetFillColor('purple@0.5');
+$graph->Add($spR);
+$spR->SetColor('black');
+$spR->SetWeight(7);
+$spR->SetStyle("solid");
+$spR->SetStepStyle();
+$spR->SetLegend("Received");
+
 $spA = new LinePlot($arrAssembled[1],$arrAssembled[0]);
 #$spA->SetFillColor('purple@0.5');
 $graph->Add($spA);
@@ -142,32 +171,32 @@ $spT->SetStyle("solid");
 $spT->SetStepStyle();
 $spT->SetLegend("Tested");
 
-$sp1 = new LinePlot($arr1[1],$arr1[0]);
-#$sp1->SetFillColor('lightblue@0.5');
-$graph->Add($sp1);
-$sp1->SetColor('green@0.5');
-$sp1->SetWeight(7);
-$sp1->SetStyle("solid");
-$sp1->SetStepStyle();
-$sp1->SetLegend("Grade A");
-
-$sp2 = new LinePlot($arr2[1],$arr2[0]);
-#$sp2->SetFillColor('lightred@0.5');
-$graph->Add($sp2);
-$sp2->SetColor('blue@0.5');
-$sp2->SetWeight(7);
-$sp2->SetStyle("solid");
-$sp2->SetStepStyle();
-$sp2->SetLegend("Grade B");
-
 $sp3 = new LinePlot($arr3[1],$arr3[0]);
-#$sp3->SetFillColor('lightgreen@0.5');
 $graph->Add($sp3);
-$sp3->SetColor('red@0.5');
+$sp3->SetColor('red');
 $sp3->SetWeight(7);
 $sp3->SetStyle("solid");
 $sp3->SetStepStyle();
+
+$sp2 = new LinePlot($arr2[1],$arr2[0]);
+$graph->Add($sp2);
+$sp2->SetColor('blue');
+$sp2->SetWeight(7);
+$sp2->SetStyle("solid");
+$sp2->SetStepStyle();
+
+
+$sp1 = new LinePlot($arr1[1],$arr1[0]);
+$graph->Add($sp1);
+$sp1->SetColor('green');
+$sp1->SetWeight(7);
+$sp1->SetStyle("solid");
+$sp1->SetStepStyle();
+
+$sp1->SetLegend("Grade A");
+$sp2->SetLegend("Grade B");
 $sp3->SetLegend("Grade C");
+$graph->legend->SetReverse();
 
 $graph->legend->SetLineWeight(10);
 $graph->Stroke();
