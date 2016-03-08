@@ -914,9 +914,9 @@ function findid($db, $name){
 	include('../../../Submission_p_secure_pages/connect.php');
 
 	mysql_query('USE cmsfpix_u', $connection);
-
-	$sqlname = mysql_real_escape_string($name);
-
+	#echo "Name=".$name."<br>";
+	$sqlname = trim($name);
+	#$sqlname = mysql_real_escape_string($name);
 	$func = "SELECT id FROM $db WHERE name=\"$sqlname\"";
 
 	if($db == "module_p"){
