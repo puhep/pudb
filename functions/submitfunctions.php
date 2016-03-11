@@ -1596,7 +1596,6 @@ include_once("../functions/editfunctions.php");
 
 	ini_set('display_error', 'On');
 	error_reporting(E_ALL | E_STRICT);
-
 	$dir = "/project/cmsfpix/.www/Submission_p/tmp/tmpwafer/";
 	$date = date('Y-m-d H:i:s');
 	
@@ -1634,9 +1633,10 @@ include_once("../functions/editfunctions.php");
 					$batchnum = array_search($batchlet, $ALPHA2IND);
 					$wafnum = substr($doc->Worksheet[$i]->attributes('ss', TRUE)->Name, 1);
 					$wafnum = str_pad($wafnum, 2, "0", STR_PAD_LEFT);
-					#echo $batchlet."<br>";
+					#echo "Batchlet: ".$batchlet."<br>";
 					$wafnum = $batchnum.$wafnum;
-					echo "trying to find wafer id...".findid("wafer_p",$wafnum)."<br>";
+					#echo "Wafer Num: ".$wafnum."<br>";
+					#echo "trying to find wafer id...".findid("wafer_p",$wafnum)."<br>";
 					if(findid("wafer_p",$wafnum) === NULL){
 						wafersensorinfo($wafnum, $date, "Wafer submitted automatically through batch submission");
 						$wafid = findid("wafer_p", $wafnum);
@@ -1649,7 +1649,7 @@ include_once("../functions/editfunctions.php");
 						###call promotesensors for the wafer
 						promoteSensors($wafid);
 					}
-					echo $wafnum."<br>";
+					#echo $wafnum."<br>";
 
 
 
@@ -1698,7 +1698,7 @@ include_once("../functions/editfunctions.php");
 							
 						$sensid = findid("sensor_p", $sensnum);
 
-						echo $sensid."<br>";
+						#echo $sensid."<br>";
 						measurement($sensid, "wafer", "IV", "Automatically uploaded through batch submission", addslashes($xml), strlen($xml), $sensnum."_IV.xml", 0, 0, 0);
 						
 					}
