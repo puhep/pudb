@@ -316,21 +316,28 @@ function modulepopwithroc(){
 
 include('../../../Submission_p_secure_pages/connect.php');
 include_once('../functions/curfunctions.php');
-
+	$modules = array();
 	$hide = hidepre("module",2);
 
 	mysql_query('USE cmsfpix_u', $connection);
 
-	$func = "SELECT id FROM module_p WHERE has_ROC=\"1\"".$hide;
+	$func = "SELECT name,name_hdi,id FROM module_p WHERE has_ROC=\"1\"".$hide;
 
 	$available = mysql_query($func,$connection);
 
 	echo "<option value=\"NULL\">Select a module</option>\n";
-
+	$i=0;
 	while($modrow = mysql_fetch_assoc($available)){
 		$id = $modrow['id'];
 		$name = findname("module_p", $id);
-		echo "<option value=\"$id\">".$name."</option>\n";
+		$modules[$i] = $name;
+		#echo "<option value=\"$id\">".$name."</option>\n";
+		$i++;
+	}
+	sort($modules);
+	for($x=0; $x<$i; $x++){
+		  $id = findid("module_p",$modules[$x]);
+		  echo "<option value=\"$id\">".$modules[$x]."</option>\n";	  
 	}
 }
 	
