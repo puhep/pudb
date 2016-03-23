@@ -34,8 +34,10 @@ include('../graphing/xmlgrapher_crit.php');
 	$param27 = "";
 	$param28 = "";
 	$param29 = "";
-	#$param30 = "";
-
+	$param30 = "";
+	$param31 = "";
+	$param34 = "";
+	$param35 = "";
 
 	$comp2 = "";
 	$comp3 = "";
@@ -95,7 +97,10 @@ include('../graphing/xmlgrapher_crit.php');
 		$param27 = $_GET['param27'];
 		$param28 = $_GET['param28'];
 		$param29 = $_GET['param29'];
-		#$param30 = $_GET['param30'];
+		$param30 = $_GET['param30'];
+		$param31 = $_GET['param31'];
+		$param34 = $_GET['param34'];
+		$param35 = $_GET['param35'];	
 		
 		$comp2 = $_GET['comp2'];
 		$comp3 = $_GET['comp3'];
@@ -181,6 +186,21 @@ In transit?
 <option value="Yes"<?php echo $param27 == 'Yes' ? 'selected="selected"' : ''; ?>>Yes</option>
 <option value="No"<?php echo $param27 == 'No' ? 'selected="selected"' : ''; ?>>No</option>
 </select>
+<br>
+<br>
+
+Module Shipped Between:
+<textarea placeholder="2015-09-01" name="param30" cols="10" rows="1"><?php echo $param30; ?></textarea>
+and: 
+<textarea placeholder=<?php echo date("Y-m-d"); ?> name="param31" cols="10" rows="1"><?php echo $param31; ?></textarea>
+(yyyy-mm-dd)
+<br>
+
+Module Received Between:
+<textarea placeholder="2015-09-01" name="param34" cols="10" rows="1"><?php echo $param34; ?></textarea>
+and: 
+<textarea placeholder=<?php echo date("Y-m-d"); ?> name="param35" cols="10" rows="1"><?php echo $param35; ?></textarea>
+(yyyy-mm-dd)
 <br>
 <br>
 
@@ -414,6 +434,8 @@ $sortmod26 = "";
 $sortmod27 = "";
 $sortmod28 = "";
 $sortmod29 = "";
+$sortmod30 = "";
+$sortmod34 = "";
 
 if($param1 != ""){
 	$sortmod1 = "AND location=\"".$_GET['param1']."\" ";
@@ -508,12 +530,35 @@ if($param27 != ""){
 if($param28 != ""){
 	$sortmod28 = "AND c.vcal_thresh".$_GET['comp28']."\"".$_GET['param28']."\" ";
 }
-#$sortmod30 = "AND a.name NOT LIKE '%95%' AND a.name NOT LIKE '%96%' AND a.name NOT LIKE '%97%' ";
-$sortmod30 = "";
+if($param30 != "" && $param31 != ""){
+	$sortmod30 = "AND DATE_FORMAT(b.shipped,\"%Y-%m-%d\") BETWEEN \"".$_GET['param30']."\" AND \"".$_GET['param31']."\" ";
+}
+elseif($param30 != "" && $param31 == ""){
+	$d = date("Y-m-d");
+	$sortmod30 = "AND DATE_FORMAT(b.shipped,\"%Y-%m-%d\") BETWEEN \"".$_GET['param30']."\" AND \"$d\" ";
+}
+elseif($param30 == "" && $param31 != ""){
+	$d = "2015-09-01";
+	$sortmod30 = "AND DATE_FORMAT(b.shipped,\"%Y-%m-%d\") BETWEEN \"".$d."\" AND \"".$_GET['param31']."\" ";
+}
 
-$sortmod31 = "AND a.assembly >= 11 ";
+if($param35 != "" && $param34 != ""){
+	$sortmod34 = "AND arrival BETWEEN \"".$_GET['param34']."\" AND \"".$_GET['param35']."\" ";
+}
+elseif($param34 != "" && $param35 == ""){
+	$d = date("Y-m-d");
+	$sortmod34 = "AND arrival BETWEEN \"".$_GET['param34']."\" AND \"$d\" ";
+}
+elseif($param34 == "" && $param35 != ""){
+	$d = "2015-09-01";
+	$sortmod34 = "AND arrival BETWEEN \"".$d."\" AND \"".$_GET['param35']."\" ";
+}
+#$sortmod32 = "AND a.name NOT LIKE '%95%' AND a.name NOT LIKE '%96%' AND a.name NOT LIKE '%97%' ";
+$sortmod32 = "";
 
-$sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19.$sortmod20.$sortmod21.$sortmod22.$sortmod23.$sortmod24.$sortmod25.$sortmod26.$sortmod27.$sortmod28.$sortmod29.$sortmod30.$sortmod31;
+$sortmod33 = "AND a.assembly >= 11 ";
+
+$sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19.$sortmod20.$sortmod21.$sortmod22.$sortmod23.$sortmod24.$sortmod25.$sortmod26.$sortmod27.$sortmod28.$sortmod29.$sortmod30.$sortmod32.$sortmod33.$sortmod34;
 
 #echo $sorter;
 
