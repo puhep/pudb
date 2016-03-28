@@ -165,7 +165,7 @@ $spA->SetLegend("Assembled");
 $spT = new LinePlot($arrTested[1],$arrTested[0]);
 #$spT->SetFillColor('yellow@0.5');
 $graph->Add($spT);
-$spT->SetColor('orange');
+$spT->SetColor('blue');
 $spT->SetWeight(7);
 $spT->SetStyle("solid");
 $spT->SetStepStyle();
@@ -180,7 +180,7 @@ $sp3->SetStepStyle();
 
 $sp2 = new LinePlot($arr2[1],$arr2[0]);
 $graph->Add($sp2);
-$sp2->SetColor('blue');
+$sp2->SetColor('orange');
 $sp2->SetWeight(7);
 $sp2->SetStyle("solid");
 $sp2->SetStepStyle();

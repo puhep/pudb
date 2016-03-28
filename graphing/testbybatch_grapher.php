@@ -6,8 +6,8 @@ include('../jpgraph/src/jpgraph_date.php');
 include('../jpgraph/src/jpgraph_line.php');
 include('../jpgraph/src/jpgraph_bar.php');
 
-ini_set('display_errors','On');
-error_reporting(E_ALL | E_STRICT);
+#ini_set('display_errors','On');
+#error_reporting(E_ALL | E_STRICT);
 
 #$arrDates;
 #$arrReceived;

@@ -1397,7 +1397,7 @@ include_once("../functions/editfunctions.php");
 	$dir = "/project/cmsfpix/.www/Submission_p/module_config_files/";
 	
 	###Not sure why this line is here, it seems to be redundant
-	#$id = findid("module_p", $part);
+	$id = findid("module_p", $part);
 
 	if(!file_exists($dir.$id)){
 		mkdir($dir.$id);
