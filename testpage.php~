@@ -54,17 +54,19 @@ include('../../Submission_p_secure_pages/connect.php');
 #echo "<br>$id<br>";
 
 mysql_query("USE cmsfpix_u", $connection);
-$arr1;
-$func1 =  "SELECT UNIX_TIMESTAMP(post_tested_17c), assoc_module FROM times_module_p WHERE UNIX_TIMESTAMP(post_tested_17c) IS NOT NULL AND UNIX_TIMESTAMP(post_tested_17c) != 0 ORDER BY UNIX_TIMESTAMP(post_tested_17c)";
-$output1 = mysql_query($func1, $connection);
-echo "output1: ".$output1;
+#$arr1;
+#$func1 =  "SELECT UNIX_TIMESTAMP(post_tested_17c), assoc_module FROM times_module_p WHERE UNIX_TIMESTAMP(post_tested_17c) IS NOT NULL AND UNIX_TIMESTAMP(post_tested_17c) != 0 ORDER BY UNIX_TIMESTAMP(post_tested_17c)";
+#$output1 = mysql_query($func1, $connection);
+#echo "output1: ".$output1;
+#echo "<br>";
+#$row1 = mysql_fetch_assoc($output1);
+#echo "row1: ".$row1;
+#echo "<br>";
+#$arr1[0][0] = $row1['post_tested_17c'];
+#echo $arr1[0][0];#
+echo findassembly_post(205)%5;
 echo "<br>";
-$row1 = mysql_fetch_assoc($output1);
-echo "row1: ".$row1;
-echo "<br>";
-$arr1[0][0] = $row1['post_tested_17c'];
-echo $arr1[0][0];
-echo "<br>";
+echo 5%5;
 
 
 ?>

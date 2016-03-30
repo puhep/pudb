@@ -48,26 +48,25 @@ $output1 = mysql_query($func1,$connection);
 
 while($row0 = mysql_fetch_assoc($output0)){
 	    $arr[0][$g] = ($row0['date']);
+	    if($g==0){
 	    $arr[1][$g] = $row0['receive'];
 	    $arr[2][$g] = $row0['ship'];
 	    $arr[3][$g] = $row0['tested'];
+	    }
+	    else{
+	    $arr[1][$g] = $row0['receive']+$arr[1][$g-1];
+	    $arr[2][$g] = $row0['ship']+$arr[2][$g-1];
+	    $arr[3][$g] = $row0['tested']+$arr[3][$g-1];
+	    }
 	    $g++;
 }
 
 $g = 0;
 ### fix for modules that have been rejected without being tested
-while($row1 = mysql_fetch_assoc($output1)){
-	    $arrFix[0][$g] = $row1['date'];
-	    $arrFix[1][$g] = $row1['num'];
-	    $g++;
-}
-#echo count($arrFix[0]);
-#for($x=0; $x<count($arrFix[0]);$x++){
-#	  for($y=0;$y<count($arr[0]);$y++){
-#	  if($arrFix[0][$x] == $arr[0][$y]){
-#	  	$arr[3][$y] += $arrFix[1][$x];
-#	  }
-#	  }
+#while($row1 = mysql_fetch_assoc($output1)){
+#	    $arrFix[0][$g] = $row1['date'];
+#	    $arrFix[1][$g] = $row1['num'];
+#	    $g++;
 #}
 
 $arrIDs = array();
@@ -83,10 +82,17 @@ for($z=0;$z<count($arr[0]);$z++){
 	}
 }
 
-for($i=0;$i<count($arrIDs);$i++){
+for($i=0;$i<count($arrIDs)+1;$i++){
+	if($i==0){
 	$arrA[$i]=0;
 	$arrB[$i]=0;
 	$arrC[$i]=0;
+	}
+	else{
+	$arrA[$i]=$arrA[$i-1];
+	$arrB[$i]=$arrB[$i-1];
+	$arrC[$i]=$arrC[$i-1];
+	}
 	for($j=0;$j<count($arrIDs[$i]);$j++){
 		if(curgrade($arrIDs[$i][$j]) == "A"){
 			$arrA[$i]++;
@@ -100,6 +106,9 @@ for($i=0;$i<count($arrIDs);$i++){
 		
 	}
 }
+#$arrA[$i+1]=$arrA[$i];
+#$arrB[$i+1]=$arrB[$i];
+#$arrC[$i+1]=$arrC[$i];
 
 #echo $arr[0][0]."<br>";
 #print_r($arrIDs[0]);
@@ -115,87 +124,95 @@ for($i=0;$i<count($arrIDs);$i++){
 $graph = new Graph(1340,800);
 $graph->SetScale('textlin');
 
+$graph->SetScale('textlin');
+$graph->SetFrame(true,'black',0);
 
+$graph->title->SetFont(FF_FONT2,FS_BOLD);
 
-#// Add a drop shadow
-#$graph->SetShadow();
- 
-#// Adjust the margin a bit to make more room for titles
-$graph->SetMargin(70,80,40,40);
+$graph->xaxis->SetLabelAngle(90);
+$graph->xaxis->title->SetFont(FF_FONT2,FS_BOLD);
+$graph->xaxis->title->Set("Time");
+$graph->xaxis->title->SetMargin(60);
+$graph->xaxis->SetFont(FF_FONT2, FS_BOLD);
+#$graph->xaxis->scale->ticks->Set(7*24*60*60);
+$graph->xaxis->SetTickLabels($arr[0]);
+
+$graph->yaxis->SetFont(FF_FONT2, FS_BOLD);
+$graph->yaxis->title->SetMargin(20);
+$graph->yaxis->scale->SetAutoMin(0);
+
+$graph->yaxis->title->SetFont(FF_FONT2,FS_BOLD);
+$graph->legend->SetLineWeight(12);
+
+$graph->img->SetAntiAliasing(false);
+$graph->img->SetMargin(70,80,40,40);	
+
+$graph->legend->SetPos(.1, .1, 'left','top');
+$graph->legend->SetFont(FF_FONT2,FS_BOLD);
  
 #// Create a bar pot
-$b1plot = new BarPlot($arr[1]);
-$b2plot = new BarPlot($arr[2]);
-#$b3plot = new BarPlot($arr[3]);
+$b1plot = new LinePlot($arr[1]);
+$b2plot = new LinePlot($arr[2]);
+$b3plot = new LinePlot($arr[3]);
 
-$Aplot = new BarPlot($arrA);
-$Bplot = new BarPlot($arrB);
-$Cplot = new BarPlot($arrC);
+$Aplot = new LinePlot($arrA);
+$Bplot = new LinePlot($arrB);
+$Cplot = new LinePlot($arrC);
 
 #$Aplot->SetFillColor("green");
 #$Bplot->SetFillColor("blue");
 #$Cplot->SetFillColor("red");
-$ABCplot = new AccBarPlot(array($Aplot,$Bplot,$Cplot));
-
-$graph->legend->SetPos(.1, .1, 'left','top');
-$graph->legend->SetFont(FF_FONT2,FS_BOLD);
 
 #// Adjust fill color
 
 $graph->Add($b1plot);
-$b1plot->SetFillColor('lightblue');
-$b1plot->SetLegend("Not Graded");
-
 #$graph->Add($b2plot);
-$b2plot->SetFillColor('orchid');
+$graph->Add($b3plot);
+$graph->Add($Aplot);
+$graph->Add($Bplot);
+$graph->Add($Cplot);
+
+$b1plot->SetColor('black');
+$b1plot->SetLegend("Received");
+$b1plot->SetWeight(7);
+$b1plot->SetStyle("solid");
+$b1plot->SetStepStyle();
+
+$b2plot->SetColor('purple');
 $b2plot->SetLegend("Shipped");
+$b2plot->SetWeight(7);
+$b2plot->SetStyle("solid");
+$b2plot->SetStepStyle();
 
-#$graph->Add($b3plot);
-#$b3plot->SetFillColor('lightgreen');
-#$b3plot->SetLegend("Tested");
+$b3plot->SetColor('blue');
+$b3plot->SetLegend("Tested");
+$b3plot->SetWeight(7);
+$b3plot->SetStyle("solid");
+$b3plot->SetStepStyle();
 
-#$graph->Add($Aplot);
-#$Aplot->SetColor('lightgreen');
-#$Aplot->SetWeight(10);
-#$Aplot->SetNoFill();
+$Aplot->SetWeight(7);
+$Aplot->SetStepStyle();
 $Aplot->SetLegend("Grade A");
 
-#$graph->Add($Bplot);
-#$Bplot->SetColor('lightblue');
-#$Bplot->SetNoFill();
-#$Bplot->SetWeight(20);
+$Bplot->SetStepStyle();
+$Bplot->SetWeight(7);
 $Bplot->SetLegend("Grade B");
 
-#$graph->Add($Cplot);
-#$Cplot->SetColor('red');
-#$Cplot->SetNoFill();
+$Cplot->SetStepStyle();
+$Cplot->SetWeight(7);
 $Cplot->SetLegend("Grade C");
 
-$graph->Add($ABCplot);
-$Aplot->SetFillColor("lightgreen");
-$Bplot->SetFillColor("lightgoldenrod1");
-$Cplot->SetFillColor("lightred");
-$Aplot->SetColor("lightgreen");
-$Bplot->SetColor("lightgoldenrod1");
-$Cplot->SetColor("lightred");
+#$graph->Add($ABCplot);
+$Aplot->SetColor("green");
+$Bplot->SetColor("orange");
+$Cplot->SetColor("red");
 
-$graph->legend->SetReverse();
+#$graph->legend->SetReverse();
 
 #// Setup the titles
-$graph->title->Set('Grades by Batch');
+$graph->title->Set('Module -20C Grades by Batch');
 $graph->xaxis->title->Set('Day Received');
-$graph->yaxis->title->Set('Number in Batch');
- 
-$graph->title->SetFont(FF_FONT2,FS_BOLD);
-$graph->yaxis->title->SetFont(FF_FONT2,FS_BOLD);
-$graph->xaxis->title->SetFont(FF_FONT2,FS_BOLD);
-$graph->xaxis->SetFont(FF_FONT2, FS_BOLD);
-$graph->yaxis->SetFont(FF_FONT2, FS_BOLD);
-$graph->xaxis->SetLabelAngle(90);
-$graph->xaxis->title->SetMargin(60);
-$graph->xaxis->SetTickLabels($arr[0]);
-$graph->yaxis->title->SetMargin(20);
-
+$graph->yaxis->title->Set('Number of Modules');
 
 #// Display the graph
 $graph->Stroke();

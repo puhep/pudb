@@ -68,9 +68,12 @@ while($row = mysql_fetch_assoc($output2)){
 	$badbump = 0;
 	$badpix = 0;
 	$badbump_elec = 0;
+	$badIV = 0;
 	if(badpix_crit($id)>"A"){ $badpix = 1; }
 	if(badbumps_crit($id)>"A"){ $badbump = 1; }
 	if(badbumps_elec_crit($id)>"A"){ $badbump_elec = 1;}
+	#echo "crit num: ".xmlgrapher_crit_num($row['assoc_sens'], "IV", "module",0)."<br>";
+	if(xmlgrapher_crit_num($row['assoc_sens'], "IV", "module",0) != 1){ $badIV=1;}
 
 	#if(!is_null($row['post_tested_n20c']) && $badbump && xmlgrapher_crit_num($row['assoc_sens'], "IV", "module",0)!=1 && $loc_condition==$modloc){
 	#	if($k==0){
@@ -116,7 +119,7 @@ while($row = mysql_fetch_assoc($output2)){
 		$l++;
 	}
 	
-	if(!is_null($row['post_tested_n20c']) && xmlgrapher_crit_num($row['assoc_sens'], "IV", "module",0)!=1 && $loc_condition==$modloc){
+	if(!is_null($row['post_tested_n20c']) && $badIV && $loc_condition==$modloc){
 		if($j==0){
 			$arr2[0][$j] = strtotime($row['post_tested_n20c']);
 			$arr2[1][$j] = 0;

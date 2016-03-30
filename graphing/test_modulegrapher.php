@@ -28,9 +28,9 @@ if($loc == "nebraska"){
 	$loc_condition = "Nebraska";
 }
 
-$func0 = "SELECT a.received, a.post_tested_n20c, a.assoc_module, b.id FROM times_module_p a, module_p b WHERE a.assoc_module=b.id".$hide." ORDER BY a.received";
-$func = "SELECT a.HDI_attached, a.post_tested_n20c, a.assoc_module, b.id FROM times_module_p a, module_p b WHERE a.assoc_module=b.id".$hide." ORDER BY HDI_attached";
-$func2 = "SELECT a.HDI_attached, a.post_tested_n20c, a.assoc_module, b.id FROM times_module_p a, module_p b WHERE a.assoc_module=b.id".$hide." ORDER BY post_tested_n20c";
+$func0 = "SELECT a.received, a.post_tested_n20c, b.assembly, a.assoc_module, b.id FROM times_module_p a, module_p b WHERE a.assoc_module=b.id".$hide." ORDER BY a.received";
+$func = "SELECT a.HDI_attached, a.post_tested_n20c, b.assembly, a.assoc_module, b.id FROM times_module_p a, module_p b WHERE a.assoc_module=b.id".$hide." ORDER BY HDI_attached";
+$func2 = "SELECT a.HDI_attached, a.post_tested_n20c, b.assembly, a.assoc_module, b.id FROM times_module_p a, module_p b WHERE a.assoc_module=b.id".$hide." ORDER BY post_tested_n20c";
 
 $output0 = mysql_query($func0, $connection);
 $output = mysql_query($func, $connection);
@@ -134,9 +134,12 @@ $graph->xaxis->SetFont(FF_FONT2,FS_BOLD);
 $graph->xaxis->title->Set("Time");
 $graph->xaxis->title->SetFont(FF_FONT2,FS_BOLD);
 $graph->xaxis->scale->ticks->Set(7*24*60*60);
+$graph->xaxis->title->SetMargin(85);
 
-$graph->yaxis->title->SetMargin(30);
 $graph->yaxis->SetFont(FF_FONT2,FS_BOLD);
+$graph->yaxis->title->Set("Number of Modules");
+$graph->yaxis->title->SetFont(FF_FONT2,FS_BOLD);
+$graph->yaxis->title->SetMargin(20);
 
 $graph->legend->SetPos(.1, .1, 'left','top');
 $graph->legend->SetFont(FF_FONT2,FS_BOLD);
