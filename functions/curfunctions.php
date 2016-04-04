@@ -815,15 +815,27 @@ function curtestparams($id, $edit=0){
 	else{ echo "Not Set"; }
 	echo "<br>";
 
-	echo "Number of Double Columns below 95% efficiency: ";
+	echo "Double Columns below 95% efficiency: ";
 	if(!is_null($dumped['DC_below_95'])){ echo $dumped['DC_below_95']; }
 	else{ echo "Not Set"; }
 	echo "<br>";
 
-	echo "Number of Double Columns below 98% efficiency: ";
+	echo "Double Columns below 98% efficiency: ";
 	if(!is_null($dumped['DC_below_98'])){ echo $dumped['DC_below_98']; }
 	else{ echo "Not Set"; }
 	echo "<br>";
+
+	echo "Double Columns below 0.60 uniformity: ";
+	if(!is_null($dumped['DC_below_60_uni'])){ echo $dumped['DC_below_60_uni']; }
+	else{ echo "Not Set"; }
+	echo "<br>";
+
+	echo "Double Columns above 1.50 uniformity: ";
+	if(!is_null($dumped['DC_above_150_uni'])){ echo $dumped['DC_above_150_uni']; }
+	else{ echo "Not Set"; }
+	echo "<br>";
+
+
 	
 	if(is_null($dumped['tested_status'])){
 		echo "Next Testing Step: Not Set<br>";

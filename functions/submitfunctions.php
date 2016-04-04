@@ -896,7 +896,7 @@ include_once("../functions/editfunctions.php");
 					}
 					#####################
 
-					##########NUMBER OF DOUBLE COLUMNS BELOW 98% EFFICIENCY########
+					########## NUMBER OF DOUBLE COLUMNS BELOW 98% EFFICIENCY ########
 
 					if(isset($doc->TEST[$i]->DC_BELOW_98)){
 					    $DC_below_98 = $doc->TEST[$i]->DC_BELOW_98;
@@ -909,7 +909,7 @@ include_once("../functions/editfunctions.php");
 					}
 					#####################
 
-					##########NUMBER OF DOUBLE COLUMNS BELOW 95% EFFICIENCY########
+					########## NUMBER OF DOUBLE COLUMNS BELOW 95% EFFICIENCY ########
 
 					if(isset($doc->TEST[$i]->DC_BELOW_95)){
 					    $DC_below_95 = $doc->TEST[$i]->DC_BELOW_95;
@@ -917,6 +917,33 @@ include_once("../functions/editfunctions.php");
 						    mysql_query('USE cmsfpix_u', $connection);
 
 						    $func = "UPDATE module_p SET DC_below_95=$DC_below_95 WHERE id=$id";
+						    mysql_query($func, $connection);
+					    }
+					}
+					#####################
+
+					
+					########## NUMBER OF DOUBLE COLUMNS BELOW 0.60 UNIFORMITY ########
+
+					if(isset($doc->TEST[$i]->DC_BELOW_60_UNI)){
+					    $DC_below_60_uni = $doc->TEST[$i]->DC_BELOW_60_UNI;
+					    if($DC_below_60_uni != ""){
+						    mysql_query('USE cmsfpix_u', $connection);
+
+						    $func = "UPDATE module_p SET DC_below_60_uni=$DC_below_60_uni WHERE id=$id";
+						    mysql_query($func, $connection);
+					    }
+					}
+					#####################
+
+					########## NUMBER OF DOUBLE COLUMNS ABOVE 1.50 UNIFORMITY ########
+
+					if(isset($doc->TEST[$i]->DC_ABOVE_150_UNI)){
+					    $DC_above_150_uni = $doc->TEST[$i]->DC_ABOVE_150_UNI;
+					    if($DC_above_150_uni != ""){
+						    mysql_query('USE cmsfpix_u', $connection);
+
+						    $func = "UPDATE module_p SET DC_above_150_uni=$DC_above_150_uni WHERE id=$id";
 						    mysql_query($func, $connection);
 					    }
 					}

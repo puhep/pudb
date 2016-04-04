@@ -1,3 +1,32 @@
+<html>
+  <head>
+    <title>CSS based columns</title>
+  </head>
+  <body>
+    <h1>CSS based columns</h1>
+    <ul style="columns: 3 200px; -moz-columns: 3 200px; -webkit-columns: 3 200px;">
+      <li>Item one</li>
+      <li>Item two</li>
+      <li>Item three</li>
+      <li>Item four</li>
+      <li>Item five</li>
+      <li>Item six</li>
+      <li>Item eight</li>
+      <li>Item nine</li>
+      <li>Item ten</li>
+      <li>Item eleven</li>
+      <li>Item twelve</li>
+      <li>Item thirteen</li>
+    </ul>
+  </body>
+</html>
+
+
+
+
+
+
+
 <?php
 
 ini_set('display_errors','On');
@@ -64,9 +93,9 @@ mysql_query("USE cmsfpix_u", $connection);
 #echo "<br>";
 #$arr1[0][0] = $row1['post_tested_17c'];
 #echo $arr1[0][0];#
-echo findassembly_post(205)%5;
-echo "<br>";
-echo 5%5;
+#echo findassembly_post(205)%5;
+#echo "<br>";
+#echo 5%5;
 
 
 ?>
