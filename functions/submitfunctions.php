@@ -997,7 +997,9 @@ include_once("../functions/editfunctions.php");
 				while($doc->SCAN[$i]->NAME != ""){
 
 					$name = $doc->SCAN[$i]->NAME;
+					#echo "IV scan module name: $name<br>";
 					$modid = findid("module_p", $name);
+					#echo "IV scan module ID: $modid<br>";
 					$dumped = dump("module_p", $modid);
 					$id = $dumped['assoc_sens'];
 
@@ -1025,8 +1027,10 @@ include_once("../functions/editfunctions.php");
 						$compliance = $doc->SCAN[$i]->COMPLIANCE;
 						$compliance = settype($compliance, "float");
 					}
-					measurement($id, $level, $type, $notes, $content, filesize($dir.$file), $file, $breakdown, $compliance);
-
+					if(filesize($dir.$file) != 0){
+						measurement($id, $level, $type, $notes, $content, filesize($dir.$file), $file, $breakdown, $compliance);
+					}
+					else{ return 4; }
 					lastUpdate("module_p", $modid, $user, "Fulltest IV/CV scan", $notes);
 					$i++;
 				}
@@ -1039,8 +1043,10 @@ include_once("../functions/editfunctions.php");
 					$name = $doc->CONFIG[$i]->NAME;
 								
 					$file = $doc->CONFIG[$i]->FILE;
-
-					addconfig($file, $dir.$file, $name);
+					if(filesize($dir.$file) != 0){
+						addconfig($file, $dir.$file, $name);
+					}
+					else{ return 4; }
 
 		
 					$i++;

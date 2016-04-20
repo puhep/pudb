@@ -1,3 +1,5 @@
+
+<!--
 <html>
   <head>
     <title>CSS based columns</title>
@@ -22,7 +24,7 @@
 </html>
 
 
-
+-->
 
 
 
@@ -97,5 +99,8 @@ mysql_query("USE cmsfpix_u", $connection);
 #echo "<br>";
 #echo 5%5;
 
+$pattern = "/([0-9A-Za-z]{5})-([0-9A-Za-z]{4})/";
+$subject = "YHC69-1015";
+echo preg_match($pattern, $subject);
 
 ?>

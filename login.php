@@ -49,7 +49,11 @@ if(isset($_POST['u']) && isset($_POST['p'])){
 	$row = mysql_fetch_assoc($output);
 
 	if($row['password'] == $_POST['p']){
-		session_start();
+                ini_set('session.gc_maxlifetime',28800);
+                session_set_cookie_params(28800);
+                session_start();
+                ini_set('session.gc_maxlifetime',28800);
+                session_set_cookie_params(28800);
 		$_SESSION['user'] = $htmlu;
 		echo "<br>";
 		echo "You have logged in successfully";

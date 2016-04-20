@@ -635,4 +635,21 @@ function postassembly_radio_show_not($PAvaln){
 
 }
 
+function rocpop($id){
+	 include('../../../Submission_p_secure_pages/connect.php');
+	 mysql_query('USE cmsfpix_u', $connection);
+	 $func = "select name,id,position from ROC_p where assoc_module=$id order by position";
+	 $out = mysql_query($func, $connection);
+
+	 while($row = mysql_fetch_assoc($out)){
+		$name = $row['name'];
+		$rocid = $row['id'];
+		if(strpos($name," ")){
+			$name = substr($name,strpos($name," ")+1);
+		}
+		$position = $row['position'];
+		echo "<option value=\"$rocid\">$position ($name)</option>\n";
+	}
+}
+
 ?>

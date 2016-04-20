@@ -91,6 +91,20 @@ Next Testing Step: <select name="status">
 <br>
 <br>
 
+ROC: <select name="ROC"><?php rocpop($id) ?></select>
+Failure Mode: <select name="mode">
+	<option value=""></option>
+	<option value="Dead DC w/ good Trim">Dead DC w/ good Trim</option>
+	<option value="Dead DC w/ bad Trim">Dead DC w/ bad Trim</option>
+	<option value="Zombie">Zombie</option>
+	<option value="Zero PH">Zero PH</option>
+	<option value="Partially Detached">Partially Detached</option>
+	<option value="Dead Pixels">Dead Pixels</option>
+	<option value="Other">Other</option>
+	</select>
+<br>
+<br>
+
 Additional Notes <textarea cols="40" rows="5" name="notes"></textarea>
 <br>
 <br>

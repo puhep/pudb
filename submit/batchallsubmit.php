@@ -43,7 +43,7 @@ if($_GET['code'] == 3){
 	echo "<br>The xml file could not be parsed and the data has not been uploaded<br>";
 }
 if($_GET['code'] == 4){
-	echo "<br>An unknown error has occurred<br>";
+	echo "<br>An unknown error has occurred, please retry<br>";
 }
 if($_GET['code'] == 5){
 	echo "<br>Uploaded file was not a .zip, please retry<br>";

@@ -447,7 +447,7 @@ function curgrades_string($id){
 
 	mysql_query('USE cmsfpix_u', $connection);
 	
-	$func = "SELECT badbumps_elec, deadpix, vcal_thresh, position from ROC_p WHERE assoc_module=".$id." ORDER BY position";
+	$func = "SELECT badbumps_elec, deadpix, vcal_thresh, position, failure_mode from ROC_p WHERE assoc_module=".$id." ORDER BY position";
 	$output = mysql_query($func, $connection);
 	$rocgrades = "";
 	$biggest_contributors = array();
@@ -495,6 +495,10 @@ function curgrades_string($id){
 		else{
 			$biggest_contributors[] = "";
 		}
+		if($array['failure_mode']){
+			$biggest_contributors[$i] .= "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Failure Mode: ".$array['failure_mode'];
+		}
+		$biggest_contributors[$i] .= "<br>";
 		$i++;
 	}
 	if($rocsnull == 1){
@@ -503,7 +507,7 @@ function curgrades_string($id){
 	else{
 	for($i=0; $i<16; $i++){
 		  if($rocgrades[$i] != "A" && isset($rocgrades[$i])){
-		  	$ret = $ret."ROC".$i.": Grade ".$rocgrades[$i]."; biggest contribution: ".$biggest_contributors[$i]."<br>";
+		  	$ret = $ret."ROC".$i.": Grade ".$rocgrades[$i]."; biggest contribution: ".$biggest_contributors[$i];
 		  }
 		  elseif(!isset($rocgrades[$i])){
 			#$ret = $ret."ROC".$i.": Grade not set <br>";
@@ -516,6 +520,10 @@ function curgrades_string($id){
 	}
 	elseif($crit%5 == 0){
 		   $ret = $ret."IV: B <br>";
+	}
+	$xraycrit = xray_crit($id);
+	if($xraycrit != "A"){
+		$ret = $ret."X-Ray: ".$xraycrit."<br>";
 	}
 	if($ret == ""){
 		$ret = "None <br>";
@@ -536,15 +544,15 @@ function curgrade($id){
 	$crit = xmlgrapher_crit_num($dumped['assoc_sens'], "IV", "module", 0);
 
 	$bumpcrit = badbumps_crit($id);
-
-	if($bumpcrit == "" || $crit == 0){
+	$xraycrit = xray_crit($id);
+	if($bumpcrit == "" || $crit == 0 || $xraycrit == ""){
 		return "I";
 	}
 
-	if($crit%25 == 0 || $crit%7 == 0 || $bumpcrit == "C"){
+	if($crit%25 == 0 || $crit%7 == 0 || $bumpcrit == "C" || $xraycrit == "C"){
 		return "C";
 	}
-	if($crit%5 == 0 || $bumpcrit == "B"){
+	if($crit%5 == 0 || $bumpcrit == "B" || $xraycrit == "B"){
 		return "B";
 	}
 	
@@ -552,6 +560,38 @@ function curgrade($id){
 	
 }
 
+### Evaluates a modules based on its X-Ray criteria
+### X-Ray criteria include: DC efficiency, DC uniformity
+function xray_crit($id){
+	 include('../../../Submission_p_secure_pages/connect.php');
+
+	mysql_query('USE cmsfpix_u', $connection);
+	
+	$func = "SELECT DC_below_98 as n98,DC_below_95 as n95,DC_below_60_uni as n60,DC_above_150_uni as n150 from module_p WHERE id=".$id;
+	$output = mysql_query($func, $connection);
+	$ret = "";
+	while($array = mysql_fetch_assoc($output)){
+		     if(is_null($array['n98']) || is_null($array['n95']) || is_null($array['n60']) || is_null($array['n150'])){
+		     return ""; }
+		     $n60 = $array['n60'];
+		     $n150 = $array['n150'];
+		     $n98 = $array['n98'];
+		     $n95 = $array['n95'];
+		     if($n60 + $n150 > 1 || $n95 > 1){
+		     	     return "C";
+		     }
+		     elseif($n60 + $n150 == 1 || $n98 > 0 || $n95 == 1){
+		     	     return "B";
+		     }
+		     elseif($n60 + $n150 == 0 && $n98 == 0 && $n95 == 0){
+		     	     return "A";
+		     }
+		     else{
+			     return "-1";
+		     }
+		     	     
+	}
+}
 
 ### Evaluates a module and return's its grade based only on its number of bad bumps.
 ### Bad bumps include electrically bad, unaddressable, unmaskable, dead pixels, and VCal thresh defect pixels

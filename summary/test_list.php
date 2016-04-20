@@ -38,6 +38,7 @@ include('../graphing/xmlgrapher_crit.php');
 	$param31 = "";
 	$param34 = "";
 	$param35 = "";
+	$param36 = "";
 
 	$comp2 = "";
 	$comp3 = "";
@@ -101,6 +102,7 @@ include('../graphing/xmlgrapher_crit.php');
 		$param31 = $_GET['param31'];
 		$param34 = $_GET['param34'];
 		$param35 = $_GET['param35'];	
+		$param36 = $_GET['param36'];
 		
 		$comp2 = $_GET['comp2'];
 		$comp3 = $_GET['comp3'];
@@ -251,6 +253,20 @@ Grade:
 <option value="B"<?php echo $param2 == 'B' ? 'selected="selected"' : ''; ?>>B</option>
 <option value="C"<?php echo $param2 == 'C' ? 'selected="selected"' : ''; ?>>C</option>
 <option value="I"<?php echo $param2 == 'I' ? 'selected="selected"' : ''; ?>>I</option>
+</select>
+<br>
+<br>
+
+Has ROC Failure Mode: 
+<select name="param36">
+<option value=""></option>
+<option value="Dead DC w/ good Trim"<?php echo $param36 == 'Dead DC w/ good Trim' ? 'selected="selected"' : ''; ?>>Dead DC w/ good Trim</option>
+<option value="Dead DC w/ bad Trim"<?php echo $param36 == 'Dead DC w/ bad Trim' ? 'selected="selected"' : ''; ?>>Dead DC w/ bad Trim</option>
+<option value="Zombie"<?php echo $param36 == 'Zombie' ? 'selected="selected"' : ''; ?>>Zombie</option>
+<option value="Zero PH"<?php echo $param36 == 'Zero PH' ? 'selected="selected"' : ''; ?>>Zero PH</option>
+<option value="Partially Detached"<?php echo $param36 == 'Partially Detached' ? 'selected="selected"' : ''; ?>>Partially Detached</option>
+<option value="Dead Pixels"<?php echo $param36 == 'Dead Pixels' ? 'selected="selected"' : ''; ?>>Dead Pixels</option>
+<option value="Other"<?php echo $param36 == 'Other' ? 'selected="selected"' : ''; ?>>Other</option>
 </select>
 <br>
 <br>
@@ -436,6 +452,7 @@ $sortmod28 = "";
 $sortmod29 = "";
 $sortmod30 = "";
 $sortmod34 = "";
+$sortmod36 = "";
 
 if($param1 != ""){
 	$sortmod1 = "AND location=\"".$_GET['param1']."\" ";
@@ -553,12 +570,16 @@ elseif($param34 == "" && $param35 != ""){
 	$d = "2015-09-01";
 	$sortmod34 = "AND arrival BETWEEN \"".$d."\" AND \"".$_GET['param35']."\" ";
 }
+if($param36 != ""){
+	$sortmod36 = "AND c.failure_mode = ". $_GET['param36']." ";
+}
+
 #$sortmod32 = "AND a.name NOT LIKE '%95%' AND a.name NOT LIKE '%96%' AND a.name NOT LIKE '%97%' ";
 $sortmod32 = "";
 
 $sortmod33 = "AND a.assembly >= 11 ";
 
-$sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19.$sortmod20.$sortmod21.$sortmod22.$sortmod23.$sortmod24.$sortmod25.$sortmod26.$sortmod27.$sortmod28.$sortmod29.$sortmod30.$sortmod32.$sortmod33.$sortmod34;
+$sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19.$sortmod20.$sortmod21.$sortmod22.$sortmod23.$sortmod24.$sortmod25.$sortmod26.$sortmod27.$sortmod28.$sortmod29.$sortmod30.$sortmod32.$sortmod33.$sortmod34.$sortmod36;
 
 #echo $sorter;
 

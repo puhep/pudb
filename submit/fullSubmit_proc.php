@@ -149,6 +149,14 @@ if($_POST['notes'] != ""){
 
 	addcomment_fnal($id, $_POST['notes']."&nbsp;&nbsp;&nbsp;&nbsp; --".$_POST['user'], $_POST['user']);
 }
+
+if($_POST['mode'] != ""){
+	$funcROC = "UPDATE ROC_p set failure_mode = \"".$_POST['mode']."\" where id=".$_POST['ROC'];
+	include('../../../Submission_p_secure_pages/connect.php');
+	mysql_query('USE cmsfpix_u',$connection);
+	mysql_query($funcROC, $connection);
+}
+
 }
 exit();
 ?>
