@@ -293,7 +293,7 @@ Has ROC Failure Mode:
 <br>
 <br>
 
-Number of pXar Errors:
+#pXar Errors:
 <select name="comp41">
 <?php comparepop($comp41); ?>
 </select>
