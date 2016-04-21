@@ -63,11 +63,11 @@ while($row0 = mysql_fetch_assoc($output0)){
 
 $g = 0;
 ### fix for modules that have been rejected without being tested
-#while($row1 = mysql_fetch_assoc($output1)){
-#	    $arrFix[0][$g] = $row1['date'];
-#	    $arrFix[1][$g] = $row1['num'];
-#	    $g++;
-#}
+while($row1 = mysql_fetch_assoc($output1)){
+	    $arrFix[0][$g] = $row1['date'];
+	    $arrFix[1][$g] = $row1['num'];
+	    $g++;
+}
 
 $arrIDs = array();
 for($z=0;$z<count($arr[0]);$z++){
@@ -106,6 +106,12 @@ for($i=0;$i<count($arrIDs)+1;$i++){
 		
 	}
 }
+
+#make 'tested' list equal to the sum of the graded modules for each batch
+for($g=0;$g<count($arrIDs)+1;$g++){
+	$arr[3][$g] = $arrA[$g]+$arrB[$g]+$arrC[$g];
+}
+
 #$arrA[$i+1]=$arrA[$i];
 #$arrB[$i+1]=$arrB[$i];
 #$arrC[$i+1]=$arrC[$i];

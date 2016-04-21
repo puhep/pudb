@@ -28,7 +28,7 @@
 		echo "</h>";
 		echo "<br>";
                 echo "Grades and test dates are based on the -20C Full Test at FNAL";
-		echo "<br>Note: due to a known bug, the 'tested' modules for this graph only do not include rejected modules that were not tested at -20C<br>";
+		echo "<br>Note: the tested and graded modules for this graph only do not include rejected modules that were not tested at -20C<br>";
 
 		#echo "<div id=\"module\">";
 		#echo "Total";
