@@ -39,6 +39,11 @@ include('../graphing/xmlgrapher_crit.php');
 	$param34 = "";
 	$param35 = "";
 	$param36 = "";
+	$param37 = "";
+	$param38 = "";
+	$param39 = "";
+	$param40 = "";
+	$param41 = "";
 
 	$comp2 = "";
 	$comp3 = "";
@@ -55,7 +60,13 @@ include('../graphing/xmlgrapher_crit.php');
 	$comp28 = "";
 	$comp29 = "";
 	#$comp30 = "";
-	
+	$comp36 = "";
+	$comp37 = "";
+	$comp38 = "";
+	$comp39 = "";	
+	$comp40 = "";	
+	$comp41 = "";	
+
 	if(!empty($_GET)){
 		$param1 = $_GET['param1'];
 		$param2 = $_GET['param2'];
@@ -103,7 +114,12 @@ include('../graphing/xmlgrapher_crit.php');
 		$param34 = $_GET['param34'];
 		$param35 = $_GET['param35'];	
 		$param36 = $_GET['param36'];
-		
+		$param37 = $_GET['param37'];
+		$param38 = $_GET['param38'];
+		$param39 = $_GET['param39'];
+		$param40 = $_GET['param40'];		
+		$param41 = $_GET['param41'];		
+
 		$comp2 = $_GET['comp2'];
 		$comp3 = $_GET['comp3'];
 		$comp4 = $_GET['comp4'];
@@ -119,6 +135,12 @@ include('../graphing/xmlgrapher_crit.php');
 		$comp28 = $_GET['comp28'];
 		$comp29 = $_GET['comp29'];
 		#$comp30 = $_GET['comp30'];
+		$comp36 = $_GET['comp36'];
+		$comp37 = $_GET['comp37'];
+		$comp38 = $_GET['comp38'];
+		$comp39 = $_GET['comp39'];
+		$comp40 = $_GET['comp40'];
+		$comp41 = $_GET['comp41'];
 	}
 
 ?>
@@ -271,6 +293,14 @@ Has ROC Failure Mode:
 <br>
 <br>
 
+Number of pXar Errors:
+<select name="comp41">
+<?php comparepop($comp41); ?>
+</select>
+<textarea name="param41" cols="10" rows="1"><?php echo $param41; ?></textarea>
+<br>
+<br>
+
 # Bad ROCs:
 <select name="comp3">
 <?php comparepop($comp3); ?>
@@ -328,6 +358,7 @@ Has ROC Failure Mode:
 </select>
 <textarea name="param7" cols="10" rows="1"><?php echo $param7; ?></textarea>
 <br>
+<br>
 
 X-Ray Slope: 
 <select name="comp12">
@@ -341,6 +372,34 @@ X-Ray Offset:
 <?php comparepop($comp13); ?>
 </select>
 <textarea name="param13" cols="10" rows="1"><?php echo $param13; ?></textarea>
+<br>
+
+#DC with Efficiency < 98%: 
+<select name="comp37">
+<?php comparepop($comp37); ?>
+</select>
+<textarea name="param37" cols="10" rows="1"><?php echo $param37; ?></textarea>
+<br>
+
+#DC with Efficiency < 95%: 
+<select name="comp38">
+<?php comparepop($comp38); ?>
+</select>
+<textarea name="param38" cols="10" rows="1"><?php echo $param38; ?></textarea>
+<br>
+
+#DC with Uniformity < 0.60: 
+<select name="comp39">
+<?php comparepop($comp39); ?>
+</select>
+<textarea name="param39" cols="10" rows="1"><?php echo $param39; ?></textarea>
+<br>
+
+#DC with Uniformity > 1.50: 
+<select name="comp40">
+<?php comparepop($comp40); ?>
+</select>
+<textarea name="param40" cols="10" rows="1"><?php echo $param40; ?></textarea>
 <br>
 
 <?php /* ?>
@@ -453,6 +512,11 @@ $sortmod29 = "";
 $sortmod30 = "";
 $sortmod34 = "";
 $sortmod36 = "";
+$sortmod37 = "";
+$sortmod38 = "";
+$sortmod39 = "";
+$sortmod40 = "";
+$sortmod41 = "";
 
 if($param1 != ""){
 	$sortmod1 = "AND location=\"".$_GET['param1']."\" ";
@@ -573,13 +637,28 @@ elseif($param34 == "" && $param35 != ""){
 if($param36 != ""){
 	$sortmod36 = "AND c.failure_mode = ". $_GET['param36']." ";
 }
+if($param37 != ""){
+	$sortmod37 = "AND a.DC_below_98".$_GET['comp37'].$_GET['param37']." ";
+}
+if($param38 != ""){
+	$sortmod38 = "AND a.DC_below_95".$_GET['comp38'].$_GET['param38']." ";
+}
+if($param39 != ""){
+	$sortmod39 = "AND a.DC_below_60_uni".$_GET['comp39'].$_GET['param39']." ";
+}
+if($param40 != ""){
+	$sortmod40 = "AND a.DC_above_150_uni".$_GET['comp40'].$_GET['param40']." ";
+}
+if($param41 != ""){
+	$sortmod41 = "AND a.pxar_errors".$_GET['comp41'].$_GET['param41']." ";
+}
 
 #$sortmod32 = "AND a.name NOT LIKE '%95%' AND a.name NOT LIKE '%96%' AND a.name NOT LIKE '%97%' ";
 $sortmod32 = "";
 
 $sortmod33 = "AND a.assembly >= 11 ";
 
-$sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19.$sortmod20.$sortmod21.$sortmod22.$sortmod23.$sortmod24.$sortmod25.$sortmod26.$sortmod27.$sortmod28.$sortmod29.$sortmod30.$sortmod32.$sortmod33.$sortmod34.$sortmod36;
+$sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19.$sortmod20.$sortmod21.$sortmod22.$sortmod23.$sortmod24.$sortmod25.$sortmod26.$sortmod27.$sortmod28.$sortmod29.$sortmod30.$sortmod32.$sortmod33.$sortmod34.$sortmod36.$sortmod37.$sortmod38.$sortmod39.$sortmod40.$sortmod41;
 
 #echo $sorter;
 
