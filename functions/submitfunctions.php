@@ -972,8 +972,8 @@ include_once("../functions/editfunctions.php");
 				$i=0;
 				while($doc->PIC[$i]->NAME != ""){
 					
-					$part = $doc->PIC[$i]->PART;
-					$name = $doc->PIC[$i]->NAME;
+					$part = trim($doc->PIC[$i]->PART);
+					$name = trim($doc->PIC[$i]->NAME);
 					if($part == "sidet_p"){
 						$id = findid("module_p", $name);
 					}
@@ -981,9 +981,9 @@ include_once("../functions/editfunctions.php");
 						$id = findid($part, $name);
 					}
 					
-					$picfile = $doc->PIC[$i]->FILE;
-					$notesfile = $doc->PIC[$i]->TXT;
-
+					$picfile = trim($doc->PIC[$i]->FILE);
+					$notesfile = trim($doc->PIC[$i]->TXT);
+					#echo "Picfile:$picfile<br>";
 					$notes = file_get_contents($dir.$notesfile);
 					addpic($picfile, $dir.$picfile,$part, $id, $notes, $time); 
 					
