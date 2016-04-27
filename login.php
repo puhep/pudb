@@ -19,20 +19,17 @@
 
 Username: <input type="text" name="u">
 Password: <input type="password" name="p">
-
 <br>
 <br>
 
 <input type="button" value="Log In" onclick="formhash(this.form,this.form.p);"/>
 
 <?php
-
 echo "<input type='hidden' name='part' value='".$_POST['part']."'>";
 echo "<input type='hidden' name='id' value='".$_POST['id']."'>";
 
 
 if(isset($_POST['u']) && isset($_POST['p'])){
-
 
 	include('../../Submission_p_secure_pages/connect.php');
 
@@ -66,17 +63,31 @@ if(isset($_POST['u']) && isset($_POST['p'])){
 ?>
 </form>
 
+<!--
 <br>
-
-<form method="link" action="
-<?php
-	echo $_GET['prev'];
-?>
-">
+<?php echo $_GET['prev']; ?>
+<br>
+<form method="GET" action="<?php echo $_GET['prev']; ?> ">
 <input type="submit" value="BACK">
 </form>
-
+-->
+<!--
 <br>
+<?php echo $_GET['prev']; ?>
+<br>
+-->
+<br>
+<button type="button" onclick="location.href='<?php echo $_GET['prev']; ?> '">BACK
+</button>
+<br>
+<br>
+
+<!--
+<br>
+<a href="<?php echo $_GET['prev'] ?>">BACK</a>
+<br>
+<br>
+-->
 
 <form method="link" action="index.php">
 <input type="submit" value="MAIN MENU">

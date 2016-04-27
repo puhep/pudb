@@ -401,7 +401,7 @@ include_once('../functions/curfunctions.php');
 
 	mysql_query('USE cmsfpix_u', $connection);
 
-	$func = "SELECT name, id FROM HDI_p WHERE assembly=2".$hide;
+	$func = "SELECT name, id,location FROM HDI_p WHERE assembly=2".$hide." ORDER BY name";
 
 	$available = mysql_query($func, $connection);
 
@@ -410,7 +410,8 @@ include_once('../functions/curfunctions.php');
 	while($hdirow = mysql_fetch_assoc($available)){
 		$id = $hdirow['id'];
 		$hdiid = $hdirow['name'];
-		echo "<option value=\"$id\">".$hdiid."</option>\n";
+		$loc = $hdirow['location'];
+		echo "<option value=\"$id\">".$hdiid."  (".$loc.")</option>\n";
 	}	
 	
 }

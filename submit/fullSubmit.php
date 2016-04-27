@@ -116,7 +116,7 @@ Note: User field is required
 <br>
 
 <?php
-  	conditionalSubmit(0);
+  	conditionalSubmit(1);
         echo "<br> <br>";
 	curpics("sidet_p", $id);
 ?>
