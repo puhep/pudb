@@ -660,7 +660,7 @@ $sortmod33 = "AND a.assembly >= 11 ";
 
 $sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19.$sortmod20.$sortmod21.$sortmod22.$sortmod23.$sortmod24.$sortmod25.$sortmod26.$sortmod27.$sortmod28.$sortmod29.$sortmod30.$sortmod32.$sortmod33.$sortmod34.$sortmod36.$sortmod37.$sortmod38.$sortmod39.$sortmod40.$sortmod41;
 
-echo $sorter."<br>";
+#echo $sorter."<br>";
 
 ?>
 <input type="submit" value="Apply">
