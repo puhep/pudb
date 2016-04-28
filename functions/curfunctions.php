@@ -495,9 +495,9 @@ function curgrades_string($id){
 		else{
 			$biggest_contributors[] = "";
 		}
-		if($array['failure_mode']){
-			$biggest_contributors[$i] .= "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Failure Mode: ".$array['failure_mode'];
-		}
+		#if($array['failure_mode']){
+		#	$biggest_contributors[$i] .= "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Failure Mode: ".$array['failure_mode'];
+		#}
 		$biggest_contributors[$i] .= "<br>";
 		$i++;
 	}
@@ -507,7 +507,7 @@ function curgrades_string($id){
 	else{
 	for($i=0; $i<16; $i++){
 		  if($rocgrades[$i] != "A" && isset($rocgrades[$i])){
-		  	$ret = $ret."ROC".$i.": Grade ".$rocgrades[$i]."; biggest contribution: ".$biggest_contributors[$i];
+		  	$ret = $ret."&nbsp;&nbsp;&nbsp;ROC".$i.": Grade ".$rocgrades[$i]."; biggest contribution: ".$biggest_contributors[$i];
 		  }
 		  elseif(!isset($rocgrades[$i])){
 			#$ret = $ret."ROC".$i.": Grade not set <br>";
@@ -516,14 +516,14 @@ function curgrades_string($id){
 	}
 	$crit = xmlgrapher_crit_num($dumped['assoc_sens'], "IV", "module", 0);
 	if($crit%25 == 0 || $crit%7 == 0){
-		    $ret = $ret."IV: C <br>";
+		    $ret = $ret."&nbsp;&nbsp;&nbsp;IV: C <br>";
 	}
 	elseif($crit%5 == 0){
-		   $ret = $ret."IV: B <br>";
+		   $ret = $ret."&nbsp;&nbsp;&nbsp;IV: B <br>";
 	}
 	$xraycrit = xray_crit($id);
 	if($xraycrit != "A"){
-		$ret = $ret."X-Ray: ".$xraycrit."<br>";
+		$ret = $ret."&nbsp;&nbsp;&nbsp;X-Ray: ".$xraycrit."<br>";
 	}
 	if($ret == ""){
 		$ret = "None <br>";
@@ -572,7 +572,7 @@ function xray_crit($id){
 	$ret = "";
 	while($array = mysql_fetch_assoc($output)){
 		     if(is_null($array['n98']) || is_null($array['n95']) || is_null($array['n60']) || is_null($array['n150'])){
-		     return ""; }
+		     return "I"; }
 		     $n60 = $array['n60'];
 		     $n150 = $array['n150'];
 		     $n98 = $array['n98'];
@@ -741,7 +741,22 @@ function badbumps($id){
 	return $totbad;
 }
 
-
+### Returns a string of ROCs that have failure modes 
+function ROC_failure_modes($id){
+	 include('../../../Submission_p_secure_pages/connect.php');
+	 mysql_query('USE cmsfpix_u', $connection);
+	 $mod_string = "";
+	 $func = "SELECT name,position,id,failure_mode from ROC_p where assoc_module=$id and failure_mode is not null order by position";
+	 $output = mysql_query($func, $connection);
+	 while($row = mysql_fetch_assoc($output)){
+	 	    $name = $row['name'];
+		    $pos = $row['position'];
+		    $failure = $row['failure_mode'];
+		    $mode_string .= "&nbsp;&nbsp;&nbsp;ROC$pos: $failure <br>";
+	 }
+	 if($mode_string != ""){ $mode_string = "ROC failure modes:<br>".$mode_string; }
+	 return $mode_string;
+}
 
 ### Returns the number of ROCs for a given module that are flagged as bad
 function badrocs($id){
@@ -834,7 +849,8 @@ function curtestparams($id, $edit=0){
 		  curgrades_string($id);
 		  #echo "<br>";
 	}
-	
+	echo ROC_failure_modes($id);
+
 	if($dumped['can_time']==1){
 	echo "Timeable: Yes<br>";
 	}
