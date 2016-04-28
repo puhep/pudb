@@ -635,7 +635,7 @@ elseif($param34 == "" && $param35 != ""){
 	$sortmod34 = "AND arrival BETWEEN \"".$d."\" AND \"".$_GET['param35']."\" ";
 }
 if($param36 != ""){
-	$sortmod36 = "AND c.failure_mode = ". $_GET['param36']." ";
+	$sortmod36 = "AND c.failure_mode = \"". $_GET['param36']."\" ";
 }
 if($param37 != ""){
 	$sortmod37 = "AND a.DC_below_98".$_GET['comp37'].$_GET['param37']." ";
@@ -660,7 +660,7 @@ $sortmod33 = "AND a.assembly >= 11 ";
 
 $sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19.$sortmod20.$sortmod21.$sortmod22.$sortmod23.$sortmod24.$sortmod25.$sortmod26.$sortmod27.$sortmod28.$sortmod29.$sortmod30.$sortmod32.$sortmod33.$sortmod34.$sortmod36.$sortmod37.$sortmod38.$sortmod39.$sortmod40.$sortmod41;
 
-#echo $sorter;
+echo $sorter."<br>";
 
 ?>
 <input type="submit" value="Apply">
