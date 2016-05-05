@@ -641,7 +641,7 @@ function rocpop($id){
 	 mysql_query('USE cmsfpix_u', $connection);
 	 $func = "select name,id,position from ROC_p where assoc_module=$id order by position";
 	 $out = mysql_query($func, $connection);
-
+	 echo "<option value=\"\"</option>\n";
 	 while($row = mysql_fetch_assoc($out)){
 		$name = $row['name'];
 		$rocid = $row['id'];

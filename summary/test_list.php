@@ -284,10 +284,16 @@ Has ROC Failure Mode:
 <option value=""></option>
 <option value="Dead DC w/ good Trim"<?php echo $param36 == 'Dead DC w/ good Trim' ? 'selected="selected"' : ''; ?>>Dead DC w/ good Trim</option>
 <option value="Dead DC w/ bad Trim"<?php echo $param36 == 'Dead DC w/ bad Trim' ? 'selected="selected"' : ''; ?>>Dead DC w/ bad Trim</option>
+<option value="Bad Trim w/ no Bad DC"<?php echo $param36 == 'Bad Trim w/ no Bad DC' ? 'selected="selected"' : ''; ?>>Bad Trim w/ no Bad DC</option>
 <option value="Zombie"<?php echo $param36 == 'Zombie' ? 'selected="selected"' : ''; ?>>Zombie</option>
 <option value="Zero PH"<?php echo $param36 == 'Zero PH' ? 'selected="selected"' : ''; ?>>Zero PH</option>
+<option value="Low Iana / High Vana"<?php echo $param36 == 'Low Iana / High Vana' ? 'selected="selected"' : ''; ?>>Low Iana / High Vana</option>
+<option value="Iana Short"<?php echo $param36 == 'Iana Short' ? 'selected="selected"' : ''; ?>>Iana Short</option>
+<option value="Idig Short"<?php echo $param36 == 'Idig Short' ? 'selected="selected"' : ''; ?>>Idig Short</option>
 <option value="Partially Detached"<?php echo $param36 == 'Partially Detached' ? 'selected="selected"' : ''; ?>>Partially Detached</option>
 <option value="Dead Pixels"<?php echo $param36 == 'Dead Pixels' ? 'selected="selected"' : ''; ?>>Dead Pixels</option>
+<option value="Bad Bumps"<?php echo $param36 == 'Bad Bumps' ? 'selected="selected"' : ''; ?>>Bad Bumps</option>
+<option value="No Token Pass"<?php echo $param36 == 'No Token Pass' ? 'selected="selected"' : ''; ?>>No Token Pass</option>
 <option value="Other"<?php echo $param36 == 'Other' ? 'selected="selected"' : ''; ?>>Other</option>
 </select>
 <br>

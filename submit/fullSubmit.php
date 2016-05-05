@@ -96,10 +96,16 @@ Failure Mode: <select name="mode">
 	<option value=""></option>
 	<option value="Dead DC w/ good Trim">Dead DC w/ good Trim</option>
 	<option value="Dead DC w/ bad Trim">Dead DC w/ bad Trim</option>
+	<option value="Bad Trim w/ no Bad DC">Bad Trim w/ no Bad DC</option>
 	<option value="Zombie">Zombie</option>
 	<option value="Zero PH">Zero PH</option>
+	<option value="Low Iana / High Vana">Low Iana / High Vana</option>
+	<option value="Iana Short">Iana Short</option>
+	<option value="Idig Short">Idig Short</option>
 	<option value="Partially Detached">Partially Detached</option>
 	<option value="Dead Pixels">Dead Pixels</option>
+	<option value="Bad Bumps">Bad Bumps</option>
+	<option value="No Token Pass">No Token Pass</option>
 	<option value="Other">Other</option>
 	</select>
 <br>
