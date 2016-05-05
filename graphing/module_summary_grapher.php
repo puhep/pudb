@@ -43,6 +43,7 @@ $func1 = "SELECT UNIX_TIMESTAMP(a.received), a.assoc_module FROM times_module_p 
 $func2 = "SELECT UNIX_TIMESTAMP(a.post_tested_n20c), a.assoc_module FROM times_module_p a, module_p b WHERE a.assoc_module=b.id AND (b.name NOT LIKE \"%95%\" AND b.name NOT LIKE \"%96%\" AND b.name NOT LIKE \"%97%\") AND post_tested_17c IS NOT NULL AND post_tested_thermal_cycle IS NOT NULL".$hide." ORDER BY post_tested_n20c";
 $func3 = "SELECT UNIX_TIMESTAMP(a.shipped), a.assoc_module FROM times_module_p a, module_p b WHERE a.assoc_module=b.id AND (b.name NOT LIKE \"%95%\" AND b.name NOT LIKE \"%96%\" AND b.name NOT LIKE \"%97%\")".$hide." ORDER BY a.shipped";
 $func4 = "SELECT UNIX_TIMESTAMP(a.fnal_tested), a.assoc_module FROM times_module_p a, module_p b WHERE a.assoc_module=b.id AND (b.name NOT LIKE \"%95%\" AND b.name NOT LIKE \"%96%\" AND b.name NOT LIKE \"%97%\")".$hide." ORDER BY a.fnal_tested";
+$func5 = "SELECT UNIX_TIMESTAMP(a.on_blade), a.assoc_module FROM times_module_p a, module_p b WHERE a.assoc_module=b.id AND (b.name NOT LIKE \"%95%\" AND b.name NOT LIKE \"%96%\" AND b.name NOT LIKE \"%97%\")".$hide." ORDER BY a.on_blade";
 #Old functions. We might want to re-use them after the stress test
 #$func1 = "SELECT UNIX_TIMESTAMP(received), assoc_module FROM times_module_p".$hide." ORDER BY received";
 #$func2 = "SELECT UNIX_TIMESTAMP(HDI_attached), assoc_module FROM times_module_p".$hide." ORDER BY HDI_attached";
@@ -52,6 +53,7 @@ $output1 = mysql_query($func1, $connection);
 $output2 = mysql_query($func2, $connection);
 $output3 = mysql_query($func3, $connection);
 $output4 = mysql_query($func4, $connection);
+$output5 = mysql_query($func5, $connection);
 
 $i=0;
 while($row1 = mysql_fetch_assoc($output1)){
@@ -110,6 +112,20 @@ while($row4 = mysql_fetch_assoc($output4)){
 }
 $arr4[0][$l] = $date;
 $arr4[1][$l] = $l;
+
+$m=0;
+while($row5 = mysql_fetch_assoc($output5)){
+
+	$modloc = curloc("module_p", $row5['assoc_module']);
+
+	if(!is_null($row5['UNIX_TIMESTAMP(a.on_blade)']) && $loc_condition==$modloc){
+		$arr5[0][$m] = $row5['UNIX_TIMESTAMP(a.on_blade)'];
+		$arr5[1][$m] = $m+1;
+		$m++;
+	}
+}
+$arr5[0][$m] = $date;
+$arr5[1][$m] = $m;
 
 $arr_install[0][0] = strtotime("2015-12-01");
 $arr_install[1][0] = 672;
@@ -193,6 +209,16 @@ $sp4->SetWeight(7);
 $sp4->SetStyle("solid");
 $sp4->SetStepStyle();
 $sp4->SetLegend("Detector Grade");
+
+$sp5 = new LinePlot($arr5[1],$arr5[0]);
+$sp5->SetColor('orange@0.5');
+$sp5->SetFillColor('orange@0.5');
+$graph->Add($sp5);
+$sp5->SetColor('orange@0.5');
+$sp5->SetWeight(7);
+$sp5->SetStyle("solid");
+$sp5->SetStepStyle();
+$sp5->SetLegend("Mounted");
 
 $spin = new LinePlot($arr_install[1],$arr_install[0]);
 $graph->Add($spin);
