@@ -106,6 +106,8 @@ Failure Mode: <select name="mode">
 	<option value="Dead Pixels">Dead Pixels</option>
 	<option value="Bad Bumps">Bad Bumps</option>
 	<option value="No Token Pass">No Token Pass</option>
+	<option value="Unprogrammable">Unprogrammable</option>
+	<option value="Pulse Height Issue">Pulse Height Issue</option>
 	<option value="Other">Other</option>
 	</select>
 <br>
