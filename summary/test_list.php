@@ -702,7 +702,7 @@ $func4 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a
 $func5 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Final Judgement\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.shipped DESC";
 $func6 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Debugging\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.shipped DESC";
 $func7 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Ready for Mounting\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY SUM(c.deadpix+c.badbumps_elec+c.unmaskable+c.unaddressable+IFNULL(c.vcal_thresh,0)) ASC";
-$func10 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Mounted\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.on_blade DESC";
+$func10 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Mounted\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." and a.assembly = 14 GROUP BY a.name ORDER BY b.on_blade DESC";
 $func8 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Rejected\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY SUM(IFNULL(c.deadpix,1000000)+IFNULL(c.badbumps_elec,1000000)+IFNULL(c.unmaskable,0)+IFNULL(c.unaddressable,0)+IFNULL(c.vcal_thresh,0)) ASC";
 $func9 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status IS NULL AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.shipped DESC";
 
@@ -999,6 +999,7 @@ $fpartarray[8] = $fpartarray[8]." (".$j.")";
 $total = $total + $j;
 
 if($j > $i){$i = $j;}
+$j=0;
 
 $output10 = mysql_query($func10, $connection);
 while($output10 && $row10 = mysql_fetch_assoc($output10)){
