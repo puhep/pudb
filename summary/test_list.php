@@ -152,9 +152,7 @@ include('../graphing/xmlgrapher_crit.php');
 </head>
 <body>
 
-
 <a href="../graphing/post_assembly_grapher.php" target="blank"><img src="../graphing/post_assembly_grapher.php" style="float:right;width:1100px;height:700px"/></a>
-
 
 <form method="link" action="../index.php">
 <input type="submit" value="MAIN MENU">

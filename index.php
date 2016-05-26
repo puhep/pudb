@@ -68,6 +68,10 @@ Data Viewing
   <input value="Recently Updated Modules"
  type="submit"></form>
 
+<form action="summary/modulesbybatch.php" method="get">
+  <input value="Module List by Batch"
+ type="submit"></form>
+
 <form action="summary/time.php" method="get">
   <input value="Assembly Over Time"
  type="submit"></form>
