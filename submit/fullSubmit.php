@@ -89,6 +89,8 @@ Next Testing Step: <select name="status">
 	<option value="Rejected">Rejected</option>
 	</select>
 <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: Modules cannot be rejected without a comment.
+<br>
 <br>
 
 ROC: <select name="ROC"><?php rocpop($id) ?></select>
@@ -119,7 +121,7 @@ Additional Notes <textarea cols="40" rows="5" name="notes"></textarea>
 
 User: <input name="user" type="text">
 <br>
-Note: User field is required
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: User field is required
 <br>
 <br>
 
