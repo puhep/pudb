@@ -32,14 +32,14 @@ while($row0 = mysql_fetch_assoc($output0)){
 	    $num_in_batch[$i] = $row0['num'];
 	    $dates[$i] = $row0['date'];
 	    $arrivals[$i] = $row0['arrival'];
-            if(date("N",strtotime($arrivals[$i]))<3){
+            #if(date("N",strtotime($arrivals[$i]))<3){
 		$startdate = date("Y-m-d", strtotime("Wednesday $arrivals[$i] -1 week"));
 		$enddate = date("Y-m-d", strtotime("Tuesday $arrivals[$i]"));
-		}
-	    else{
-		$startdate = date("Y-m-d", strtotime("Wednesday $arrivals[$i]"));
-		$enddate = date("Y-m-d", strtotime("Tuesday $arrivals[$i] +1 week"));
-		}
+		#}
+	    #else{
+		#$startdate = date("Y-m-d", strtotime("Wednesday $arrivals[$i]"));
+		#$enddate = date("Y-m-d", strtotime("Tuesday $arrivals[$i] +1 week"));
+		#}
 	    $ranges[$i] = $startdate." to ".$enddate;
             $i++;
 }
