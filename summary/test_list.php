@@ -717,16 +717,16 @@ mysql_query('USE cmsfpix_u', $connection);
 $output1 = mysql_query($func1, $connection);
 while($output1 && $row1 = mysql_fetch_assoc($output1)){
 	#Testing Pass/Fail of IV test
-	$dumped = dump("module_p", $row1['id']);
+	#$dumped = dump("module_p", $row1['id']);
+	$dumped = findsensor($row1['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
-	
 	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row1['id'])){ continue;}
 	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row1['id'])){ continue;}
 	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row1['id'])){ continue;}
 	if($comp2 === ">=" && $param2 !== "" && $param2 < curgrade($row1['id'])){ continue;}
 	if($comp2 === "<=" && $param2 !== "" && $param2 > curgrade($row1['id'])){ continue;}
 	if($comp2 === "!=" && $param2 !== "" && $param2 == curgrade($row1['id'])){ continue;}
-
+	
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
 	if($comp18 === "0" && $param18 === "1" && $crit%7 > 0){ continue;}
@@ -746,16 +746,16 @@ $total = $total + $i;
 $output2 = mysql_query($func2, $connection);
 while($output2 && $row2 = mysql_fetch_assoc($output2)){
 	#Testing Pass/Fail of IV test
-	$dumped = dump("module_p", $row2['id']);
+	#$dumped = dump("module_p", $row2['id']);
+	$dumped = findsensor($row2['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
-	
 	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row2['id'])){ continue;}
 	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row2['id'])){ continue;}
 	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row2['id'])){ continue;}
 	if($comp2 === ">=" && $param2 !== "" && $param2 < curgrade($row2['id'])){ continue;}
 	if($comp2 === "<=" && $param2 !== "" && $param2 > curgrade($row2['id'])){ continue;}
 	if($comp2 === "!=" && $param2 !== "" && $param2 == curgrade($row2['id'])){ continue;}
-
+	
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
 	if($comp18 === "0" && $param18 === "1" && $crit%7 > 0){ continue;}
@@ -778,9 +778,9 @@ $j=0;
 $output3 = mysql_query($func3, $connection);
 while($output3 && $row3 = mysql_fetch_assoc($output3)){
 	#Testing Pass/Fail of IV test
-	$dumped = dump("module_p", $row3['id']);
+	#$dumped = dump("module_p", $row3['id']);
+	$dumped = findsensor($row1['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
-	
 	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row3['id'])){ continue;}
 	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row3['id'])){ continue;}
 	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row3['id'])){ continue;}
@@ -810,9 +810,9 @@ $j=0;
 $output4 = mysql_query($func4, $connection);
 while($output4 && $row4 = mysql_fetch_assoc($output4)){
 	#Testing Pass/Fail of IV test
-	$dumped = dump("module_p", $row4['id']);
+	#$dumped = dump("module_p", $row4['id']);
+	$dumped = findsensor($row4['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
-	
 	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row4['id'])){ continue;}
 	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row4['id'])){ continue;}
 	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row4['id'])){ continue;}
@@ -842,16 +842,16 @@ $j=0;
 $output5 = mysql_query($func5, $connection);
 while($output5 && $row5 = mysql_fetch_assoc($output5)){
 	#Testing Pass/Fail of IV test
-	$dumped = dump("module_p", $row5['id']);
+	#$dumped = dump("module_p", $row5['id']);
+	$dumped = findsensor($row5['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
-	
 	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row5['id'])){ continue;}
 	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row5['id'])){ continue;}
 	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row5['id'])){ continue;}
 	if($comp2 === ">=" && $param2 !== "" && $param2 < curgrade($row5['id'])){ continue;}
 	if($comp2 === "<=" && $param2 !== "" && $param2 > curgrade($row5['id'])){ continue;}
 	if($comp2 === "!=" && $param2 !== "" && $param2 == curgrade($row5['id'])){ continue;}
-
+	
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
 	if($comp18 === "0" && $param18 === "1" && $crit%7 > 0){ continue;}
@@ -874,9 +874,9 @@ $j=0;
 $output6 = mysql_query($func6, $connection);
 while($output6 && $row6 = mysql_fetch_assoc($output6)){
 	#Testing Pass/Fail of IV test
-	$dumped = dump("module_p", $row6['id']);
+	#$dumped = dump("module_p", $row6['id']);
+	$dumped = findsensor($row6['id']);	
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
-	
 	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row6['id'])){ continue;}
 	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row6['id'])){ continue;}
 	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row6['id'])){ continue;}
@@ -906,9 +906,9 @@ $j=0;
 $output7 = mysql_query($func7, $connection);
 while($output7 && $row7 = mysql_fetch_assoc($output7)){
 	#Testing Pass/Fail of IV test
-	$dumped = dump("module_p", $row7['id']);
+	#$dumped = dump("module_p", $row7['id']);
+	$dumped = findsensor($row7['id']);	
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
-	
 	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row7['id'])){ continue;}
 	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row7['id'])){ continue;}
 	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row7['id'])){ continue;}
@@ -938,9 +938,9 @@ $j=0;
 $output8 = mysql_query($func8, $connection);
 while($output8 && $row8 = mysql_fetch_assoc($output8)){
 	#Testing Pass/Fail of IV test
-	$dumped = dump("module_p", $row8['id']);
+	#$dumped = dump("module_p", $row8['id']);
+	$dumped = findsensor($row8['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
-	
 	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row8['id'])){ continue;}
 	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row8['id'])){ continue;}
 	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row8['id'])){ continue;}
@@ -970,9 +970,9 @@ $j=0;
 $output9 = mysql_query($func9, $connection);
 while($output9 && $row9 = mysql_fetch_assoc($output9)){
 	#Testing Pass/Fail of IV test
-	$dumped = dump("module_p", $row9['id']);
+	#$dumped = dump("module_p", $row9['id']);	
+	$dumped = findsensor($row9['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
-	
 	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row9['id'])){ continue;}
 	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row9['id'])){ continue;}
 	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row9['id'])){ continue;}
@@ -1002,9 +1002,9 @@ $j=0;
 $output10 = mysql_query($func10, $connection);
 while($output10 && $row10 = mysql_fetch_assoc($output10)){
 	#Testing Pass/Fail of IV test
-	$dumped = dump("module_p", $row10['id']);
+	#$dumped = dump("module_p", $row10['id']);
+	$dumped = findsensor($row10['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
-	
 	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row10['id'])){ continue;}
 	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row10['id'])){ continue;}
 	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row10['id'])){ continue;}

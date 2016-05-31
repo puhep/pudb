@@ -1006,7 +1006,7 @@ function findname($db, $id){
 
 	$func = "SELECT name FROM $db WHERE id=\"$id\"";
 	if($db == "module_p"){
-		$func = "SELECT name,name_hdi FROM $db WHERE id=$id";
+		$func = "SELECT name,name_hdi FROM $db WHERE id=".$id;
 	}
 	
 	$output = mysql_query($func, $connection);
@@ -1020,6 +1020,17 @@ function findname($db, $id){
 	else{
 		return  $name_hdi;
 	}
+}
+
+### Returns the associated sensor for a module given the id
+function findsensor($id){
+	#include('../../../Submission_p_secure_pages/connect.php');
+	#mysql_query('USE cmsfpix_u', $connection);
+	$func = "SELECT assoc_sens FROM module_p WHERE id=$id";
+	$output = mysql_query($func,$connection);
+	return $output['assoc_sens'];
+
+
 }
 
 ### Returns the current assembly step of a module, given its id
