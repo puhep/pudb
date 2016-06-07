@@ -201,7 +201,7 @@ $sp1[$l]->mark->SetFillColor($color);
 #$sp1[$l]->link->Show();
 $graph->Add($sp1[$l]);
 #$sp1[$l]->mark->SetWidth(7);
-$sp1[$l]->SetWeight(1);
+$sp1[$l]->SetWeight(2);
 $sp1[$l]->SetColor($color);
 
 }
