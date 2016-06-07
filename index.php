@@ -92,6 +92,10 @@ Data Viewing
   <input value="Module Report"
  type="submit"></form>
 
+<form action="summary/modulereport2.php" method="get">
+  <input value="Module Report 2"
+ type="submit"></form>
+
 <br>
 
 New Parts Information
