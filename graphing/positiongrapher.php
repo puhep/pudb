@@ -101,8 +101,8 @@ $doc1=simplexml_load_string($xml);
 		$arr1[$k][0][$loop]=$doc1->DATA_SET->DATA[$loop]->VOLTAGE_VOLT;
 
 		settype($arr1[$k][0][$loop],"float");
-
-		$arr1[$k][0][$loop] = abs($arr1[$k][0][$loop]);
+		#$arr1[$k][0][$loop] = round(abs($arr1[$k][0][$loop]));
+		$arr1[$k][0][$loop] = round(abs($arr1[$k][0][$loop]));
 
 		$arr1[$k][1][$loop]=$doc1->DATA_SET->DATA[$loop]->$y;
 		if($arr1[$k][1][$loop] == "NaN"){
@@ -123,20 +123,23 @@ $doc1=simplexml_load_string($xml);
 
 	$index150 = array_search(150, $arr1[$k][0]);
 		$I150=$arr1[$k][1][$index150];
-
+	$markedarr[$k]=0;
 	if($I150>2E-6){
-		$markedarr[$k]=1;
+		$markedarr[$k]+=1;
 	}
-	else if($I150/$I100>2){
-		$markedarr[$k]=2;
+	if($I150>10E-6){
+		$markedarr[$k]+=10;
 	}
-	else{
-		$markedarr[$k]=0;
+	if($I150/$I100>2){
+		$markedarr[$k]+=10;
 	}
+	#else{
+	#	$markedarr[$k]=0;
+	#}
 
 $k++;
-
 }
+#echo array_sum($markedarr);
 
 $graph=new Graph(1340,800);
 $graph->SetFrame(true,'black',0);
@@ -176,14 +179,15 @@ for($l=0;$l<$k;$l++){
 
 
 $QC = " PASS";
-if($markedarr[$l]==1){
-	$QC = " FAIL1";
+if($markedarr[$l]>=10){
+	$color = "red";
 }
-if($markedarr[$l]==2){
-	$QC = " FAIL2";
+if($markedarr[$l]!=0 && $markedarr[$l] < 10){
+	$color = "orange";
 }
-
-
+if($markedarr[$l]==0){
+	$color = "forestgreen";
+}
 $sp1[$l] = new LinePlot($arr1[$l][1],$arr1[$l][0]);
 if($level == "fnal" || $level == "fnal_17c"){
 }
@@ -193,12 +197,12 @@ else{
 	$sp1[$l]->SetLegend($sensors[$l][0]);
 }
 
-$color = sprintf('#%06X', mt_rand(0,0xFFFFFF));
 $sp1[$l]->mark->SetFillColor($color);
 #$sp1[$l]->link->Show();
 $graph->Add($sp1[$l]);
 #$sp1[$l]->mark->SetWidth(7);
-$sp1[$l]->SetWeight(7);
+$sp1[$l]->SetWeight(1);
+$sp1[$l]->SetColor($color);
 
 }
 

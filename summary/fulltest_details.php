@@ -64,7 +64,7 @@
                 echo "<h>Grade Percentages by Batch</h>";
                 echo "<br>";
                 echo "<p>Grades are based on the -20C Full Test at FNAL; modules are binned by batch</p>";
-		echo "<a href=\"../graphing/testbybatch_grapher.php\" target=\"blank\"><img src=\"../graphing/testbybatch_fractional_grapher.php\" width=\"710\" height=\"400\" /></a>";
+		echo "<a href=\"../graphing/testbybatch_fractional_grapher.php\" target=\"blank\"><img src=\"../graphing/testbybatch_fractional_grapher.php\" width=\"710\" height=\"400\" /></a>";
                 echo "<br>";
                 
 		echo "<h>";
