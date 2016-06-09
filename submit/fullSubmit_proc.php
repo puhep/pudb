@@ -101,6 +101,9 @@ if($_POST['status'] == "Rejected" && $_POST['notes'] != ""){
 	
 	$funcassembly = "UPDATE module_p SET assembly=15 WHERE id=".$id;
 	mysql_query($funcassembly, $connection);
+
+	$timesfunc = "UPDATE times_module_p SET rejected = NOW() where assoc_module=".$id;
+	mysql_query($timesfunc, $connection);
 	
 	addcomment("module_p", $id, $_POST['status']." by ".$_POST['user'], $_POST['user']);
 	addcomment_fnal($id, "Set to ".$_POST['status']." by ".$_POST['user'], $_POST['user']);
