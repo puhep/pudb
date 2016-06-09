@@ -1,9 +1,21 @@
 <?php
-include('../../../Submission_p_secure_pages/connect.php');
+#include('../../../Submission_p_secure_pages/connect.php');
 include('../functions/curfunctions.php');
 include('../jpgraph/src/jpgraph.php');
 include('../jpgraph/src/jpgraph_date.php');
 include('../jpgraph/src/jpgraph_line.php');
+
+
+$connection = mysql_connect('fibonacci.physics.purdue.edu','cmsfpix_u_www','0MKshqtRV6Y');
+if(!$connection){
+	echo("Unable to connect to the database server at this time.");
+	exit();
+}
+else{
+	#echo "Connected";
+}
+
+
 
 $arrReceived;
 $arrAssembled;
@@ -28,6 +40,7 @@ if($loc == "nebraska"){
 	$loc_condition = "Nebraska";
 }
 
+
 $func0 = "SELECT a.received, a.post_tested_n20c, b.assembly, a.assoc_module, b.id FROM times_module_p a, module_p b WHERE a.assoc_module=b.id".$hide." ORDER BY a.received";
 $func = "SELECT a.HDI_attached, a.post_tested_n20c, b.assembly, a.assoc_module, b.id FROM times_module_p a, module_p b WHERE a.assoc_module=b.id".$hide." ORDER BY HDI_attached";
 $func2 = "SELECT a.HDI_attached, a.post_tested_n20c, b.assembly, a.assoc_module, b.id FROM times_module_p a, module_p b WHERE a.assoc_module=b.id".$hide." ORDER BY post_tested_n20c";
@@ -44,10 +57,10 @@ $k=0;
 $l=0;
 
 while($row0 = mysql_fetch_assoc($output0)){
-
+	#print_r($row0);
+	#echo "<br><br>";
 	$modloc = curloc("module_p", $row0['assoc_module']);
 	$id = $row0['id'];
-
 	if(!is_null($row0['received']) && $loc_condition==$modloc){
 		$arrReceived[0][$l] = strtotime($row0['received']);
 		$arrReceived[1][$l] = $l+1;
@@ -62,7 +75,6 @@ while($row = mysql_fetch_assoc($output)){
 
 	$modloc = curloc("module_p", $row['assoc_module']);
 	$id = $row['id'];
-
 	if(!is_null($row['HDI_attached']) && $loc_condition==$modloc){
 		$arrAssembled[0][$g] = strtotime($row['HDI_attached']);
 		$arrAssembled[1][$g] = $g+1;
@@ -79,25 +91,25 @@ while($row2 = mysql_fetch_assoc($output2)){
 
 	$modloc = curloc("module_p", $row2['assoc_module']);
 	$id = $row2['id'];
-
+	$grade = curgrade($id);
 	if(!is_null($row2['post_tested_n20c']) && $loc_condition==$modloc){
 		$arrTested[0][$h] = strtotime($row2['post_tested_n20c']);
 		$arrTested[1][$h] = $h+1;
 		$h++;
 	}
-	if(!is_null($row2['post_tested_n20c']) && curgrade($id)=="A" && $loc_condition==$modloc){
+	if(!is_null($row2['post_tested_n20c']) && $grade=="A" && $loc_condition==$modloc){
 		$arr1[0][$i] = strtotime($row2['post_tested_n20c']);
 		$arr1[1][$i] = $i+1;
 		$i++;
 	}
 	
-	if(!is_null($row2['post_tested_n20c']) && curgrade($id)=="B" && $loc_condition==$modloc){
+	if(!is_null($row2['post_tested_n20c']) && $grade=="B" && $loc_condition==$modloc){
 		$arr2[0][$j] = strtotime($row2['post_tested_n20c']);
 		$arr2[1][$j] = $j+1;
 		$j++;
 	}
 	
-	if(!is_null($row2['post_tested_n20c']) && curgrade($id)=="C" && $loc_condition==$modloc){
+	if(!is_null($row2['post_tested_n20c']) && $grade=="C" && $loc_condition==$modloc){
 		$arr3[0][$k] = strtotime($row2['post_tested_n20c']);
 		$arr3[1][$k] = $k+1;
 		$k++;

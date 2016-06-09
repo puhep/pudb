@@ -534,9 +534,14 @@ function curgrades_string($id){
 ### Evaluates a module and returns its grade
 function curgrade($id){
 	include_once('../graphing/xmlgrapher_crit.php');
+	include('../../../Submission_p_secure_pages/connect.php');
 	#include_once('../functions/curfunctions.php');
-	$dumped = dump("module_p", $id);
-
+	###
+	#$dumped = dump("module_p", $id);
+	### change dump to call only assoc_sens and tested status
+	$func = "SELECT assoc_sens,tested_status FROM module_p WHERE id=$id";
+	$dumped = mysql_query($func,$connection);
+	
 	if($dumped['tested_status']=="Rejected"){
 		return "C";
 	}	
