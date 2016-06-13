@@ -111,6 +111,7 @@ Failure Mode: <select name="mode">
 	<option value="Unprogrammable">Unprogrammable</option>
 	<option value="Pulse Height Issue">Pulse Height Issue</option>
 	<option value="Other">Other</option>
+	<option value=NULL>Unset Failure Mode</option>
 	</select>
 <br>
 <br>

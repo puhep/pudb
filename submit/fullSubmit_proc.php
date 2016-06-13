@@ -154,7 +154,12 @@ if($_POST['notes'] != ""){
 }
 
 if($_POST['mode'] != ""){
+	if($_POST['mode']!="NULL"){	
 	$funcROC = "UPDATE ROC_p set failure_mode = \"".$_POST['mode']."\" where id=".$_POST['ROC'];
+	}
+	else{
+	$funcROC = "UPDATE ROC_p set failure_mode = NULL where id=".$_POST['ROC'];
+	}
 	include('../../../Submission_p_secure_pages/connect.php');
 	mysql_query('USE cmsfpix_u',$connection);
 	mysql_query($funcROC, $connection);
