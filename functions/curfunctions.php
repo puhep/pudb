@@ -539,14 +539,14 @@ function curgrade($id){
 	###
 	#$dumped = dump("module_p", $id);
 	### change dump to call only assoc_sens and tested status
-	$func = "SELECT assoc_sens,tested_status FROM module_p WHERE id=$id";
-	$dumped = mysql_query($func,$connection);
+	#$func = "SELECT assoc_sens,tested_status FROM module_p WHERE id=".$id;
+	#$dumped = mysql_query($func,$connection);
 	
-	if($dumped['tested_status']=="Rejected"){
+	if(findmodassembly($id)==15){
 		return "C";
 	}	
 
-	$crit = xmlgrapher_crit_num($dumped['assoc_sens'], "IV", "module", 0);
+	$crit = xmlgrapher_crit_num(findsensor($id), "IV", "module", 0);
 
 	$bumpcrit = badbumps_crit($id);
 	$xraycrit = xray_crit($id);
