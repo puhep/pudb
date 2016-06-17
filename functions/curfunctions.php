@@ -828,7 +828,7 @@ function curtestparams($id, $edit=0){
 
 	$badrocs = badrocs($id);
 	$badbumps = badbumps($id);
-	if($badbumps == "No Data"){
+	if($badbumps === "No Data"){
 		$percent_badbumps = "No Data";	    
 	}
 	else{
