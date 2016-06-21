@@ -482,6 +482,7 @@ include_once('../functions/curfunctions.php');
 	
 	libxml_use_internal_errors(true);
 	$doc->loadHTMLFile("/project/cmsfpix/.www/MoReWeb/Results/Overview.html");
+
 	libxml_use_internal_errors(false);
 
 
@@ -497,7 +498,6 @@ include_once('../functions/curfunctions.php');
 		$curid = findid("module_p",$curname);
 		$curlink = $tag->getAttribute('href');
 		$exploded = explode('_',$curlink);
-		
 		if($curid == $modid){
 			
 			$fulllink = "../../MoReWeb/Results/".$curlink;

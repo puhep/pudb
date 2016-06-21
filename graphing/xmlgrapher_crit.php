@@ -567,6 +567,7 @@ if(!is_null($file1)){
 		$timestamp1 = "No Timestamp";
 	}
 }
+
 if(!is_null($file2)){
 	$datacount2 = count($doc2->DATA_SET->DATA);
 	if($datacount2 > $datacountlim){
@@ -578,6 +579,7 @@ if(!is_null($file2)){
 		$timestamp2 = "No Timestamp";
 	}
 }
+
 if(!is_null($file3)){
 	$datacount3 = count($doc3->DATA_SET->DATA);
 	if($datacount3 > $datacountlim){
@@ -645,7 +647,6 @@ if(!is_null($file1)){
 				$arr1[1][$loop] *= -1;
 			}
 	}
-	
 	$index100 = array_search(100, $arr1[0]);
 		$I100=$arr1[1][$index100];
 
@@ -699,7 +700,6 @@ if(!is_null($file2)){
 		$markedB*=7;
 	}
 }
-
 if(!is_null($file3)){
 	$markedC=1;
 	$totmarked=1;
@@ -768,7 +768,6 @@ if(!is_null($file4)){
 
 	$index150 = array_search(150, $arr4[0]);
 		$I150=$arr4[1][$index150];
-
 	if($I150>2E-6){
 		$markedD*=5;
 	}
@@ -829,7 +828,6 @@ if($exclusive == 0){
 	}
 
 	if(!is_null($file4) && $level=="module"){
-
 		#$totmarked*=$markedD;
 		return $markedD;
 	}

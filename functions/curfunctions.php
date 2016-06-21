@@ -547,7 +547,7 @@ function curgrade($id){
 	}	
 
 	$crit = xmlgrapher_crit_num(findsensor($id), "IV", "module", 0);
-
+	#echo "IV crit num: ".$crit."<br>";
 	$bumpcrit = badbumps_crit($id);
 	$xraycrit = xray_crit($id);
 	if($bumpcrit == "" || $crit == 0 || $xraycrit == ""){
@@ -642,7 +642,7 @@ function totbad_crit($id){
 	include('../../../Submission_p_secure_pages/connect.php');
 
 	mysql_query('USE cmsfpix_u', $connection);
-	
+	$totbad = 0;
 	$func = "SELECT badbumps_elec, deadpix, unaddressable, unmaskable, vcal_thresh from ROC_p WHERE assoc_module=".$id;
 	$output = mysql_query($func, $connection);
 	while($array = mysql_fetch_assoc($output)){
@@ -750,7 +750,7 @@ function badbumps($id){
 function ROC_failure_modes($id){
 	 include('../../../Submission_p_secure_pages/connect.php');
 	 mysql_query('USE cmsfpix_u', $connection);
-	 $mod_string = "";
+	 $mode_string = "";
 	 $func = "SELECT name,position,id,failure_mode from ROC_p where assoc_module=$id and failure_mode is not null order by position";
 	 $output = mysql_query($func, $connection);
 	 while($row = mysql_fetch_assoc($output)){
@@ -1029,10 +1029,13 @@ function findname($db, $id){
 
 ### Returns the associated sensor for a module given the id
 function findsensor($id){
-	#include('../../../Submission_p_secure_pages/connect.php');
-	#mysql_query('USE cmsfpix_u', $connection);
-	$func = "SELECT assoc_sens FROM module_p WHERE id=$id";
+	include('../../../Submission_p_secure_pages/connect.php');
+	mysql_query('USE cmsfpix_u', $connection);
+	$func = "SELECT assoc_sens FROM module_p WHERE id=".$id;
 	$output = mysql_query($func,$connection);
+	$output = mysql_fetch_assoc($output);
+	#echo "ModID: ".$id."<br>";
+	#echo "SensorID: ".$output['assoc_sens']."<br>";
 	return $output['assoc_sens'];
 
 

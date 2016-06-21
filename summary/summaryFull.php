@@ -19,14 +19,13 @@ include_once('../functions/popfunctions.php');
 $name = $_GET['name'];
 $id = findid("module_p", $name);
 
-
-
 echo "<input type='hidden' name='name' value='".$_GET['name']."'>";
 curname("module_p", $id);
 echo "<br>";
 curtestparams($id);
-morewebLinkList($id);
-echo "<br>";
+if($_GET['links']=="show"){
+   morewebLinkList($id);
+}
 curnotes_fnal($id);
 echo "<br>";
 curpics("sidet_p", $id);
@@ -49,14 +48,14 @@ curpics("sidet_p", $id);
 <div2 style="position:absolute;left:500px;top:38px;">
 <form method="GET" action="../download/configfiles.php" target="_blank">
 <?php
-  echo "<input type='hidden' name='name' value='".$name."'>";
+  echo "<input type='hidden' name='name' value='".$name."' >";
 ?>
 <input type="submit" value="Extra Files">
 </form>
 </div2>
 
 <div3 style="position:absolute;left:500px;top:66px;">
-<form method="GET" action="test_list.php" ">
+<form method="GET" action="test_list.php">
 <input type="submit" value="Back to Tested Module List">
 </form>
 </div3>
@@ -76,6 +75,19 @@ curpics("sidet_p", $id);
 </form>
 </div5>
 
+<div6 style="position:absolute;left:500px;top:150px;">
+<form method="GET" action="../summary/summaryFull.php">
+<?php
+  echo "<input type='hidden' name='name' value='".$name."'>";
+   if($_GET['links']!="show"){
+     echo "<input type='hidden' name='links' value='show'>";
+
+   }
+  #echo "<input type='hidden' name='links' value=''>";
+?>
+<input type="submit" value="Show/Hide MoReWeb Links">
+</form>
+</div6>
 
 <form method="GET" action="../submit/fullSubmit.php">
 <?php

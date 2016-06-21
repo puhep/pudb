@@ -1495,6 +1495,9 @@ include_once("../functions/editfunctions.php");
 					}
 					elseif(substr($delivered,0,1) == "B"){
 						$wafer = "0".$strwafer;	
+						if(strlen($wafer) == 2){
+							$wafer = "0".$wafer;
+						}
 					}
 					elseif(substr($delivered,0,1) == "D"){
 						$wafer = intval($strwafer)+200;	
