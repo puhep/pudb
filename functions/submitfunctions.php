@@ -1431,12 +1431,10 @@ include_once("../functions/editfunctions.php");
 	
 	###Not sure why this line is here, it seems to be redundant
 	$id = findid("module_p", $part);
-
 	if(!file_exists($dir.$id)){
 		mkdir($dir.$id);
 		chmod($dir.$id, 0777);
 	}
-	
 	rename($tmploc, $dir.$id."/".$filename);
 	chmod($dir.$id."/".$filename, 0777);
 	
@@ -1501,7 +1499,9 @@ include_once("../functions/editfunctions.php");
 					elseif(substr($delivered,0,1) == "D"){
 						$wafer = intval($strwafer)+200;	
 					}
-					
+					elseif(substr($delivered,0,1) == "E"){
+						$wafer = intval($strwafer)+300;	
+					}					
 					#echo "wafer: ".$wafer."<br>";
 					
 					$rtimodule = $doc->Worksheet[0]->Table->Row[$i]->Cell[2]->Data;
