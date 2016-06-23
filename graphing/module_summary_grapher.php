@@ -129,12 +129,12 @@ $arr5[1][$m] = $m;
 
 $arr_install[0][0] = strtotime("2015-12-01");
 $arr_install[1][0] = 672;
-$arr_install[0][1] = strtotime("2016-06-30");
+$arr_install[0][1] = strtotime("2016-10-31");
 $arr_install[1][1] = 672;
 
 $arr_spare[0][0] = strtotime("2015-12-01");
 $arr_spare[1][0] = 940;
-$arr_spare[0][1] = strtotime("2016-06-30");
+$arr_spare[0][1] = strtotime("2016-10-31");
 $arr_spare[1][1] = 940;
 
 $graph=new Graph(1340,800);
@@ -232,7 +232,7 @@ $spsp->setColor('black');
 $spsp->SetWeight(3);
 $spsp->SetLegend("Spare");
 
-$line = new PlotLine(VERTICAL,strtotime("2016-06-30"),"red",2); 
+$line = new PlotLine(VERTICAL,strtotime("2016-10-01"),"red",4); 
 $graph->AddLine($line);
 $line->SetLegend("End of Mounting");
 
