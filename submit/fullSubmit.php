@@ -110,6 +110,7 @@ Failure Mode: <select name="mode">
 	<option value="No Token Pass">No Token Pass</option>
 	<option value="Unprogrammable">Unprogrammable</option>
 	<option value="Pulse Height Issue">Pulse Height Issue</option>
+	<option value="Dead Edge">Dead Edge</option>
 	<option value="Other">Other</option>
 	<option value=NULL>Unset Failure Mode</option>
 	</select>

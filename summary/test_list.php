@@ -294,6 +294,7 @@ Has ROC Failure Mode:
 <option value="No Token Pass"<?php echo $param36 == 'No Token Pass' ? 'selected="selected"' : ''; ?>>No Token Pass</option>
 <option value="Unprogrammable"<?php echo $param36 == 'Unprogrammable' ? 'selected="selected"' : ''; ?>>Unprogrammable</option>
 <option value="Pulse Height Issue"<?php echo $param36 == 'Pulse Height Issue' ? 'selected="selected"' : ''; ?>>Pulse Height Issue</option>
+<option value="Dead Edge"<?php echo $param36 == 'Dead Edge' ? 'selected="selected"' : ''; ?>>Dead Edge</option>
 <option value="Other"<?php echo $param36 == 'Other' ? 'selected="selected"' : ''; ?>>Other</option>
 </select>
 <br>
