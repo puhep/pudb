@@ -27,7 +27,7 @@ include('../functions/popfunctions.php');
 include('../functions/curfunctions.php');
 include('../../../Submission_p_secure_pages/connect.php');
 
-$bbmfunc = "SELECT a.id, a.assembly, b.received as received, b.shipped as shipped, b.fnal_tested as judged, a.pos_on_blade as pos from module_p a,times_module_p b where a.id=b.assoc_module AND a.arrival>\"2015-09-01\" ORDER BY a.arrival";
+$bbmfunc = "SELECT a.id, a.assembly, b.received as received, b.shipped as shipped, b.fnal_tested as judged, b.rejected as rejected, a.pos_on_blade as pos from module_p a,times_module_p b where a.id=b.assoc_module AND a.arrival>\"2015-09-01\" ORDER BY a.arrival";
 $dlstring = "Module, Grade, Received, Shipped, Judged, Position, ROC0, ROC1, ROC2, ROC3, ROC4, ROC5, ROC6, ROC7, ROC8, ROC9, ROC10, ROC11, ROC12, ROC13, ROC14, ROC15, \n";
 
 $i=0;
@@ -46,6 +46,7 @@ while($row = mysql_fetch_assoc($output)){
 	$bbmarray[4][$k] = $row['shipped'];
 	$bbmarray[5][$k] = $row['judged'];
         $bbmarray[6][$k] = $row['pos'];
+        $bbmarray[7][$k] = $row['rejected'];
 #	if($bbmarray[2][$k] != 0){
 #		$k_adj++;
 #	}
@@ -73,8 +74,13 @@ for($loop=0; $loop<$k; $loop++){
        $dlstring .= $bbmarray[3][$loop].", ";
 
        $dlstring .= $bbmarray[4][$loop].", ";
-
+if($bbmarray[7][$loop] != ""){
+       $dlstring .= $bbmarray[7][$loop].", ";
+}
+else{
        $dlstring .= $bbmarray[5][$loop].", ";
+
+}
 
        $dlstring .= $bbmarray[6][$loop].", ";
 
