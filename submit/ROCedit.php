@@ -320,6 +320,9 @@ Result:
 <br>
 <br>
 
+User: <input name="user" type="text">
+<br>
+<br>
 <?php
 
 conditionalSubmit(1);
@@ -327,7 +330,6 @@ conditionalSubmit(1);
 ?>
 </form>
 
-<br>
 
 <form method="link" action="../index.php">
 <input type="submit" value="MAIN MENU">

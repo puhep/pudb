@@ -50,5 +50,6 @@ else if(isset($_POST['submit']) && isset($_POST['ROC0'])){
 
 	$func3 = 'UPDATE module_p SET has_ROC=\"1\" WHERE id='.$_POST['modules'];
 	mysql_query($func3, $connection);
+	addcomment("module_p", $_POST['modules'], "ROCs edited by ".$_POST['user'], $_POST['user']);
 }
 ?>
