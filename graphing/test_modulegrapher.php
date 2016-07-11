@@ -41,9 +41,9 @@ if($loc == "nebraska"){
 }
 
 
-$func0 = "SELECT a.received, a.post_tested_n20c, b.assembly, a.assoc_module, b.id FROM times_module_p a, module_p b WHERE a.assoc_module=b.id".$hide." ORDER BY a.received";
-$func = "SELECT a.HDI_attached, a.post_tested_n20c, b.assembly, a.assoc_module, b.id FROM times_module_p a, module_p b WHERE a.assoc_module=b.id".$hide." ORDER BY HDI_attached";
-$func2 = "SELECT a.HDI_attached, a.post_tested_n20c, b.assembly, a.assoc_module, b.id FROM times_module_p a, module_p b WHERE a.assoc_module=b.id".$hide." ORDER BY post_tested_n20c";
+$func0 = "SELECT a.received, a.assoc_module, b.id FROM times_module_p a, module_p b WHERE a.assoc_module=b.id".$hide." AND a.received IS NOT NULL ORDER BY a.received";
+$func = "SELECT a.HDI_attached, a.post_tested_n20c, b.assembly, a.assoc_module, b.id FROM times_module_p a, module_p b WHERE a.assoc_module=b.id".$hide." and a.HDI_attached IS NOT NULL ORDER BY HDI_attached";
+$func2 = "SELECT a.HDI_attached, a.post_tested_n20c, a.rejected, b.assembly, a.assoc_module, b.id FROM times_module_p a, module_p b WHERE a.assoc_module=b.id".$hide." AND (post_tested_n20c IS NOT NULL OR rejected IS NOT NULL) ORDER BY GREATEST(IFNULL(post_tested_n20c,0),IFNULL(rejected,0))";
 
 $output0 = mysql_query($func0, $connection);
 $output = mysql_query($func, $connection);
@@ -55,6 +55,7 @@ $i=0;
 $j=0;
 $k=0;
 $l=0;
+$m=0;
 
 while($row0 = mysql_fetch_assoc($output0)){
 	#print_r($row0);
@@ -92,31 +93,32 @@ while($row2 = mysql_fetch_assoc($output2)){
 	$modloc = curloc("module_p", $row2['assoc_module']);
 	$id = $row2['id'];
 	$grade = curgrade($id);
-	if(!is_null($row2['post_tested_n20c']) && $loc_condition==$modloc){
-		$arrTested[0][$h] = strtotime($row2['post_tested_n20c']);
+	$maxdate = max($row2['post_tested_n20c'],$row2['rejected']);
+	#echo $date."<br>";
+	if(!is_null($maxdate) && $loc_condition==$modloc){
+		$arrTested[0][$h] = strtotime($maxdate);
 		$arrTested[1][$h] = $h+1;
 		$h++;
 	}
-	if(!is_null($row2['post_tested_n20c']) && $grade=="A" && $loc_condition==$modloc){
-		$arr1[0][$i] = strtotime($row2['post_tested_n20c']);
+	if(!is_null($maxdate) && $grade=="A" && $loc_condition==$modloc){
+		$arr1[0][$i] = strtotime($maxdate);
 		$arr1[1][$i] = $i+1;
 		$i++;
 	}
 	
-	if(!is_null($row2['post_tested_n20c']) && $grade=="B" && $loc_condition==$modloc){
-		$arr2[0][$j] = strtotime($row2['post_tested_n20c']);
+	if(!is_null($maxdate) && $grade=="B" && $loc_condition==$modloc){
+		$arr2[0][$j] = strtotime($maxdate);
 		$arr2[1][$j] = $j+1;
 		$j++;
 	}
 	
-	if(!is_null($row2['post_tested_n20c']) && $grade=="C" && $loc_condition==$modloc){
-		$arr3[0][$k] = strtotime($row2['post_tested_n20c']);
+	if(!is_null($maxdate) && $grade=="C" && $loc_condition==$modloc){
+		$arr3[0][$k] = strtotime($maxdate);
 		$arr3[1][$k] = $k+1;
 		$k++;
 	}
-
-
 }
+
 $arrTested[0][$h] = $date;
 $arrTested[1][$h] = $h;
 
@@ -128,9 +130,6 @@ $arr2[1][$j] = $j;
 
 $arr3[0][$k] = $date;
 $arr3[1][$k] = $k;
-
-#print_r($arrReceived);
-#print_r($arrTested);
 
 $graphname = "Module Grades over Time";
 
@@ -199,7 +198,6 @@ $sp2->SetColor('orange');
 $sp2->SetWeight(7);
 $sp2->SetStyle("solid");
 $sp2->SetStepStyle();
-
 
 $sp1 = new LinePlot($arr1[1],$arr1[0]);
 $graph->Add($sp1);
