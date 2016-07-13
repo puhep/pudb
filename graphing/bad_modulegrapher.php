@@ -35,7 +35,7 @@ if($loc == "nebraska"){
 }
 
 $func = "SELECT a.HDI_attached, a.post_tested_n20c, a.assoc_module, b.id, b.assoc_sens FROM times_module_p a, module_p b WHERE a.assoc_module=b.id".$hide." ORDER BY HDI_attached";
-$func2 = "SELECT a.HDI_attached, a.post_tested_n20c, a.assoc_module, b.id FROM times_module_p a, module_p b WHERE a.assoc_module=b.id".$hide." ORDER BY post_tested_n20c";
+$func2 = "SELECT a.HDI_attached, a.post_tested_n20c, a.rejected, b.assembly, a.assoc_module, b.id FROM times_module_p a, module_p b WHERE a.assoc_module=b.id".$hide." AND (post_tested_n20c IS NOT NULL OR rejected IS NOT NULL) ORDER BY GREATEST(IFNULL(post_tested_n20c,0),IFNULL(rejected,0))";
 
 $output = mysql_query($func, $connection);
 $output2 = mysql_query($func2, $connection);
@@ -50,21 +50,22 @@ while($row = mysql_fetch_assoc($output2)){
 
 	$modloc = curloc("module_p", $row['assoc_module']);
 	$id = $row['id'];
-
+	$sensor = findsensor($id);
+	$maxdate = max($row['post_tested_n20c'],$row['rejected']);
+	#echo $maxdate."<br>";	
 	$totgrade = curgrade($id);
 	if($totgrade == "I"){ continue;}
 
-	if(!is_null($row['HDI_attached']) && $totgrade!="A" && !is_null($row['post_tested_n20c']) && $loc_condition==$modloc){
+	if(!is_null($maxdate) && $totgrade!="A" && !is_null($maxdate) && $loc_condition==$modloc){
 		if($g==0){
-			$arrAssembled[0][$g] = strtotime($row['post_tested_n20c']);
+			$arrAssembled[0][$g] = strtotime($maxdate);
 			$arrAssembled[1][$g] = 0;
 			$g++;
 		}
-		$arrAssembled[0][$g] = strtotime($row['post_tested_n20c']);
+		$arrAssembled[0][$g] = strtotime($maxdate);
 		$arrAssembled[1][$g] = $g;
 		$g++;
 	}
-
 	$badbump = 0;
 	$badpix = 0;
 	$badbump_elec = 0;
@@ -72,8 +73,9 @@ while($row = mysql_fetch_assoc($output2)){
 	if(badpix_crit($id)>"A"){ $badpix = 1; }
 	if(badbumps_crit($id)>"A"){ $badbump = 1; }
 	if(badbumps_elec_crit($id)>"A"){ $badbump_elec = 1;}
+	if(xmlgrapher_crit_num($sensor, "IV", "module",0) != 1){ $badIV=1;}
+
 	#echo "crit num: ".xmlgrapher_crit_num($row['assoc_sens'], "IV", "module",0)."<br>";
-	if(xmlgrapher_crit_num($row['assoc_sens'], "IV", "module",0) != 1){ $badIV=1;}
 
 	#if(!is_null($row['post_tested_n20c']) && $badbump && xmlgrapher_crit_num($row['assoc_sens'], "IV", "module",0)!=1 && $loc_condition==$modloc){
 	#	if($k==0){
@@ -85,49 +87,50 @@ while($row = mysql_fetch_assoc($output2)){
 	#	$arr3[1][$k] = $k;
 	#	$k++;
 	#}
-
-	if(!is_null($row['post_tested_n20c']) && $badbump_elec && $loc_condition==$modloc){
+	if(!is_null($maxdate)){
+	if($badbump_elec && $loc_condition==$modloc){
 		if($k==0){
-			$arr3[0][$k] = strtotime($row['post_tested_n20c']);
+			$arr3[0][$k] = strtotime($maxdate);
 			$arr3[1][$k] = 0;
 			$k++;
 		}
-		$arr3[0][$k] = strtotime($row['post_tested_n20c']);
+		$arr3[0][$k] = strtotime($maxdate);
 		$arr3[1][$k] = $k;
 		$k++;
 	}
 
-	if(!is_null($row['post_tested_n20c']) && $badbump && !badbump_elec && !badpix && $loc_condition==$modloc){
+	if($badbump && !badbump_elec && !badpix && $loc_condition==$modloc){
 		if($i==0){
-			$arr1[0][$i] = strtotime($row['post_tested_n20c']);
+			$arr1[0][$i] = strtotime($maxdate);
 			$arr1[1][$i] = 0;
 			$i++;
 		}
-		$arr1[0][$i] = strtotime($row['post_tested_n20c']);
+		$arr1[0][$i] = strtotime($maxdate);
 		$arr1[1][$i] = $i;
 		$i++;
 	}
 
-	if(!is_null($row['post_tested_n20c']) && $badpix && $loc_condition==$modloc){
+	if($badpix && $loc_condition==$modloc){
 		if($l==0){
-			$arr4[0][$l] = strtotime($row['post_tested_n20c']);
+			$arr4[0][$l] = strtotime($maxdate);
 			$arr4[1][$l] = 0;
 			$l++;
 		}
-		$arr4[0][$l] = strtotime($row['post_tested_n20c']);
+		$arr4[0][$l] = strtotime($maxdate);
 		$arr4[1][$l] = $l;
 		$l++;
 	}
 	
-	if(!is_null($row['post_tested_n20c']) && $badIV && $loc_condition==$modloc){
+	if($badIV && $loc_condition==$modloc){
 		if($j==0){
-			$arr2[0][$j] = strtotime($row['post_tested_n20c']);
+			$arr2[0][$j] = strtotime($maxdate);
 			$arr2[1][$j] = 0;
 			$j++;
 		}
-		$arr2[0][$j] = strtotime($row['post_tested_n20c']);
+		$arr2[0][$j] = strtotime($maxdate);
 		$arr2[1][$j] = $j;
 		$j++;
+	}
 	}
 }
 
@@ -201,21 +204,21 @@ $sp1->SetStepStyle();
 $sp1->SetLegend("Bad Pixels+Bumps");
 
 #$sp2->SetFillColor('lightred@0.5');
-$sp2->SetColor('red@0.5');
+$sp2->SetColor('red');
 $sp2->SetWeight(7);
 $sp2->SetStyle("solid");
 $sp2->SetStepStyle();
 $sp2->SetLegend("Bad IV");
 
 #$sp3->SetFillColor('lightgreen@0.5');
-$sp3->SetColor('blue@0.5');
+$sp3->SetColor('blue');
 $sp3->SetWeight(7);
 $sp3->SetStyle("solid");
 $sp3->SetStepStyle();
 $sp3->SetLegend("Bad Bumps");
 
 #$sp4->SetFillColor('lightgreen@0.5');
-$sp4->SetColor('green@0.5');
+$sp4->SetColor('green');
 $sp4->SetWeight(7);
 $sp4->SetStyle("solid");
 $sp4->SetStepStyle();
