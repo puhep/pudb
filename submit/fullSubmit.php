@@ -86,6 +86,7 @@ Next Testing Step: <select name="status">
 	<option value="Final Judgement">Final Judgement</option>
 	<option value="Debugging">Debugging</option>
 	<option value="Ready for Mounting">Ready for Mounting</option>
+	<option value="Deferred">Deferred</option>
 	<option value="Rejected">Rejected</option>
 	</select>
 <br>

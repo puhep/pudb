@@ -694,16 +694,18 @@ include('../../../Submission_p_secure_pages/connect.php');
 #$func8 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.name LIKE 'M_TT%' AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.HDI_attached DESC";
 
 #Updated grouping by next testing step instead of wafer position
-$func1 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Full test at 17C\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.shipped DESC";
-$func2 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Full test at -20C\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.shipped DESC";
-$func3 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"X-ray testing\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.shipped DESC";
-$func4 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Thermal cycling\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.shipped DESC";
-$func5 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Final Judgement\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.shipped DESC";
-$func6 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Debugging\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.shipped DESC";
-$func7 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Ready for Mounting\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY SUM(c.deadpix+c.badbumps_elec+c.unmaskable+c.unaddressable+IFNULL(c.vcal_thresh,0)) ASC";
-$func10 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Mounted\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." and a.assembly = 14 GROUP BY a.name ORDER BY b.on_blade DESC";
-$func8 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Rejected\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY SUM(IFNULL(c.deadpix,1000000)+IFNULL(c.badbumps_elec,1000000)+IFNULL(c.unmaskable,0)+IFNULL(c.unaddressable,0)+IFNULL(c.vcal_thresh,0)) ASC";
-$func9 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status IS NULL AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.shipped DESC";
+$func1 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status IS NULL AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.shipped DESC";
+$func2 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Full test at 17C\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.shipped DESC";
+$func3 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Full test at -20C\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.shipped DESC";
+$func4 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"X-ray testing\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.shipped DESC";
+$func5 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Thermal cycling\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.shipped DESC";
+$func6 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Final Judgement\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.shipped DESC";
+$func7 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Deferred\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.shipped DESC";
+$func8 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Debugging\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY b.shipped DESC";
+$func9 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Ready for Mounting\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY SUM(c.deadpix+c.badbumps_elec+c.unmaskable+c.unaddressable+IFNULL(c.vcal_thresh,0)) ASC";
+$func10 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Rejected\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." GROUP BY a.name ORDER BY SUM(IFNULL(c.deadpix,1000000)+IFNULL(c.badbumps_elec,1000000)+IFNULL(c.unmaskable,0)+IFNULL(c.unaddressable,0)+IFNULL(c.vcal_thresh,0)) ASC";
+$func11 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Mounted\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." and a.assembly = 14 GROUP BY a.name ORDER BY b.on_blade DESC";
+
 
 
 $i=0;
@@ -711,7 +713,7 @@ $j=0;
 $total=0;
 $dataarray;
 $partarray = array("bbm", "bbm", "bbm", "bbm", "bbm", "bbm", "bbm", "bbm");
-$fpartarray = array("Full Test at 17C", "Full Test at -20C", "X-ray testing", "Thermal cycling", "Final Judgement", "Debugging", "Ready for Mounting", "Rejected", "Not Set", "Mounted on Blade");
+$fpartarray = array("Not Set", "Full Test at 17C", "Full Test at -20C", "X-ray testing", "Thermal cycling", "Final Judgement", "Deferred", "Debugging", "Ready for Mounting", "Rejected", "Mounted on Blade");
 
 mysql_query('USE cmsfpix_u', $connection);
 
@@ -1026,7 +1028,44 @@ while($output10 && $row10 = mysql_fetch_assoc($output10)){
 	$dataarray[19][$j] = $row10['id'];
 	$j++;
 }
+#$fpartarray[10] = $fpartarray[10]." (".$j.")";
+#$total = $total + $j;
+#
+#if($j > $i){$i = $j;}
+
 $fpartarray[9] = $fpartarray[9]." (".$j.")";
+$total = $total + $j;
+
+if($j > $i){$i = $j;}
+$j=0;
+
+$output11 = mysql_query($func11, $connection);
+while($output11 && $row11 = mysql_fetch_assoc($output11)){
+	#Testing Pass/Fail of IV test
+	#$dumped = dump("module_p", $row11['id']);
+	$dumped = findsensor($row11['id']);
+	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
+	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row11['id'])){ continue;}
+	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row11['id'])){ continue;}
+	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row11['id'])){ continue;}
+	if($comp2 === ">=" && $param2 !== "" && $param2 < curgrade($row11['id'])){ continue;}
+	if($comp2 === "<=" && $param2 !== "" && $param2 > curgrade($row11['id'])){ continue;}
+	if($comp2 === "!=" && $param2 !== "" && $param2 == curgrade($row11['id'])){ continue;}
+	
+	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
+	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
+	if($comp18 === "0" && $param18 === "1" && $crit%7 > 0){ continue;}
+	if($comp18 === "1" && $param18 === "1" && $crit%7 == 0){ continue;}
+	if($comp18 === "0" && $param18 === "2" && $crit%35 > 0){ continue;}
+	if($comp18 === "1" && $param18 === "2" && $crit != 1){ continue;}
+	if($comp18 === "0" && $param18 === "3" && $crit == 1){ continue;}
+	if($comp18 === "1" && $param18 === "3" && $crit == 35){ continue;}
+
+	$dataarray[20][$j] = $row11['name'];
+	$dataarray[21][$j] = $row11['id'];
+	$j++;
+}
+$fpartarray[10] = $fpartarray[10]." (".$j.")";
 $total = $total + $j;
 
 if($j > $i){$i = $j;}
@@ -1037,7 +1076,7 @@ echo $total." matching modules";
 echo "<table cellspacing=60 border=0>";
 echo "<tr valign=top>";
 
-for($l=0;$l<10;$l++){
+for($l=0;$l<11;$l++){
 	echo "<td>";
 
 
