@@ -15,11 +15,9 @@ error_reporting(E_ALL | E_STRICT);
 
 	$name = $_GET['name'];
 	$id = findid("module_p", $name);
-	
-	$basedir = "../module_config_files/";
+	$basedir = "../../Submission_p/module_config_files/";
 
 	$dir = $basedir.$id;
-
 	echo "<table>";
 	echo "<tr valign=top>";
 	echo "<th>";
