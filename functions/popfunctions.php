@@ -554,6 +554,32 @@ include('../../../Submission_p_secure_pages/connect.php');
 	echo "<br>";
 }
 
+function run_at_HV_pop($id, $active){
+
+include('../../../Submission_p_secure_pages/connect.php');
+
+	mysql_query('USE cmsfpix_u', $connection);
+
+	$func = "SELECT run_at_HV FROM module_p WHERE id=".$id;
+
+	$output = mysql_query($func, $connection);
+	$row = mysql_fetch_assoc($output);
+	$val = $row['run_at_HV'];
+
+	$disabled = " DISABLED";
+
+	$checker = " CHECKED";
+
+	if($active == 1){
+		$disabled = "";
+	}
+
+	if($val == 1){ $checker = " CHECKED";}
+	else{ $checker = "";}
+	echo "Run at high voltage <input name=\"HV\" value=\"1\" type=\"checkbox\"".$checker.$disabled.">";
+	echo "<br>";
+}
+
 function postassembly_radio_show($PAval){
 
 	if($PAval%2 == 0){ $checker = " CHECKED";}

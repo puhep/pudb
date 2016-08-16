@@ -165,6 +165,16 @@ if($_POST['mode'] != ""){
 	mysql_query($funcROC, $connection);
 }
 
+if(!empty($_POST['HV'])){
+	$dumped = dump("module_p", $id);
+	if(!$dumped['run_at_HV']){
+		$func = "UPDATE module_p SET run_at_HV = 1 WHERE id = ".$id;
+		mysql_query($func, $connection);
+		addcomment_fnal($id, "Set to run at HV by ".$_POST['user'], $_POST['user']);
+	}	
+
+}
+
 }
 exit();
 ?>

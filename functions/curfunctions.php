@@ -910,6 +910,9 @@ function curtestparams($id, $edit=0){
 	echo "<br>";
 	postassembly_radio_pop($id, $edit);
 	echo "<br>";
+	### run at HV checkbox
+	run_at_HV_pop($id, $edit);
+	echo "<br>";
 
 	echo "<table border=0>";
 	echo "<tr>";
@@ -1493,8 +1496,8 @@ function isLoggedIn(){
 	if(!isset($_SESSION)){
 		session_start();
 	}
-
-	if(substr($_SERVER['REMOTE_ADDR'],0,11) == "128.210.67." || substr($_SERVER['REMOTE_ADDR'],0,10) == "192.168.1."){
+	# 10.164.19
+	if(substr($_SERVER['REMOTE_ADDR'],0,11) == "128.210.67." || substr($_SERVER['REMOTE_ADDR'],0,10) == "192.168.1." || substr($_SERVER['REMOTE_ADDR'],0,10) == "10.164.19."){
 		$_SESSION['user'] = "PurdueUser";
 	}
 
