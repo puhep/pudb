@@ -576,7 +576,7 @@ include('../../../Submission_p_secure_pages/connect.php');
 
 	if($val == 1){ $checker = " CHECKED";}
 	else{ $checker = "";}
-	echo "Run at high voltage <input name=\"HV\" value=\"1\" type=\"checkbox\"".$checker.$disabled.">";
+	echo "Run at -300V <input name=\"HV\" value=\"1\" type=\"checkbox\"".$checker.$disabled.">";
 	echo "<br>";
 }
 
