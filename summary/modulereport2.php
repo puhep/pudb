@@ -28,7 +28,7 @@ include('../functions/curfunctions.php');
 include('../../../Submission_p_secure_pages/connect.php');
 
 $bbmfunc = "SELECT a.id, a.assembly, b.received as received, b.shipped as shipped, b.fnal_tested as judged, b.rejected as rejected, a.pos_on_blade as pos from module_p a,times_module_p b where a.id=b.assoc_module AND a.arrival>\"2015-09-01\" ORDER BY a.arrival";
-$dlstring = "Module, Grade, Received, Shipped, Judged, Position, ROC0, ROC1, ROC2, ROC3, ROC4, ROC5, ROC6, ROC7, ROC8, ROC9, ROC10, ROC11, ROC12, ROC13, ROC14, ROC15, \n";
+$dlstring = "Module, Grade, X-Ray Grade, IV Grade, NBadPix, Received, Shipped, Judged, Position, ROC0, ROC1, ROC2, ROC3, ROC4, ROC5, ROC6, ROC7, ROC8, ROC9, ROC10, ROC11, ROC12, ROC13, ROC14, ROC15, \n";
 
 $i=0;
 $k=0;
@@ -66,29 +66,53 @@ for($j=0;$j<$k;$j++){
 }
 
 for($loop=0; $loop<$k; $loop++){
+		       $id = $bbmarray[1][$loop];
+		       # module name
+		       $dlstring .= $bbmarray[0][$loop].", ";
+		       # grade
+		       $dlstring .= curgrade($id).", ";
+		       # X-Ray grade
+		       $dlstring .= xray_crit($id).", ";
+		       # IV grade
+		       $crit = xmlgrapher_crit_num(findsensor($id), "IV", "module", 0);
+		       if($crit == 0){
+		        $dlstring .= "I, ";
 
-       $dlstring .= $bbmarray[0][$loop].", ";
+		       }
+		       elseif($crit%7 == 0){
+		        $dlstring .= "C, ";
 
-       $dlstring .= curgrade($bbmarray[1][$loop]).", ";
+		       }
+		       elseif($crit%5 == 0 && $crit%7 != 0){
+		        $dlstring .= "B, ";
 
-       $dlstring .= $bbmarray[3][$loop].", ";
+		       }
+		       elseif($crit == 1){
+		        $dlstring .= "A, ";
+		       }
+		       else{ $dlstring .= "$crit, "; }
+		       # NBadPix
+		       $dlstring .= totbad_crit($id).", ";
+		       # Received date
+		       $dlstring .= $bbmarray[3][$loop].", ";
+		       # shipped date
+		       $dlstring .= $bbmarray[4][$loop].", ";
+		       # Judged date
+		       if($bbmarray[7][$loop] != ""){
+		        $dlstring .= $bbmarray[7][$loop].", ";
+		       }
+		       else{
+		       $dlstring .= $bbmarray[5][$loop].", ";
 
-       $dlstring .= $bbmarray[4][$loop].", ";
-if($bbmarray[7][$loop] != ""){
-       $dlstring .= $bbmarray[7][$loop].", ";
-}
-else{
-       $dlstring .= $bbmarray[5][$loop].", ";
+		       }
+		       # position on blade
+		       $dlstring .= $bbmarray[6][$loop].", ";
+		       # ROC failure modes
+		       $dlstring .= $rocarr[$loop];
 
-}
+		       #$dlstring .= $bbmarray[11][$loop].", ";
 
-       $dlstring .= $bbmarray[6][$loop].", ";
-
-       $dlstring .= $rocarr[$loop];
-
-       #$dlstring .= $bbmarray[11][$loop].", ";
-
-       $dlstring .= "\n";
+		       $dlstring .= "\n";
 
 }
 
