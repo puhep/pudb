@@ -10,19 +10,37 @@ include('../functions/editfunctions.php');
 	$id = findid("module_p", $_POST['name']);
 	$gets = "?name=".$_POST['name'];
 	$assembly = findmodassembly($id);
-
+	$dumped = dump("module_p", $id);
 	header("Location: fullSubmit.php".$gets);
 
 ### Only execute anything if the submit button is pressed and the user field is filled
 if($_POST['user'] != "" && isset($_POST['submit'])){
 if(isset($_POST['submit'])){
+	
+	$num = 0;
+	#$dumped = dump("module_p", $id);
+	if(!empty($_POST['HV'])){
+		$num = 1;
+	}
+	if($dumped['run_at_HV'] != $num){
+		include('../../../Submission_p_secure_pages/connect.php');
+		$func = "UPDATE module_p SET run_at_HV = $num WHERE id = ".$id;
+		mysql_query($func, $connection);
+		if($num == 1){
+			addcomment_fnal($id, "Set to run at HV by ".$_POST['user'], $_POST['user']);
+		}
+		if($num != 1){
+			addcomment_fnal($id, "Set to run at normal voltage by ".$_POST['user'], $_POST['user']);
+		}
+	}
+
 	$newval = 1;
 	if(!empty($_POST['PA'])){
 		foreach($_POST['PA'] as $check){
 			$newval *= $check;
 		}
 	}
-	$dumped = dump("module_p", $id);
+	#$dumped = dump("module_p", $id);
 	if($dumped['assembly_post'] != $newval){
 		include('../../../Submission_p_secure_pages/connect.php');
 		$func = "UPDATE module_p SET assembly_post=".$newval." WHERE id=".$id;
@@ -165,15 +183,7 @@ if($_POST['mode'] != ""){
 	mysql_query($funcROC, $connection);
 }
 
-if(!empty($_POST['HV'])){
-	$dumped = dump("module_p", $id);
-	if(!$dumped['run_at_HV']){
-		$func = "UPDATE module_p SET run_at_HV = 1 WHERE id = ".$id;
-		mysql_query($func, $connection);
-		addcomment_fnal($id, "Set to run at HV by ".$_POST['user'], $_POST['user']);
-	}	
 
-}
 
 }
 exit();
