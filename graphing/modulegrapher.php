@@ -17,7 +17,7 @@ $hide= "";
 if(!$_SESSION['hidepre']){
 	#$hide = " WHERE received > \"2015-09-01\"";
 	$hide = " AND received > \"2015-09-01\"";
-	$day = 7;
+	$day = 30;
 }
 else{$day=30;}
 
@@ -94,7 +94,7 @@ $graphname = "Module Assembly over Time";
 
 
 $graph=new Graph(1340,800);
-$graph->SetScale("datlin");
+$graph->SetScale("datlin",0,1200);
 $graph->SetFrame(true,'black',0);
 
 $graph->title->Set($graphname);
@@ -107,6 +107,7 @@ $graph->xaxis->SetFont(FF_FONT2, FS_BOLD);
 $graph->xaxis->scale->ticks->Set($day*24*60*60);
 
 #$graph->yaxis->title->Set("");
+#$graph->yaxis->scale->SetAutoMax(1200);
 $graph->yaxis->SetFont(FF_FONT2, FS_BOLD);
 $graph->yaxis->title->SetMargin(30);
 

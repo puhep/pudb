@@ -38,7 +38,7 @@ Purdue University CMS FPix Upgrade Production Database
 </div3>
 <?php } ?>
 
-<div4 style="position:fixed;left:520px;top:200px">
+<div4 style="position:fixed;left:320px;top:175px">
 <a href="graphing/modulegrapher.php" target="blank"><img src="graphing/modulegrapher.php" width="910" height="600" /></a>
 </div4>
 
