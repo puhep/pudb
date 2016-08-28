@@ -110,7 +110,7 @@ $doc1=simplexml_load_string($xml);
 	if($I150>2E-6){
 		$markedarr[0]++;
 	}
-	if($I150/$I100>2){
+	if($I150/$I100>10){
 		$markedarr[1]++;
 	}
 
@@ -128,7 +128,7 @@ echo "<td>";
 echo "I(V=150) < 2uA";
 echo "</td>";
 echo "<td>";
-echo "I(V=150)/I(V=100) < 2";
+echo "I(V=150)/I(V=100) < 10";
 echo "</td>";
 echo "</tr>";
 

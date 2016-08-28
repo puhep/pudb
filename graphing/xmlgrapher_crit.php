@@ -181,7 +181,7 @@ if(!is_null($file1)){
 	if($I150>2E-6){
 		$markedA*=2;
 	}
-	if($I150/$I100>2){
+	if($I150/$I100>10){
 		$markedA*=3;
 	}
 }
@@ -233,7 +233,7 @@ if(!is_null($file2)){
 	if($I150>2E-6){
 		$markedB*=2;
 	}
-	if($I150/$I100>2){
+	if($I150/$I100>10){
 		$markedB*=3;
 	}
 }
@@ -276,7 +276,7 @@ if(!is_null($file3)){
 	if($I150>2E-6){
 		$markedC*=2;
 	}
-	if($I150/$I100>2){
+	if($I150/$I100>10){
 		$markedC*=3;
 	}
 }
@@ -319,7 +319,7 @@ if(!is_null($file4)){
 	if($I150>2E-6){
 		$markedD*=2;
 	}
-	if($I150/$I100>2){
+	if($I150/$I100>10){
 		$markedD*=3;
 	}
 }
@@ -362,7 +362,7 @@ if(!is_null($file5)){
 	if($I150>2E-6){
 		$markedE*=2;
 	}
-	if($I150/$I100>2){
+	if($I150/$I100>10){
 		$markedE*=3;
 	}
 }
@@ -376,7 +376,7 @@ echo "<td>";
 echo "I(V=150) < 2uA";
 echo "</td>";
 echo "<td>";
-echo "I(V=150)/I(V=100) < 2";
+echo "I(V=150)/I(V=100) < 10";
 echo "</td>";
 echo "</tr>";
 
@@ -659,7 +659,7 @@ if(!is_null($file1)){
 	if($I150>10E-6){
 		$markedA*=5;
 	}
-	if($I150/$I100>2){
+	if($I150/$I100>10){
 		$markedA*=7;
 	}
 }
@@ -696,7 +696,7 @@ if(!is_null($file2)){
 	if($I150>10E-6){
 		$markedB*=5;
 	}
-	if($I150/$I100>2){
+	if($I150/$I100>10){
 		$markedB*=7;
 	}
 }
@@ -735,7 +735,7 @@ if(!is_null($file3)){
 	if($I150>10E-6){
 		$markedC*=5;
 	}
-	if($I150/$I100>2){
+	if($I150/$I100>10){
 		$markedC*=7;
 	}
 }
@@ -774,7 +774,7 @@ if(!is_null($file4)){
 	if($I150>10E-6){
 		$markedD*=5;
 	}
-	if($I150/$I100>2){
+	if($I150/$I100>10){
 		$markedD*=7;
 	}
 }
@@ -814,7 +814,7 @@ if(!is_null($file5)){
 	if($I150>10E-6){
 		$markedE*=5;
 	}
-	if($I150/$I100>2){
+	if($I150/$I100>10){
 		$markedE*=7;
 	}
 }
