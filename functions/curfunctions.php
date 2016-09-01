@@ -907,6 +907,12 @@ function curtestparams($id, $edit=0){
 	elseif($dumped['tested_status'] == "Mounted"){
 		echo "Module mounted on blade at position ".$dumped['pos_on_blade']."<br>";
 	}
+	if(is_null($dumped['name_pos'])){
+		echo "Official name of position: Not Set";
+	}
+	else{
+		echo "Official name of position: ".$dumped['name_pos']."<br>";
+	}
 	echo "<br>";
 	postassembly_radio_pop($id, $edit);
 	echo "<br>";
@@ -1053,6 +1059,17 @@ function findmodassembly($id){
 	$array = mysql_fetch_assoc($output);
 	$assembly = $array['assembly'];
 	return $assembly;
+}
+
+### Returns the name_pos step of a module, given its id
+function find_name_pos($id){
+	include('../../../Submission_p_secure_pages/connect.php');
+	mysql_query('USE cmsfpix_u', $connection);
+	$func = "SELECT name_pos FROM module_p  WHERE id=$id";
+	$output = mysql_query($func, $connection);
+	$array = mysql_fetch_assoc($output);
+	$pos_name = $array['name_pos'];
+	return $pos_name;
 }
 
 ### Returns the current post-assembly testing status, given its id

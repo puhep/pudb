@@ -89,6 +89,15 @@ curpics("sidet_p", $id);
 </form>
 </div6>
 
+<div7 style="position:absolute;left:500px;top:178px;">
+<form method="GET" action="../download/POS_config_files.php" target="_blank">
+<?php
+  echo "<input type='hidden' name='name' value='".$name."' >";
+?>
+<input type="submit" value="POS Config Files">
+</form>
+</div7>
+
 <form method="GET" action="../submit/fullSubmit.php">
 <?php
   echo "<input type='hidden' name='name' value='".$name."'>";
