@@ -46,6 +46,8 @@ include('../graphing/xmlgrapher_crit.php');
 	$param41 = "";
 	$param42 = "";
 	$param43 = "";
+	$param44 = "";
+	$param45 = "";
 
 	$comp2 = "";
 	$comp3 = "";
@@ -123,6 +125,8 @@ include('../graphing/xmlgrapher_crit.php');
 		$param41 = $_GET['param41'];
 		$param42 = $_GET['param42'];		
 		$param43 = $_GET['param43'];		
+		$param44 = $_GET['param44'];		
+		$param45 = $_GET['param45'];		
 
 		$comp2 = $_GET['comp2'];
 		$comp3 = $_GET['comp3'];
@@ -276,6 +280,33 @@ Mounted on Blade:
 <br>
 <br>
 
+Has position name set: 
+<select name="param44">
+<option value=""></option>
+<option value="Yes"<?php echo $param44 == 'Yes' ? 'selected="selected"' : ''; ?>>Yes</option>
+<option value="No"<?php echo $param44 == 'No' ? 'selected="selected"' : ''; ?>>No</option>
+</select>
+<br>
+<br>
+
+Has POS config files: 
+<select name="param45">
+<option value=""></option>
+<option value="Yes"<?php echo $param45 == 'Yes' ? 'selected="selected"' : ''; ?>>Yes</option>
+<option value="No"<?php echo $param45 == 'No' ? 'selected="selected"' : ''; ?>>No</option>
+</select>
+<br>
+<br>
+
+Has Config Files:
+<select name="param42">
+<option value=""></option>
+<option value="Yes"<?php echo $param42 == 'Yes' ? 'selected="selected"' : ''; ?>>Yes</option>
+<option value="No"<?php echo $param42 == 'No' ? 'selected="selected"' : ''; ?>>No</option>
+</select>
+<br>
+<br>
+
 Grade:
 <select name="comp2">
 <?php comparepop($comp2); ?>
@@ -309,15 +340,6 @@ Has ROC Failure Mode:
 <option value="Pulse Height Issue"<?php echo $param36 == 'Pulse Height Issue' ? 'selected="selected"' : ''; ?>>Pulse Height Issue</option>
 <option value="Dead Edge"<?php echo $param36 == 'Dead Edge' ? 'selected="selected"' : ''; ?>>Dead Edge</option>
 <option value="Other"<?php echo $param36 == 'Other' ? 'selected="selected"' : ''; ?>>Other</option>
-</select>
-<br>
-<br>
-
-Has Config Files:
-<select name="param42">
-<option value=""></option>
-<option value="Yes"<?php echo $param42 == 'Yes' ? 'selected="selected"' : ''; ?>>Yes</option>
-<option value="No"<?php echo $param42 == 'No' ? 'selected="selected"' : ''; ?>>No</option>
 </select>
 <br>
 <br>
@@ -547,6 +569,8 @@ $sortmod39 = "";
 $sortmod40 = "";
 $sortmod41 = "";
 $sortmod43 = "";
+$sortmod44 = "";
+$sortmod45 = "";
 
 if($param1 != ""){
 	$sortmod1 = "AND location=\"".$_GET['param1']."\" ";
@@ -690,13 +714,21 @@ if($param43 != ""){
 		$sortmod43 = "AND (run_at_HV IS NULL OR run_at_HV != 1) ";
 	}
 }
+if($param44 != ""){
+	if($_GET['param44'] == 'Yes'){
+		$sortmod44 = "AND name_pos is not null ";
+	}
+	elseif($_GET['param44'] == "No"){
+		$sortmod44 = "AND name_pos is null ";
+	}
+}
 
 #$sortmod32 = "AND a.name NOT LIKE '%95%' AND a.name NOT LIKE '%96%' AND a.name NOT LIKE '%97%' ";
 $sortmod32 = "";
 
 $sortmod33 = "AND a.assembly >= 11 ";
 
-$sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19.$sortmod20.$sortmod21.$sortmod22.$sortmod23.$sortmod24.$sortmod25.$sortmod26.$sortmod27.$sortmod28.$sortmod29.$sortmod30.$sortmod32.$sortmod33.$sortmod34.$sortmod36.$sortmod37.$sortmod38.$sortmod39.$sortmod40.$sortmod41.$sortmod43;
+$sorter = $hide.$sortmod1.$sortmod3.$sortmod4.$sortmod5.$sortmod6.$sortmod7.$sortmod8.$sortmod9.$sortmod10.$sortmod11.$sortmod12.$sortmod13.$sortmod19.$sortmod20.$sortmod21.$sortmod22.$sortmod23.$sortmod24.$sortmod25.$sortmod26.$sortmod27.$sortmod28.$sortmod29.$sortmod30.$sortmod32.$sortmod33.$sortmod34.$sortmod36.$sortmod37.$sortmod38.$sortmod39.$sortmod40.$sortmod41.$sortmod43.$sortmod44;
 
 #echo $sorter."<br>";
 
@@ -738,7 +770,6 @@ $func10 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE 
 $func11 = "SELECT a.name, a.id from module_p a, times_module_p b, ROC_p c WHERE a.tested_status LIKE \"Mounted\" AND a.id=b.assoc_module AND a.id=c.assoc_module ".$sorter." and a.assembly = 14 GROUP BY a.name ORDER BY b.on_blade DESC";
 
 
-
 $i=0;
 $j=0;
 $total=0;
@@ -755,13 +786,15 @@ while($output1 && $row1 = mysql_fetch_assoc($output1)){
 	$dumped = findsensor($row1['id']);
 	$id = $row1['id'];
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
-	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row1['id'])){ continue;}
-	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row1['id'])){ continue;}
-	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row1['id'])){ continue;}
-	if($comp2 === ">=" && $param2 !== "" && $param2 < curgrade($row1['id'])){ continue;}
-	if($comp2 === "<=" && $param2 !== "" && $param2 > curgrade($row1['id'])){ continue;}
-	if($comp2 === "!=" && $param2 !== "" && $param2 == curgrade($row1['id'])){ continue;}
-	
+	if($param2 !== ""){
+	$grade = curgrade($id);
+	       if($comp2 === "=" && $param2 != $grade){ continue;}
+	       if($comp2 === ">" && $param2 <= $grade){ continue;}
+	       if($comp2 === "<" && $param2 >= $grade){ continue;}
+	       if($comp2 === ">=" && $param2 < $grade){ continue;}
+	       if($comp2 === "<=" && $param2 > $grade){ continue;}
+	       if($comp2 === "!=" && $param2 == $grade){ continue;}
+	}
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
 	if($comp18 === "0" && $param18 === "1" && $crit%7 > 0){ continue;}
@@ -774,6 +807,11 @@ while($output1 && $row1 = mysql_fetch_assoc($output1)){
 	if($param42 === "No" && file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 	if($param42 === "Yes" && !file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 
+	if($param45 !== ""){
+		    $pos_name = find_name_pos($id);
+		    if(!is_null($pos_name) && $param45 == "No"){ continue; }
+		    if(is_null($pos_name) && $param45 == "Yes"){ continue; }
+	}
 	$dataarray[0][$i] = $row1['name'];
 	$dataarray[1][$i] = $row1['id'];
 	$i++;
@@ -788,13 +826,15 @@ while($output2 && $row2 = mysql_fetch_assoc($output2)){
 	$dumped = findsensor($row2['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
 	$id = $row2['id'];
-	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row2['id'])){ continue;}
-	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row2['id'])){ continue;}
-	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row2['id'])){ continue;}
-	if($comp2 === ">=" && $param2 !== "" && $param2 < curgrade($row2['id'])){ continue;}
-	if($comp2 === "<=" && $param2 !== "" && $param2 > curgrade($row2['id'])){ continue;}
-	if($comp2 === "!=" && $param2 !== "" && $param2 == curgrade($row2['id'])){ continue;}
-	
+	if($param2 !== ""){
+		   $grade = curgrade($id);
+		   if($comp2 === "=" && $param2 != $grade){ continue;}
+		   if($comp2 === ">" && $param2 <= $grade){ continue;}
+		   if($comp2 === "<" && $param2 >= $grade){ continue;}
+		   if($comp2 === ">=" && $param2 < $grade){ continue;}
+		   if($comp2 === "<=" && $param2 > $grade){ continue;}
+		   if($comp2 === "!=" && $param2 == $grade){ continue;}
+	}
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
 	if($comp18 === "0" && $param18 === "1" && $crit%7 > 0){ continue;}
@@ -807,7 +847,11 @@ while($output2 && $row2 = mysql_fetch_assoc($output2)){
 	if($param42 === "No" && file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 	if($param42 === "Yes" && !file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 
-
+	if($param45 !== ""){
+		    $pos_name = find_name_pos($id);
+		    if(!is_null($pos_name) && $param45 == "No"){ continue; }
+		    if(is_null($pos_name) && $param45 == "Yes"){ continue; }
+	}
 	$dataarray[2][$j] = $row2['name'];
 	$dataarray[3][$j] = $row2['id'];
 	$j++;
@@ -825,13 +869,15 @@ while($output3 && $row3 = mysql_fetch_assoc($output3)){
 	$dumped = findsensor($row1['id']);
 	$id = $row3['id'];
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
-	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row3['id'])){ continue;}
-	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row3['id'])){ continue;}
-	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row3['id'])){ continue;}
-	if($comp2 === ">=" && $param2 !== "" && $param2 < curgrade($row3['id'])){ continue;}
-	if($comp2 === "<=" && $param2 !== "" && $param2 > curgrade($row3['id'])){ continue;}
-	if($comp2 === "!=" && $param2 !== "" && $param2 == curgrade($row3['id'])){ continue;}
-	
+	if($param2 !== ""){
+		   $grade = curgrade($id);
+		   if($comp2 === "=" && $param2 != $grade){ continue;}
+		   if($comp2 === ">" && $param2 <= $grade){ continue;}
+		   if($comp2 === "<" && $param2 >= $grade){ continue;}
+		   if($comp2 === ">=" && $param2 < $grade){ continue;}
+		   if($comp2 === "<=" && $param2 > $grade){ continue;}
+		   if($comp2 === "!=" && $param2 == $grade){ continue;}
+	}
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
 	if($comp18 === "0" && $param18 === "1" && $crit%7 > 0){ continue;}
@@ -844,6 +890,11 @@ while($output3 && $row3 = mysql_fetch_assoc($output3)){
 	if($param42 === "No" && file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 	if($param42 === "Yes" && !file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 
+	if($param45 !== ""){
+		    $pos_name = find_name_pos($id);
+		    if(!is_null($pos_name) && $param45 == "No"){ continue; }
+		    if(is_null($pos_name) && $param45 == "Yes"){ continue; }
+	}
 	$dataarray[4][$j] = $row3['name'];
 	$dataarray[5][$j] = $row3['id'];
 	$j++;
@@ -861,13 +912,15 @@ while($output4 && $row4 = mysql_fetch_assoc($output4)){
 	$dumped = findsensor($row4['id']);
 	$id = $row4['id'];
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
-	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row4['id'])){ continue;}
-	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row4['id'])){ continue;}
-	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row4['id'])){ continue;}
-	if($comp2 === ">=" && $param2 !== "" && $param2 < curgrade($row4['id'])){ continue;}
-	if($comp2 === "<=" && $param2 !== "" && $param2 > curgrade($row4['id'])){ continue;}
-	if($comp2 === "!=" && $param2 !== "" && $param2 == curgrade($row4['id'])){ continue;}
-	
+	if($param2 !== ""){
+		   $grade = curgrade($id);
+		   if($comp2 === "=" && $param2 != $grade){ continue;}
+		   if($comp2 === ">" && $param2 <= $grade){ continue;}
+		   if($comp2 === "<" && $param2 >= $grade){ continue;}
+		   if($comp2 === ">=" && $param2 < $grade){ continue;}
+		   if($comp2 === "<=" && $param2 > $grade){ continue;}
+		   if($comp2 === "!=" && $param2 == $grade){ continue;}
+	}
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
 	if($comp18 === "0" && $param18 === "1" && $crit%7 > 0){ continue;}
@@ -880,6 +933,11 @@ while($output4 && $row4 = mysql_fetch_assoc($output4)){
 	if($param42 === "No" && file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 	if($param42 === "Yes" && !file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 
+	if($param45 !== ""){
+		    $pos_name = find_name_pos($id);
+		    if(!is_null($pos_name) && $param45 == "No"){ continue; }
+		    if(is_null($pos_name) && $param45 == "Yes"){ continue; }
+	}
 	$dataarray[6][$j] = $row4['name'];
 	$dataarray[7][$j] = $row4['id'];
 	$j++;
@@ -897,13 +955,15 @@ while($output5 && $row5 = mysql_fetch_assoc($output5)){
 	$dumped = findsensor($row5['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
 	$id = $row5['id'];
-	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row5['id'])){ continue;}
-	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row5['id'])){ continue;}
-	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row5['id'])){ continue;}
-	if($comp2 === ">=" && $param2 !== "" && $param2 < curgrade($row5['id'])){ continue;}
-	if($comp2 === "<=" && $param2 !== "" && $param2 > curgrade($row5['id'])){ continue;}
-	if($comp2 === "!=" && $param2 !== "" && $param2 == curgrade($row5['id'])){ continue;}
-	
+	if($param2 !== ""){
+		   $grade = curgrade($id);
+		   if($comp2 === "=" && $param2 != $grade){ continue;}
+		   if($comp2 === ">" && $param2 <= $grade){ continue;}
+		   if($comp2 === "<" && $param2 >= $grade){ continue;}
+		   if($comp2 === ">=" && $param2 < $grade){ continue;}
+		   if($comp2 === "<=" && $param2 > $grade){ continue;}
+		   if($comp2 === "!=" && $param2 == $grade){ continue;}
+	}
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
 	if($comp18 === "0" && $param18 === "1" && $crit%7 > 0){ continue;}
@@ -916,6 +976,11 @@ while($output5 && $row5 = mysql_fetch_assoc($output5)){
 	if($param42 === "No" && file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 	if($param42 === "Yes" && !file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 
+	if($param45 !== ""){
+		    $pos_name = find_name_pos($id);
+		    if(!is_null($pos_name) && $param45 == "No"){ continue; }
+		    if(is_null($pos_name) && $param45 == "Yes"){ continue; }
+	}
 	$dataarray[8][$j] = $row5['name'];
 	$dataarray[9][$j] = $row5['id'];
 	$j++;
@@ -933,13 +998,15 @@ while($output6 && $row6 = mysql_fetch_assoc($output6)){
 	$dumped = findsensor($row6['id']);	
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
 	$id = $row6['id'];
-	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row6['id'])){ continue;}
-	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row6['id'])){ continue;}
-	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row6['id'])){ continue;}
-	if($comp2 === ">=" && $param2 !== "" && $param2 < curgrade($row6['id'])){ continue;}
-	if($comp2 === "<=" && $param2 !== "" && $param2 > curgrade($row6['id'])){ continue;}
-	if($comp2 === "!=" && $param2 !== "" && $param2 == curgrade($row6['id'])){ continue;}
-	
+	if($param2 !== ""){
+		   $grade = curgrade($id);
+		   if($comp2 === "=" && $param2 != $grade){ continue;}
+		   if($comp2 === ">" && $param2 <= $grade){ continue;}
+		   if($comp2 === "<" && $param2 >= $grade){ continue;}
+		   if($comp2 === ">=" && $param2 < $grade){ continue;}
+		   if($comp2 === "<=" && $param2 > $grade){ continue;}
+		   if($comp2 === "!=" && $param2 == $grade){ continue;}
+	}
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
 	if($comp18 === "0" && $param18 === "1" && $crit%7 > 0){ continue;}
@@ -952,6 +1019,11 @@ while($output6 && $row6 = mysql_fetch_assoc($output6)){
 	if($param42 === "No" && file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 	if($param42 === "Yes" && !file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 
+	if($param45 !== ""){
+		    $pos_name = find_name_pos($id);
+		    if(!is_null($pos_name) && $param45 == "No"){ continue; }
+		    if(is_null($pos_name) && $param45 == "Yes"){ continue; }
+	}
 	$dataarray[10][$j] = $row6['name'];
 	$dataarray[11][$j] = $row6['id'];
 	$j++;
@@ -969,13 +1041,15 @@ while($output7 && $row7 = mysql_fetch_assoc($output7)){
 	$dumped = findsensor($row7['id']);	
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
 	$id = $row7['id'];
-	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row7['id'])){ continue;}
-	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row7['id'])){ continue;}
-	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row7['id'])){ continue;}
-	if($comp2 === ">=" && $param2 !== "" && $param2 < curgrade($row7['id'])){ continue;}
-	if($comp2 === "<=" && $param2 !== "" && $param2 > curgrade($row7['id'])){ continue;}
-	if($comp2 === "!=" && $param2 !== "" && $param2 == curgrade($row7['id'])){ continue;}
-	
+	if($param2 !== ""){
+		   $grade = curgrade($id);
+		   if($comp2 === "=" && $param2 != $grade){ continue;}
+		   if($comp2 === ">" && $param2 <= $grade){ continue;}
+		   if($comp2 === "<" && $param2 >= $grade){ continue;}
+		   if($comp2 === ">=" && $param2 < $grade){ continue;}
+		   if($comp2 === "<=" && $param2 > $grade){ continue;}
+		   if($comp2 === "!=" && $param2 == $grade){ continue;}
+	}
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
 	if($comp18 === "0" && $param18 === "1" && $crit%7 > 0){ continue;}
@@ -988,6 +1062,11 @@ while($output7 && $row7 = mysql_fetch_assoc($output7)){
 	if($param42 === "No" && file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 	if($param42 === "Yes" && !file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 
+	if($param45 !== ""){
+		    $pos_name = find_name_pos($id);
+		    if(!is_null($pos_name) && $param45 == "No"){ continue; }
+		    if(is_null($pos_name) && $param45 == "Yes"){ continue; }
+	}
 	$dataarray[12][$j] = $row7['name'];
 	$dataarray[13][$j] = $row7['id'];
 	$j++;
@@ -1005,13 +1084,15 @@ while($output8 && $row8 = mysql_fetch_assoc($output8)){
 	$dumped = findsensor($row8['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
 	$id = $row8['id'];
-	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row8['id'])){ continue;}
-	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row8['id'])){ continue;}
-	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row8['id'])){ continue;}
-	if($comp2 === ">=" && $param2 !== "" && $param2 < curgrade($row8['id'])){ continue;}
-	if($comp2 === "<=" && $param2 !== "" && $param2 > curgrade($row8['id'])){ continue;}
-	if($comp2 === "!=" && $param2 !== "" && $param2 == curgrade($row8['id'])){ continue;}
-	
+	if($param2 !== ""){
+		   $grade = curgrade($id);
+		   if($comp2 === "=" && $param2 != $grade){ continue;}
+		   if($comp2 === ">" && $param2 <= $grade){ continue;}
+		   if($comp2 === "<" && $param2 >= $grade){ continue;}
+		   if($comp2 === ">=" && $param2 < $grade){ continue;}
+		   if($comp2 === "<=" && $param2 > $grade){ continue;}
+		   if($comp2 === "!=" && $param2 == $grade){ continue;}
+	}
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
 	if($comp18 === "0" && $param18 === "1" && $crit%7 > 0){ continue;}
@@ -1024,6 +1105,11 @@ while($output8 && $row8 = mysql_fetch_assoc($output8)){
 	if($param42 === "No" && file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 	if($param42 === "Yes" && !file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 
+	if($param45 !== ""){
+		    $pos_name = find_name_pos($id);
+		    if(!is_null($pos_name) && $param45 == "No"){ continue; }
+		    if(is_null($pos_name) && $param45 == "Yes"){ continue; }
+	}
 	$dataarray[14][$j] = $row8['name'];
 	$dataarray[15][$j] = $row8['id'];
 	$j++;
@@ -1041,13 +1127,15 @@ while($output9 && $row9 = mysql_fetch_assoc($output9)){
 	$dumped = findsensor($row9['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
 	$id = $row9['id'];
-	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row9['id'])){ continue;}
-	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row9['id'])){ continue;}
-	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row9['id'])){ continue;}
-	if($comp2 === ">=" && $param2 !== "" && $param2 < curgrade($row9['id'])){ continue;}
-	if($comp2 === "<=" && $param2 !== "" && $param2 > curgrade($row9['id'])){ continue;}
-	if($comp2 === "!=" && $param2 !== "" && $param2 == curgrade($row9['id'])){ continue;}
-	
+	if($param2 !== ""){
+		   $grade = curgrade($id);
+		   if($comp2 === "=" && $param2 != $grade){ continue;}
+		   if($comp2 === ">" && $param2 <= $grade){ continue;}
+		   if($comp2 === "<" && $param2 >= $grade){ continue;}
+		   if($comp2 === ">=" && $param2 < $grade){ continue;}
+		   if($comp2 === "<=" && $param2 > $grade){ continue;}
+		   if($comp2 === "!=" && $param2 == $grade){ continue;}
+	}
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
 	if($comp18 === "0" && $param18 === "1" && $crit%7 > 0){ continue;}
@@ -1060,6 +1148,11 @@ while($output9 && $row9 = mysql_fetch_assoc($output9)){
 	if($param42 === "No" && file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 	if($param42 === "Yes" && !file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 
+	if($param45 !== ""){
+		    $pos_name = find_name_pos($id);
+		    if(!is_null($pos_name) && $param45 == "No"){ continue; }
+		    if(is_null($pos_name) && $param45 == "Yes"){ continue; }
+	}
 	$dataarray[16][$j] = $row9['name'];
 	$dataarray[17][$j] = $row9['id'];
 	$j++;
@@ -1077,13 +1170,15 @@ while($output10 && $row10 = mysql_fetch_assoc($output10)){
 	$dumped = findsensor($row10['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
 	$id = $row10['id'];
-	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row10['id'])){ continue;}
-	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row10['id'])){ continue;}
-	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row10['id'])){ continue;}
-	if($comp2 === ">=" && $param2 !== "" && $param2 < curgrade($row10['id'])){ continue;}
-	if($comp2 === "<=" && $param2 !== "" && $param2 > curgrade($row10['id'])){ continue;}
-	if($comp2 === "!=" && $param2 !== "" && $param2 == curgrade($row10['id'])){ continue;}
-	
+	if($param2 !== ""){
+		   $grade = curgrade($id);
+		   if($comp2 === "=" && $param2 != $grade){ continue;}
+		   if($comp2 === ">" && $param2 <= $grade){ continue;}
+		   if($comp2 === "<" && $param2 >= $grade){ continue;}
+		   if($comp2 === ">=" && $param2 < $grade){ continue;}
+		   if($comp2 === "<=" && $param2 > $grade){ continue;}
+		   if($comp2 === "!=" && $param2 == $grade){ continue;}
+	}
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
 	if($comp18 === "0" && $param18 === "1" && $crit%7 > 0){ continue;}
@@ -1095,6 +1190,12 @@ while($output10 && $row10 = mysql_fetch_assoc($output10)){
 
 	if($param42 === "No" && file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 	if($param42 === "Yes" && !file_exists("../../Submission_p/module_config_files/$id")){ continue; }
+
+	if($param45 !== ""){
+		    $pos_name = find_name_pos($id);
+		    if(!is_null($pos_name) && $param45 == "No"){ continue; }
+		    if(is_null($pos_name) && $param45 == "Yes"){ continue; }
+	}
 
 	$dataarray[18][$j] = $row10['name'];
 	$dataarray[19][$j] = $row10['id'];
@@ -1118,13 +1219,15 @@ while($output11 && $row11 = mysql_fetch_assoc($output11)){
 	$dumped = findsensor($row11['id']);
 	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
 	$id = $row11['id'];
-	if($comp2 === "=" && $param2 !== "" && $param2 != curgrade($row11['id'])){ continue;}
-	if($comp2 === ">" && $param2 !== "" && $param2 <= curgrade($row11['id'])){ continue;}
-	if($comp2 === "<" && $param2 !== "" && $param2 >= curgrade($row11['id'])){ continue;}
-	if($comp2 === ">=" && $param2 !== "" && $param2 < curgrade($row11['id'])){ continue;}
-	if($comp2 === "<=" && $param2 !== "" && $param2 > curgrade($row11['id'])){ continue;}
-	if($comp2 === "!=" && $param2 !== "" && $param2 == curgrade($row11['id'])){ continue;}
-	
+	if($param2 !== ""){
+		   $grade = curgrade($id);
+		   if($comp2 === "=" && $param2 != $grade){ continue;}
+		   if($comp2 === ">" && $param2 <= $grade){ continue;}
+		   if($comp2 === "<" && $param2 >= $grade){ continue;}
+		   if($comp2 === ">=" && $param2 < $grade){ continue;}
+		   if($comp2 === "<=" && $param2 > $grade){ continue;}
+		   if($comp2 === "!=" && $param2 == $grade){ continue;}
+	}
 	if($comp18 === "0" && $param18 === "0" && $crit%5 > 0){ continue;}
 	if($comp18 === "1" && $param18 === "0" && $crit%5 == 0){ continue;}
 	if($comp18 === "0" && $param18 === "1" && $crit%7 > 0){ continue;}
@@ -1137,6 +1240,11 @@ while($output11 && $row11 = mysql_fetch_assoc($output11)){
 	if($param42 === "No" && file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 	if($param42 === "Yes" && !file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 
+	if($param45 !== ""){
+		    $pos_name = find_name_pos($id);
+		    if(!is_null($pos_name) && $param45 == "No"){ continue; }
+		    if(is_null($pos_name) && $param45 == "Yes"){ continue; }
+	}
 	$dataarray[20][$j] = $row11['name'];
 	$dataarray[21][$j] = $row11['id'];
 	$j++;
