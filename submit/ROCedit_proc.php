@@ -17,16 +17,19 @@ if(isset($_POST['submit']) && isset($_POST['spin']) && isset($_POST['flip'])){
 
 	spinROCs($_POST['modules']);
 	flipROCs($_POST['modules']);
+	addcomment("module_p", $_POST['modules'], "ROCs flipped and spun by ".$_POST['user'], $_POST['user']);
 
 }
 else if(isset($_POST['submit']) && isset($_POST['spin'])){
 
 	spinROCs($_POST['modules']);
+	addcomment("module_p", $_POST['modules'], "ROCs spun by ".$_POST['user'], $_POST['user']);
 
 }
 else if(isset($_POST['submit']) && isset($_POST['flip'])){
 
 	flipROCs($_POST['modules']);
+	addcomment("module_p", $_POST['modules'], "ROCs flipped by ".$_POST['user'], $_POST['user']);
 
 }
 
