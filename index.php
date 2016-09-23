@@ -96,6 +96,10 @@ Data Viewing
   <input value="Module Report 2"
  type="submit"></form>
 
+<form action="summary/POS_config_download.php" method="get">
+  <input value="POS Configs"
+ type="submit"></form>
+
 <br>
 
 New Parts Information
