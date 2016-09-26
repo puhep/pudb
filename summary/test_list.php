@@ -487,7 +487,7 @@ RTD Temperature:
 <br>
 <br>
 
-IV Scan Thresholds:
+IV Scan Thresholds (highest available):
 <select name="comp18">
 <option value=""></option>
 <option value="1"<?php echo $comp18 == '1' ? 'selected="selected"' : ''; ?>>Pass</option>
@@ -503,7 +503,7 @@ IV Scan Thresholds:
 <br>
 <br>
 
-<!--
+
 IV Scan Thresholds (+17C):
 <select name="comp29">
 <option value=""></option>
@@ -519,7 +519,7 @@ IV Scan Thresholds (+17C):
 </select>
 <br>
 <br>
--->
+
 
 <?php
 
@@ -785,7 +785,7 @@ while($output1 && $row1 = mysql_fetch_assoc($output1)){
 	#$dumped = dump("module_p", $row1['id']);
 	$dumped = findsensor($row1['id']);
 	$id = $row1['id'];
-	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
+	$crit =  xmlgrapher_crit_num($dumped,"IV","module", 0);
 	if($param2 !== ""){
 	$grade = curgrade($id);
 	       if($comp2 === "=" && $param2 != $grade){ continue;}
@@ -803,6 +803,19 @@ while($output1 && $row1 = mysql_fetch_assoc($output1)){
 	if($comp18 === "1" && $param18 === "2" && $crit != 1){ continue;}
 	if($comp18 === "0" && $param18 === "3" && $crit == 1){ continue;}
 	if($comp18 === "1" && $param18 === "3" && $crit == 35){ continue;}
+	
+	if($param29 !== ""){
+		    $crit = xmlgrapher_crit_num($dumped,"IV","fnal_17c", 1);
+		    if($comp29 === "0" && $param29 === "0" && $crit%5 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "0" && $crit%5 == 0){ continue;}
+		    if($comp29 === "0" && $param29 === "1" && $crit%7 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "1" && $crit%7 == 0){ continue;}
+		    if($comp29 === "0" && $param29 === "2" && $crit%35 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "2" && $crit != 1){ continue;}
+		    if($comp29 === "0" && $param29 === "3" && $crit == 1){ continue;}
+		    if($comp29 === "1" && $param29 === "3" && $crit == 35){ continue;}  
+		    if($comp29 === "0" && ($param29 === "3" || $param29 === "2") && $crit == 0){ continue;}  
+	}
 
 	if($param42 === "No" && file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 	if($param42 === "Yes" && !file_exists("../../Submission_p/module_config_files/$id")){ continue; }
@@ -824,7 +837,7 @@ while($output2 && $row2 = mysql_fetch_assoc($output2)){
 	#Testing Pass/Fail of IV test
 	#$dumped = dump("module_p", $row2['id']);
 	$dumped = findsensor($row2['id']);
-	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
+	$crit =  xmlgrapher_crit_num($dumped,"IV","module", 0);
 	$id = $row2['id'];
 	if($param2 !== ""){
 		   $grade = curgrade($id);
@@ -843,6 +856,19 @@ while($output2 && $row2 = mysql_fetch_assoc($output2)){
 	if($comp18 === "1" && $param18 === "2" && $crit != 1){ continue;}
 	if($comp18 === "0" && $param18 === "3" && $crit == 1){ continue;}
 	if($comp18 === "1" && $param18 === "3" && $crit == 35){ continue;}
+	
+	if($param29 !== ""){
+		    $crit = xmlgrapher_crit_num($dumped,"IV","fnal_17c", 1);
+		    if($comp29 === "0" && $param29 === "0" && $crit%5 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "0" && $crit%5 == 0){ continue;}
+		    if($comp29 === "0" && $param29 === "1" && $crit%7 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "1" && $crit%7 == 0){ continue;}
+		    if($comp29 === "0" && $param29 === "2" && $crit%35 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "2" && $crit != 1){ continue;}
+		    if($comp29 === "0" && $param29 === "3" && $crit == 1){ continue;}
+		    if($comp29 === "1" && $param29 === "3" && $crit == 35){ continue;}  
+		    if($comp29 === "0" && ($param29 === "3" || $param29 === "2") && $crit == 0){ continue;}  
+	}
 
 	if($param42 === "No" && file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 	if($param42 === "Yes" && !file_exists("../../Submission_p/module_config_files/$id")){ continue; }
@@ -868,7 +894,7 @@ while($output3 && $row3 = mysql_fetch_assoc($output3)){
 	#$dumped = dump("module_p", $row3['id']);
 	$dumped = findsensor($row1['id']);
 	$id = $row3['id'];
-	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
+	$crit =  xmlgrapher_crit_num($dumped,"IV","module", 0);
 	if($param2 !== ""){
 		   $grade = curgrade($id);
 		   if($comp2 === "=" && $param2 != $grade){ continue;}
@@ -886,6 +912,19 @@ while($output3 && $row3 = mysql_fetch_assoc($output3)){
 	if($comp18 === "1" && $param18 === "2" && $crit != 1){ continue;}
 	if($comp18 === "0" && $param18 === "3" && $crit == 1){ continue;}
 	if($comp18 === "1" && $param18 === "3" && $crit == 35){ continue;}
+	
+	if($param29 !== ""){
+		    $crit = xmlgrapher_crit_num($dumped,"IV","fnal_17c", 1);
+		    if($comp29 === "0" && $param29 === "0" && $crit%5 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "0" && $crit%5 == 0){ continue;}
+		    if($comp29 === "0" && $param29 === "1" && $crit%7 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "1" && $crit%7 == 0){ continue;}
+		    if($comp29 === "0" && $param29 === "2" && $crit%35 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "2" && $crit != 1){ continue;}
+		    if($comp29 === "0" && $param29 === "3" && $crit == 1){ continue;}
+		    if($comp29 === "1" && $param29 === "3" && $crit == 35){ continue;}  
+		    if($comp29 === "0" && ($param29 === "3" || $param29 === "2") && $crit == 0){ continue;}  
+	}
 
 	if($param42 === "No" && file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 	if($param42 === "Yes" && !file_exists("../../Submission_p/module_config_files/$id")){ continue; }
@@ -911,7 +950,7 @@ while($output4 && $row4 = mysql_fetch_assoc($output4)){
 	#$dumped = dump("module_p", $row4['id']);
 	$dumped = findsensor($row4['id']);
 	$id = $row4['id'];
-	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
+	$crit =  xmlgrapher_crit_num($dumped,"IV","module", 0);
 	if($param2 !== ""){
 		   $grade = curgrade($id);
 		   if($comp2 === "=" && $param2 != $grade){ continue;}
@@ -929,6 +968,19 @@ while($output4 && $row4 = mysql_fetch_assoc($output4)){
 	if($comp18 === "1" && $param18 === "2" && $crit != 1){ continue;}
 	if($comp18 === "0" && $param18 === "3" && $crit == 1){ continue;}
 	if($comp18 === "1" && $param18 === "3" && $crit == 35){ continue;}
+	
+	if($param29 !== ""){
+		    $crit = xmlgrapher_crit_num($dumped,"IV","fnal_17c", 1);
+		    if($comp29 === "0" && $param29 === "0" && $crit%5 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "0" && $crit%5 == 0){ continue;}
+		    if($comp29 === "0" && $param29 === "1" && $crit%7 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "1" && $crit%7 == 0){ continue;}
+		    if($comp29 === "0" && $param29 === "2" && $crit%35 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "2" && $crit != 1){ continue;}
+		    if($comp29 === "0" && $param29 === "3" && $crit == 1){ continue;}
+		    if($comp29 === "1" && $param29 === "3" && $crit == 35){ continue;}  
+		    if($comp29 === "0" && ($param29 === "3" || $param29 === "2") && $crit == 0){ continue;}  
+	}
 
 	if($param42 === "No" && file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 	if($param42 === "Yes" && !file_exists("../../Submission_p/module_config_files/$id")){ continue; }
@@ -953,7 +1005,7 @@ while($output5 && $row5 = mysql_fetch_assoc($output5)){
 	#Testing Pass/Fail of IV test
 	#$dumped = dump("module_p", $row5['id']);
 	$dumped = findsensor($row5['id']);
-	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
+	$crit =  xmlgrapher_crit_num($dumped,"IV","module", 0);
 	$id = $row5['id'];
 	if($param2 !== ""){
 		   $grade = curgrade($id);
@@ -972,6 +1024,19 @@ while($output5 && $row5 = mysql_fetch_assoc($output5)){
 	if($comp18 === "1" && $param18 === "2" && $crit != 1){ continue;}
 	if($comp18 === "0" && $param18 === "3" && $crit == 1){ continue;}
 	if($comp18 === "1" && $param18 === "3" && $crit == 35){ continue;}
+	
+	if($param29 !== ""){
+		    $crit = xmlgrapher_crit_num($dumped,"IV","fnal_17c", 1);
+		    if($comp29 === "0" && $param29 === "0" && $crit%5 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "0" && $crit%5 == 0){ continue;}
+		    if($comp29 === "0" && $param29 === "1" && $crit%7 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "1" && $crit%7 == 0){ continue;}
+		    if($comp29 === "0" && $param29 === "2" && $crit%35 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "2" && $crit != 1){ continue;}
+		    if($comp29 === "0" && $param29 === "3" && $crit == 1){ continue;}
+		    if($comp29 === "1" && $param29 === "3" && $crit == 35){ continue;}  
+		    if($comp29 === "0" && ($param29 === "3" || $param29 === "2") && $crit == 0){ continue;}  
+	}
 
 	if($param42 === "No" && file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 	if($param42 === "Yes" && !file_exists("../../Submission_p/module_config_files/$id")){ continue; }
@@ -996,7 +1061,7 @@ while($output6 && $row6 = mysql_fetch_assoc($output6)){
 	#Testing Pass/Fail of IV test
 	#$dumped = dump("module_p", $row6['id']);
 	$dumped = findsensor($row6['id']);	
-	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
+	$crit =  xmlgrapher_crit_num($dumped,"IV","module", 0);
 	$id = $row6['id'];
 	if($param2 !== ""){
 		   $grade = curgrade($id);
@@ -1015,6 +1080,19 @@ while($output6 && $row6 = mysql_fetch_assoc($output6)){
 	if($comp18 === "1" && $param18 === "2" && $crit != 1){ continue;}
 	if($comp18 === "0" && $param18 === "3" && $crit == 1){ continue;}
 	if($comp18 === "1" && $param18 === "3" && $crit == 35){ continue;}
+	
+	if($param29 !== ""){
+		    $crit = xmlgrapher_crit_num($dumped,"IV","fnal_17c", 1);
+		    if($comp29 === "0" && $param29 === "0" && $crit%5 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "0" && $crit%5 == 0){ continue;}
+		    if($comp29 === "0" && $param29 === "1" && $crit%7 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "1" && $crit%7 == 0){ continue;}
+		    if($comp29 === "0" && $param29 === "2" && $crit%35 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "2" && $crit != 1){ continue;}
+		    if($comp29 === "0" && $param29 === "3" && $crit == 1){ continue;}
+		    if($comp29 === "1" && $param29 === "3" && $crit == 35){ continue;}  
+		    if($comp29 === "0" && ($param29 === "3" || $param29 === "2") && $crit == 0){ continue;}  
+	}
 
 	if($param42 === "No" && file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 	if($param42 === "Yes" && !file_exists("../../Submission_p/module_config_files/$id")){ continue; }
@@ -1039,7 +1117,7 @@ while($output7 && $row7 = mysql_fetch_assoc($output7)){
 	#Testing Pass/Fail of IV test
 	#$dumped = dump("module_p", $row7['id']);
 	$dumped = findsensor($row7['id']);	
-	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
+	$crit =  xmlgrapher_crit_num($dumped,"IV","module", 0);
 	$id = $row7['id'];
 	if($param2 !== ""){
 		   $grade = curgrade($id);
@@ -1058,6 +1136,19 @@ while($output7 && $row7 = mysql_fetch_assoc($output7)){
 	if($comp18 === "1" && $param18 === "2" && $crit != 1){ continue;}
 	if($comp18 === "0" && $param18 === "3" && $crit == 1){ continue;}
 	if($comp18 === "1" && $param18 === "3" && $crit == 35){ continue;}
+	
+	if($param29 !== ""){
+		    $crit = xmlgrapher_crit_num($dumped,"IV","fnal_17c", 1);
+		    if($comp29 === "0" && $param29 === "0" && $crit%5 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "0" && $crit%5 == 0){ continue;}
+		    if($comp29 === "0" && $param29 === "1" && $crit%7 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "1" && $crit%7 == 0){ continue;}
+		    if($comp29 === "0" && $param29 === "2" && $crit%35 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "2" && $crit != 1){ continue;}
+		    if($comp29 === "0" && $param29 === "3" && $crit == 1){ continue;}
+		    if($comp29 === "1" && $param29 === "3" && $crit == 35){ continue;}  
+		    if($comp29 === "0" && ($param29 === "3" || $param29 === "2") && $crit == 0){ continue;}  
+	}
 
 	if($param42 === "No" && file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 	if($param42 === "Yes" && !file_exists("../../Submission_p/module_config_files/$id")){ continue; }
@@ -1082,7 +1173,7 @@ while($output8 && $row8 = mysql_fetch_assoc($output8)){
 	#Testing Pass/Fail of IV test
 	#$dumped = dump("module_p", $row8['id']);
 	$dumped = findsensor($row8['id']);
-	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
+	$crit =  xmlgrapher_crit_num($dumped,"IV","module", 0);
 	$id = $row8['id'];
 	if($param2 !== ""){
 		   $grade = curgrade($id);
@@ -1101,6 +1192,19 @@ while($output8 && $row8 = mysql_fetch_assoc($output8)){
 	if($comp18 === "1" && $param18 === "2" && $crit != 1){ continue;}
 	if($comp18 === "0" && $param18 === "3" && $crit == 1){ continue;}
 	if($comp18 === "1" && $param18 === "3" && $crit == 35){ continue;}
+	
+	if($param29 !== ""){
+		    $crit = xmlgrapher_crit_num($dumped,"IV","fnal_17c", 1);
+		    if($comp29 === "0" && $param29 === "0" && $crit%5 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "0" && $crit%5 == 0){ continue;}
+		    if($comp29 === "0" && $param29 === "1" && $crit%7 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "1" && $crit%7 == 0){ continue;}
+		    if($comp29 === "0" && $param29 === "2" && $crit%35 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "2" && $crit != 1){ continue;}
+		    if($comp29 === "0" && $param29 === "3" && $crit == 1){ continue;}
+		    if($comp29 === "1" && $param29 === "3" && $crit == 35){ continue;}  
+		    if($comp29 === "0" && ($param29 === "3" || $param29 === "2") && $crit == 0){ continue;}  
+	}
 
 	if($param42 === "No" && file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 	if($param42 === "Yes" && !file_exists("../../Submission_p/module_config_files/$id")){ continue; }
@@ -1125,7 +1229,7 @@ while($output9 && $row9 = mysql_fetch_assoc($output9)){
 	#Testing Pass/Fail of IV test
 	#$dumped = dump("module_p", $row9['id']);	
 	$dumped = findsensor($row9['id']);
-	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
+	$crit =  xmlgrapher_crit_num($dumped,"IV","module", 0);
 	$id = $row9['id'];
 	if($param2 !== ""){
 		   $grade = curgrade($id);
@@ -1144,6 +1248,19 @@ while($output9 && $row9 = mysql_fetch_assoc($output9)){
 	if($comp18 === "1" && $param18 === "2" && $crit != 1){ continue;}
 	if($comp18 === "0" && $param18 === "3" && $crit == 1){ continue;}
 	if($comp18 === "1" && $param18 === "3" && $crit == 35){ continue;}
+	
+	if($param29 !== ""){
+		    $crit = xmlgrapher_crit_num($dumped,"IV","fnal_17c", 1);
+		    if($comp29 === "0" && $param29 === "0" && $crit%5 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "0" && $crit%5 == 0){ continue;}
+		    if($comp29 === "0" && $param29 === "1" && $crit%7 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "1" && $crit%7 == 0){ continue;}
+		    if($comp29 === "0" && $param29 === "2" && $crit%35 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "2" && $crit != 1){ continue;}
+		    if($comp29 === "0" && $param29 === "3" && $crit == 1){ continue;}
+		    if($comp29 === "1" && $param29 === "3" && $crit == 35){ continue;}  
+		    if($comp29 === "0" && ($param29 === "3" || $param29 === "2") && $crit == 0){ continue;}  
+	}
 
 	if($param42 === "No" && file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 	if($param42 === "Yes" && !file_exists("../../Submission_p/module_config_files/$id")){ continue; }
@@ -1168,7 +1285,7 @@ while($output10 && $row10 = mysql_fetch_assoc($output10)){
 	#Testing Pass/Fail of IV test
 	#$dumped = dump("module_p", $row10['id']);
 	$dumped = findsensor($row10['id']);
-	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
+	$crit =  xmlgrapher_crit_num($dumped,"IV","module", 0);
 	$id = $row10['id'];
 	if($param2 !== ""){
 		   $grade = curgrade($id);
@@ -1187,6 +1304,19 @@ while($output10 && $row10 = mysql_fetch_assoc($output10)){
 	if($comp18 === "1" && $param18 === "2" && $crit != 1){ continue;}
 	if($comp18 === "0" && $param18 === "3" && $crit == 1){ continue;}
 	if($comp18 === "1" && $param18 === "3" && $crit == 35){ continue;}
+	
+	if($param29 !== ""){
+		    $crit = xmlgrapher_crit_num($dumped,"IV","fnal_17c", 1);
+		    if($comp29 === "0" && $param29 === "0" && $crit%5 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "0" && $crit%5 == 0){ continue;}
+		    if($comp29 === "0" && $param29 === "1" && $crit%7 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "1" && $crit%7 == 0){ continue;}
+		    if($comp29 === "0" && $param29 === "2" && $crit%35 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "2" && $crit != 1){ continue;}
+		    if($comp29 === "0" && $param29 === "3" && $crit == 1){ continue;}
+		    if($comp29 === "1" && $param29 === "3" && $crit == 35){ continue;}  
+		    if($comp29 === "0" && ($param29 === "3" || $param29 === "2") && $crit == 0){ continue;}  
+	}
 
 	if($param42 === "No" && file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 	if($param42 === "Yes" && !file_exists("../../Submission_p/module_config_files/$id")){ continue; }
@@ -1217,7 +1347,7 @@ while($output11 && $row11 = mysql_fetch_assoc($output11)){
 	#Testing Pass/Fail of IV test
 	#$dumped = dump("module_p", $row11['id']);
 	$dumped = findsensor($row11['id']);
-	$crit =  xmlgrapher_crit_num($dumped['assoc_sens'],"IV","module", 0);
+	$crit =  xmlgrapher_crit_num($dumped,"IV","module", 0);
 	$id = $row11['id'];
 	if($param2 !== ""){
 		   $grade = curgrade($id);
@@ -1236,6 +1366,19 @@ while($output11 && $row11 = mysql_fetch_assoc($output11)){
 	if($comp18 === "1" && $param18 === "2" && $crit != 1){ continue;}
 	if($comp18 === "0" && $param18 === "3" && $crit == 1){ continue;}
 	if($comp18 === "1" && $param18 === "3" && $crit == 35){ continue;}
+	
+	if($param29 != ""){
+		    $crit = xmlgrapher_crit_num($dumped,"IV","fnal_17c", 1);
+		    if($comp29 === "0" && $param29 === "0" && $crit%5 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "0" && $crit%5 == 0){ continue;}
+		    if($comp29 === "0" && $param29 === "1" && $crit%7 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "1" && $crit%7 == 0){ continue;}
+		    if($comp29 === "0" && $param29 === "2" && $crit%35 > 0){ continue;}
+		    if($comp29 === "1" && $param29 === "2" && $crit != 1){ continue;}
+		    if($comp29 === "0" && $param29 === "3" && $crit == 1){ continue;}
+		    if($comp29 === "1" && $param29 === "3" && $crit == 35){ continue;}  
+		    if($comp29 === "0" && ($param29 === "3" || $param29 === "2") && $crit == 0){ continue;}  
+	}
 
 	if($param42 === "No" && file_exists("../../Submission_p/module_config_files/$id")){ continue; }
 	if($param42 === "Yes" && !file_exists("../../Submission_p/module_config_files/$id")){ continue; }

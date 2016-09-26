@@ -532,6 +532,11 @@ while($row = mysql_fetch_assoc($file)){
 				$file5 = $row['file'];
 			}
 		}
+		if($level == "fnal_17c"){
+			if($row['part_type'] == "fnal_17c"){
+				$file5 = $row['file'];
+			}			  
+		}
 	}
 }
 
