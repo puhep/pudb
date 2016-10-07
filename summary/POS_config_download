@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<form method="link" action="../index.php">
+<input type="submit" value="MAIN MENU">
+</form>
+<br>
+
+
+<head>
+  <title>POS Config Tarball</title>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <link rel="stylesheet" type="text/css" href="../css/assemblyovertime.css" />
+</head>
+<body>
+
+<p>The linked document is a tarball containing all POS Config files separated into subfolders by the official name of the position. Loading this page generates the tarball, so the tarball will always be up to date when accessed from this page.</p>
+
+<a href="../tmp/POS_configs.tar" download>POS Configs tarball</a>
+<br>
+
+<?php
+ini_set('display_errors', 'On');
+error_reporting(E_ALL | E_STRICT);
+include('../functions/popfunctions.php');
+include('../functions/curfunctions.php');
+include('../../../Submission_p_secure_pages/connect.php');
+
+?>
+
+
+
+
+
+</body?>
+</html>
