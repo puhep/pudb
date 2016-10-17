@@ -94,7 +94,8 @@ $graphname = "Module Assembly over Time";
 
 
 $graph=new Graph(1340,800);
-$graph->SetScale("datlin",0,1200);
+$graph->SetScale("datlin",0,1400);
+#$graph->yaxis->scale->ticks->Set(400);
 $graph->SetFrame(true,'black',0);
 
 $graph->title->Set($graphname);
