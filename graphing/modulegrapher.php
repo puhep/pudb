@@ -11,7 +11,8 @@ $arr3;
 
 mysql_query("USE cmsfpix_u", $connection);
 
-$date = time();
+#$date = time();
+$date = "1483298650";
 
 $hide= "";
 if(!$_SESSION['hidepre']){
